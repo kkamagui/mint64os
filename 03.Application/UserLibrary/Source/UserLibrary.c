@@ -3,7 +3,7 @@
  *  date    2009/12/13
  *  author  kkamagui 
  *          Copyright(c)2008 All rights reserved by kkamagui
- *  brief   À¯Àú ·¹º§¿¡¼­ »ç¿ëÇÏ´Â ¶óÀÌºê·¯¸®¿¡ °ü·ÃµÈ ¼Ò½º ÆÄÀÏ
+ *  brief   ìœ ì € ë ˆë²¨ì—ì„œ ì‚¬ìš©í•˜ëŠ” ë¼ì´ë¸ŒëŸ¬ë¦¬ì— ê´€ë ¨ëœ ì†ŒìŠ¤ íŒŒì¼
  */
 
 #include "Types.h"
@@ -11,10 +11,10 @@
 #include <stdarg.h>
 
 //==============================================================================
-//  È­¸é ÀÔÃâ·Â°ú Ç¥ÁØ ÇÔ¼ö °ü·Ã
+//  í™”ë©´ ì…ì¶œë ¥ê³¼ í‘œì¤€ í•¨ìˆ˜ ê´€ë ¨
 //==============================================================================
 /** 
- *  ¸Ş¸ğ¸®¸¦ Æ¯Á¤ °ªÀ¸·Î Ã¤¿ò
+ *  ë©”ëª¨ë¦¬ë¥¼ íŠ¹ì • ê°’ìœ¼ë¡œ ì±„ì›€
  */
 void memset( void* pvDestination, BYTE bData, int iSize )
 {
@@ -22,20 +22,20 @@ void memset( void* pvDestination, BYTE bData, int iSize )
     QWORD qwData;
     int iRemainByteStartOffset;
     
-    // 8 ¹ÙÀÌÆ® µ¥ÀÌÅÍ¸¦ Ã¤¿ò
+    // 8 ë°”ì´íŠ¸ ë°ì´í„°ë¥¼ ì±„ì›€
     qwData = 0;
     for( i = 0 ; i < 8 ; i++ )
     {
         qwData = ( qwData << 8 ) | bData;
     }
     
-    // 8 ¹ÙÀÌÆ®¾¿ ¸ÕÀú Ã¤¿ò
+    // 8 ë°”ì´íŠ¸ì”© ë¨¼ì € ì±„ì›€
     for( i = 0 ; i < ( iSize / 8 ) ; i++ )
     {
         ( ( QWORD* ) pvDestination )[ i ] = qwData;
     }
     
-    // 8 ¹ÙÀÌÆ®¾¿ Ã¤¿ì°í ³²Àº ºÎºĞÀ» ¸¶¹«¸®
+    // 8 ë°”ì´íŠ¸ì”© ì±„ìš°ê³  ë‚¨ì€ ë¶€ë¶„ì„ ë§ˆë¬´ë¦¬
     iRemainByteStartOffset = i * 8;
     for( i = 0 ; i < ( iSize % 8 ) ; i++ )
     {
@@ -44,20 +44,20 @@ void memset( void* pvDestination, BYTE bData, int iSize )
 }
 
 /**
- *  ¸Ş¸ğ¸® º¹»ç
+ *  ë©”ëª¨ë¦¬ ë³µì‚¬
  */
 int memcpy( void* pvDestination, const void* pvSource, int iSize )
 {
     int i;
     int iRemainByteStartOffset;
     
-    // 8 ¹ÙÀÌÆ®¾¿ ¸ÕÀú º¹»ç
+    // 8 ë°”ì´íŠ¸ì”© ë¨¼ì € ë³µì‚¬
     for( i = 0 ; i < ( iSize / 8 ) ; i++ )
     {
         ( ( QWORD* ) pvDestination )[ i ] = ( ( QWORD* ) pvSource )[ i ];
     }
     
-    // 8 ¹ÙÀÌÆ®¾¿ Ã¤¿ì°í ³²Àº ºÎºĞÀ» ¸¶¹«¸®
+    // 8 ë°”ì´íŠ¸ì”© ì±„ìš°ê³  ë‚¨ì€ ë¶€ë¶„ì„ ë§ˆë¬´ë¦¬
     iRemainByteStartOffset = i * 8;
     for( i = 0 ; i < ( iSize % 8 ) ; i++ )
     {
@@ -69,7 +69,7 @@ int memcpy( void* pvDestination, const void* pvSource, int iSize )
 }
 
 /**
- *  ¸Ş¸ğ¸® ºñ±³
+ *  ë©”ëª¨ë¦¬ ë¹„êµ
  */
 int memcmp( const void* pvDestination, const void* pvSource, int iSize )
 {
@@ -78,12 +78,12 @@ int memcmp( const void* pvDestination, const void* pvSource, int iSize )
     QWORD qwValue;
     char cValue;
     
-    // 8 ¹ÙÀÌÆ®¾¿ ¸ÕÀú ºñ±³
+    // 8 ë°”ì´íŠ¸ì”© ë¨¼ì € ë¹„êµ
     for( i = 0 ; i < ( iSize / 8 ) ; i++ )
     {
         qwValue = ( ( QWORD* ) pvDestination )[ i ] - ( ( QWORD* ) pvSource )[ i ];
 
-        // Æ²¸° À§Ä¡¸¦ Á¤È®ÇÏ°Ô Ã£¾Æ¼­ ±× °ªÀ» ¹İÈ¯
+        // í‹€ë¦° ìœ„ì¹˜ë¥¼ ì •í™•í•˜ê²Œ ì°¾ì•„ì„œ ê·¸ ê°’ì„ ë°˜í™˜
         if( qwValue != 0 )
         {
             for( i = 0 ; i < 8 ; i++ )
@@ -96,7 +96,7 @@ int memcmp( const void* pvDestination, const void* pvSource, int iSize )
         }
     }
     
-    // 8 ¹ÙÀÌÆ®¾¿ Ã¤¿ì°í ³²Àº ºÎºĞÀ» ¸¶¹«¸®
+    // 8 ë°”ì´íŠ¸ì”© ì±„ìš°ê³  ë‚¨ì€ ë¶€ë¶„ì„ ë§ˆë¬´ë¦¬
     iRemainByteStartOffset = i * 8;
     for( i = 0 ; i < ( iSize % 8 ) ; i++ )
     {
@@ -112,7 +112,7 @@ int memcmp( const void* pvDestination, const void* pvSource, int iSize )
 }
 
 /**
- *  ¹®ÀÚ¿­À» º¹»ç
+ *  ë¬¸ìì—´ì„ ë³µì‚¬
  */
 int strcpy( char* pcDestination, const char* pcSource )
 {
@@ -126,7 +126,7 @@ int strcpy( char* pcDestination, const char* pcSource )
 }
 
 /**
- *  ¹®ÀÚ¿­À» ºñ±³
+ *  ë¬¸ìì—´ì„ ë¹„êµ
  */
 int strcmp( char* pcDestination, const char* pcSource )
 {
@@ -144,7 +144,7 @@ int strcmp( char* pcDestination, const char* pcSource )
 }
 
 /**
- *  ¹®ÀÚ¿­ÀÇ ±æÀÌ¸¦ ¹İÈ¯
+ *  ë¬¸ìì—´ì˜ ê¸¸ì´ë¥¼ ë°˜í™˜
  */
 int strlen( const char* pcBuffer )
 {
@@ -161,7 +161,7 @@ int strlen( const char* pcBuffer )
 }
 
 /**
- *  atoi() ÇÔ¼öÀÇ ³»ºÎ ±¸Çö
+ *  atoi() í•¨ìˆ˜ì˜ ë‚´ë¶€ êµ¬í˜„
  */
 long atoi( const char* pcBuffer, int iRadix )
 {
@@ -169,12 +169,12 @@ long atoi( const char* pcBuffer, int iRadix )
     
     switch( iRadix )
     {
-        // 16Áø¼ö
+        // 16ì§„ìˆ˜
     case 16:
         lReturn = HexStringToQword( pcBuffer );
         break;
         
-        // 10Áø¼ö ¶Ç´Â ±âÅ¸
+        // 10ì§„ìˆ˜ ë˜ëŠ” ê¸°íƒ€
     case 10:
     default:
         lReturn = DecimalStringToLong( pcBuffer );
@@ -184,14 +184,14 @@ long atoi( const char* pcBuffer, int iRadix )
 }
 
 /**
- *  16Áø¼ö ¹®ÀÚ¿­À» QWORD·Î º¯È¯ 
+ *  16ì§„ìˆ˜ ë¬¸ìì—´ì„ QWORDë¡œ ë³€í™˜ 
  */
 QWORD HexStringToQword( const char* pcBuffer )
 {
     QWORD qwValue = 0;
     int i;
     
-    // ¹®ÀÚ¿­À» µ¹¸é¼­ Â÷·Ê·Î º¯È¯
+    // ë¬¸ìì—´ì„ ëŒë©´ì„œ ì°¨ë¡€ë¡œ ë³€í™˜
     for( i = 0 ; pcBuffer[ i ] != '\0' ; i++ )
     {
         qwValue *= 16;
@@ -212,14 +212,14 @@ QWORD HexStringToQword( const char* pcBuffer )
 }
 
 /**
- *  10Áø¼ö ¹®ÀÚ¿­À» longÀ¸·Î º¯È¯
+ *  10ì§„ìˆ˜ ë¬¸ìì—´ì„ longìœ¼ë¡œ ë³€í™˜
  */
 long DecimalStringToLong( const char* pcBuffer )
 {
     long lValue = 0;
     int i;
     
-    // À½¼öÀÌ¸é -¸¦ Á¦¿ÜÇÏ°í ³ª¸ÓÁö¸¦ ¸ÕÀú longÀ¸·Î º¯È¯
+    // ìŒìˆ˜ì´ë©´ -ë¥¼ ì œì™¸í•˜ê³  ë‚˜ë¨¸ì§€ë¥¼ ë¨¼ì € longìœ¼ë¡œ ë³€í™˜
     if( pcBuffer[ 0 ] == '-' )
     {
         i = 1;
@@ -229,14 +229,14 @@ long DecimalStringToLong( const char* pcBuffer )
         i = 0;
     }
     
-    // ¹®ÀÚ¿­À» µ¹¸é¼­ Â÷·Ê·Î º¯È¯
+    // ë¬¸ìì—´ì„ ëŒë©´ì„œ ì°¨ë¡€ë¡œ ë³€í™˜
     for( ; pcBuffer[ i ] != '\0' ; i++ )
     {
         lValue *= 10;
         lValue += pcBuffer[ i ] - '0';
     }
     
-    // À½¼öÀÌ¸é - Ãß°¡
+    // ìŒìˆ˜ì´ë©´ - ì¶”ê°€
     if( pcBuffer[ 0 ] == '-' )
     {
         lValue = -lValue;
@@ -245,7 +245,7 @@ long DecimalStringToLong( const char* pcBuffer )
 }
 
 /**
- *  itoa() ÇÔ¼öÀÇ ³»ºÎ ±¸Çö
+ *  itoa() í•¨ìˆ˜ì˜ ë‚´ë¶€ êµ¬í˜„
  */
 int itoa( long lValue, char* pcBuffer, int iRadix )
 {
@@ -253,12 +253,12 @@ int itoa( long lValue, char* pcBuffer, int iRadix )
     
     switch( iRadix )
     {
-        // 16Áø¼ö
+        // 16ì§„ìˆ˜
     case 16:
         iReturn = HexToString( lValue, pcBuffer );
         break;
         
-        // 10Áø¼ö ¶Ç´Â ±âÅ¸
+        // 10ì§„ìˆ˜ ë˜ëŠ” ê¸°íƒ€
     case 10:
     default:
         iReturn = DecimalToString( lValue, pcBuffer );
@@ -269,14 +269,14 @@ int itoa( long lValue, char* pcBuffer, int iRadix )
 }
 
 /**
- *  16Áø¼ö °ªÀ» ¹®ÀÚ¿­·Î º¯È¯
+ *  16ì§„ìˆ˜ ê°’ì„ ë¬¸ìì—´ë¡œ ë³€í™˜
  */
 int HexToString( QWORD qwValue, char* pcBuffer )
 {
     QWORD i;
     QWORD qwCurrentValue;
 
-    // 0ÀÌ µé¾î¿À¸é ¹Ù·Î Ã³¸®
+    // 0ì´ ë“¤ì–´ì˜¤ë©´ ë°”ë¡œ ì²˜ë¦¬
     if( qwValue == 0 )
     {
         pcBuffer[ 0 ] = '0';
@@ -284,7 +284,7 @@ int HexToString( QWORD qwValue, char* pcBuffer )
         return 1;
     }
     
-    // ¹öÆÛ¿¡ 1ÀÇ ÀÚ¸®ºÎÅÍ 16, 256, ...ÀÇ ÀÚ¸® ¼ø¼­·Î ¼ıÀÚ »ğÀÔ
+    // ë²„í¼ì— 1ì˜ ìë¦¬ë¶€í„° 16, 256, ...ì˜ ìë¦¬ ìˆœì„œë¡œ ìˆ«ì ì‚½ì…
     for( i = 0 ; qwValue > 0 ; i++ )
     {
         qwCurrentValue = qwValue % 16;
@@ -301,19 +301,19 @@ int HexToString( QWORD qwValue, char* pcBuffer )
     }
     pcBuffer[ i ] = '\0';
     
-    // ¹öÆÛ¿¡ µé¾îÀÖ´Â ¹®ÀÚ¿­À» µÚÁı¾î¼­ ... 256, 16, 1ÀÇ ÀÚ¸® ¼ø¼­·Î º¯°æ
+    // ë²„í¼ì— ë“¤ì–´ìˆëŠ” ë¬¸ìì—´ì„ ë’¤ì§‘ì–´ì„œ ... 256, 16, 1ì˜ ìë¦¬ ìˆœì„œë¡œ ë³€ê²½
     ReverseString( pcBuffer );
     return i;
 }
 
 /**
- *  10Áø¼ö °ªÀ» ¹®ÀÚ¿­·Î º¯È¯
+ *  10ì§„ìˆ˜ ê°’ì„ ë¬¸ìì—´ë¡œ ë³€í™˜
  */
 int DecimalToString( long lValue, char* pcBuffer )
 {
     long i;
 
-    // 0ÀÌ µé¾î¿À¸é ¹Ù·Î Ã³¸®
+    // 0ì´ ë“¤ì–´ì˜¤ë©´ ë°”ë¡œ ì²˜ë¦¬
     if( lValue == 0 )
     {
         pcBuffer[ 0 ] = '0';
@@ -321,7 +321,7 @@ int DecimalToString( long lValue, char* pcBuffer )
         return 1;
     }
     
-    // ¸¸¾à À½¼öÀÌ¸é Ãâ·Â ¹öÆÛ¿¡ '-'¸¦ Ãß°¡ÇÏ°í ¾ç¼ö·Î º¯È¯
+    // ë§Œì•½ ìŒìˆ˜ì´ë©´ ì¶œë ¥ ë²„í¼ì— '-'ë¥¼ ì¶”ê°€í•˜ê³  ì–‘ìˆ˜ë¡œ ë³€í™˜
     if( lValue < 0 )
     {
         i = 1;
@@ -333,7 +333,7 @@ int DecimalToString( long lValue, char* pcBuffer )
         i = 0;
     }
 
-    // ¹öÆÛ¿¡ 1ÀÇ ÀÚ¸®ºÎÅÍ 10, 100, 1000 ...ÀÇ ÀÚ¸® ¼ø¼­·Î ¼ıÀÚ »ğÀÔ
+    // ë²„í¼ì— 1ì˜ ìë¦¬ë¶€í„° 10, 100, 1000 ...ì˜ ìë¦¬ ìˆœì„œë¡œ ìˆ«ì ì‚½ì…
     for( ; lValue > 0 ; i++ )
     {
         pcBuffer[ i ] = '0' + lValue % 10;        
@@ -341,10 +341,10 @@ int DecimalToString( long lValue, char* pcBuffer )
     }
     pcBuffer[ i ] = '\0';
     
-    // ¹öÆÛ¿¡ µé¾îÀÖ´Â ¹®ÀÚ¿­À» µÚÁı¾î¼­ ... 1000, 100, 10, 1ÀÇ ÀÚ¸® ¼ø¼­·Î º¯°æ
+    // ë²„í¼ì— ë“¤ì–´ìˆëŠ” ë¬¸ìì—´ì„ ë’¤ì§‘ì–´ì„œ ... 1000, 100, 10, 1ì˜ ìë¦¬ ìˆœì„œë¡œ ë³€ê²½
     if( pcBuffer[ 0 ] == '-' )
     {
-        // À½¼öÀÎ °æ¿ì´Â ºÎÈ£¸¦ Á¦¿ÜÇÏ°í ¹®ÀÚ¿­À» µÚÁıÀ½
+        // ìŒìˆ˜ì¸ ê²½ìš°ëŠ” ë¶€í˜¸ë¥¼ ì œì™¸í•˜ê³  ë¬¸ìì—´ì„ ë’¤ì§‘ìŒ
         ReverseString( &( pcBuffer[ 1 ] ) );
     }
     else
@@ -356,7 +356,7 @@ int DecimalToString( long lValue, char* pcBuffer )
 }
 
 /**
- *  ¹®ÀÚ¿­ÀÇ ¼ø¼­¸¦ µÚÁıÀ½
+ *  ë¬¸ìì—´ì˜ ìˆœì„œë¥¼ ë’¤ì§‘ìŒ
  */
 void ReverseString( char* pcBuffer )
 {
@@ -365,7 +365,7 @@ void ReverseString( char* pcBuffer )
    char cTemp;
    
    
-   // ¹®ÀÚ¿­ÀÇ °¡¿îµ¥¸¦ Áß½ÉÀ¸·Î ÁÂ/¿ì¸¦ ¹Ù²ã¼­ ¼ø¼­¸¦ µÚÁıÀ½
+   // ë¬¸ìì—´ì˜ ê°€ìš´ë°ë¥¼ ì¤‘ì‹¬ìœ¼ë¡œ ì¢Œ/ìš°ë¥¼ ë°”ê¿”ì„œ ìˆœì„œë¥¼ ë’¤ì§‘ìŒ
    iLength = strlen( pcBuffer );
    for( i = 0 ; i < iLength / 2 ; i++ )
    {
@@ -376,14 +376,14 @@ void ReverseString( char* pcBuffer )
 }
 
 /**
- *  sprintf() ÇÔ¼öÀÇ ³»ºÎ ±¸Çö
+ *  sprintf() í•¨ìˆ˜ì˜ ë‚´ë¶€ êµ¬í˜„
  */
 int sprintf( char* pcBuffer, const char* pcFormatString, ... )
 {
     va_list ap;
     int iReturn;
     
-    // °¡º¯ ÀÎÀÚ¸¦ ²¨³»¼­ vsprintf() ÇÔ¼ö¿¡ ³Ñ°ÜÁÜ
+    // ê°€ë³€ ì¸ìë¥¼ êº¼ë‚´ì„œ vsprintf() í•¨ìˆ˜ì— ë„˜ê²¨ì¤Œ
     va_start( ap, pcFormatString );
     iReturn = vsprintf( pcBuffer, pcFormatString, ap );
     va_end( ap );
@@ -392,8 +392,8 @@ int sprintf( char* pcBuffer, const char* pcFormatString, ... )
 }
 
 /**
- *  vsprintf() ÇÔ¼öÀÇ ³»ºÎ ±¸Çö
- *      ¹öÆÛ¿¡ Æ÷¸Ë ¹®ÀÚ¿­¿¡ µû¶ó µ¥ÀÌÅÍ¸¦ º¹»ç
+ *  vsprintf() í•¨ìˆ˜ì˜ ë‚´ë¶€ êµ¬í˜„
+ *      ë²„í¼ì— í¬ë§· ë¬¸ìì—´ì— ë”°ë¼ ë°ì´í„°ë¥¼ ë³µì‚¬
  */
 int vsprintf( char* pcBuffer, const char* pcFormatString, va_list ap )
 {
@@ -405,76 +405,76 @@ int vsprintf( char* pcBuffer, const char* pcFormatString, va_list ap )
     int iValue;
     double dValue;
     
-    // Æ÷¸Ë ¹®ÀÚ¿­ÀÇ ±æÀÌ¸¦ ÀĞ¾î¼­ ¹®ÀÚ¿­ÀÇ ±æÀÌ¸¸Å­ µ¥ÀÌÅÍ¸¦ Ãâ·Â ¹öÆÛ¿¡ Ãâ·Â
+    // í¬ë§· ë¬¸ìì—´ì˜ ê¸¸ì´ë¥¼ ì½ì–´ì„œ ë¬¸ìì—´ì˜ ê¸¸ì´ë§Œí¼ ë°ì´í„°ë¥¼ ì¶œë ¥ ë²„í¼ì— ì¶œë ¥
     iFormatLength = strlen( pcFormatString );
     for( i = 0 ; i < iFormatLength ; i++ ) 
     {
-        // %·Î ½ÃÀÛÇÏ¸é µ¥ÀÌÅÍ Å¸ÀÔ ¹®ÀÚ·Î Ã³¸®
+        // %ë¡œ ì‹œì‘í•˜ë©´ ë°ì´í„° íƒ€ì… ë¬¸ìë¡œ ì²˜ë¦¬
         if( pcFormatString[ i ] == '%' ) 
         {
-            // % ´ÙÀ½ÀÇ ¹®ÀÚ·Î ÀÌµ¿
+            // % ë‹¤ìŒì˜ ë¬¸ìë¡œ ì´ë™
             i++;
             switch( pcFormatString[ i ] ) 
             {
-                // ¹®ÀÚ¿­ Ãâ·Â  
+                // ë¬¸ìì—´ ì¶œë ¥  
             case 's':
-                // °¡º¯ ÀÎÀÚ¿¡ µé¾îÀÖ´Â ÆÄ¶ó¹ÌÅÍ¸¦ ¹®ÀÚ¿­ Å¸ÀÔÀ¸·Î º¯È¯
+                // ê°€ë³€ ì¸ìì— ë“¤ì–´ìˆëŠ” íŒŒë¼ë¯¸í„°ë¥¼ ë¬¸ìì—´ íƒ€ì…ìœ¼ë¡œ ë³€í™˜
                 pcCopyString = ( char* ) ( va_arg(ap, char* ));
                 iCopyLength = strlen( pcCopyString );
-                // ¹®ÀÚ¿­ÀÇ ±æÀÌ¸¸Å­À» Ãâ·Â ¹öÆÛ·Î º¹»çÇÏ°í Ãâ·ÂÇÑ ±æÀÌ¸¸Å­ 
-                // ¹öÆÛÀÇ ÀÎµ¦½º¸¦ ÀÌµ¿
+                // ë¬¸ìì—´ì˜ ê¸¸ì´ë§Œí¼ì„ ì¶œë ¥ ë²„í¼ë¡œ ë³µì‚¬í•˜ê³  ì¶œë ¥í•œ ê¸¸ì´ë§Œí¼ 
+                // ë²„í¼ì˜ ì¸ë±ìŠ¤ë¥¼ ì´ë™
                 memcpy( pcBuffer + iBufferIndex, pcCopyString, iCopyLength );
                 iBufferIndex += iCopyLength;
                 break;
                 
-                // ¹®ÀÚ Ãâ·Â
+                // ë¬¸ì ì¶œë ¥
             case 'c':
-                // °¡º¯ ÀÎÀÚ¿¡ µé¾îÀÖ´Â ÆÄ¶ó¹ÌÅÍ¸¦ ¹®ÀÚ Å¸ÀÔÀ¸·Î º¯È¯ÇÏ¿© 
-                // Ãâ·Â ¹öÆÛ¿¡ º¹»çÇÏ°í ¹öÆÛÀÇ ÀÎµ¦½º¸¦ 1¸¸Å­ ÀÌµ¿
+                // ê°€ë³€ ì¸ìì— ë“¤ì–´ìˆëŠ” íŒŒë¼ë¯¸í„°ë¥¼ ë¬¸ì íƒ€ì…ìœ¼ë¡œ ë³€í™˜í•˜ì—¬ 
+                // ì¶œë ¥ ë²„í¼ì— ë³µì‚¬í•˜ê³  ë²„í¼ì˜ ì¸ë±ìŠ¤ë¥¼ 1ë§Œí¼ ì´ë™
                 pcBuffer[ iBufferIndex ] = ( char ) ( va_arg( ap, int ) );
                 iBufferIndex++;
                 break;
 
-                // Á¤¼ö Ãâ·Â
+                // ì •ìˆ˜ ì¶œë ¥
             case 'd':
             case 'i':
-                // °¡º¯ ÀÎÀÚ¿¡ µé¾îÀÖ´Â ÆÄ¶ó¹ÌÅÍ¸¦ Á¤¼ö Å¸ÀÔÀ¸·Î º¯È¯ÇÏ¿©
-                // Ãâ·Â ¹öÆÛ¿¡ º¹»çÇÏ°í Ãâ·ÂÇÑ ±æÀÌ¸¸Å­ ¹öÆÛÀÇ ÀÎµ¦½º¸¦ ÀÌµ¿
+                // ê°€ë³€ ì¸ìì— ë“¤ì–´ìˆëŠ” íŒŒë¼ë¯¸í„°ë¥¼ ì •ìˆ˜ íƒ€ì…ìœ¼ë¡œ ë³€í™˜í•˜ì—¬
+                // ì¶œë ¥ ë²„í¼ì— ë³µì‚¬í•˜ê³  ì¶œë ¥í•œ ê¸¸ì´ë§Œí¼ ë²„í¼ì˜ ì¸ë±ìŠ¤ë¥¼ ì´ë™
                 iValue = ( int ) ( va_arg( ap, int ) );
                 iBufferIndex += itoa( iValue, pcBuffer + iBufferIndex, 10 );
                 break;
                 
-                // 4¹ÙÀÌÆ® Hex Ãâ·Â
+                // 4ë°”ì´íŠ¸ Hex ì¶œë ¥
             case 'x':
             case 'X':
-                // °¡º¯ ÀÎÀÚ¿¡ µé¾îÀÖ´Â ÆÄ¶ó¹ÌÅÍ¸¦ DWORD Å¸ÀÔÀ¸·Î º¯È¯ÇÏ¿©
-                // Ãâ·Â ¹öÆÛ¿¡ º¹»çÇÏ°í Ãâ·ÂÇÑ ±æÀÌ¸¸Å­ ¹öÆÛÀÇ ÀÎµ¦½º¸¦ ÀÌµ¿
+                // ê°€ë³€ ì¸ìì— ë“¤ì–´ìˆëŠ” íŒŒë¼ë¯¸í„°ë¥¼ DWORD íƒ€ì…ìœ¼ë¡œ ë³€í™˜í•˜ì—¬
+                // ì¶œë ¥ ë²„í¼ì— ë³µì‚¬í•˜ê³  ì¶œë ¥í•œ ê¸¸ì´ë§Œí¼ ë²„í¼ì˜ ì¸ë±ìŠ¤ë¥¼ ì´ë™
                 qwValue = ( DWORD ) ( va_arg( ap, DWORD ) ) & 0xFFFFFFFF;
                 iBufferIndex += itoa( qwValue, pcBuffer + iBufferIndex, 16 );
                 break;
 
-                // 8¹ÙÀÌÆ® Hex Ãâ·Â
+                // 8ë°”ì´íŠ¸ Hex ì¶œë ¥
             case 'q':
             case 'Q':
             case 'p':
-                // °¡º¯ ÀÎÀÚ¿¡ µé¾îÀÖ´Â ÆÄ¶ó¹ÌÅÍ¸¦ QWORD Å¸ÀÔÀ¸·Î º¯È¯ÇÏ¿©
-                // Ãâ·Â ¹öÆÛ¿¡ º¹»çÇÏ°í Ãâ·ÂÇÑ ±æÀÌ¸¸Å­ ¹öÆÛÀÇ ÀÎµ¦½º¸¦ ÀÌµ¿
+                // ê°€ë³€ ì¸ìì— ë“¤ì–´ìˆëŠ” íŒŒë¼ë¯¸í„°ë¥¼ QWORD íƒ€ì…ìœ¼ë¡œ ë³€í™˜í•˜ì—¬
+                // ì¶œë ¥ ë²„í¼ì— ë³µì‚¬í•˜ê³  ì¶œë ¥í•œ ê¸¸ì´ë§Œí¼ ë²„í¼ì˜ ì¸ë±ìŠ¤ë¥¼ ì´ë™
                 qwValue = ( QWORD ) ( va_arg( ap, QWORD ) );
                 iBufferIndex += itoa( qwValue, pcBuffer + iBufferIndex, 16 );
                 break;
             
-                // ¼Ò¼öÁ¡ µÑÂ° ÀÚ¸®±îÁö ½Ç¼ö¸¦ Ãâ·Â
+                // ì†Œìˆ˜ì  ë‘˜ì§¸ ìë¦¬ê¹Œì§€ ì‹¤ìˆ˜ë¥¼ ì¶œë ¥
             case 'f':
                 dValue = ( double) ( va_arg( ap, double ) );
-                // ¼ÂÂ° ÀÚ¸®¿¡¼­ ¹İ¿Ã¸² Ã³¸®
+                // ì…‹ì§¸ ìë¦¬ì—ì„œ ë°˜ì˜¬ë¦¼ ì²˜ë¦¬
                 dValue += 0.005;
-                // ¼Ò¼öÁ¡ µÑÂ° ÀÚ¸®ºÎÅÍ Â÷·Ê·Î ÀúÀåÇÏ¿© ¹öÆÛ¸¦ µÚÁıÀ½
+                // ì†Œìˆ˜ì  ë‘˜ì§¸ ìë¦¬ë¶€í„° ì°¨ë¡€ë¡œ ì €ì¥í•˜ì—¬ ë²„í¼ë¥¼ ë’¤ì§‘ìŒ
                 pcBuffer[ iBufferIndex ] = '0' + ( QWORD ) ( dValue * 100 ) % 10;
                 pcBuffer[ iBufferIndex + 1 ] = '0' + ( QWORD ) ( dValue * 10 ) % 10;
                 pcBuffer[ iBufferIndex + 2 ] = '.';
                 for( k = 0 ; ; k++ )
                 {
-                    // Á¤¼ö ºÎºĞÀÌ 0ÀÌ¸é Á¾·á
+                    // ì •ìˆ˜ ë¶€ë¶„ì´ 0ì´ë©´ ì¢…ë£Œ
                     if( ( ( QWORD ) dValue == 0 ) && ( k != 0 ) )
                     {
                         break;
@@ -483,35 +483,35 @@ int vsprintf( char* pcBuffer, const char* pcFormatString, va_list ap )
                     dValue = dValue / 10;
                 }
                 pcBuffer[ iBufferIndex + 3 + k ] = '\0';
-                // °ªÀÌ ÀúÀåµÈ ±æÀÌ¸¸Å­ µÚÁı°í ±æÀÌ¸¦ Áõ°¡½ÃÅ´
+                // ê°’ì´ ì €ì¥ëœ ê¸¸ì´ë§Œí¼ ë’¤ì§‘ê³  ê¸¸ì´ë¥¼ ì¦ê°€ì‹œí‚´
                 ReverseString( pcBuffer + iBufferIndex );
                 iBufferIndex += 3 + k;
                 break;
                 
-                // À§¿¡ ÇØ´çÇÏÁö ¾ÊÀ¸¸é ¹®ÀÚ¸¦ ±×´ë·Î Ãâ·ÂÇÏ°í ¹öÆÛÀÇ ÀÎµ¦½º¸¦
-                // 1¸¸Å­ ÀÌµ¿
+                // ìœ„ì— í•´ë‹¹í•˜ì§€ ì•Šìœ¼ë©´ ë¬¸ìë¥¼ ê·¸ëŒ€ë¡œ ì¶œë ¥í•˜ê³  ë²„í¼ì˜ ì¸ë±ìŠ¤ë¥¼
+                // 1ë§Œí¼ ì´ë™
             default:
                 pcBuffer[ iBufferIndex ] = pcFormatString[ i ];
                 iBufferIndex++;
                 break;
             }
         } 
-        // ÀÏ¹İ ¹®ÀÚ¿­ Ã³¸®
+        // ì¼ë°˜ ë¬¸ìì—´ ì²˜ë¦¬
         else
         {
-            // ¹®ÀÚ¸¦ ±×´ë·Î Ãâ·ÂÇÏ°í ¹öÆÛÀÇ ÀÎµ¦½º¸¦ 1¸¸Å­ ÀÌµ¿
+            // ë¬¸ìë¥¼ ê·¸ëŒ€ë¡œ ì¶œë ¥í•˜ê³  ë²„í¼ì˜ ì¸ë±ìŠ¤ë¥¼ 1ë§Œí¼ ì´ë™
             pcBuffer[ iBufferIndex ] = pcFormatString[ i ];
             iBufferIndex++;
         }
     }
     
-    // NULLÀ» Ãß°¡ÇÏ¿© ¿ÏÀüÇÑ ¹®ÀÚ¿­·Î ¸¸µé°í Ãâ·ÂÇÑ ¹®ÀÚÀÇ ±æÀÌ¸¦ ¹İÈ¯
+    // NULLì„ ì¶”ê°€í•˜ì—¬ ì™„ì „í•œ ë¬¸ìì—´ë¡œ ë§Œë“¤ê³  ì¶œë ¥í•œ ë¬¸ìì˜ ê¸¸ì´ë¥¼ ë°˜í™˜
     pcBuffer[ iBufferIndex ] = '\0';
     return iBufferIndex;
 }
 
 /**
- *  printf ÇÔ¼öÀÇ ³»ºÎ ±¸Çö
+ *  printf í•¨ìˆ˜ì˜ ë‚´ë¶€ êµ¬í˜„
  */
 void printf( const char* pcFormatString, ... )
 {
@@ -519,23 +519,23 @@ void printf( const char* pcFormatString, ... )
     char vcBuffer[ 1024 ];
     int iNextPrintOffset;
 
-    // °¡º¯ ÀÎÀÚ ¸®½ºÆ®¸¦ »ç¿ëÇØ¼­ vsprintf()·Î Ã³¸®
+    // ê°€ë³€ ì¸ì ë¦¬ìŠ¤íŠ¸ë¥¼ ì‚¬ìš©í•´ì„œ vsprintf()ë¡œ ì²˜ë¦¬
     va_start( ap, pcFormatString );
     vsprintf( vcBuffer, pcFormatString, ap );
     va_end( ap );
     
-    // Æ÷¸Ë ¹®ÀÚ¿­À» È­¸é¿¡ Ãâ·Â
+    // í¬ë§· ë¬¸ìì—´ì„ í™”ë©´ì— ì¶œë ¥
     iNextPrintOffset = ConsolePrintString( vcBuffer );
     
-    // Ä¿¼­ÀÇ À§Ä¡¸¦ ¾÷µ¥ÀÌÆ®
+    // ì»¤ì„œì˜ ìœ„ì¹˜ë¥¼ ì—…ë°ì´íŠ¸
     SetCursor( iNextPrintOffset % CONSOLE_WIDTH, iNextPrintOffset / CONSOLE_WIDTH );
 }
 
-// ³­¼ö¸¦ ¹ß»ı½ÃÅ°±â À§ÇÑ º¯¼ö
+// ë‚œìˆ˜ë¥¼ ë°œìƒì‹œí‚¤ê¸° ìœ„í•œ ë³€ìˆ˜
 static volatile QWORD gs_qwRandomValue = 0;
 
 /**
- *  ³­¼öÀÇ ÃÊ±ê°ª(Seed) ¼³Á¤
+ *  ë‚œìˆ˜ì˜ ì´ˆê¹ƒê°’(Seed) ì„¤ì •
  */
 void srand( QWORD qwSeed )
 {
@@ -543,7 +543,7 @@ void srand( QWORD qwSeed )
 }
 
 /**
- *  ÀÓÀÇÀÇ ³­¼ö¸¦ ¹İÈ¯
+ *  ì„ì˜ì˜ ë‚œìˆ˜ë¥¼ ë°˜í™˜
  */
 QWORD rand( void )
 {
@@ -552,14 +552,14 @@ QWORD rand( void )
 }
 
 //==============================================================================
-// GUI ½Ã½ºÅÛ °ü·Ã
+// GUI ì‹œìŠ¤í…œ ê´€ë ¨
 //==============================================================================
 /**
- *  (x, y)°¡ »ç°¢Çü ¿µ¿ª ¾È¿¡ ÀÖ´ÂÁö ¿©ºÎ¸¦ ¹İÈ¯
+ *  (x, y)ê°€ ì‚¬ê°í˜• ì˜ì—­ ì•ˆì— ìˆëŠ”ì§€ ì—¬ë¶€ë¥¼ ë°˜í™˜
  */
 BOOL IsInRectangle( const RECT* pstArea, int iX, int iY )
 {
-    // È­¸é¿¡ Ç¥½ÃµÇ´Â ¿µ¿ªÀ» ¹ş¾î³µ´Ù¸é ±×¸®Áö ¾ÊÀ½
+    // í™”ë©´ì— í‘œì‹œë˜ëŠ” ì˜ì—­ì„ ë²—ì–´ë‚¬ë‹¤ë©´ ê·¸ë¦¬ì§€ ì•ŠìŒ
     if( ( iX <  pstArea->iX1 ) || ( pstArea->iX2 < iX ) ||
         ( iY <  pstArea->iY1 ) || ( pstArea->iY2 < iY ) )
     {
@@ -570,7 +570,7 @@ BOOL IsInRectangle( const RECT* pstArea, int iX, int iY )
 }
 
 /**
- *  »ç°¢ÇüÀÇ ³Êºñ¸¦ ¹İÈ¯
+ *  ì‚¬ê°í˜•ì˜ ë„ˆë¹„ë¥¼ ë°˜í™˜
  */
 int GetRectangleWidth( const RECT* pstArea )
 {
@@ -587,7 +587,7 @@ int GetRectangleWidth( const RECT* pstArea )
 }
 
 /**
- *  »ç°¢ÇüÀÇ ³ôÀÌ¸¦ ¹İÈ¯
+ *  ì‚¬ê°í˜•ì˜ ë†’ì´ë¥¼ ë°˜í™˜
  */
 int GetRectangleHeight( const RECT* pstArea )
 {
@@ -604,7 +604,7 @@ int GetRectangleHeight( const RECT* pstArea )
 }
 
 /**
- *  ¿µ¿ª 1°ú ¿µ¿ª 2ÀÇ °ãÄ¡´Â ¿µ¿ªÀ» ¹İÈ¯
+ *  ì˜ì—­ 1ê³¼ ì˜ì—­ 2ì˜ ê²¹ì¹˜ëŠ” ì˜ì—­ì„ ë°˜í™˜
  */
 BOOL GetOverlappedRectangle( const RECT* pstArea1, const RECT* pstArea2,
         RECT* pstIntersection  )
@@ -614,27 +614,27 @@ BOOL GetOverlappedRectangle( const RECT* pstArea1, const RECT* pstArea2,
     int iMaxY1;
     int iMinY2;
 
-    // XÃàÀÇ ½ÃÀÛÁ¡Àº µÎ Á¡ Áß¿¡¼­ Å« °ÍÀ» Ã£À½
+    // Xì¶•ì˜ ì‹œì‘ì ì€ ë‘ ì  ì¤‘ì—ì„œ í° ê²ƒì„ ì°¾ìŒ
     iMaxX1 = MAX( pstArea1->iX1, pstArea2->iX1 );
-    // XÃàÀÇ ³¡Á¡Àº µÎ Á¡ Áß¿¡¼­ ÀÛÀº °ÍÀ» Ã£À½
+    // Xì¶•ì˜ ëì ì€ ë‘ ì  ì¤‘ì—ì„œ ì‘ì€ ê²ƒì„ ì°¾ìŒ
     iMinX2 = MIN( pstArea1->iX2, pstArea2->iX2 );
-    // °è»êÇÑ ½ÃÀÛÁ¡ÀÇ À§Ä¡°¡ ³¡Á¡ÀÇ À§Ä¡º¸´Ù Å©´Ù¸é µÎ »ç°¢ÇüÀº °ãÄ¡Áö ¾ÊÀ½
+    // ê³„ì‚°í•œ ì‹œì‘ì ì˜ ìœ„ì¹˜ê°€ ëì ì˜ ìœ„ì¹˜ë³´ë‹¤ í¬ë‹¤ë©´ ë‘ ì‚¬ê°í˜•ì€ ê²¹ì¹˜ì§€ ì•ŠìŒ
     if( iMinX2 < iMaxX1 )
     {
         return FALSE;
     }
 
-    // YÃàÀÇ ½ÃÀÛÁ¡Àº µÎ Á¡ Áß¿¡¼­ Å« °ÍÀ» Ã£À½
+    // Yì¶•ì˜ ì‹œì‘ì ì€ ë‘ ì  ì¤‘ì—ì„œ í° ê²ƒì„ ì°¾ìŒ
     iMaxY1 = MAX( pstArea1->iY1, pstArea2->iY1 );
-    // YÃàÀÇ ³¡Á¡Àº µÎ Á¡ Áß¿¡¼­ ÀÛÀº °ÍÀ» Ã£À½
+    // Yì¶•ì˜ ëì ì€ ë‘ ì  ì¤‘ì—ì„œ ì‘ì€ ê²ƒì„ ì°¾ìŒ
     iMinY2 = MIN( pstArea1->iY2, pstArea2->iY2 );
-    // °è»êÇÑ ½ÃÀÛÁ¡ÀÇ À§Ä¡°¡ ³¡Á¡ÀÇ À§Ä¡º¸´Ù Å©´Ù¸é µÎ »ç°¢ÇüÀº °ãÄ¡Áö ¾ÊÀ½
+    // ê³„ì‚°í•œ ì‹œì‘ì ì˜ ìœ„ì¹˜ê°€ ëì ì˜ ìœ„ì¹˜ë³´ë‹¤ í¬ë‹¤ë©´ ë‘ ì‚¬ê°í˜•ì€ ê²¹ì¹˜ì§€ ì•ŠìŒ
     if( iMinY2 < iMaxY1 )
     {
         return FALSE;
     }
 
-    // °ãÄ¡´Â ¿µ¿ªÀÇ Á¤º¸ ÀúÀå
+    // ê²¹ì¹˜ëŠ” ì˜ì—­ì˜ ì •ë³´ ì €ì¥
     pstIntersection->iX1 = iMaxX1;
     pstIntersection->iY1 = iMaxY1;
     pstIntersection->iX2 = iMinX2;
@@ -644,14 +644,14 @@ BOOL GetOverlappedRectangle( const RECT* pstArea1, const RECT* pstArea2,
 }
 
 /**
- *  ÀüÃ¼ È­¸éÀ» ±âÁØÀ¸·Î ÇÑ X,Y ÁÂÇ¥¸¦ À©µµ¿ì ³»ºÎ ÁÂÇ¥·Î º¯È¯
+ *  ì „ì²´ í™”ë©´ì„ ê¸°ì¤€ìœ¼ë¡œ í•œ X,Y ì¢Œí‘œë¥¼ ìœˆë„ìš° ë‚´ë¶€ ì¢Œí‘œë¡œ ë³€í™˜
  */
 BOOL ConvertPointScreenToClient( QWORD qwWindowID, const POINT* pstXY, 
         POINT* pstXYInWindow )
 {
     RECT stArea;
     
-    // À©µµ¿ì ¿µ¿ªÀ» ¹İÈ¯
+    // ìœˆë„ìš° ì˜ì—­ì„ ë°˜í™˜
     if( GetWindowArea( qwWindowID, &stArea ) == FALSE )
     {
         return FALSE;
@@ -663,14 +663,14 @@ BOOL ConvertPointScreenToClient( QWORD qwWindowID, const POINT* pstXY,
 }
 
 /**
- *  À©µµ¿ì ³»ºÎ¸¦ ±âÁØÀ¸·Î ÇÑ X,Y ÁÂÇ¥¸¦ È­¸é ÁÂÇ¥·Î º¯È¯
+ *  ìœˆë„ìš° ë‚´ë¶€ë¥¼ ê¸°ì¤€ìœ¼ë¡œ í•œ X,Y ì¢Œí‘œë¥¼ í™”ë©´ ì¢Œí‘œë¡œ ë³€í™˜
  */
 BOOL ConvertPointClientToScreen( QWORD qwWindowID, const POINT* pstXY, 
         POINT* pstXYInScreen )
 {
     RECT stArea;
     
-    // À©µµ¿ì ¿µ¿ªÀ» ¹İÈ¯
+    // ìœˆë„ìš° ì˜ì—­ì„ ë°˜í™˜
     if( GetWindowArea( qwWindowID, &stArea ) == FALSE )
     {
         return FALSE;
@@ -682,14 +682,14 @@ BOOL ConvertPointClientToScreen( QWORD qwWindowID, const POINT* pstXY,
 }
 
 /**
- *  ÀüÃ¼ È­¸éÀ» ±âÁØÀ¸·Î ÇÑ »ç°¢Çü ÁÂÇ¥¸¦ À©µµ¿ì ³»ºÎ ÁÂÇ¥·Î º¯È¯
+ *  ì „ì²´ í™”ë©´ì„ ê¸°ì¤€ìœ¼ë¡œ í•œ ì‚¬ê°í˜• ì¢Œí‘œë¥¼ ìœˆë„ìš° ë‚´ë¶€ ì¢Œí‘œë¡œ ë³€í™˜
  */
 BOOL ConvertRectScreenToClient( QWORD qwWindowID, const RECT* pstArea, 
         RECT* pstAreaInWindow )
 {
     RECT stWindowArea;
     
-    // À©µµ¿ì ¿µ¿ªÀ» ¹İÈ¯
+    // ìœˆë„ìš° ì˜ì—­ì„ ë°˜í™˜
     if( GetWindowArea( qwWindowID, &stWindowArea ) == FALSE )
     {
         return FALSE;
@@ -703,14 +703,14 @@ BOOL ConvertRectScreenToClient( QWORD qwWindowID, const RECT* pstArea,
 }
 
 /**
- *  À©µµ¿ì ³»ºÎ¸¦ ±âÁØÀ¸·Î ÇÑ »ç°¢Çü ÁÂÇ¥¸¦ È­¸é ÁÂÇ¥·Î º¯È¯
+ *  ìœˆë„ìš° ë‚´ë¶€ë¥¼ ê¸°ì¤€ìœ¼ë¡œ í•œ ì‚¬ê°í˜• ì¢Œí‘œë¥¼ í™”ë©´ ì¢Œí‘œë¡œ ë³€í™˜
  */
 BOOL ConvertRectClientToScreen( QWORD qwWindowID, const RECT* pstArea, 
         RECT* pstAreaInScreen )
 {
     RECT stWindowArea;
     
-    // À©µµ¿ì ¿µ¿ªÀ» ¹İÈ¯
+    // ìœˆë„ìš° ì˜ì—­ì„ ë°˜í™˜
     if( GetWindowArea( qwWindowID, &stWindowArea ) == FALSE )
     {
         return FALSE;
@@ -724,12 +724,12 @@ BOOL ConvertRectClientToScreen( QWORD qwWindowID, const RECT* pstArea,
 }
 
 /**
- *  »ç°¢Çü ÀÚ·á±¸Á¶¸¦ Ã¤¿ò
- *      x1°ú x2, y1°ú y2¸¦ ºñ±³ÇØ¼­ x1 < x2, y1 < y2°¡ µÇµµ·Ï ÀúÀå
+ *  ì‚¬ê°í˜• ìë£Œêµ¬ì¡°ë¥¼ ì±„ì›€
+ *      x1ê³¼ x2, y1ê³¼ y2ë¥¼ ë¹„êµí•´ì„œ x1 < x2, y1 < y2ê°€ ë˜ë„ë¡ ì €ì¥
  */
 void SetRectangleData( int iX1, int iY1, int iX2, int iY2, RECT* pstRect )
 {
-    // x1 < x2°¡ µÇµµ·Ï RECT ÀÚ·á±¸Á¶¿¡ XÁÂÇ¥¸¦ ¼³Á¤
+    // x1 < x2ê°€ ë˜ë„ë¡ RECT ìë£Œêµ¬ì¡°ì— Xì¢Œí‘œë¥¼ ì„¤ì •
     if( iX1 < iX2 )
     {
         pstRect->iX1 = iX1;
@@ -741,7 +741,7 @@ void SetRectangleData( int iX1, int iY1, int iX2, int iY2, RECT* pstRect )
         pstRect->iX2 = iX1;
     }
     
-    // y1 < y2°¡ µÇµµ·Ï RECT ÀÚ·á±¸Á¶¿¡ YÁÂÇ¥¸¦ ¼³Á¤
+    // y1 < y2ê°€ ë˜ë„ë¡ RECT ìë£Œêµ¬ì¡°ì— Yì¢Œí‘œë¥¼ ì„¤ì •
     if( iY1 < iY2 )
     {
         pstRect->iY1 = iY1;
@@ -755,7 +755,7 @@ void SetRectangleData( int iX1, int iY1, int iX2, int iY2, RECT* pstRect )
 }
 
 /**
- *  ¸¶¿ì½º ÀÌº¥Æ® ÀÚ·á±¸Á¶¸¦ ¼³Á¤
+ *  ë§ˆìš°ìŠ¤ ì´ë²¤íŠ¸ ìë£Œêµ¬ì¡°ë¥¼ ì„¤ì •
  */
 BOOL SetMouseEvent( QWORD qwWindowID, QWORD qwEventType, int iMouseX, int iMouseY, 
         BYTE bButtonStatus, EVENT* pstEvent )
@@ -763,10 +763,10 @@ BOOL SetMouseEvent( QWORD qwWindowID, QWORD qwEventType, int iMouseX, int iMouse
     POINT stMouseXYInWindow;
     POINT stMouseXY;
     
-    // ÀÌº¥Æ® Á¾·ù¸¦ È®ÀÎÇÏ¿© ¸¶¿ì½º ÀÌº¥Æ® »ı¼º
+    // ì´ë²¤íŠ¸ ì¢…ë¥˜ë¥¼ í™•ì¸í•˜ì—¬ ë§ˆìš°ìŠ¤ ì´ë²¤íŠ¸ ìƒì„±
     switch( qwEventType )
     {
-        // ¸¶¿ì½º ÀÌº¥Æ® Ã³¸®
+        // ë§ˆìš°ìŠ¤ ì´ë²¤íŠ¸ ì²˜ë¦¬
     case EVENT_MOUSE_MOVE:
     case EVENT_MOUSE_LBUTTONDOWN:
     case EVENT_MOUSE_LBUTTONUP:            
@@ -774,24 +774,24 @@ BOOL SetMouseEvent( QWORD qwWindowID, QWORD qwEventType, int iMouseX, int iMouse
     case EVENT_MOUSE_RBUTTONUP:
     case EVENT_MOUSE_MBUTTONDOWN:
     case EVENT_MOUSE_MBUTTONUP:
-        // ¸¶¿ì½ºÀÇ X, YÁÂÇ¥¸¦ ¼³Á¤
+        // ë§ˆìš°ìŠ¤ì˜ X, Yì¢Œí‘œë¥¼ ì„¤ì •
         stMouseXY.iX = iMouseX;
         stMouseXY.iY = iMouseY;
         
-        // ¸¶¿ì½º X, YÁÂÇ¥¸¦ À©µµ¿ì ³»ºÎ ÁÂÇ¥·Î º¯È¯
+        // ë§ˆìš°ìŠ¤ X, Yì¢Œí‘œë¥¼ ìœˆë„ìš° ë‚´ë¶€ ì¢Œí‘œë¡œ ë³€í™˜
         if( ConvertPointScreenToClient( qwWindowID, &stMouseXY, &stMouseXYInWindow ) 
                 == FALSE )
         {
             return FALSE;
         }
 
-        // ÀÌº¥Æ® Å¸ÀÔ ¼³Á¤
+        // ì´ë²¤íŠ¸ íƒ€ì… ì„¤ì •
         pstEvent->qwType = qwEventType;
-        // À©µµ¿ì ID ¼³Á¤
+        // ìœˆë„ìš° ID ì„¤ì •
         pstEvent->stMouseEvent.qwWindowID = qwWindowID;    
-        // ¸¶¿ì½º ¹öÆ°ÀÇ »óÅÂ ¼³Á¤
+        // ë§ˆìš°ìŠ¤ ë²„íŠ¼ì˜ ìƒíƒœ ì„¤ì •
         pstEvent->stMouseEvent.bButtonStatus = bButtonStatus;
-        // ¸¶¿ì½º Ä¿¼­ÀÇ ÁÂÇ¥¸¦ À©µµ¿ì ³»ºÎ ÁÂÇ¥·Î º¯È¯ÇÑ °ªÀ» ¼³Á¤
+        // ë§ˆìš°ìŠ¤ ì»¤ì„œì˜ ì¢Œí‘œë¥¼ ìœˆë„ìš° ë‚´ë¶€ ì¢Œí‘œë¡œ ë³€í™˜í•œ ê°’ì„ ì„¤ì •
         memcpy( &( pstEvent->stMouseEvent.stPoint ), &stMouseXYInWindow, 
                 sizeof( POINT ) );
         break;
@@ -804,32 +804,32 @@ BOOL SetMouseEvent( QWORD qwWindowID, QWORD qwEventType, int iMouseX, int iMouse
 }
 
 /**
- *  À©µµ¿ì ÀÌº¥Æ® ÀÚ·á±¸Á¶¸¦ ¼³Á¤
+ *  ìœˆë„ìš° ì´ë²¤íŠ¸ ìë£Œêµ¬ì¡°ë¥¼ ì„¤ì •
  */
 BOOL SetWindowEvent( QWORD qwWindowID, QWORD qwEventType, EVENT* pstEvent )
 {
     RECT stArea;
     
-    // ÀÌº¥Æ® Á¾·ù¸¦ È®ÀÎÇÏ¿© À©µµ¿ì ÀÌº¥Æ® »ı¼º
+    // ì´ë²¤íŠ¸ ì¢…ë¥˜ë¥¼ í™•ì¸í•˜ì—¬ ìœˆë„ìš° ì´ë²¤íŠ¸ ìƒì„±
     switch( qwEventType )
     {
-        // À©µµ¿ì ÀÌº¥Æ® Ã³¸®
+        // ìœˆë„ìš° ì´ë²¤íŠ¸ ì²˜ë¦¬
     case EVENT_WINDOW_SELECT:
     case EVENT_WINDOW_DESELECT:
     case EVENT_WINDOW_MOVE:
     case EVENT_WINDOW_RESIZE:
     case EVENT_WINDOW_CLOSE:
-        // ÀÌº¥Æ® Å¸ÀÔ ¼³Á¤
+        // ì´ë²¤íŠ¸ íƒ€ì… ì„¤ì •
         pstEvent->qwType = qwEventType;
-        // À©µµ¿ì ID ¼³Á¤
+        // ìœˆë„ìš° ID ì„¤ì •
         pstEvent->stWindowEvent.qwWindowID = qwWindowID;
-        // À©µµ¿ì ¿µ¿ªÀ» ¹İÈ¯
+        // ìœˆë„ìš° ì˜ì—­ì„ ë°˜í™˜
         if( GetWindowArea( qwWindowID, &stArea ) == FALSE )
         {
             return FALSE;
         }
         
-        // À©µµ¿ìÀÇ ÇöÀç ÁÂÇ¥¸¦ ¼³Á¤
+        // ìœˆë„ìš°ì˜ í˜„ì¬ ì¢Œí‘œë¥¼ ì„¤ì •
         memcpy( &( pstEvent->stWindowEvent.stArea ), &stArea, sizeof( RECT ) );
         break;
         
@@ -841,11 +841,11 @@ BOOL SetWindowEvent( QWORD qwWindowID, QWORD qwEventType, EVENT* pstEvent )
 }
 
 /**
- *  Å° ÀÌº¥Æ® ÀÚ·á±¸Á¶¸¦ ¼³Á¤
+ *  í‚¤ ì´ë²¤íŠ¸ ìë£Œêµ¬ì¡°ë¥¼ ì„¤ì •
  */
 void SetKeyEvent( QWORD qwWindow, const KEYDATA* pstKeyData, EVENT* pstEvent )
 {
-    // ´­¸² ¶Ç´Â ¶³¾îÁü Ã³¸®
+    // ëˆŒë¦¼ ë˜ëŠ” ë–¨ì–´ì§ ì²˜ë¦¬
     if( pstKeyData->bFlags & KEY_FLAGS_DOWN )
     {
         pstEvent->qwType = EVENT_KEY_DOWN;
@@ -855,7 +855,7 @@ void SetKeyEvent( QWORD qwWindow, const KEYDATA* pstKeyData, EVENT* pstEvent )
         pstEvent->qwType = EVENT_KEY_UP;
     }
     
-    // Å°ÀÇ °¢ Á¤º¸¸¦ ¼³Á¤
+    // í‚¤ì˜ ê° ì •ë³´ë¥¼ ì„¤ì •
     pstEvent->stKeyEvent.bASCIICode = pstKeyData->bASCIICode;
     pstEvent->stKeyEvent.bScanCode = pstKeyData->bScanCode;
     pstEvent->stKeyEvent.bFlags = pstKeyData->bFlags;

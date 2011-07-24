@@ -10,7 +10,7 @@
  */
 #include "JPEG.h"
 
-// Áö±×Àç±× Å×ÀÌºí 
+// ì§€ê·¸ì¬ê·¸ í…Œì´ë¸” 
 int zigzag_table[]={
      0, 1, 8, 16,9, 2, 3,10,
     17,24,32,25,18,11, 4, 5,
@@ -25,7 +25,7 @@ int zigzag_table[]={
 
 // -------------------------- I/O ----------------------------
 
-// ¹öÆÛ¿¡¼­ µ¥ÀÌÅÍ¸¦ ¹İÈ¯ÇÏ´Â ÇÔ¼öµé
+// ë²„í¼ì—ì„œ ë°ì´í„°ë¥¼ ë°˜í™˜í•˜ëŠ” í•¨ìˆ˜ë“¤
 unsigned char get_byte(JPEG *jpeg)
 {
     unsigned char c;
@@ -54,7 +54,7 @@ unsigned short get_bits(JPEG *jpeg,int bit)
 
     while(remain <= 16){
         c = get_byte(jpeg);
-        if(c == 0xFF) {  // ¸¶Ä¿ ¿À·ù¸¦ ¹æÁö¸¦ À§ÇØ FF - FF 00 ´Â Á¦°Å
+        if(c == 0xFF) {  // ë§ˆì»¤ ì˜¤ë¥˜ë¥¼ ë°©ì§€ë¥¼ ìœ„í•´ FF - FF 00 ëŠ” ì œê±°
             get_byte(jpeg);
         }
         buff = (buff << 8) | c;
@@ -69,9 +69,9 @@ unsigned short get_bits(JPEG *jpeg,int bit)
     return ret;
 }
 
-// ------------------------ JPEG ¼¼±×¸ÕÆ® ±¸Çö -----------------
+// ------------------------ JPEG ì„¸ê·¸ë¨¼íŠ¸ êµ¬í˜„ -----------------
 
-// Áö¿øÇÏÁö ¾Ê´Â °ÍÀº ¹öÆÛ¿¡¼­ Á¦¿Ü
+// ì§€ì›í•˜ì§€ ì•ŠëŠ” ê²ƒì€ ë²„í¼ì—ì„œ ì œì™¸
 void jpeg_skip(JPEG *jpeg)
 {
     unsigned w;
@@ -174,8 +174,8 @@ int jpeg_dht(JPEG *jpeg)
     {
         val = get_byte(jpeg);
         
-        tc = (val>>4) & 0x0F; // Å×ÀÌºí Å¬·¡½º(DC/AC ¼ººĞ ¼±ÅÃ)
-        th =  val     & 0x0F; // Å×ÀÌºí Çì´õ(¸î ¹øÂ° ÇÃ·¹ÀÎÀÎ°¡?)
+        tc = (val>>4) & 0x0F; // í…Œì´ë¸” í´ë˜ìŠ¤(DC/AC ì„±ë¶„ ì„ íƒ)
+        th =  val     & 0x0F; // í…Œì´ë¸” í—¤ë”(ëª‡ ë²ˆì§¸ í”Œë ˆì¸ì¸ê°€?)
 
         table = (HUFF*)&(jpeg->huff[tc][th]);
 
@@ -186,7 +186,7 @@ int jpeg_dht(JPEG *jpeg)
         }
         table->elem = num;
 
-        // ÄÚµå »ı¼º
+        // ì½”ë“œ ìƒì„±
         k=0;
         for(i=1;i<=16;i++) {
             for(j=0;j<Li[i];j++) {
@@ -244,8 +244,8 @@ void jpeg_sos(JPEG *jpeg)
 void jpeg_idct_init(void);
 
 /**
- *  JPEG ÀÌ¹ÌÁö ÆÄÀÏÀÇ ÀüÃ¼°¡ ´ã±ä ÆÄÀÏ ¹öÆÛ¿Í Å©±â¸¦ ÀÌ¿ëÇØ¼­ JPEG ÀÚ·á±¸Á¶¸¦ ÃÊ±âÈ­
- *      ÆÄÀÏ ¹öÆÛÀÇ ³»¿ëÀ» ºĞ¼®ÇÏ¿© ÀÌ¹ÌÁö ÀüÃ¼ÀÇ Å©±â¿Í ±âÅ¸ Á¤º¸¸¦ JPEG ÀÚ·á±¸Á¶¿¡ »ğÀÔ 
+ *  JPEG ì´ë¯¸ì§€ íŒŒì¼ì˜ ì „ì²´ê°€ ë‹´ê¸´ íŒŒì¼ ë²„í¼ì™€ í¬ê¸°ë¥¼ ì´ìš©í•´ì„œ JPEG ìë£Œêµ¬ì¡°ë¥¼ ì´ˆê¸°í™”
+ *      íŒŒì¼ ë²„í¼ì˜ ë‚´ìš©ì„ ë¶„ì„í•˜ì—¬ ì´ë¯¸ì§€ ì „ì²´ì˜ í¬ê¸°ì™€ ê¸°íƒ€ ì •ë³´ë¥¼ JPEG ìë£Œêµ¬ì¡°ì— ì‚½ì… 
  */
 BOOL kJPEGInit(JPEG *jpeg, BYTE* pbFileBuffer, DWORD dwFileSize)
 {
@@ -264,7 +264,7 @@ BOOL kJPEGInit(JPEG *jpeg, BYTE* pbFileBuffer, DWORD dwFileSize)
     // DRI
     jpeg->interval = 0;
     
-    // DataÀÇ Á¤º¸ ¼³Á¤
+    // Dataì˜ ì •ë³´ ì„¤ì •
     jpeg->data_index = 0;
     jpeg->data_size = dwFileSize;
     jpeg->data = pbFileBuffer;
@@ -322,7 +322,7 @@ BOOL kJPEGInit(JPEG *jpeg, BYTE* pbFileBuffer, DWORD dwFileSize)
 
 // MCU decode
 
-// µğÄÚµù
+// ë””ì½”ë”©
 int jpeg_decode_init(JPEG *jpeg)
 {
     int i,j;
@@ -356,7 +356,7 @@ int jpeg_decode_init(JPEG *jpeg)
     return 0;
 }
 
-// ÇãÇÁ¸¸ 1 ÄÚµå µğÄÚµù
+// í—ˆí”„ë§Œ 1 ì½”ë“œ ë””ì½”ë”©
 int jpeg_huff_decode(JPEG *jpeg,int tc,int th)
 {
     HUFF *h = &(jpeg->huff[tc][th]);
@@ -384,7 +384,7 @@ int jpeg_huff_decode(JPEG *jpeg,int tc,int th)
     return -1;
 }
 
-// ¿ª DCT
+// ì—­ DCT
 int base_img[64][64];
 
 void jpeg_idct_init(void)
@@ -403,7 +403,7 @@ void jpeg_idct_init(void)
             if (d == 0)
                 i = 4;
             for (m = 0; m < 8; m++){
-                tmpm[m] = cost[i]; // ÄÃ·³ Cos °ª
+                tmpm[m] = cost[i]; // ì»¬ëŸ¼ Cos ê°’
                 i=(i+d)&31;
             }
         }
@@ -413,11 +413,11 @@ void jpeg_idct_init(void)
                 if (d == 0)
                     i=4;
                 for (n = 0; n < 8; n++){
-                    tmpn[n] = cost[i]; // Row Cos °ª
+                    tmpn[n] = cost[i]; // Row Cos ê°’
                     i=(i+d)&31;
                 }
             }
-            // È®ÀåÇÏ¿© ±âº» ÀÌ¹ÌÁö »ı¼º
+            // í™•ì¥í•˜ì—¬ ê¸°ë³¸ ì´ë¯¸ì§€ ìƒì„±
             for (m = 0; m < 8; m++) {
                 for (n = 0; n < 8; n++) {
                     base_img[u * 8 + v][m * 8 + n] = (tmpm[m] * tmpn[n])>>15;
@@ -437,19 +437,19 @@ void jpeg_idct(int *block, int *dest)
 
     for (i = 0; i < 64; i++) {
         k = block[i];
-        if(k) { //k°¡ 0ÀÎ °æ¿ì´Â Á¦¿Ü
+        if(k) { //kê°€ 0ì¸ ê²½ìš°ëŠ” ì œì™¸
             for (j = 0; j < 64; j++) {
                 dest[j] += k * base_img[i][j];
             }
         }
     }
-    // °íÁ¤ ¼Ò¼öÁ¡À» Á¤¼ö·Î º¯È¯
+    // ê³ ì • ì†Œìˆ˜ì ì„ ì •ìˆ˜ë¡œ ë³€í™˜
     for (i = 0; i < 64; i++)
         dest[i] >>= 17;
     return;
 }
 
-// µğÄÚµùµÈ ¼ıÀÚ¸¦ ¹İÈ¯
+// ë””ì½”ë”©ëœ ìˆ«ìë¥¼ ë°˜í™˜
 int jpeg_get_value(JPEG *jpeg,int size) {
     int val = 0;
     if(size == 0)
@@ -463,8 +463,8 @@ int jpeg_get_value(JPEG *jpeg,int size) {
     return val;
 }
 
-// ---- ºí·Ï µğÄÚµù ---
-// ÇãÇÁ¸¸ µğÄÚµù + ¿ª¾çÀÚÈ­ + ¿ª Áö±×Àç±× 
+// ---- ë¸”ë¡ ë””ì½”ë”© ---
+// í—ˆí”„ë§Œ ë””ì½”ë”© + ì—­ì–‘ìí™” + ì—­ ì§€ê·¸ì¬ê·¸ 
 int jpeg_decode_huff(JPEG *jpeg,int scan,int *block)
 {
     int size, val, run, index;
@@ -478,7 +478,7 @@ int jpeg_decode_huff(JPEG *jpeg,int scan,int *block)
     jpeg->mcu_preDC[scan] += val;
     block[0] = jpeg->mcu_preDC[scan] * pQt[0];
 
-    //AC µğÄÚµù
+    //AC ë””ì½”ë”©
     index = 1;
     while(index<64)
     {
@@ -495,7 +495,7 @@ int jpeg_decode_huff(JPEG *jpeg,int scan,int *block)
         
         val = jpeg_get_value(jpeg,size);
         if(val>=0x10000) {
-            // ¸¶Ä¿ ¹ß°ß
+            // ë§ˆì»¤ ë°œê²¬
             return val;
         }
 
@@ -511,8 +511,8 @@ int jpeg_decode_huff(JPEG *jpeg,int scan,int *block)
     return 0;
 }
 
-// ºí·Ï º¹¿ø
-// ¸®¼ÀÇÃ¸µ
+// ë¸”ë¡ ë³µì›
+// ë¦¬ì…ˆí”Œë§
 void jpeg_mcu_bitblt(int *src,int *dest,int width,
                      int x0,int y0,int x1,int y1)
 {
@@ -532,7 +532,7 @@ void jpeg_mcu_bitblt(int *src,int *dest,int width,
     }
 }
 
-// MCU ÇÑ °³¸¦ º¯È¯
+// MCU í•œ ê°œë¥¼ ë³€í™˜
 int jpeg_decode_mcu(JPEG *jpeg)
 {
     int scan,val;
@@ -540,7 +540,7 @@ int jpeg_decode_mcu(JPEG *jpeg)
     int *p,hh,vv;
     int block[64],dest[64];
 
-    // mcu_width x mcu_height Å©±âÀÇ ºí·ÏÀ» º¯È¯
+    // mcu_width x mcu_height í¬ê¸°ì˜ ë¸”ë¡ì„ ë³€í™˜
     for(scan=0;scan<jpeg->scan_count;scan++)
     {
         hh = jpeg->scan_h[scan];
@@ -548,17 +548,17 @@ int jpeg_decode_mcu(JPEG *jpeg)
         for(v=0;v<vv;v++){
             for(h=0;h<hh;h++){
 
-                // block (8x8) µğÄÚµù 
+                // block (8x8) ë””ì½”ë”© 
                 val = jpeg_decode_huff(jpeg , scan , block);
                 
-                // ¿ª DCT
+                // ì—­ DCT
                 jpeg_idct(block,dest);
 
-                // ¸®¼ÀÇÃ¸µ                
-                // ¾²±â ¹öÆÛ
+                // ë¦¬ì…ˆí”Œë§                
+                // ì“°ê¸° ë²„í¼
                 p = jpeg->mcu_buf + (scan * 32 * 32);
                 
-                // È®´ë Àü¼Û
+                // í™•ëŒ€ ì „ì†¡
                 jpeg_mcu_bitblt(dest , p ,
                                 jpeg->mcu_width,
                                 jpeg->mcu_width * h / hh,
@@ -571,7 +571,7 @@ int jpeg_decode_mcu(JPEG *jpeg)
     return 0;
 }
 
-// YCrCb => RGB º¯È¯
+// YCrCb => RGB ë³€í™˜
 int jpeg_decode_yuv(JPEG *jpeg,int h,int v,COLOR *rgb)
 {
     int x0,y0,x,y,x1,y1;
@@ -616,7 +616,7 @@ int jpeg_decode_yuv(JPEG *jpeg,int h,int v,COLOR *rgb)
             B = 128 + ((Y*0x1000 - V*4 + U*0x1C59) / 4096) * 1300 / 1000;
             B = (B & 0xffffff00) ? (B >> 24) ^ 0xff : B;
             
-            // RGB888 -> RGB565·Î º¯È¯
+            // RGB888 -> RGB565ë¡œ ë³€í™˜
             rgb[(y0+y)*w + (x0+x)] = RGB( R, G, B);
         }
     }
@@ -624,16 +624,16 @@ int jpeg_decode_yuv(JPEG *jpeg,int h,int v,COLOR *rgb)
 }
 
 /**
- *  JPEG ÀÚ·á±¸Á¶¿¡ ÀúÀåµÈ Á¤º¸¸¦ ÀÌ¿ëÇÏ¿© µğÄÚµùÇÑ °á°ú¸¦ Ãâ·Â ¹öÆÛ¿¡ ÀúÀå
+ *  JPEG ìë£Œêµ¬ì¡°ì— ì €ì¥ëœ ì •ë³´ë¥¼ ì´ìš©í•˜ì—¬ ë””ì½”ë”©í•œ ê²°ê³¼ë¥¼ ì¶œë ¥ ë²„í¼ì— ì €ì¥
  */
 BOOL kJPEGDecode(JPEG *jpeg,COLOR* pstOutputBuffer)
 {
     int h_unit,v_unit;
     int mcu_count,h,v;
     
-    // MCU Å©±â °è»ê
+    // MCU í¬ê¸° ê³„ì‚°
     if(jpeg_decode_init(jpeg))
-        return FALSE; // ¿À·ù
+        return FALSE; // ì˜¤ë¥˜
     
     h_unit = jpeg->width / jpeg->mcu_width;
     v_unit = jpeg->height/ jpeg->mcu_height;
@@ -644,7 +644,7 @@ BOOL kJPEGDecode(JPEG *jpeg,COLOR* pstOutputBuffer)
         v_unit++;
     }
     
-    // 1 ºí·Ï º¯È¯
+    // 1 ë¸”ë¡ ë³€í™˜
     mcu_count = 0;
     for(v=0;v<v_unit;v++){
         for(h=0;h<h_unit;h++){
@@ -654,8 +654,8 @@ BOOL kJPEGDecode(JPEG *jpeg,COLOR* pstOutputBuffer)
             
             if(jpeg->interval > 0 && mcu_count >= jpeg->interval){
                 
-                // RST ¸¶Ä¿¸¦ Á¦¿Ü(FF hoge)
-                // hoge µÚ¿¡ ºÙÀº FFµµ Á¦¿Ü
+                // RST ë§ˆì»¤ë¥¼ ì œì™¸(FF hoge)
+                // hoge ë’¤ì— ë¶™ì€ FFë„ ì œì™¸
                 jpeg->bit_remain -= (jpeg->bit_remain & 7);
                 jpeg->bit_remain -= 8;
                 

@@ -3,7 +3,7 @@
  *  date    2009/01/02
  *  author  kkamagui 
  *          Copyright(c)2008 All rights reserved by kkamagui
- *  brief   C ¾ð¾î·Î ÀÛ¼ºµÈ Ä¿³ÎÀÇ ¿£Æ®¸® Æ÷ÀÎÆ® ÆÄÀÏ
+ *  brief   C ì–¸ì–´ë¡œ ìž‘ì„±ëœ ì»¤ë„ì˜ ì—”íŠ¸ë¦¬ í¬ì¸íŠ¸ íŒŒì¼
  */
 
 #include "Types.h"
@@ -25,16 +25,16 @@
 #include "WindowManagerTask.h"
 #include "SystemCall.h"
 
-// Application Processor¸¦ À§ÇÑ Main ÇÔ¼ö
+// Application Processorë¥¼ ìœ„í•œ Main í•¨ìˆ˜
 void MainForApplicationProcessor( void );
-// ¸ÖÆ¼ ÄÚ¾î ÇÁ·Î¼¼¼­ ¶Ç´Â ¸ÖÆ¼ ÇÁ·Î¼¼¼­ ¸ðµå·Î ÀüÈ¯ÇÏ´Â ÇÔ¼ö
+// ë©€í‹° ì½”ì–´ í”„ë¡œì„¸ì„œ ë˜ëŠ” ë©€í‹° í”„ë¡œì„¸ì„œ ëª¨ë“œë¡œ ì „í™˜í•˜ëŠ” í•¨ìˆ˜
 BOOL kChangeToMultiCoreMode( void );
-// ±×·¡ÇÈ ¸ðµå¸¦ Å×½ºÆ®ÇÏ´Â ÇÔ¼ö
+// ê·¸ëž˜í”½ ëª¨ë“œë¥¼ í…ŒìŠ¤íŠ¸í•˜ëŠ” í•¨ìˆ˜
 void kStartGraphicModeTest( void );
 
 /**
- *  Bootstrap Processor¿ë C ¾ð¾î Ä¿³Î ¿£Æ®¸® Æ÷ÀÎÆ®
- *      ¾Æ·¡ ÇÔ¼ö´Â C ¾ð¾î Ä¿³ÎÀÇ ½ÃÀÛ ºÎºÐÀÓ
+ *  Bootstrap Processorìš© C ì–¸ì–´ ì»¤ë„ ì—”íŠ¸ë¦¬ í¬ì¸íŠ¸
+ *      ì•„ëž˜ í•¨ìˆ˜ëŠ” C ì–¸ì–´ ì»¤ë„ì˜ ì‹œìž‘ ë¶€ë¶„ìž„
  */
 void Main( void )
 {
@@ -43,24 +43,24 @@ void Main( void )
     int iX;
     int iY;
     
-    // ºÎÆ® ·Î´õ¿¡ ÀÖ´Â BSP ÇÃ·¡±×¸¦ ÀÐ¾î¼­ Application ProcessorÀÌ¸é 
-    // ÇØ´ç ÄÚ¾î¿ë ÃÊ±âÈ­ ÇÔ¼ö·Î ÀÌµ¿
+    // ë¶€íŠ¸ ë¡œë”ì— ìžˆëŠ” BSP í”Œëž˜ê·¸ë¥¼ ì½ì–´ì„œ Application Processorì´ë©´ 
+    // í•´ë‹¹ ì½”ì–´ìš© ì´ˆê¸°í™” í•¨ìˆ˜ë¡œ ì´ë™
     if( *( ( BYTE* ) BOOTSTRAPPROCESSOR_FLAGADDRESS ) == 0 )
     {
         MainForApplicationProcessor();
     }
     
-    // Bootstrap Processor°¡ ºÎÆÃÀ» ¿Ï·áÇßÀ¸¹Ç·Î, 0x7C09¿¡ ÀÖ´Â Bootstrap Processor¸¦
-    // ³ªÅ¸³»´Â ÇÃ·¡±×¸¦ 0À¸·Î ¼³Á¤ÇÏ¿© Application Processor¿ëÀ¸·Î ÄÚµå ½ÇÇà °æ·Î¸¦ º¯°æ
+    // Bootstrap Processorê°€ ë¶€íŒ…ì„ ì™„ë£Œí–ˆìœ¼ë¯€ë¡œ, 0x7C09ì— ìžˆëŠ” Bootstrap Processorë¥¼
+    // ë‚˜íƒ€ë‚´ëŠ” í”Œëž˜ê·¸ë¥¼ 0ìœ¼ë¡œ ì„¤ì •í•˜ì—¬ Application Processorìš©ìœ¼ë¡œ ì½”ë“œ ì‹¤í–‰ ê²½ë¡œë¥¼ ë³€ê²½
     *( ( BYTE* ) BOOTSTRAPPROCESSOR_FLAGADDRESS ) = 0;
 
-    // ÄÜ¼ÖÀ» ¸ÕÀú ÃÊ±âÈ­ÇÑ ÈÄ, ´ÙÀ½ ÀÛ¾÷À» ¼öÇà
+    // ì½˜ì†”ì„ ë¨¼ì € ì´ˆê¸°í™”í•œ í›„, ë‹¤ìŒ ìž‘ì—…ì„ ìˆ˜í–‰
     kInitializeConsole( 0, 10 );    
     kPrintf( "Switch To IA-32e Mode Success~!!\n" );
     kPrintf( "IA-32e C Language Kernel Start..............[Pass]\n" );
     kPrintf( "Initialize Console..........................[Pass]\n" );
     
-    // ºÎÆÃ »óÈ²À» È­¸é¿¡ Ãâ·Â
+    // ë¶€íŒ… ìƒí™©ì„ í™”ë©´ì— ì¶œë ¥
     kGetCursor( &iCursorX, &iCursorY );
     kPrintf( "GDT Initialize And Switch For IA-32e Mode...[    ]" );
     kInitializeGDTTableAndTSS();
@@ -88,16 +88,16 @@ void Main( void )
     iCursorY++;
     kInitializeScheduler();
     
-    // µ¿Àû ¸Þ¸ð¸® ÃÊ±âÈ­
+    // ë™ì  ë©”ëª¨ë¦¬ ì´ˆê¸°í™”
     kPrintf( "Dynamic Memory Initialize...................[Pass]\n" );
     iCursorY++;
     kInitializeDynamicMemory();
     
-    // 1ms´ç ÇÑ¹ø¾¿ ÀÎÅÍ·´Æ®°¡ ¹ß»ýÇÏµµ·Ï ¼³Á¤
+    // 1msë‹¹ í•œë²ˆì”© ì¸í„°ëŸ½íŠ¸ê°€ ë°œìƒí•˜ë„ë¡ ì„¤ì •
     kInitializePIT( MSTOCOUNT( 1 ), 1 );
     
     kPrintf( "Keyboard Activate And Queue Initialize......[    ]" );
-    // Å°º¸µå¸¦ È°¼ºÈ­
+    // í‚¤ë³´ë“œë¥¼ í™œì„±í™”
     if( kInitializeKeyboard() == TRUE )
     {
         kSetCursor( 45, iCursorY++ );
@@ -112,7 +112,7 @@ void Main( void )
     }
 
     kPrintf( "Mouse Activate And Queue Initialize.........[    ]" );
-    // ¸¶¿ì½º¸¦ È°¼ºÈ­
+    // ë§ˆìš°ìŠ¤ë¥¼ í™œì„±í™”
     if( kInitializeMouse() == TRUE )
     {
         kEnableMouseInterrupt();
@@ -127,14 +127,14 @@ void Main( void )
     }
     
     kPrintf( "PIC Controller And Interrupt Initialize.....[    ]" );
-    // PIC ÄÁÆ®·Ñ·¯ ÃÊ±âÈ­ ¹× ¸ðµç ÀÎÅÍ·´Æ® È°¼ºÈ­
+    // PIC ì»¨íŠ¸ë¡¤ëŸ¬ ì´ˆê¸°í™” ë° ëª¨ë“  ì¸í„°ëŸ½íŠ¸ í™œì„±í™”
     kInitializePIC();
     kMaskPICInterrupt( 0 );
     kEnableInterrupt();
     kSetCursor( 45, iCursorY++ );
     kPrintf( "Pass\n" );
     
-    // ÆÄÀÏ ½Ã½ºÅÛÀ» ÃÊ±âÈ­
+    // íŒŒì¼ ì‹œìŠ¤í…œì„ ì´ˆê¸°í™”
     kPrintf( "File System Initialize......................[    ]" );
     if( kInitializeFileSystem() == TRUE )
     {
@@ -147,14 +147,14 @@ void Main( void )
         kPrintf( "Fail\n" );
     }
 
-    // ½Ã¸®¾ó Æ÷Æ®¸¦ ÃÊ±âÈ­    
+    // ì‹œë¦¬ì–¼ í¬íŠ¸ë¥¼ ì´ˆê¸°í™”    
     kPrintf( "Serial Port Initialize......................[Pass]\n" );
     iCursorY++;
     kInitializeSerialPort();
     
-    // ¸ÖÆ¼ÄÚ¾î ÇÁ·Î¼¼¼­ ¸ðµå·Î ÀüÈ¯
-    // Application Processor È°¼ºÈ­, I/O ¸ðµå È°¼ºÈ­, ÀÎÅÍ·´Æ®¿Í ÅÂ½ºÅ© ºÎÇÏ ºÐ»ê
-    // ±â´É È°¼ºÈ­
+    // ë©€í‹°ì½”ì–´ í”„ë¡œì„¸ì„œ ëª¨ë“œë¡œ ì „í™˜
+    // Application Processor í™œì„±í™”, I/O ëª¨ë“œ í™œì„±í™”, ì¸í„°ëŸ½íŠ¸ì™€ íƒœìŠ¤í¬ ë¶€í•˜ ë¶„ì‚°
+    // ê¸°ëŠ¥ í™œì„±í™”
     kPrintf( "Change To MultiCore Processor Mode..........[    ]" );
     if( kChangeToMultiCoreMode() == TRUE )
     {
@@ -167,21 +167,21 @@ void Main( void )
         kPrintf( "Fail\n" );
     }
     
-    // ½Ã½ºÅÛ ÄÝ¿¡ °ü·ÃµÈ MSRÀ» ÃÊ±âÈ­
+    // ì‹œìŠ¤í…œ ì½œì— ê´€ë ¨ëœ MSRì„ ì´ˆê¸°í™”
     kPrintf( "System Call MSR Initialize..................[Pass]\n" );
     iCursorY++;
     kInitializeSystemCall();
 
-    // À¯ÈÞ ÅÂ½ºÅ©¸¦ ½Ã½ºÅÛ ½º·¹µå·Î »ý¼ºÇÏ°í ¼ÐÀ» ½ÃÀÛ
+    // ìœ íœ´ íƒœìŠ¤í¬ë¥¼ ì‹œìŠ¤í…œ ìŠ¤ë ˆë“œë¡œ ìƒì„±í•˜ê³  ì…¸ì„ ì‹œìž‘
     kCreateTask( TASK_FLAGS_LOWEST | TASK_FLAGS_THREAD | TASK_FLAGS_SYSTEM | TASK_FLAGS_IDLE, 0, 0, 
             ( QWORD ) kIdleTask, kGetAPICID() );
 
-    // ±×·¡ÇÈ ¸ðµå°¡ ¾Æ´Ï¸é ÄÜ¼Ö ¼Ð ½ÇÇà
+    // ê·¸ëž˜í”½ ëª¨ë“œê°€ ì•„ë‹ˆë©´ ì½˜ì†” ì…¸ ì‹¤í–‰
     if( *( BYTE* ) VBE_STARTGRAPHICMODEFLAGADDRESS == 0 )
     {
         kStartConsoleShell();
     }
-    // ±×·¡ÇÈ ¸ðµåÀÌ¸é À©µµ¿ì ¸Å´ÏÀú ·çÇÁ ½ÇÇà
+    // ê·¸ëž˜í”½ ëª¨ë“œì´ë©´ ìœˆë„ìš° ë§¤ë‹ˆì € ë£¨í”„ ì‹¤í–‰
     else
     {
         kStartWindowManager();
@@ -189,52 +189,52 @@ void Main( void )
 }
 
 /**
- *  Application Processor¿ë C ¾ð¾î Ä¿³Î ¿£Æ®¸® Æ÷ÀÎÆ®
- *      ´ëºÎºÐÀÇ ÀÚ·á±¸Á¶´Â Bootstrap Processor°¡ »ý¼ºÇØ ³õ¾ÒÀ¸¹Ç·Î ÄÚ¾î¿¡ ¼³Á¤ÇÏ´Â
- *      ÀÛ¾÷¸¸ ÇÔ
+ *  Application Processorìš© C ì–¸ì–´ ì»¤ë„ ì—”íŠ¸ë¦¬ í¬ì¸íŠ¸
+ *      ëŒ€ë¶€ë¶„ì˜ ìžë£Œêµ¬ì¡°ëŠ” Bootstrap Processorê°€ ìƒì„±í•´ ë†“ì•˜ìœ¼ë¯€ë¡œ ì½”ì–´ì— ì„¤ì •í•˜ëŠ”
+ *      ìž‘ì—…ë§Œ í•¨
  */
 void MainForApplicationProcessor( void )
 {
     QWORD qwTickCount;
 
-    // GDT Å×ÀÌºíÀ» ¼³Á¤
+    // GDT í…Œì´ë¸”ì„ ì„¤ì •
     kLoadGDTR( GDTR_STARTADDRESS );
 
-    // TSS µð½ºÅ©¸³ÅÍ¸¦ ¼³Á¤. TSS ¼¼±×¸ÕÆ®¿Í µð½ºÅ©¸³ÅÍ¸¦ Application ProcessorÀÇ 
-    // ¼ö¸¸Å­ »ý¼ºÇßÀ¸¹Ç·Î, APIC ID¸¦ ÀÌ¿ëÇÏ¿© TSS µð½ºÅ©¸³ÅÍ¸¦ ÇÒ´ç
+    // TSS ë””ìŠ¤í¬ë¦½í„°ë¥¼ ì„¤ì •. TSS ì„¸ê·¸ë¨¼íŠ¸ì™€ ë””ìŠ¤í¬ë¦½í„°ë¥¼ Application Processorì˜ 
+    // ìˆ˜ë§Œí¼ ìƒì„±í–ˆìœ¼ë¯€ë¡œ, APIC IDë¥¼ ì´ìš©í•˜ì—¬ TSS ë””ìŠ¤í¬ë¦½í„°ë¥¼ í• ë‹¹
     kLoadTR( GDT_TSSSEGMENT + ( kGetAPICID() * sizeof( GDTENTRY16 ) ) );
 
-    // IDT Å×ÀÌºíÀ» ¼³Á¤
+    // IDT í…Œì´ë¸”ì„ ì„¤ì •
     kLoadIDTR( IDTR_STARTADDRESS );
     
-    // ½ºÄÉÁÙ·¯ ÃÊ±âÈ­
+    // ìŠ¤ì¼€ì¤„ëŸ¬ ì´ˆê¸°í™”
     kInitializeScheduler();
     
-    // ÇöÀç ÄÚ¾îÀÇ ·ÎÄÃ APIC¸¦ È°¼ºÈ­
+    // í˜„ìž¬ ì½”ì–´ì˜ ë¡œì»¬ APICë¥¼ í™œì„±í™”
     kEnableSoftwareLocalAPIC();
 
-    // ¸ðµç ÀÎÅÍ·´Æ®¸¦ ¼ö½ÅÇÒ ¼ö ÀÖµµ·Ï ÅÂ½ºÅ© ¿ì¼± ¼øÀ§ ·¹Áö½ºÅÍ¸¦ 0À¸·Î ¼³Á¤
+    // ëª¨ë“  ì¸í„°ëŸ½íŠ¸ë¥¼ ìˆ˜ì‹ í•  ìˆ˜ ìžˆë„ë¡ íƒœìŠ¤í¬ ìš°ì„  ìˆœìœ„ ë ˆì§€ìŠ¤í„°ë¥¼ 0ìœ¼ë¡œ ì„¤ì •
     kSetTaskPriority( 0 );
 
-    // ·ÎÄÃ APICÀÇ ·ÎÄÃ º¤ÅÍ Å×ÀÌºíÀ» ÃÊ±âÈ­
+    // ë¡œì»¬ APICì˜ ë¡œì»¬ ë²¡í„° í…Œì´ë¸”ì„ ì´ˆê¸°í™”
     kInitializeLocalVectorTable();
 
-    // ÀÎÅÍ·´Æ®¸¦ È°¼ºÈ­
+    // ì¸í„°ëŸ½íŠ¸ë¥¼ í™œì„±í™”
     kEnableInterrupt();    
 
-    // ½Ã½ºÅÛ ÄÝ¿¡ °ü·ÃµÈ MSRÀ» ÃÊ±âÈ­
+    // ì‹œìŠ¤í…œ ì½œì— ê´€ë ¨ëœ MSRì„ ì´ˆê¸°í™”
     kInitializeSystemCall();
 
-    // ´ëÄª I/O ¸ðµå Å×½ºÆ®¸¦ À§ÇØ Application Processor°¡ ½ÃÀÛÇÑ ÈÄ ÇÑ¹ø¸¸ Ãâ·Â
+    // ëŒ€ì¹­ I/O ëª¨ë“œ í…ŒìŠ¤íŠ¸ë¥¼ ìœ„í•´ Application Processorê°€ ì‹œìž‘í•œ í›„ í•œë²ˆë§Œ ì¶œë ¥
     //kPrintf( "Application Processor[APIC ID: %d] Is Activated\n",
     //        kGetAPICID() );
 
-    // À¯ÈÞ ÅÂ½ºÅ© ½ÇÇà
+    // ìœ íœ´ íƒœìŠ¤í¬ ì‹¤í–‰
     kIdleTask();
 }
 
 /**
- *  ¸ÖÆ¼ÄÚ¾î ÇÁ·Î¼¼¼­ ¶Ç´Â ¸ÖÆ¼ ÇÁ·Î¼¼¼­ ¸ðµå·Î ÀüÈ¯ÇÏ´Â ÇÔ¼ö
+ *  ë©€í‹°ì½”ì–´ í”„ë¡œì„¸ì„œ ë˜ëŠ” ë©€í‹° í”„ë¡œì„¸ì„œ ëª¨ë“œë¡œ ì „í™˜í•˜ëŠ” í•¨ìˆ˜
  */
 BOOL kChangeToMultiCoreMode( void )
 {
@@ -242,57 +242,57 @@ BOOL kChangeToMultiCoreMode( void )
     BOOL bInterruptFlag;
     int i;
 
-    // Application Processor È°¼ºÈ­
+    // Application Processor í™œì„±í™”
     if( kStartUpApplicationProcessor() == FALSE )
     {
         return FALSE;
     }
 
     //--------------------------------------------------------------------------
-    // ´ëÄª I/O ¸ðµå·Î ÀüÈ¯
+    // ëŒ€ì¹­ I/O ëª¨ë“œë¡œ ì „í™˜
     //--------------------------------------------------------------------------
-    // MP ¼³Á¤ ¸Å´ÏÀú¸¦ Ã£¾Æ¼­ PIC ¸ðµåÀÎ°¡ È®ÀÎ
+    // MP ì„¤ì • ë§¤ë‹ˆì €ë¥¼ ì°¾ì•„ì„œ PIC ëª¨ë“œì¸ê°€ í™•ì¸
     pstMPManager = kGetMPConfigurationManager();
     if( pstMPManager->bUsePICMode == TRUE )
     {
-        // PIC ¸ðµåÀÌ¸é I/O Æ÷Æ® ¾îµå·¹½º 0x22¿¡ 0x70À» ¸ÕÀú Àü¼ÛÇÏ°í 
-        // I/O Æ÷Æ® ¾îµå·¹½º 0x23¿¡ 0x01À» Àü¼ÛÇÏ´Â ¹æ¹ýÀ¸·Î IMCR ·¹Áö½ºÅÍ¿¡ Á¢±ÙÇÏ¿©
-        // PIC ¸ðµå ºñÈ°¼ºÈ­
+        // PIC ëª¨ë“œì´ë©´ I/O í¬íŠ¸ ì–´ë“œë ˆìŠ¤ 0x22ì— 0x70ì„ ë¨¼ì € ì „ì†¡í•˜ê³  
+        // I/O í¬íŠ¸ ì–´ë“œë ˆìŠ¤ 0x23ì— 0x01ì„ ì „ì†¡í•˜ëŠ” ë°©ë²•ìœ¼ë¡œ IMCR ë ˆì§€ìŠ¤í„°ì— ì ‘ê·¼í•˜ì—¬
+        // PIC ëª¨ë“œ ë¹„í™œì„±í™”
         kOutPortByte( 0x22, 0x70 );
         kOutPortByte( 0x23, 0x01 );
     }
 
-    // PIC ÄÁÆ®·Ñ·¯ÀÇ ÀÎÅÍ·´Æ®¸¦ ¸ðµÎ ¸¶½ºÅ©ÇÏ¿© ÀÎÅÍ·´Æ®°¡ ¹ß»ýÇÒ ¼ö ¾øµµ·Ï ÇÔ
+    // PIC ì»¨íŠ¸ë¡¤ëŸ¬ì˜ ì¸í„°ëŸ½íŠ¸ë¥¼ ëª¨ë‘ ë§ˆìŠ¤í¬í•˜ì—¬ ì¸í„°ëŸ½íŠ¸ê°€ ë°œìƒí•  ìˆ˜ ì—†ë„ë¡ í•¨
     kMaskPICInterrupt( 0xFFFF );
 
-    // ÇÁ·Î¼¼¼­ ÀüÃ¼ÀÇ ·ÎÄÃ APIC¸¦ È°¼ºÈ­
+    // í”„ë¡œì„¸ì„œ ì „ì²´ì˜ ë¡œì»¬ APICë¥¼ í™œì„±í™”
     kEnableGlobalLocalAPIC();
     
-    // ÇöÀç ÄÚ¾îÀÇ ·ÎÄÃ APIC¸¦ È°¼ºÈ­
+    // í˜„ìž¬ ì½”ì–´ì˜ ë¡œì»¬ APICë¥¼ í™œì„±í™”
     kEnableSoftwareLocalAPIC();
 
-    // ÀÎÅÍ·´Æ®¸¦ ºÒ°¡·Î ¼³Á¤
+    // ì¸í„°ëŸ½íŠ¸ë¥¼ ë¶ˆê°€ë¡œ ì„¤ì •
     bInterruptFlag = kSetInterruptFlag( FALSE );
     
-    // ¸ðµç ÀÎÅÍ·´Æ®¸¦ ¼ö½ÅÇÒ ¼ö ÀÖµµ·Ï ÅÂ½ºÅ© ¿ì¼± ¼øÀ§ ·¹Áö½ºÅÍ¸¦ 0À¸·Î ¼³Á¤
+    // ëª¨ë“  ì¸í„°ëŸ½íŠ¸ë¥¼ ìˆ˜ì‹ í•  ìˆ˜ ìžˆë„ë¡ íƒœìŠ¤í¬ ìš°ì„  ìˆœìœ„ ë ˆì§€ìŠ¤í„°ë¥¼ 0ìœ¼ë¡œ ì„¤ì •
     kSetTaskPriority( 0 );
 
-    // ·ÎÄÃ APICÀÇ ·ÎÄÃ º¤ÅÍ Å×ÀÌºíÀ» ÃÊ±âÈ­
+    // ë¡œì»¬ APICì˜ ë¡œì»¬ ë²¡í„° í…Œì´ë¸”ì„ ì´ˆê¸°í™”
     kInitializeLocalVectorTable();
 
-    // ´ëÄª I/O ¸ðµå·Î º¯°æµÇ¾úÀ½À» ¼³Á¤
+    // ëŒ€ì¹­ I/O ëª¨ë“œë¡œ ë³€ê²½ë˜ì—ˆìŒì„ ì„¤ì •
     kSetSymmetricIOMode( TRUE );
     
-    // I/O APIC ÃÊ±âÈ­
+    // I/O APIC ì´ˆê¸°í™”
     kInitializeIORedirectionTable();
         
-    // ÀÌÀü ÀÎÅÍ·´Æ® ÇÃ·¡±×¸¦ º¹¿ø
+    // ì´ì „ ì¸í„°ëŸ½íŠ¸ í”Œëž˜ê·¸ë¥¼ ë³µì›
     kSetInterruptFlag( bInterruptFlag );
 
-    // ÀÎÅÍ·´Æ® ºÎÇÏ ºÐ»ê ±â´É È°¼ºÈ­
+    // ì¸í„°ëŸ½íŠ¸ ë¶€í•˜ ë¶„ì‚° ê¸°ëŠ¥ í™œì„±í™”
     kSetInterruptLoadBalancing( TRUE );
 
-    // ÅÂ½ºÅ© ºÎÇÏ ºÐ»ê ±â´É È°¼ºÈ­
+    // íƒœìŠ¤í¬ ë¶€í•˜ ë¶„ì‚° ê¸°ëŠ¥ í™œì„±í™”
     for( i = 0 ; i < MAXPROCESSORCOUNT ; i++ )
     {
         kSetTaskLoadBalancing( i, TRUE );

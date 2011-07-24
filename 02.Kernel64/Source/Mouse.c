@@ -3,7 +3,7 @@
  *  date    2009/09/26
  *  author  kkamagui 
  *          Copyright(c)2008 All rights reserved by kkamagui
- *  brief   ¸¶¿ì½º µð¹ÙÀÌ½º µå¶óÀÌ¹ö¿¡ °ü·ÃµÈ ¼Ò½º ÆÄÀÏ
+ *  brief   ë§ˆìš°ìŠ¤ ë””ë°”ì´ìŠ¤ ë“œë¼ì´ë²„ì— ê´€ë ¨ëœ ì†ŒìŠ¤ íŒŒì¼
  */
 
 #include "Mouse.h"
@@ -11,29 +11,29 @@
 #include "Queue.h"
 #include "AssemblyUtility.h"
 
-// ¸¶¿ì½º »óÅÂ¸¦ °ü¸®ÇÏ´Â ¸¶¿ì½º ¸Å´ÏÀú
+// ë§ˆìš°ìŠ¤ ìƒíƒœë¥¼ ê´€ë¦¬í•˜ëŠ” ë§ˆìš°ìŠ¤ ë§¤ë‹ˆì €
 static MOUSEMANAGER gs_stMouseManager = { 0, };
 
-// ¸¶¿ì½º¸¦ ÀúÀåÇÏ´Â Å¥¿Í ¹öÆÛ Á¤ÀÇ
+// ë§ˆìš°ìŠ¤ë¥¼ ì €ìž¥í•˜ëŠ” íì™€ ë²„í¼ ì •ì˜
 static QUEUE gs_stMouseQueue;
 static MOUSEDATA gs_vstMouseQueueBuffer[ MOUSE_MAXQUEUECOUNT ];
 
 /**
- *  ¸¶¿ì½º ÃÊ±âÈ­
+ *  ë§ˆìš°ìŠ¤ ì´ˆê¸°í™”
  */
 BOOL kInitializeMouse( void )
 {
-    // Å¥ ÃÊ±âÈ­
+    // í ì´ˆê¸°í™”
     kInitializeQueue( &gs_stMouseQueue, gs_vstMouseQueueBuffer, MOUSE_MAXQUEUECOUNT, 
             sizeof( MOUSEDATA ) );
     
-    // ½ºÇÉ¶ô ÃÊ±âÈ­
+    // ìŠ¤í•€ë½ ì´ˆê¸°í™”
     kInitializeSpinLock( &( gs_stMouseManager.stSpinLock ) );
     
-    // ¸¶¿ì½º È°¼ºÈ­
+    // ë§ˆìš°ìŠ¤ í™œì„±í™”
     if( kActivateMouse() == TRUE )
     {
-        // ¸¶¿ì½º ÀÎÅÍ·´Æ® È°¼ºÈ­
+        // ë§ˆìš°ìŠ¤ ì¸í„°ëŸ½íŠ¸ í™œì„±í™”
         kEnableMouseInterrupt();
         return TRUE;
     }
@@ -41,7 +41,7 @@ BOOL kInitializeMouse( void )
 }
 
 /**
- *  ¸¶¿ì½º¸¦ È°¼ºÈ­ ÇÔ
+ *  ë§ˆìš°ìŠ¤ë¥¼ í™œì„±í™” í•¨
  */
 BOOL kActivateMouse( void )
 {
@@ -49,138 +49,138 @@ BOOL kActivateMouse( void )
     BOOL bPreviousInterrupt;
     BOOL bResult;
     
-    // ÀÎÅÍ·´Æ® ºÒ°¡
+    // ì¸í„°ëŸ½íŠ¸ ë¶ˆê°€
     bPreviousInterrupt = kSetInterruptFlag( FALSE );
     
-    // ÄÁÆ®·Ñ ·¹Áö½ºÅÍ(Æ÷Æ® 0x64)¿¡ ¸¶¿ì½º È°¼ºÈ­ Ä¿¸Çµå(0xA8)À» Àü´ÞÇÏ¿© ¸¶¿ì½º µð¹ÙÀÌ½º È°¼ºÈ­
+    // ì»¨íŠ¸ë¡¤ ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x64)ì— ë§ˆìš°ìŠ¤ í™œì„±í™” ì»¤ë§¨ë“œ(0xA8)ì„ ì „ë‹¬í•˜ì—¬ ë§ˆìš°ìŠ¤ ë””ë°”ì´ìŠ¤ í™œì„±í™”
     kOutPortByte( 0x64, 0xA8 );
    
-    // ÄÁÆ®·Ñ ·¹Áö½ºÅÍ(Æ÷Æ® 0x64)¿¡ ¸¶¿ì½º·Î µ¥ÀÌÅÍ¸¦ Àü¼ÛÇÏ´Â Ä¿¸Çµå(0xD4)¸¦ Àü´ÞÇÏ¿© 
-    // ÀÔ·Â ¹öÆÛ(Æ÷Æ® 0x60)·Î Àü´ÞµÈ µ¥ÀÌÅÍ¸¦ ¸¶¿ì½º·Î Àü¼Û
+    // ì»¨íŠ¸ë¡¤ ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x64)ì— ë§ˆìš°ìŠ¤ë¡œ ë°ì´í„°ë¥¼ ì „ì†¡í•˜ëŠ” ì»¤ë§¨ë“œ(0xD4)ë¥¼ ì „ë‹¬í•˜ì—¬ 
+    // ìž…ë ¥ ë²„í¼(í¬íŠ¸ 0x60)ë¡œ ì „ë‹¬ëœ ë°ì´í„°ë¥¼ ë§ˆìš°ìŠ¤ë¡œ ì „ì†¡
     kOutPortByte( 0x64, 0xD4 );
     
-    // ÀÔ·Â ¹öÆÛ(Æ÷Æ® 0x60)°¡ ºô ¶§±îÁö ±â´Ù·È´Ù°¡ ¸¶¿ì½º¿¡ È°¼ºÈ­ Ä¿¸Çµå¸¦ Àü¼Û
-    // 0xFFFF¸¸Å­ ·çÇÁ¸¦ ¼öÇàÇÒ ½Ã°£ÀÌ¸é ÃæºÐÈ÷ Ä¿¸Çµå°¡ Àü¼ÛµÉ ¼ö ÀÖÀ½
-    // 0xFFFF ·çÇÁ¸¦ ¼öÇàÇÑ ÀÌÈÄ¿¡µµ ÀÔ·Â ¹öÆÛ(Æ÷Æ® 0x60)°¡ ºñÁö ¾ÊÀ¸¸é ¹«½ÃÇÏ°í Àü¼Û
+    // ìž…ë ¥ ë²„í¼(í¬íŠ¸ 0x60)ê°€ ë¹Œ ë•Œê¹Œì§€ ê¸°ë‹¤ë ¸ë‹¤ê°€ ë§ˆìš°ìŠ¤ì— í™œì„±í™” ì»¤ë§¨ë“œë¥¼ ì „ì†¡
+    // 0xFFFFë§Œí¼ ë£¨í”„ë¥¼ ìˆ˜í–‰í•  ì‹œê°„ì´ë©´ ì¶©ë¶„ížˆ ì»¤ë§¨ë“œê°€ ì „ì†¡ë  ìˆ˜ ìžˆìŒ
+    // 0xFFFF ë£¨í”„ë¥¼ ìˆ˜í–‰í•œ ì´í›„ì—ë„ ìž…ë ¥ ë²„í¼(í¬íŠ¸ 0x60)ê°€ ë¹„ì§€ ì•Šìœ¼ë©´ ë¬´ì‹œí•˜ê³  ì „ì†¡
     for( i = 0 ; i < 0xFFFF ; i++ )
     {
-        // ÀÔ·Â ¹öÆÛ(Æ÷Æ® 0x60)°¡ ºñ¾îÀÖÀ¸¸é Å°º¸µå Ä¿¸Çµå Àü¼Û °¡´É
+        // ìž…ë ¥ ë²„í¼(í¬íŠ¸ 0x60)ê°€ ë¹„ì–´ìžˆìœ¼ë©´ í‚¤ë³´ë“œ ì»¤ë§¨ë“œ ì „ì†¡ ê°€ëŠ¥
         if( kIsInputBufferFull() == FALSE )
         {
             break;
         }
     }
     
-    // ÀÔ·Â ¹öÆÛ(Æ÷Æ® 0x60)·Î ¸¶¿ì½º È°¼ºÈ­(0xF4) Ä¿¸Çµå¸¦ Àü´ÞÇÏ¿© ¸¶¿ì½º·Î Àü¼Û
+    // ìž…ë ¥ ë²„í¼(í¬íŠ¸ 0x60)ë¡œ ë§ˆìš°ìŠ¤ í™œì„±í™”(0xF4) ì»¤ë§¨ë“œë¥¼ ì „ë‹¬í•˜ì—¬ ë§ˆìš°ìŠ¤ë¡œ ì „ì†¡
     kOutPortByte( 0x60, 0xF4 );
     
-    // ACK°¡ ¿Ã ¶§±îÁö ´ë±âÇÔ
+    // ACKê°€ ì˜¬ ë•Œê¹Œì§€ ëŒ€ê¸°í•¨
     bResult = kWaitForACKAndPutOtherScanCode();
     
-    // ÀÌÀü ÀÎÅÍ·´Æ® »óÅÂ º¹¿ø
+    // ì´ì „ ì¸í„°ëŸ½íŠ¸ ìƒíƒœ ë³µì›
     kSetInterruptFlag( bPreviousInterrupt );
     return bResult;
 }
 
 /**
- *  ¸¶¿ì½º ÀÎÅÍ·´Æ®¸¦ È°¼ºÈ­
+ *  ë§ˆìš°ìŠ¤ ì¸í„°ëŸ½íŠ¸ë¥¼ í™œì„±í™”
  */
 void kEnableMouseInterrupt( void )
 {
     BYTE bOutputPortData;
     int i;
     
-    // Ä¿¸Çµå ¹ÙÀÌÆ® ÀÐ±â
-    // ÄÁÆ®·Ñ ·¹Áö½ºÅÍ(Æ÷Æ® 0x64)¿¡ Å°º¸µå ÄÁÆ®·Ñ·¯ÀÇ Ä¿¸Çµå ¹ÙÀÌÆ®¸¦ ÀÐ´Â Ä¿¸Çµå(0x20) Àü¼Û
+    // ì»¤ë§¨ë“œ ë°”ì´íŠ¸ ì½ê¸°
+    // ì»¨íŠ¸ë¡¤ ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x64)ì— í‚¤ë³´ë“œ ì»¨íŠ¸ë¡¤ëŸ¬ì˜ ì»¤ë§¨ë“œ ë°”ì´íŠ¸ë¥¼ ì½ëŠ” ì»¤ë§¨ë“œ(0x20) ì „ì†¡
     kOutPortByte( 0x64, 0x20 );
     
-    // Ãâ·Â Æ÷Æ®ÀÇ µ¥ÀÌÅÍ¸¦ ±â´Ù·È´Ù°¡ ÀÐÀ½
+    // ì¶œë ¥ í¬íŠ¸ì˜ ë°ì´í„°ë¥¼ ê¸°ë‹¤ë ¸ë‹¤ê°€ ì½ìŒ
     for( i = 0 ; i < 0xFFFF ; i++ )
     {
-        // Ãâ·Â ¹öÆÛ(Æ÷Æ® 0x60)°¡ Â÷ÀÖÀ¸¸é µ¥ÀÌÅÍ¸¦ ÀÐÀ» ¼ö ÀÖÀ½ 
+        // ì¶œë ¥ ë²„í¼(í¬íŠ¸ 0x60)ê°€ ì°¨ìžˆìœ¼ë©´ ë°ì´í„°ë¥¼ ì½ì„ ìˆ˜ ìžˆìŒ 
         if( kIsOutputBufferFull() == TRUE )
         {
             break;
         }
     }
-    // Ãâ·Â Æ÷Æ®(Æ÷Æ® 0x60)¿¡ ¼ö½ÅµÈ Ä¿¸Çµå ¹ÙÀÌÆ® °ªÀ» ÀÐÀ½
+    // ì¶œë ¥ í¬íŠ¸(í¬íŠ¸ 0x60)ì— ìˆ˜ì‹ ëœ ì»¤ë§¨ë“œ ë°”ì´íŠ¸ ê°’ì„ ì½ìŒ
     bOutputPortData = kInPortByte( 0x60 );
     
 
-    // ¸¶¿ì½º ÀÎÅÍ·´Æ® ºñÆ® È°¼ºÈ­ÇÑ µÚ Ä¿¸Çµå ¹ÙÀÌÆ® Àü¼Û
-    // ¸¶¿ì½º ÀÎÅÍ·´Æ® ºñÆ®(ºñÆ® 1) ¼³Á¤
+    // ë§ˆìš°ìŠ¤ ì¸í„°ëŸ½íŠ¸ ë¹„íŠ¸ í™œì„±í™”í•œ ë’¤ ì»¤ë§¨ë“œ ë°”ì´íŠ¸ ì „ì†¡
+    // ë§ˆìš°ìŠ¤ ì¸í„°ëŸ½íŠ¸ ë¹„íŠ¸(ë¹„íŠ¸ 1) ì„¤ì •
     bOutputPortData |= 0x02;
 
-    // Ä¿¸Çµå ·¹Áö½ºÅÍ(0x64)¿¡ Ä¿¸Çµå ¹ÙÀÌÆ®¸¦ ¾²´Â Ä¿¸Çµå(0x60)À» Àü´Þ
+    // ì»¤ë§¨ë“œ ë ˆì§€ìŠ¤í„°(0x64)ì— ì»¤ë§¨ë“œ ë°”ì´íŠ¸ë¥¼ ì“°ëŠ” ì»¤ë§¨ë“œ(0x60)ì„ ì „ë‹¬
     kOutPortByte( 0x64, 0x60 );
 
-    // ÀÔ·Â ¹öÆÛ(Æ÷Æ® 0x60)¿¡ µ¥ÀÌÅÍ°¡ ºñ¾îÀÖÀ¸¸é Ãâ·Â Æ÷Æ®¿¡ °ªÀ» ¾²´Â Ä¿¸Çµå¿Í Ä¿¸Çµå ¹ÙÀÌÆ® Àü¼Û
+    // ìž…ë ¥ ë²„í¼(í¬íŠ¸ 0x60)ì— ë°ì´í„°ê°€ ë¹„ì–´ìžˆìœ¼ë©´ ì¶œë ¥ í¬íŠ¸ì— ê°’ì„ ì“°ëŠ” ì»¤ë§¨ë“œì™€ ì»¤ë§¨ë“œ ë°”ì´íŠ¸ ì „ì†¡
     for( i = 0 ; i < 0xFFFF ; i++ )
     {
-        // ÀÔ·Â ¹öÆÛ(Æ÷Æ® 0x60)°¡ ºñ¾úÀ¸¸é Ä¿¸Çµå Àü¼Û °¡´É
+        // ìž…ë ¥ ë²„í¼(í¬íŠ¸ 0x60)ê°€ ë¹„ì—ˆìœ¼ë©´ ì»¤ë§¨ë“œ ì „ì†¡ ê°€ëŠ¥
         if( kIsInputBufferFull() == FALSE )
         {
             break;
         }
     }
     
-    // ÀÔ·Â ¹öÆÛ(0x60)¿¡ ¸¶¿ì½º ÀÎÅÍ·´Æ® ºñÆ®°¡ 1·Î ¼³Á¤µÈ °ªÀ» Àü´Þ
+    // ìž…ë ¥ ë²„í¼(0x60)ì— ë§ˆìš°ìŠ¤ ì¸í„°ëŸ½íŠ¸ ë¹„íŠ¸ê°€ 1ë¡œ ì„¤ì •ëœ ê°’ì„ ì „ë‹¬
     kOutPortByte( 0x60, bOutputPortData );
 }
 
 
 /**
- *  ¸¶¿ì½º µ¥ÀÌÅÍ¸¦ ¸ð¾Æ¼­ Å¥¿¡ »ðÀÔ
+ *  ë§ˆìš°ìŠ¤ ë°ì´í„°ë¥¼ ëª¨ì•„ì„œ íì— ì‚½ìž…
  */
 BOOL kAccumulateMouseDataAndPutQueue( BYTE bMouseData )
 {
     BOOL bResult;
     
-    // ¼ö½ÅµÈ ¹ÙÀÌÆ® ¼ö¿¡ µû¶ó ¸¶¿ì½º µ¥ÀÌÅÍ¸¦ ¼³Á¤
+    // ìˆ˜ì‹ ëœ ë°”ì´íŠ¸ ìˆ˜ì— ë”°ë¼ ë§ˆìš°ìŠ¤ ë°ì´í„°ë¥¼ ì„¤ì •
     switch( gs_stMouseManager.iByteCount )
     {
-        // ¹ÙÀÌÆ® 1¿¡ µ¥ÀÌÅÍ ¼³Á¤
+        // ë°”ì´íŠ¸ 1ì— ë°ì´í„° ì„¤ì •
     case 0:
         gs_stMouseManager.stCurrentData.bButtonStatusAndFlag = bMouseData;
         gs_stMouseManager.iByteCount++;
         break;
         
-        // ¹ÙÀÌÆ® 2¿¡ µ¥ÀÌÅÍ ¼³Á¤
+        // ë°”ì´íŠ¸ 2ì— ë°ì´í„° ì„¤ì •
     case 1:
         gs_stMouseManager.stCurrentData.bXMovement = bMouseData;
         gs_stMouseManager.iByteCount++;
         break;
         
-        // ¹ÙÀÌÆ® 3¿¡ µ¥ÀÌÅÍ ¼³Á¤
+        // ë°”ì´íŠ¸ 3ì— ë°ì´í„° ì„¤ì •
     case 2:
         gs_stMouseManager.stCurrentData.bYMovement = bMouseData;
         gs_stMouseManager.iByteCount++;
         break;
         
-        // ±× ¿ÜÀÇ °æ¿ì´Â ¼ö½ÅµÈ ¹ÙÀÌÆ® ¼ö ÃÊ±âÈ­
+        // ê·¸ ì™¸ì˜ ê²½ìš°ëŠ” ìˆ˜ì‹ ëœ ë°”ì´íŠ¸ ìˆ˜ ì´ˆê¸°í™”
     default:
         gs_stMouseManager.iByteCount = 0;
         break;
     }
     
-    // 3¹ÙÀÌÆ®°¡ ¸ðµÎ ¼ö½ÅµÇ¾úÀ¸¸é ¸¶¿ì½º Å¥¿¡ »ðÀÔÇÏ°í ¼ö½ÅµÈ È½¼ö¸¦ ÃÊ±âÈ­
+    // 3ë°”ì´íŠ¸ê°€ ëª¨ë‘ ìˆ˜ì‹ ë˜ì—ˆìœ¼ë©´ ë§ˆìš°ìŠ¤ íì— ì‚½ìž…í•˜ê³  ìˆ˜ì‹ ëœ íšŸìˆ˜ë¥¼ ì´ˆê¸°í™”
     if( gs_stMouseManager.iByteCount >= 3 )
     {
-        // ÀÓ°è ¿µ¿ª ½ÃÀÛ
+        // ìž„ê³„ ì˜ì—­ ì‹œìž‘
         kLockForSpinLock( &( gs_stMouseManager.stSpinLock ) );
         
-        // ¸¶¿ì½º Å¥¿¡ ¸¶¿ì½º µ¥ÀÌÅÍ »ðÀÔ 
+        // ë§ˆìš°ìŠ¤ íì— ë§ˆìš°ìŠ¤ ë°ì´í„° ì‚½ìž… 
         bResult = kPutQueue( &gs_stMouseQueue, &gs_stMouseManager.stCurrentData );    
-        // ÀÓ°è ¿µ¿ª ³¡
+        // ìž„ê³„ ì˜ì—­ ë
         kUnlockForSpinLock( &( gs_stMouseManager.stSpinLock ) );
-        // ¼ö½ÅµÈ ¹ÙÀÌÆ® ¼ö ÃÊ±âÈ­
+        // ìˆ˜ì‹ ëœ ë°”ì´íŠ¸ ìˆ˜ ì´ˆê¸°í™”
         gs_stMouseManager.iByteCount = 0;
     }
     return bResult;
 }
 
 /**
- *  ¸¶¿ì½º Å¥¿¡¼­ ¸¶¿ì½º µ¥ÀÌÅÍ¸¦ ²¨³¿
+ *  ë§ˆìš°ìŠ¤ íì—ì„œ ë§ˆìš°ìŠ¤ ë°ì´í„°ë¥¼ êº¼ëƒ„
  */
 BOOL kGetMouseDataFromMouseQueue( BYTE* pbButtonStatus, int* piRelativeX, 
         int* piRelativeY )
@@ -188,62 +188,62 @@ BOOL kGetMouseDataFromMouseQueue( BYTE* pbButtonStatus, int* piRelativeX,
     MOUSEDATA stData;
     BOOL bResult;
 
-    // Å¥°¡ ºñ¾îÀÖÀ¸¸é µ¥ÀÌÅÍ¸¦ ²¨³¾ ¼ö ¾øÀ½
+    // íê°€ ë¹„ì–´ìžˆìœ¼ë©´ ë°ì´í„°ë¥¼ êº¼ë‚¼ ìˆ˜ ì—†ìŒ
     if( kIsQueueEmpty( &( gs_stMouseQueue ) ) == TRUE )
     {
         return FALSE;
     }
     
-    // ÀÓ°è ¿µ¿ª ½ÃÀÛ
+    // ìž„ê³„ ì˜ì—­ ì‹œìž‘
     kLockForSpinLock( &( gs_stMouseManager.stSpinLock ) );
-    // Å¥¿¡¼­ µ¥ÀÌÅÍ¸¦ ²¨³¿
+    // íì—ì„œ ë°ì´í„°ë¥¼ êº¼ëƒ„
     bResult = kGetQueue( &( gs_stMouseQueue ), &stData );    
-    // ÀÓ°è ¿µ¿ª ³¡
+    // ìž„ê³„ ì˜ì—­ ë
     kUnlockForSpinLock( &( gs_stMouseManager.stSpinLock ) );
     
-    // µ¥ÀÌÅÍ¸¦ ²¨³»Áö ¸øÇßÀ¸¸é ½ÇÆÐ
+    // ë°ì´í„°ë¥¼ êº¼ë‚´ì§€ ëª»í–ˆìœ¼ë©´ ì‹¤íŒ¨
     if( bResult == FALSE )
     {
         return FALSE;
     }
     
-    // ¸¶¿ì½º µ¥ÀÌÅÍ ºÐ¼®
-    // ¸¶¿ì½º ¹öÆ° ÇÃ·¡±×´Â Ã¹ ¹øÂ° ¹ÙÀÌÆ®ÀÇ ÇÏÀ§ 3ºñÆ®¿¡ Á¸ÀçÇÔ
+    // ë§ˆìš°ìŠ¤ ë°ì´í„° ë¶„ì„
+    // ë§ˆìš°ìŠ¤ ë²„íŠ¼ í”Œëž˜ê·¸ëŠ” ì²« ë²ˆì§¸ ë°”ì´íŠ¸ì˜ í•˜ìœ„ 3ë¹„íŠ¸ì— ì¡´ìž¬í•¨
     *pbButtonStatus = stData.bButtonStatusAndFlag & 0x7;
 
-    // X, YÀÇ ÀÌµ¿°Å¸® ¼³Á¤
-    // XÀÇ ºÎÈ£ ºñÆ®´Â ºñÆ® 4¿¡ ÀÖÀ¸¸ç 1·Î ¼³Á¤µÇ¾îÀÖÀ¸¸é À½¼öÀÓ
+    // X, Yì˜ ì´ë™ê±°ë¦¬ ì„¤ì •
+    // Xì˜ ë¶€í˜¸ ë¹„íŠ¸ëŠ” ë¹„íŠ¸ 4ì— ìžˆìœ¼ë©° 1ë¡œ ì„¤ì •ë˜ì–´ìžˆìœ¼ë©´ ìŒìˆ˜ìž„
     *piRelativeX = stData.bXMovement & 0xFF;
     if( stData.bButtonStatusAndFlag & 0x10 )
     {
-        // À½¼öÀÌ¹Ç·Î ¾Æ·¡ 8ºñÆ®¿¡ X ÀÌµ¿°Å¸®¸¦ ¼³Á¤ÇÑ ÈÄ »óÀ§ ºñÆ®¸¦ ¸ðµÎ 1·Î ¸¸µé¾î
-        // ºÎÈ£ ºñÆ®¸¦ È®ÀåÇÔ 
+        // ìŒìˆ˜ì´ë¯€ë¡œ ì•„ëž˜ 8ë¹„íŠ¸ì— X ì´ë™ê±°ë¦¬ë¥¼ ì„¤ì •í•œ í›„ ìƒìœ„ ë¹„íŠ¸ë¥¼ ëª¨ë‘ 1ë¡œ ë§Œë“¤ì–´
+        // ë¶€í˜¸ ë¹„íŠ¸ë¥¼ í™•ìž¥í•¨ 
         *piRelativeX |= ( 0xFFFFFF00 );
     }
     
-    // YÀÇ ºÎÈ£ ºñÆ®´Â ºñÆ® 5¿¡ ÀÖÀ¸¸ç, 1·Î ¼³Á¤µÇ¾úÀ¸¸é À½¼öÀÓ
-    // ¾Æ·¡ ¹æÇâÀ¸·Î °¥¼ö·Ï Y °ªÀÌ Áõ°¡ÇÏ´Â È­¸é ÁÂÇ¥¿Í ´Þ¸® ¸¶¿ì½º´Â À§ÂÊ ¹æÇâÀ¸·Î °¥¼ö·Ï
-    // °ªÀÌ Áõ°¡ÇÏ¹Ç·Î °è»êÀÌ ³¡³­ ÈÄ ºÎÈ£¸¦ µÚÁýÀ½
+    // Yì˜ ë¶€í˜¸ ë¹„íŠ¸ëŠ” ë¹„íŠ¸ 5ì— ìžˆìœ¼ë©°, 1ë¡œ ì„¤ì •ë˜ì—ˆìœ¼ë©´ ìŒìˆ˜ìž„
+    // ì•„ëž˜ ë°©í–¥ìœ¼ë¡œ ê°ˆìˆ˜ë¡ Y ê°’ì´ ì¦ê°€í•˜ëŠ” í™”ë©´ ì¢Œí‘œì™€ ë‹¬ë¦¬ ë§ˆìš°ìŠ¤ëŠ” ìœ„ìª½ ë°©í–¥ìœ¼ë¡œ ê°ˆìˆ˜ë¡
+    // ê°’ì´ ì¦ê°€í•˜ë¯€ë¡œ ê³„ì‚°ì´ ëë‚œ í›„ ë¶€í˜¸ë¥¼ ë’¤ì§‘ìŒ
     *piRelativeY = stData.bYMovement & 0xFF;
     if( stData.bButtonStatusAndFlag & 0x20 )
     {
-        // À½¼öÀÌ¹Ç·Î ¾Æ·¡ 8ºñÆ®¿¡ Y ÀÌµ¿°Å¸®¸¦ ¼³Á¤ÇÑ ÈÄ »óÀ§ ºñÆ®¸¦ ¸ðµÎ 1·Î ¸¸µé¾î
-        // ºÎÈ£ ºñÆ®¸¦ È®ÀåÇÔ 
+        // ìŒìˆ˜ì´ë¯€ë¡œ ì•„ëž˜ 8ë¹„íŠ¸ì— Y ì´ë™ê±°ë¦¬ë¥¼ ì„¤ì •í•œ í›„ ìƒìœ„ ë¹„íŠ¸ë¥¼ ëª¨ë‘ 1ë¡œ ë§Œë“¤ì–´
+        // ë¶€í˜¸ ë¹„íŠ¸ë¥¼ í™•ìž¥í•¨ 
         *piRelativeY |= ( 0xFFFFFF00 );
     }
 
-    // ¸¶¿ì½ºÀÇ YÃà Áõ°¨ ¹æÇâÀº È­¸é ÁÂÇ¥¿Í ¹Ý´ëÀÌ¹Ç·Î Y ÀÌµ¿°Å¸®¿¡ -ÇÏ¿© ¹æÇâÀ» ¹Ù²Þ
+    // ë§ˆìš°ìŠ¤ì˜ Yì¶• ì¦ê° ë°©í–¥ì€ í™”ë©´ ì¢Œí‘œì™€ ë°˜ëŒ€ì´ë¯€ë¡œ Y ì´ë™ê±°ë¦¬ì— -í•˜ì—¬ ë°©í–¥ì„ ë°”ê¿ˆ
     *piRelativeY = -*piRelativeY;
     return TRUE;
 }
 
 /**
- *  ¸¶¿ì½º µ¥ÀÌÅÍ°¡ Ãâ·Â ¹öÆÛ¿¡ ÀÖ´ÂÁö¸¦ ¹ÝÈ¯
+ *  ë§ˆìš°ìŠ¤ ë°ì´í„°ê°€ ì¶œë ¥ ë²„í¼ì— ìžˆëŠ”ì§€ë¥¼ ë°˜í™˜
  */
 BOOL kIsMouseDataInOutputBuffer( void )
 {
-    // Ãâ·Â ¹öÆÛ(Æ÷Æ® 0x60À» ÀÐ±â Àü¿¡ ¸ÕÀú »óÅÂ ·¹Áö½ºÅÍ(Æ÷Æ® 0x64)¸¦ ÀÐ¾î¼­
-    // ¸¶¿ì½º µ¥ÀÌÅÍÀÎ°¡¸¦ È®ÀÎ, ¸¶¿ì½º µ¥ÀÌÅÍ´Â AUXB ºñÆ®(ºñÆ® 5)°¡ 1·Î ¼³Á¤µÊ
+    // ì¶œë ¥ ë²„í¼(í¬íŠ¸ 0x60ì„ ì½ê¸° ì „ì— ë¨¼ì € ìƒíƒœ ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x64)ë¥¼ ì½ì–´ì„œ
+    // ë§ˆìš°ìŠ¤ ë°ì´í„°ì¸ê°€ë¥¼ í™•ì¸, ë§ˆìš°ìŠ¤ ë°ì´í„°ëŠ” AUXB ë¹„íŠ¸(ë¹„íŠ¸ 5)ê°€ 1ë¡œ ì„¤ì •ë¨
     if( kInPortByte( 0x64 ) & 0x20 )
     {
         return TRUE;

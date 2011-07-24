@@ -3,84 +3,84 @@
  *  date    2009/02/14
  *  author  kkamagui 
  *          Copyright(c)2008 All rights reserved by kkamagui
- *  brief   RTC ÄÁÆ®·Ñ·¯¿¡ °ü·ÃµÈ ¼Ò½º ÆÄÀÏ
+ *  brief   RTC ì»¨íŠ¸ë¡¤ëŸ¬ì— ê´€ë ¨ëœ ì†ŒìŠ¤ íŒŒì¼
  */
 
 #include "RTC.h"
 
 /**
- *  CMOS ¸Ş¸ğ¸®¿¡¼­ RTC ÄÁÆ®·Ñ·¯°¡ ÀúÀåÇÑ ÇöÀç ½Ã°£À» ÀĞÀ½
+ *  CMOS ë©”ëª¨ë¦¬ì—ì„œ RTC ì»¨íŠ¸ë¡¤ëŸ¬ê°€ ì €ì¥í•œ í˜„ì¬ ì‹œê°„ì„ ì½ìŒ
  */
 void kReadRTCTime( BYTE* pbHour, BYTE* pbMinute, BYTE* pbSecond )
 {
     BYTE bData;
     
-    // CMOS ¸Ş¸ğ¸® ¾îµå·¹½º ·¹Áö½ºÅÍ(Æ÷Æ® 0x70)¿¡ ½Ã°£À» ÀúÀåÇÏ´Â ·¹Áö½ºÅÍ ÁöÁ¤
+    // CMOS ë©”ëª¨ë¦¬ ì–´ë“œë ˆìŠ¤ ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x70)ì— ì‹œê°„ì„ ì €ì¥í•˜ëŠ” ë ˆì§€ìŠ¤í„° ì§€ì •
     kOutPortByte( RTC_CMOSADDRESS, RTC_ADDRESS_HOUR );
-    // CMOS µ¥ÀÌÅÍ ·¹Áö½ºÅÍ(Æ÷Æ® 0x71)¿¡¼­ ½Ã°£À» ÀĞÀ½
+    // CMOS ë°ì´í„° ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x71)ì—ì„œ ì‹œê°„ì„ ì½ìŒ
     bData = kInPortByte( RTC_CMOSDATA );
     *pbHour = RTC_BCDTOBINARY( bData );
     
-    // CMOS ¸Ş¸ğ¸® ¾îµå·¹½º ·¹Áö½ºÅÍ(Æ÷Æ® 0x70)¿¡ ºĞÀ» ÀúÀåÇÏ´Â ·¹Áö½ºÅÍ ÁöÁ¤
+    // CMOS ë©”ëª¨ë¦¬ ì–´ë“œë ˆìŠ¤ ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x70)ì— ë¶„ì„ ì €ì¥í•˜ëŠ” ë ˆì§€ìŠ¤í„° ì§€ì •
     kOutPortByte( RTC_CMOSADDRESS, RTC_ADDRESS_MINUTE );
-    // CMOS µ¥ÀÌÅÍ ·¹Áö½ºÅÍ(Æ÷Æ® 0x71)¿¡¼­ ºĞÀ» ÀĞÀ½
+    // CMOS ë°ì´í„° ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x71)ì—ì„œ ë¶„ì„ ì½ìŒ
     bData = kInPortByte( RTC_CMOSDATA );
     *pbMinute = RTC_BCDTOBINARY( bData );
     
-    // CMOS ¸Ş¸ğ¸® ¾îµå·¹½º ·¹Áö½ºÅÍ(Æ÷Æ® 0x70)¿¡ ÃÊ¸¦ ÀúÀåÇÏ´Â ·¹Áö½ºÅÍ ÁöÁ¤
+    // CMOS ë©”ëª¨ë¦¬ ì–´ë“œë ˆìŠ¤ ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x70)ì— ì´ˆë¥¼ ì €ì¥í•˜ëŠ” ë ˆì§€ìŠ¤í„° ì§€ì •
     kOutPortByte( RTC_CMOSADDRESS, RTC_ADDRESS_SECOND );
-    // CMOS µ¥ÀÌÅÍ ·¹Áö½ºÅÍ(Æ÷Æ® 0x71)¿¡¼­ ÃÊ¸¦ ÀĞÀ½
+    // CMOS ë°ì´í„° ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x71)ì—ì„œ ì´ˆë¥¼ ì½ìŒ
     bData = kInPortByte( RTC_CMOSDATA );
     *pbSecond = RTC_BCDTOBINARY( bData );
 }
 
 /**
- *  CMOS ¸Ş¸ğ¸®¿¡¼­ RTC ÄÁÆ®·Ñ·¯°¡ ÀúÀåÇÑ ÇöÀç ÀÏÀÚ¸¦ ÀĞÀ½
+ *  CMOS ë©”ëª¨ë¦¬ì—ì„œ RTC ì»¨íŠ¸ë¡¤ëŸ¬ê°€ ì €ì¥í•œ í˜„ì¬ ì¼ìë¥¼ ì½ìŒ
  */
 void kReadRTCDate( WORD* pwYear, BYTE* pbMonth, BYTE* pbDayOfMonth, 
                    BYTE* pbDayOfWeek )
 {
     BYTE bData;
     
-    // CMOS ¸Ş¸ğ¸® ¾îµå·¹½º ·¹Áö½ºÅÍ(Æ÷Æ® 0x70)¿¡ ¿¬µµ¸¦ ÀúÀåÇÏ´Â ·¹Áö½ºÅÍ ÁöÁ¤
+    // CMOS ë©”ëª¨ë¦¬ ì–´ë“œë ˆìŠ¤ ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x70)ì— ì—°ë„ë¥¼ ì €ì¥í•˜ëŠ” ë ˆì§€ìŠ¤í„° ì§€ì •
     kOutPortByte( RTC_CMOSADDRESS, RTC_ADDRESS_YEAR );
-    // CMOS µ¥ÀÌÅÍ ·¹Áö½ºÅÍ(Æ÷Æ® 0x71)¿¡¼­ ¿¬µµ¸¦ ÀĞÀ½
+    // CMOS ë°ì´í„° ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x71)ì—ì„œ ì—°ë„ë¥¼ ì½ìŒ
     bData = kInPortByte( RTC_CMOSDATA );
     *pwYear = RTC_BCDTOBINARY( bData ) + 2000;
     
-    // CMOS ¸Ş¸ğ¸® ¾îµå·¹½º ·¹Áö½ºÅÍ(Æ÷Æ® 0x70)¿¡ ¿ùÀ» ÀúÀåÇÏ´Â ·¹Áö½ºÅÍ ÁöÁ¤
+    // CMOS ë©”ëª¨ë¦¬ ì–´ë“œë ˆìŠ¤ ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x70)ì— ì›”ì„ ì €ì¥í•˜ëŠ” ë ˆì§€ìŠ¤í„° ì§€ì •
     kOutPortByte( RTC_CMOSADDRESS, RTC_ADDRESS_MONTH );
-    // CMOS µ¥ÀÌÅÍ ·¹Áö½ºÅÍ(Æ÷Æ® 0x71)¿¡¼­ ¿ùÀ» ÀĞÀ½
+    // CMOS ë°ì´í„° ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x71)ì—ì„œ ì›”ì„ ì½ìŒ
     bData = kInPortByte( RTC_CMOSDATA );
     *pbMonth = RTC_BCDTOBINARY( bData );
     
-    // CMOS ¸Ş¸ğ¸® ¾îµå·¹½º ·¹Áö½ºÅÍ(Æ÷Æ® 0x70)¿¡ ÀÏÀ» ÀúÀåÇÏ´Â ·¹Áö½ºÅÍ ÁöÁ¤
+    // CMOS ë©”ëª¨ë¦¬ ì–´ë“œë ˆìŠ¤ ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x70)ì— ì¼ì„ ì €ì¥í•˜ëŠ” ë ˆì§€ìŠ¤í„° ì§€ì •
     kOutPortByte( RTC_CMOSADDRESS, RTC_ADDRESS_DAYOFMONTH );
-    // CMOS µ¥ÀÌÅÍ ·¹Áö½ºÅÍ(Æ÷Æ® 0x71)¿¡¼­ ÀÏÀ» ÀĞÀ½
+    // CMOS ë°ì´í„° ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x71)ì—ì„œ ì¼ì„ ì½ìŒ
     bData = kInPortByte( RTC_CMOSDATA );
     *pbDayOfMonth = RTC_BCDTOBINARY( bData );
     
-    // CMOS ¸Ş¸ğ¸® ¾îµå·¹½º ·¹Áö½ºÅÍ(Æ÷Æ® 0x70)¿¡ ¿äÀÏÀ» ÀúÀåÇÏ´Â ·¹Áö½ºÅÍ ÁöÁ¤
+    // CMOS ë©”ëª¨ë¦¬ ì–´ë“œë ˆìŠ¤ ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x70)ì— ìš”ì¼ì„ ì €ì¥í•˜ëŠ” ë ˆì§€ìŠ¤í„° ì§€ì •
     kOutPortByte( RTC_CMOSADDRESS, RTC_ADDRESS_DAYOFWEEK );
-    // CMOS µ¥ÀÌÅÍ ·¹Áö½ºÅÍ(Æ÷Æ® 0x71)¿¡¼­ ¿äÀÏÀ» ÀĞÀ½
+    // CMOS ë°ì´í„° ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x71)ì—ì„œ ìš”ì¼ì„ ì½ìŒ
     bData = kInPortByte( RTC_CMOSDATA );
     *pbDayOfWeek = RTC_BCDTOBINARY( bData );
 }
 
 /**
- *  ¿äÀÏ °ªÀ» ÀÌ¿ëÇØ¼­ ÇØ´ç ¿äÀÏÀÇ ¹®ÀÚ¿­À» ¹İÈ¯
+ *  ìš”ì¼ ê°’ì„ ì´ìš©í•´ì„œ í•´ë‹¹ ìš”ì¼ì˜ ë¬¸ìì—´ì„ ë°˜í™˜
  */
 char* kConvertDayOfWeekToString( BYTE bDayOfWeek )
 {
     static char* vpcDayOfWeekString[ 8 ] = { "Error", "Sunday", "Monday", 
             "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday" };
     
-    // ¿äÀÏ ¹üÀ§°¡ ³Ñ¾î°¡¸é ¿¡·¯¸¦ ¹İÈ¯
+    // ìš”ì¼ ë²”ìœ„ê°€ ë„˜ì–´ê°€ë©´ ì—ëŸ¬ë¥¼ ë°˜í™˜
     if( bDayOfWeek >= 8 )
     {
         return vpcDayOfWeekString[ 0 ];
     }
     
-    // ¿äÀÏÀ» ¹İÈ¯
+    // ìš”ì¼ì„ ë°˜í™˜
     return vpcDayOfWeekString[ bDayOfWeek ];
 }

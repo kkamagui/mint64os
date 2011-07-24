@@ -3,14 +3,14 @@
  *  date    2009/11/24
  *  author  kkamagui 
  *          Copyright(c)2008 All rights reserved by kkamagui
- *  brief   GUI ½Ã½ºÅÛ¿¡¼­ ¹è°æÈ­¸éÀ¸·Î »ç¿ëÇÏ´Â JPEG ÀÌ¹ÌÁö ÆÄÀÏ
+ *  brief   GUI ì‹œìŠ¤í…œì—ì„œ ë°°ê²½í™”ë©´ìœ¼ë¡œ ì‚¬ìš©í•˜ëŠ” JPEG ì´ë¯¸ì§€ íŒŒì¼
  */
 #ifndef __g_vbWallPaper__
 #define __g_vbWallPaper__
 
-// JPEG ÀÌ¹ÌÁö ÆÄÀÏÀÇ Å©±â
+// JPEG ì´ë¯¸ì§€ íŒŒì¼ì˜ í¬ê¸°
 unsigned int size_g_vbWallPaper = 29481;
-// JPEG ÀÌ¹ÌÁö ÆÄÀÏÀÇ ³»¿ë
+// JPEG ì´ë¯¸ì§€ íŒŒì¼ì˜ ë‚´ìš©
 unsigned char g_vbWallPaper[] __attribute__((aligned(16))) = {
     0xff, 0xd8, 0xff, 0xe0, 0x00, 0x10, 0x4a, 0x46, 0x49, 0x46, 0x00, 0x01, 0x00, 0x01, 0x00, 0x96, 
     0x00, 0x96, 0x00, 0x00, 0xff, 0xfe, 0x00, 0x1f, 0x4c, 0x45, 0x41, 0x44, 0x20, 0x54, 0x65, 0x63, 

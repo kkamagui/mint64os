@@ -3,7 +3,7 @@
  *  date    2009/09/09
  *  author  kkamagui 
  *          Copyright(c)2008 All rights reserved by kkamagui
- *  brief   ÆùÆ®¸¦ ÃßÃâÇÏ´Â Font MakerÀÇ ÇÙ½É ¼Ò½º ÆÄÀÏ
+ *  brief   í°íŠ¸ë¥¼ ì¶”ì¶œí•˜ëŠ” Font Makerì˜ í•µì‹¬ ì†ŒìŠ¤ íŒŒì¼
  */
 // FontMakerDlg.cpp : implementation file
 //
@@ -171,7 +171,7 @@ void CFontMakerDlg::OnPaint()
 		// Draw the icon
 		dc.DrawIcon(x, y, m_hIcon);
 	}
-	// À©µµ¿ì¸¦ ±×¸± ¶§ ¿µ¹®ÀÚ¿Í ÇÑ±ÛÀ» Ãâ·ÂÇÏ¿© ¼ÀÇÃÀ» º¸¿©ÁÜ
+	// ìœˆë„ìš°ë¥¼ ê·¸ë¦´ ë•Œ ì˜ë¬¸ìì™€ í•œê¸€ì„ ì¶œë ¥í•˜ì—¬ ì…ˆí”Œì„ ë³´ì—¬ì¤Œ
 	else
 	{
         CPaintDC dc( this );
@@ -182,41 +182,41 @@ void CFontMakerDlg::OnPaint()
 		CPen clPen( PS_DOT, 1, RGB( 255, 0, 0 ) );
 		CPen* pclOldPen;
 
-		// ¹è°æ»öÀ» Åõ¸íÇÏ°Ô ¼³Á¤ÇÏ¿© ¹®ÀÚ¸¦ Ç¥½ÃÇÒ ¶§ À©µµ¿ì ¹è°æÀ» Áö¿ìÁö ¾Êµµ·Ï ÇÔ
+		// ë°°ê²½ìƒ‰ì„ íˆ¬ëª…í•˜ê²Œ ì„¤ì •í•˜ì—¬ ë¬¸ìë¥¼ í‘œì‹œí•  ë•Œ ìœˆë„ìš° ë°°ê²½ì„ ì§€ìš°ì§€ ì•Šë„ë¡ í•¨
 		dc.SetBkMode( TRANSPARENT );
 
-		// »ı¼ºÇÑ ÆùÆ® ¼³Á¤
+		// ìƒì„±í•œ í°íŠ¸ ì„¤ì •
         dc.SelectObject( &m_clFont );
 
-		// ÆæÀ» ¼³Á¤
+		// íœì„ ì„¤ì •
 		pclOldPen = dc.SelectObject( &clPen );
 
-		// ÆùÆ® Å©±â ÀúÀå
+		// í°íŠ¸ í¬ê¸° ì €ì¥
 		GetTextExtentPoint32( dc.m_hDC, "A", 1, &stEnglishSize );
-        GetTextExtentPoint32( dc.m_hDC, "°¡", 2, &stHangulSize );
+        GetTextExtentPoint32( dc.m_hDC, "ê°€", 2, &stHangulSize );
 
-		// ¾Æ·¡ À§ ±âÁØ¼± Ãâ·Â
+		// ì•„ë˜ ìœ„ ê¸°ì¤€ì„  ì¶œë ¥
 		dc.MoveTo( 0, 5 );
 		dc.LineTo( 1000, 5 );
 		dc.MoveTo( 0, 5 + stEnglishSize.cy - 1 );
 		dc.LineTo( 1000, 5 + stEnglishSize.cy - 1 );
-		// ¿µ¹®ÀÚ Ãâ·Â
+		// ì˜ë¬¸ì ì¶œë ¥
         dc.TextOut( 0, 5, "abcdefghijklmnopqrstuvwxyz ABCDEFGHIJKLMNOPQRSTUVWXYZ" );
 		
-		// ¾Æ·¡ À§ ±âÁØ¼± Ãâ·Â
+		// ì•„ë˜ ìœ„ ê¸°ì¤€ì„  ì¶œë ¥
 		dc.MoveTo( 0, 30 );
 		dc.LineTo( 1000, 30 );
 		dc.MoveTo( 0, 30 + stHangulSize.cy - 1 );
 		dc.LineTo( 1000, 30 + stHangulSize.cy - 1 );
-		// ÇÑ±Û Ãâ·Â
-        dc.TextOut( 0, 30, "¤¡¤¤¤§¤©¤±¤²¤µ¤·¤¸¤º¤»¤¼¤½¤¾ °¡³ª´Ù¶ó¸¶¹Ù»ç¾ÆÀÚÂ÷Ä«Å¸ÆÄÇÏ" );
+		// í•œê¸€ ì¶œë ¥
+        dc.TextOut( 0, 30, "ã„±ã„´ã„·ã„¹ã…ã…‚ã……ã…‡ã…ˆã…Šã…‹ã…Œã…ã… ê°€ë‚˜ë‹¤ë¼ë§ˆë°”ì‚¬ì•„ìì°¨ì¹´íƒ€íŒŒí•˜" );
 
-		// ÆùÆ®ÀÇ Å©±â¸¦ Ãâ·Â
+		// í°íŠ¸ì˜ í¬ê¸°ë¥¼ ì¶œë ¥
         clsData.Format( "English Font Pixel %dx%d, Hangul Font Pixel %dx%d", 
 			stEnglishSize.cx, stEnglishSize.cy, stHangulSize.cx, stHangulSize.cy );
         dc.TextOut( 0, 60, clsData );
 
-		// PenÀ» º¹¿ø
+		// Penì„ ë³µì›
 		dc.SelectObject( pclOldPen );
     }
 }
@@ -239,14 +239,14 @@ void CFontMakerDlg::OnButtonFontselect()
         return ;
     }
 
-    // ¼±ÅÃµÈ ÆùÆ®¸¦ ¹İÈ¯
+    // ì„ íƒëœ í°íŠ¸ë¥¼ ë°˜í™˜
     dlg.GetCurrentFont( &stLogFont );
 
-	// ÆùÆ® »çÀÌÁî°¡ 16 ÀÌ¸é 160À¸·Î ³ª¿È
+	// í°íŠ¸ ì‚¬ì´ì¦ˆê°€ 16 ì´ë©´ 160ìœ¼ë¡œ ë‚˜ì˜´
 	stLogFont.lfHeight = dlg.GetSize() / 10;
 	if( stLogFont.lfHeight > 16 )
 	{
-		AfxMessageBox( "ÆùÆ® Å©±â´Â 16 Å©±â ÀÌ»ó »ı¼ºÇÒ ¼ö ¾ø½À´Ï´Ù" );
+		AfxMessageBox( "í°íŠ¸ í¬ê¸°ëŠ” 16 í¬ê¸° ì´ìƒ ìƒì„±í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤" );
 		return ;
 	}
 
@@ -255,15 +255,15 @@ void CFontMakerDlg::OnButtonFontselect()
     m_clFont.DeleteObject();
     if( m_clFont.CreateFontIndirect( &stLogFont ) == FALSE )
     {
-        TRACE( "ÆùÆ® »ı¼º ½ÇÆĞ\n" );
+        TRACE( "í°íŠ¸ ìƒì„± ì‹¤íŒ¨\n" );
     }
 
-    // À©µµ¿ì¸¦ »õ·Î ±×¸²
+    // ìœˆë„ìš°ë¥¼ ìƒˆë¡œ ê·¸ë¦¼
     Invalidate( TRUE );
 }
 
 /**
-    ¿µ¹®ÀÚ¿Í ¿Ï¼ºÇü ÇÑ±ÛÀ» ¸ğµÎ ´Ù Ãâ·ÂÇÏ¿© ÆùÆ® ÆÄÀÏ »ı¼º 
+    ì˜ë¬¸ìì™€ ì™„ì„±í˜• í•œê¸€ì„ ëª¨ë‘ ë‹¤ ì¶œë ¥í•˜ì—¬ í°íŠ¸ íŒŒì¼ ìƒì„± 
 */
 void CFontMakerDlg::OnButtonFontmake() 
 {
@@ -271,22 +271,22 @@ void CFontMakerDlg::OnButtonFontmake()
     CDC clTempDc;
     CBitmap clBitmap;
 
-    // DC¸¦ »ı¼ºÇØ¼­ bitmapÀ» ¼³Á¤
+    // DCë¥¼ ìƒì„±í•´ì„œ bitmapì„ ì„¤ì •
     clTempDc.CreateCompatibleDC( &dc );
     clBitmap.CreateCompatibleBitmap( &clTempDc, 100, 100 );
     clTempDc.SelectObject( &clBitmap );
     clTempDc.SelectObject( &m_clFont );
     
-    // ÇÑ±Û ÆùÆ®ÆÄÀÏÀ» »ı¼º
+    // í•œê¸€ í°íŠ¸íŒŒì¼ì„ ìƒì„±
     SaveHangulFont( &clTempDc );
-    // ¿µ¹® ÆùÆ®ÆÄÀÏÀ» »ı¼º
+    // ì˜ë¬¸ í°íŠ¸íŒŒì¼ì„ ìƒì„±
     SaveEnglishFont( &clTempDc );
 
-    AfxMessageBox( "ÆùÆ® »ı¼ºÀÌ ³¡³µ½À´Ï´Ù." );
+    AfxMessageBox( "í°íŠ¸ ìƒì„±ì´ ëë‚¬ìŠµë‹ˆë‹¤." );
 }
 
 /**
-    ÇÑ±Û ÆùÆ® ÆÄÀÏÀ» »ı¼º
+    í•œê¸€ í°íŠ¸ íŒŒì¼ì„ ìƒì„±
 */
 void CFontMakerDlg::SaveHangulFont( CDC* pclTempDC )
 {
@@ -295,28 +295,28 @@ void CFontMakerDlg::SaveHangulFont( CDC* pclTempDC )
     int iCount;
     char vcBuffer[ 2 ];
 
-    // ÆùÆ® ÆÄÀÏÀ» »ı¼º
+    // í°íŠ¸ íŒŒì¼ì„ ìƒì„±
     if( CreateHangulFontFile() == FALSE )
     {
         return ;
     }
 
 	//=========================================================================
-	// ÆùÆ® µ¥ÀÌÅÍ¸¦ »ı¼ºÇÑ ÆÄÀÏ¿¡ ÀúÀå
+	// í°íŠ¸ ë°ì´í„°ë¥¼ ìƒì„±í•œ íŒŒì¼ì— ì €ì¥
 	//=========================================================================
-    //ÀÚÀ½/¸ğÀ½ °¢°¢ 0xA4A1 ~ 0xA4D3 »ı¼º
+    //ììŒ/ëª¨ìŒ ê°ê° 0xA4A1 ~ 0xA4D3 ìƒì„±
     vcBuffer[ 0 ] = ( char )0xA4;
     for( i = 0xA1 ; i <= 0xD3 ; i++ )
     {
         vcBuffer[ 1 ] = i;
         pclTempDC->TextOut( 0, 0, vcBuffer, 2 );
 
-        // ¸ğµç ÇÈ¼¿¿¡ ´ëÇØ¼­ ºñÆ®¸¶½ºÅ©¸¦ »ı¼º
+        // ëª¨ë“  í”½ì…€ì— ëŒ€í•´ì„œ ë¹„íŠ¸ë§ˆìŠ¤í¬ë¥¼ ìƒì„±
         SaveBitMask( pclTempDC, TRUE );
     }
 
     iCount = 0;
-    // ¿Ï¼ºÇü ÇÑ±Û 0xB0A1¿¡¼­ 0xC8FE »ı¼º
+    // ì™„ì„±í˜• í•œê¸€ 0xB0A1ì—ì„œ 0xC8FE ìƒì„±
     for( j = 0xB0 ; j <= 0xC8 ; j++ )
     {
         vcBuffer[ 0 ] = j;
@@ -325,7 +325,7 @@ void CFontMakerDlg::SaveHangulFont( CDC* pclTempDC )
             vcBuffer[ 1 ] = i;
             pclTempDC->TextOut( 0, 0, vcBuffer, 2 );
 
-            // ¸ğµç ÇÈ¼¿¿¡ ´ëÇØ¼­ ºñÆ®¸¶½ºÅ©¸¦ »ı¼º
+            // ëª¨ë“  í”½ì…€ì— ëŒ€í•´ì„œ ë¹„íŠ¸ë§ˆìŠ¤í¬ë¥¼ ìƒì„±
             SaveBitMask( pclTempDC, TRUE );
             iCount++;
         }
@@ -333,14 +333,14 @@ void CFontMakerDlg::SaveHangulFont( CDC* pclTempDC )
 
     TRACE( "Total Count = %d\n", iCount );
 
-    // µÚ·Î 3Ä­ ÀÌµ¿ÇÏ¿© ,\r\nÀ» »èÁ¦
+    // ë’¤ë¡œ 3ì¹¸ ì´ë™í•˜ì—¬ ,\r\nì„ ì‚­ì œ
     m_clFile.Seek( -3, SEEK_CUR );
     WriteFontData( "};\r\n" );
     CloseFontFile();
 }
 
 /**
-    ¿µ¹® ÆùÆ® ÆÄÀÏÀ» »ı¼º
+    ì˜ë¬¸ í°íŠ¸ íŒŒì¼ì„ ìƒì„±
 */
 void CFontMakerDlg::SaveEnglishFont( CDC* pclTempDC )
 {
@@ -349,37 +349,37 @@ void CFontMakerDlg::SaveEnglishFont( CDC* pclTempDC )
     char cBuffer;
 
 	//=========================================================================
-	// ÆùÆ® µ¥ÀÌÅÍ¸¦ »ı¼ºÇÑ ÆÄÀÏ¿¡ ÀúÀå
+	// í°íŠ¸ ë°ì´í„°ë¥¼ ìƒì„±í•œ íŒŒì¼ì— ì €ì¥
 	//=========================================================================
-    // ÆùÆ® ÆÄÀÏÀ» »ı¼º
+    // í°íŠ¸ íŒŒì¼ì„ ìƒì„±
     if( CreateEnglishFontFile() == FALSE )
     {
         return ;
     }
 
     iCount = 0;
-	// 0~255 ¹®ÀÚ »ı¼º
+	// 0~255 ë¬¸ì ìƒì„±
     for( i = 0 ; i <= 0xFF ; i++ )
     {
         cBuffer = i;
 		pclTempDC->FillSolidRect( 0, 0, 20, 20, RGB( 255, 255, 255 ) );
         pclTempDC->TextOut( 0, 0, &cBuffer, 1 );
 
-        // ¸ğµç ÇÈ¼¿¿¡ ´ëÇØ¼­ ºñÆ®¸¶½ºÅ©¸¦ »ı¼º
+        // ëª¨ë“  í”½ì…€ì— ëŒ€í•´ì„œ ë¹„íŠ¸ë§ˆìŠ¤í¬ë¥¼ ìƒì„±
         SaveBitMask( pclTempDC, FALSE );
         iCount++;
     }
 
     TRACE( "Total Count = %d\n", iCount );
 
-    // µÚ·Î 3Ä­ ÀÌµ¿ÇÏ¿© ,\r\nÀ» Áö¿ò
+    // ë’¤ë¡œ 3ì¹¸ ì´ë™í•˜ì—¬ ,\r\nì„ ì§€ì›€
     m_clFile.Seek( -3, SEEK_CUR );
     WriteFontData( "};\r\n" );
     CloseFontFile();
 }
 
 /**
-    ºñÆ® ¸¶½ºÅ©¸¦ ÀúÀå
+    ë¹„íŠ¸ ë§ˆìŠ¤í¬ë¥¼ ì €ì¥
 */
 void CFontMakerDlg::SaveBitMask( CDC* clTempDc, BOOL bHangul )
 {
@@ -389,8 +389,8 @@ void CFontMakerDlg::SaveBitMask( CDC* clTempDc, BOOL bHangul )
     unsigned short usBitMask;
 	int iFontWidth;
 
-	// ÇÑ±ÛÀÌ¸é ÆùÆ® ³Êºñ ¸¸Å­À» ¸ğµÎ °Ë»öÇÏ°í ¿µ¹®ÀÚÀÌ¸é ³Êºñ°¡ ÇÑ±ÛÀÇ ¹İÀÌ¹Ç·Î
-	// ¹İÀ¸·Î ¼³Á¤ÇÔ
+	// í•œê¸€ì´ë©´ í°íŠ¸ ë„ˆë¹„ ë§Œí¼ì„ ëª¨ë‘ ê²€ìƒ‰í•˜ê³  ì˜ë¬¸ìì´ë©´ ë„ˆë¹„ê°€ í•œê¸€ì˜ ë°˜ì´ë¯€ë¡œ
+	// ë°˜ìœ¼ë¡œ ì„¤ì •í•¨
 	if( bHangul == TRUE )
 	{
 		iFontWidth = m_iFontSize;
@@ -400,7 +400,7 @@ void CFontMakerDlg::SaveBitMask( CDC* clTempDc, BOOL bHangul )
 		iFontWidth = m_iFontSize / 2;
 	}
 
-    // ÆùÆ® ºñÆ®¸ÊÀ» »ı¼ºÇÏ¿© ÆÄÀÏ¿¡ ÀúÀå
+    // í°íŠ¸ ë¹„íŠ¸ë§µì„ ìƒì„±í•˜ì—¬ íŒŒì¼ì— ì €ì¥
     for( j = 0 ; j < m_iFontSize ; j++ )
     {
         usBitMask = 0;
@@ -412,7 +412,7 @@ void CFontMakerDlg::SaveBitMask( CDC* clTempDc, BOOL bHangul )
                 usBitMask |= ( 0x01 << ( iFontWidth - 1 - i ) );
             }
         }
-        // BitMask¸¦ ¾´´Ù.
+        // BitMaskë¥¼ ì“´ë‹¤.
         WriteFontData( usBitMask, bHangul );
         WriteFontData( "," );
     }
@@ -420,21 +420,21 @@ void CFontMakerDlg::SaveBitMask( CDC* clTempDc, BOOL bHangul )
 }
 
 /**
-    ÇÑ±Û ÆùÆ® ÆÄÀÏÀ» »ı¼º
-        ÆÄÀÏÀ» »ı¼ºÇÑ ÈÄ, C¾ğ¾î ¹è¿­ÀÇ Çì´õ¸¦ Ãß°¡
+    í•œê¸€ í°íŠ¸ íŒŒì¼ì„ ìƒì„±
+        íŒŒì¼ì„ ìƒì„±í•œ í›„, Cì–¸ì–´ ë°°ì—´ì˜ í—¤ë”ë¥¼ ì¶”ê°€
 */
 BOOL CFontMakerDlg::CreateHangulFontFile()
 {
-    char* pcHeader = "// ÀÚ¸ğ 51°³ + ¿Ï¼ºÇü 2350°³ ÆùÆ® µ¥ÀÌÅÍ, %dx%d pixel \r\n"
+    char* pcHeader = "// ìëª¨ 51ê°œ + ì™„ì„±í˜• 2350ê°œ í°íŠ¸ ë°ì´í„°, %dx%d pixel \r\n"
         "unsigned short g_vusHangulFont[] = { \r\n";
     char vcBuffer[ 1024 ];
 
 	sprintf( vcBuffer, pcHeader, m_iFontSize, m_iFontSize );
-	// ÆÄÀÏ »ı¼º
+	// íŒŒì¼ ìƒì„±
     if( m_clFile.Open( "HangulFont.c", CFile::modeCreate | 
         CFile::modeReadWrite ) == FALSE )
     {
-        AfxMessageBox( "ÆÄÀÏ »ı¼º¿¡ ½ÇÆĞÇß½À´Ï´Ù." );
+        AfxMessageBox( "íŒŒì¼ ìƒì„±ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤." );
         return FALSE;
     }
     m_clFile.Write( vcBuffer, strlen( vcBuffer ) );
@@ -442,21 +442,21 @@ BOOL CFontMakerDlg::CreateHangulFontFile()
 }
 
 /**
-    ¿µ¹® ÆùÆ® ÆÄÀÏÀ» »ı¼º
-        ÆÄÀÏÀ» »ı¼ºÇÑ ÈÄ, C¾ğ¾î ¹è¿­ÀÇ Çì´õ¸¦ Ãß°¡
+    ì˜ë¬¸ í°íŠ¸ íŒŒì¼ì„ ìƒì„±
+        íŒŒì¼ì„ ìƒì„±í•œ í›„, Cì–¸ì–´ ë°°ì—´ì˜ í—¤ë”ë¥¼ ì¶”ê°€
 */
 BOOL CFontMakerDlg::CreateEnglishFontFile()
 {
-    char* pcHeader = "// ¿µ¹®ÀÚ 256°³ ÆùÆ® µ¥ÀÌÅÍ, %dx%d pixel \r\n"
+    char* pcHeader = "// ì˜ë¬¸ì 256ê°œ í°íŠ¸ ë°ì´í„°, %dx%d pixel \r\n"
         "unsigned char g_vucEnglishFont[] = { \r\n";
     char vcBuffer[ 1024 ];
 
 	sprintf( vcBuffer, pcHeader, m_iFontSize / 2, m_iFontSize );
-	// ÆÄÀÏ »ı¼º
+	// íŒŒì¼ ìƒì„±
     if( m_clFile.Open( "EnglishFont.c", CFile::modeCreate | 
         CFile::modeReadWrite ) == FALSE )
     {
-        AfxMessageBox( "ÆÄÀÏ »ı¼º¿¡ ½ÇÆĞÇß½À´Ï´Ù." );
+        AfxMessageBox( "íŒŒì¼ ìƒì„±ì— ì‹¤íŒ¨í–ˆìŠµë‹ˆë‹¤." );
         return FALSE;
     }
     m_clFile.Write( vcBuffer, strlen( vcBuffer ) );
@@ -465,13 +465,13 @@ BOOL CFontMakerDlg::CreateEnglishFontFile()
 
 
 /**
-    Font ÆÄÀÏ¿¡ µ¥ÀÌÅÍ ÀúÀå
+    Font íŒŒì¼ì— ë°ì´í„° ì €ì¥
 */
 void CFontMakerDlg::WriteFontData( unsigned short usData, BOOL bHangul )
 {
     char vcBuffer[ 20 ];
 
-    // ÇÑ±ÛÀÏ °æ¿ì´Â 2byte·Î ¸¸µé°í ¿µ¹®ÀÏ °æ¿ì´Â 1byte·Î ÀúÀå
+    // í•œê¸€ì¼ ê²½ìš°ëŠ” 2byteë¡œ ë§Œë“¤ê³  ì˜ë¬¸ì¼ ê²½ìš°ëŠ” 1byteë¡œ ì €ì¥
 	if( bHangul == TRUE )
 	{
 		sprintf( vcBuffer, "0x%04X", usData );
@@ -485,7 +485,7 @@ void CFontMakerDlg::WriteFontData( unsigned short usData, BOOL bHangul )
 }
 
 /**
-    Font ÆÄÀÏ¿¡ µ¥ÀÌÅÍ¸¦ ¾¸
+    Font íŒŒì¼ì— ë°ì´í„°ë¥¼ ì”€
 */
 void CFontMakerDlg::WriteFontData( char* pcData )
 {
@@ -493,7 +493,7 @@ void CFontMakerDlg::WriteFontData( char* pcData )
 }
 
 /**
-    Font ÆÄÀÏÀ» ´İÀ½
+    Font íŒŒì¼ì„ ë‹«ìŒ
 */
 void CFontMakerDlg::CloseFontFile()
 {

@@ -3,25 +3,25 @@
  *  date    2009/07/19
  *  author  kkamagui 
  *          Copyright(c)2008 All rights reserved by kkamagui
- *  brief   I/O APIC¿¡ °ü·ÃµÈ ¼Ò½º ÆÄÀÏ
+ *  brief   I/O APICì— ê´€ë ¨ëœ ì†ŒìŠ¤ íŒŒì¼
  */
 
 #include "IOAPIC.h"
 #include "MPConfigurationTable.h"
 #include "PIC.h"
 
-// I/O APIC¸¦ °ü¸®ÇÏ´Â ÀÚ·á±¸Á¶
+// I/O APICë¥¼ ê´€ë¦¬í•˜ëŠ” ìžë£Œêµ¬ì¡°
 static IOAPICMANAGER gs_stIOAPICManager;
 
 /**
- *  ISA ¹ö½º°¡ ¿¬°áµÈ I/O APICÀÇ ±âÁØ ¾îµå·¹½º¸¦ ¹ÝÈ¯
+ *  ISA ë²„ìŠ¤ê°€ ì—°ê²°ëœ I/O APICì˜ ê¸°ì¤€ ì–´ë“œë ˆìŠ¤ë¥¼ ë°˜í™˜
  */
 QWORD kGetIOAPICBaseAddressOfISA( void )
 {
     MPCONFIGRUATIONMANAGER* pstMPManager;
     IOAPICENTRY* pstIOAPICEntry;
     
-    // I/O APICÀÇ ¾îµå·¹½º°¡ ÀúÀåµÇ¾î ÀÖÁö ¾ÊÀ¸¸é ¿£Æ®¸®¸¦ Ã£¾Æ¼­ ÀúÀå
+    // I/O APICì˜ ì–´ë“œë ˆìŠ¤ê°€ ì €ìž¥ë˜ì–´ ìžˆì§€ ì•Šìœ¼ë©´ ì—”íŠ¸ë¦¬ë¥¼ ì°¾ì•„ì„œ ì €ìž¥
     if( gs_stIOAPICManager.qwIOAPICBaseAddressOfISA == NULL )
     {
         pstIOAPICEntry = kFindIOAPICEntryForISA();
@@ -32,12 +32,12 @@ QWORD kGetIOAPICBaseAddressOfISA( void )
         }
     }
 
-    // I/O APICÀÇ ±âÁØ ¾îµå·¹½º¸¦ Ã£¾Æ¼­ ÀúÀåÇÑ ´ÙÀ½ ¹ÝÈ¯
+    // I/O APICì˜ ê¸°ì¤€ ì–´ë“œë ˆìŠ¤ë¥¼ ì°¾ì•„ì„œ ì €ìž¥í•œ ë‹¤ìŒ ë°˜í™˜
     return gs_stIOAPICManager.qwIOAPICBaseAddressOfISA;
 }
 
 /**
- *  I/O ¸®´ÙÀÌ·º¼Ç Å×ÀÌºí ÀÚ·á±¸Á¶¿¡ °ªÀ» ¼³Á¤
+ *  I/O ë¦¬ë‹¤ì´ë ‰ì…˜ í…Œì´ë¸” ìžë£Œêµ¬ì¡°ì— ê°’ì„ ì„¤ì •
  */
 void kSetIOAPICRedirectionEntry( IOREDIRECTIONTABLE* pstEntry, BYTE bAPICID,
         BYTE bInterruptMask, BYTE bFlagsAndDeliveryMode, BYTE bVector )
@@ -51,101 +51,101 @@ void kSetIOAPICRedirectionEntry( IOREDIRECTIONTABLE* pstEntry, BYTE bAPICID,
 }
 
 /**
- *  ÀÎÅÍ·´Æ® ÀÔ·Â ÇÉ(INTIN)¿¡ ÇØ´çÇÏ´Â I/O ¸®´ÙÀÌ·º¼Ç Å×ÀÌºí¿¡¼­ °ªÀ» ÀÐÀ½
+ *  ì¸í„°ëŸ½íŠ¸ ìž…ë ¥ í•€(INTIN)ì— í•´ë‹¹í•˜ëŠ” I/O ë¦¬ë‹¤ì´ë ‰ì…˜ í…Œì´ë¸”ì—ì„œ ê°’ì„ ì½ìŒ
  */
 void kReadIOAPICRedirectionTable( int iINTIN, IOREDIRECTIONTABLE* pstEntry )
 {
     QWORD* pqwData;
     QWORD qwIOAPICBaseAddress;
     
-    // ISA ¹ö½º°¡ ¿¬°áµÈ I/O APICÀÇ ¸Þ¸ð¸® ¸Ê I/O ¾îµå·¹½º
+    // ISA ë²„ìŠ¤ê°€ ì—°ê²°ëœ I/O APICì˜ ë©”ëª¨ë¦¬ ë§µ I/O ì–´ë“œë ˆìŠ¤
     qwIOAPICBaseAddress = kGetIOAPICBaseAddressOfISA();
     
-    // I/O ¸®´ÙÀÌ·º¼Ç Å×ÀÌºíÀº 8¹ÙÀÌÆ®ÀÌ¹Ç·Î, 8¹ÙÀÌÆ® Á¤¼ö·Î º¯È¯ÇØ¼­ Ã³¸®
+    // I/O ë¦¬ë‹¤ì´ë ‰ì…˜ í…Œì´ë¸”ì€ 8ë°”ì´íŠ¸ì´ë¯€ë¡œ, 8ë°”ì´íŠ¸ ì •ìˆ˜ë¡œ ë³€í™˜í•´ì„œ ì²˜ë¦¬
     pqwData = ( QWORD* ) pstEntry;
     
     //--------------------------------------------------------------------------
-    // I/O ¸®´ÙÀÌ·º¼Ç Å×ÀÌºíÀÇ »óÀ§ 4¹ÙÀÌÆ®¸¦ ÀÐÀ½
-    // I/O ¸®´ÙÀÌ·º¼Ç Å×ÀÌºíÀº »óÀ§ ·¹Áö½ºÅÍ¿Í ÇÏÀ§ ·¹Áö½ºÅÍ°¡ ÇÑ ½ÖÀÌ¹Ç·Î, INTIN¿¡
-    // 2¸¦ °öÇÏ¿© ÇØ´ç I/O ¸®´ÙÀÌ·º¼Ç Å×ÀÌºí ·¹Áö½ºÅÍÀÇ ÀÎµ¦½º¸¦ °è»ê
+    // I/O ë¦¬ë‹¤ì´ë ‰ì…˜ í…Œì´ë¸”ì˜ ìƒìœ„ 4ë°”ì´íŠ¸ë¥¼ ì½ìŒ
+    // I/O ë¦¬ë‹¤ì´ë ‰ì…˜ í…Œì´ë¸”ì€ ìƒìœ„ ë ˆì§€ìŠ¤í„°ì™€ í•˜ìœ„ ë ˆì§€ìŠ¤í„°ê°€ í•œ ìŒì´ë¯€ë¡œ, INTINì—
+    // 2ë¥¼ ê³±í•˜ì—¬ í•´ë‹¹ I/O ë¦¬ë‹¤ì´ë ‰ì…˜ í…Œì´ë¸” ë ˆì§€ìŠ¤í„°ì˜ ì¸ë±ìŠ¤ë¥¼ ê³„ì‚°
     //--------------------------------------------------------------------------
-    // I/O ·¹Áö½ºÅÍ ¼±ÅÃ ·¹Áö½ºÅÍ(0xFEC00000)¿¡ »óÀ§ I/O ¸®´ÙÀÌ·º¼Ç Å×ÀÌºí ·¹Áö½ºÅÍÀÇ
-    // ÀÎµ¦½º¸¦ Àü¼Û
+    // I/O ë ˆì§€ìŠ¤í„° ì„ íƒ ë ˆì§€ìŠ¤í„°(0xFEC00000)ì— ìƒìœ„ I/O ë¦¬ë‹¤ì´ë ‰ì…˜ í…Œì´ë¸” ë ˆì§€ìŠ¤í„°ì˜
+    // ì¸ë±ìŠ¤ë¥¼ ì „ì†¡
     *( DWORD* ) ( qwIOAPICBaseAddress + IOAPIC_REGISTER_IOREGISTERSELECTOR ) = 
         IOAPIC_REGISTERINDEX_HIGHIOREDIRECTIONTABLE + iINTIN * 2;
-    // I/O À©µµ¿ì ·¹Áö½ºÅÍ(0xFEC00010)¿¡¼­ »óÀ§ I/O ¸®´ÙÀÌ·º¼Ç Å×ÀÌºí ·¹Áö½ºÅÍÀÇ
-    // °ªÀ» ÀÐÀ½
+    // I/O ìœˆë„ìš° ë ˆì§€ìŠ¤í„°(0xFEC00010)ì—ì„œ ìƒìœ„ I/O ë¦¬ë‹¤ì´ë ‰ì…˜ í…Œì´ë¸” ë ˆì§€ìŠ¤í„°ì˜
+    // ê°’ì„ ì½ìŒ
     *pqwData = *( DWORD* ) ( qwIOAPICBaseAddress + IOAPIC_REGISTER_IOWINDOW );
     *pqwData = *pqwData << 32;
     
     //--------------------------------------------------------------------------
-    // I/O ¸®´ÙÀÌ·º¼Ç Å×ÀÌºíÀÇ ÇÏÀ§ 4¹ÙÀÌÆ®¸¦ ÀÐÀ½
-    // I/O ¸®´ÙÀÌ·º¼Ç Å×ÀÌºíÀº »óÀ§ ·¹Áö½ºÅÍ¿Í ÇÏÀ§ ·¹Áö½ºÅÍ°¡ ÇÑ ½ÖÀÌ¹Ç·Î, INTIN¿¡
-    // 2¸¦ °öÇÏ¿© ÇØ´ç I/O ¸®´ÙÀÌ·º¼Ç Å×ÀÌºí ·¹Áö½ºÅÍÀÇ ÀÎµ¦½º¸¦ °è»ê
+    // I/O ë¦¬ë‹¤ì´ë ‰ì…˜ í…Œì´ë¸”ì˜ í•˜ìœ„ 4ë°”ì´íŠ¸ë¥¼ ì½ìŒ
+    // I/O ë¦¬ë‹¤ì´ë ‰ì…˜ í…Œì´ë¸”ì€ ìƒìœ„ ë ˆì§€ìŠ¤í„°ì™€ í•˜ìœ„ ë ˆì§€ìŠ¤í„°ê°€ í•œ ìŒì´ë¯€ë¡œ, INTINì—
+    // 2ë¥¼ ê³±í•˜ì—¬ í•´ë‹¹ I/O ë¦¬ë‹¤ì´ë ‰ì…˜ í…Œì´ë¸” ë ˆì§€ìŠ¤í„°ì˜ ì¸ë±ìŠ¤ë¥¼ ê³„ì‚°
     //--------------------------------------------------------------------------
-    // I/O ·¹Áö½ºÅÍ ¼±ÅÃ ·¹Áö½ºÅÍ(0xFEC00000)¿¡ ÇÏÀ§ I/O ¸®´ÙÀÌ·º¼Ç Å×ÀÌºí ·¹Áö½ºÅÍÀÇ
-    // ÀÎµ¦½º¸¦ Àü¼Û
+    // I/O ë ˆì§€ìŠ¤í„° ì„ íƒ ë ˆì§€ìŠ¤í„°(0xFEC00000)ì— í•˜ìœ„ I/O ë¦¬ë‹¤ì´ë ‰ì…˜ í…Œì´ë¸” ë ˆì§€ìŠ¤í„°ì˜
+    // ì¸ë±ìŠ¤ë¥¼ ì „ì†¡
     *( DWORD* ) ( qwIOAPICBaseAddress + IOAPIC_REGISTER_IOREGISTERSELECTOR ) =
         IOAPIC_REGISTERINDEX_LOWIOREDIRECTIONTABLE + iINTIN * 2 ;
-    // I/O À©µµ¿ì ·¹Áö½ºÅÍ(0xFEC00010)¿¡¼­ ÇÏÀ§ I/O ¸®´ÙÀÌ·º¼Ç Å×ÀÌºí ·¹Áö½ºÅÍÀÇ
-    // °ªÀ» ÀÐÀ½
+    // I/O ìœˆë„ìš° ë ˆì§€ìŠ¤í„°(0xFEC00010)ì—ì„œ í•˜ìœ„ I/O ë¦¬ë‹¤ì´ë ‰ì…˜ í…Œì´ë¸” ë ˆì§€ìŠ¤í„°ì˜
+    // ê°’ì„ ì½ìŒ
     *pqwData |= *( DWORD* ) ( qwIOAPICBaseAddress + IOAPIC_REGISTER_IOWINDOW );
 }
 
 /**
- *  ÀÎÅÍ·´Æ® ÀÔ·Â ÇÉ(INTIN)¿¡ ÇØ´çÇÏ´Â I/O ¸®´ÙÀÌ·º¼Ç Å×ÀÌºí¿¡ °ªÀ» ¾¸
+ *  ì¸í„°ëŸ½íŠ¸ ìž…ë ¥ í•€(INTIN)ì— í•´ë‹¹í•˜ëŠ” I/O ë¦¬ë‹¤ì´ë ‰ì…˜ í…Œì´ë¸”ì— ê°’ì„ ì”€
  */
 void kWriteIOAPICRedirectionTable( int iINTIN, IOREDIRECTIONTABLE* pstEntry )
 {
     QWORD* pqwData;
     QWORD qwIOAPICBaseAddress;
     
-    // ISA ¹ö½º°¡ ¿¬°áµÈ I/O APICÀÇ ¸Þ¸ð¸® ¸Ê I/O ¾îµå·¹½º
+    // ISA ë²„ìŠ¤ê°€ ì—°ê²°ëœ I/O APICì˜ ë©”ëª¨ë¦¬ ë§µ I/O ì–´ë“œë ˆìŠ¤
     qwIOAPICBaseAddress = kGetIOAPICBaseAddressOfISA();
 
-    // I/O ¸®´ÙÀÌ·º¼Ç Å×ÀÌºíÀº 8¹ÙÀÌÆ®ÀÌ¹Ç·Î, 8¹ÙÀÌÆ® Á¤¼ö·Î º¯È¯ÇØ¼­ Ã³¸®
+    // I/O ë¦¬ë‹¤ì´ë ‰ì…˜ í…Œì´ë¸”ì€ 8ë°”ì´íŠ¸ì´ë¯€ë¡œ, 8ë°”ì´íŠ¸ ì •ìˆ˜ë¡œ ë³€í™˜í•´ì„œ ì²˜ë¦¬
     pqwData = ( QWORD* ) pstEntry;
     
     //--------------------------------------------------------------------------
-    // I/O ¸®´ÙÀÌ·º¼Ç Å×ÀÌºí¿¡ »óÀ§ 4¹ÙÀÌÆ®¸¦ ¾¸
-    // I/O ¸®´ÙÀÌ·º¼Ç Å×ÀÌºíÀº »óÀ§ ·¹Áö½ºÅÍ¿Í ÇÏÀ§ ·¹Áö½ºÅÍ°¡ ÇÑ ½ÖÀÌ¹Ç·Î, INTIN¿¡
-    // 2¸¦ °öÇÏ¿© ÇØ´ç I/O ¸®´ÙÀÌ·º¼Ç Å×ÀÌºí ·¹Áö½ºÅÍÀÇ ÀÎµ¦½º¸¦ °è»ê
+    // I/O ë¦¬ë‹¤ì´ë ‰ì…˜ í…Œì´ë¸”ì— ìƒìœ„ 4ë°”ì´íŠ¸ë¥¼ ì”€
+    // I/O ë¦¬ë‹¤ì´ë ‰ì…˜ í…Œì´ë¸”ì€ ìƒìœ„ ë ˆì§€ìŠ¤í„°ì™€ í•˜ìœ„ ë ˆì§€ìŠ¤í„°ê°€ í•œ ìŒì´ë¯€ë¡œ, INTINì—
+    // 2ë¥¼ ê³±í•˜ì—¬ í•´ë‹¹ I/O ë¦¬ë‹¤ì´ë ‰ì…˜ í…Œì´ë¸” ë ˆì§€ìŠ¤í„°ì˜ ì¸ë±ìŠ¤ë¥¼ ê³„ì‚°
     //--------------------------------------------------------------------------
-    // I/O ·¹Áö½ºÅÍ ¼±ÅÃ ·¹Áö½ºÅÍ(0xFEC00000)¿¡ »óÀ§ I/O ¸®´ÙÀÌ·º¼Ç Å×ÀÌºí ·¹Áö½ºÅÍÀÇ
-    // ÀÎµ¦½º¸¦ Àü¼Û
+    // I/O ë ˆì§€ìŠ¤í„° ì„ íƒ ë ˆì§€ìŠ¤í„°(0xFEC00000)ì— ìƒìœ„ I/O ë¦¬ë‹¤ì´ë ‰ì…˜ í…Œì´ë¸” ë ˆì§€ìŠ¤í„°ì˜
+    // ì¸ë±ìŠ¤ë¥¼ ì „ì†¡
     *( DWORD* ) ( qwIOAPICBaseAddress + IOAPIC_REGISTER_IOREGISTERSELECTOR ) = 
         IOAPIC_REGISTERINDEX_HIGHIOREDIRECTIONTABLE + iINTIN * 2;
-    // I/O À©µµ¿ì ·¹Áö½ºÅÍ(0xFEC00010)¿¡ »óÀ§ I/O ¸®´ÙÀÌ·º¼Ç Å×ÀÌºí ·¹Áö½ºÅÍÀÇ
-    // °ªÀ» ¾¸
+    // I/O ìœˆë„ìš° ë ˆì§€ìŠ¤í„°(0xFEC00010)ì— ìƒìœ„ I/O ë¦¬ë‹¤ì´ë ‰ì…˜ í…Œì´ë¸” ë ˆì§€ìŠ¤í„°ì˜
+    // ê°’ì„ ì”€
     *( DWORD* ) ( qwIOAPICBaseAddress + IOAPIC_REGISTER_IOWINDOW ) = *pqwData >> 32;
     
     //--------------------------------------------------------------------------
-    // I/O ¸®´ÙÀÌ·º¼Ç Å×ÀÌºí¿¡ ÇÏÀ§ 4¹ÙÀÌÆ®¸¦ ¾¸
-    // I/O ¸®´ÙÀÌ·º¼Ç Å×ÀÌºíÀº »óÀ§ ·¹Áö½ºÅÍ¿Í ÇÏÀ§ ·¹Áö½ºÅÍ°¡ ÇÑ ½ÖÀÌ¹Ç·Î, INTIN¿¡
-    // 2¸¦ °öÇÏ¿© ÇØ´ç I/O ¸®´ÙÀÌ·º¼Ç Å×ÀÌºí ·¹Áö½ºÅÍÀÇ ÀÎµ¦½º¸¦ °è»ê
+    // I/O ë¦¬ë‹¤ì´ë ‰ì…˜ í…Œì´ë¸”ì— í•˜ìœ„ 4ë°”ì´íŠ¸ë¥¼ ì”€
+    // I/O ë¦¬ë‹¤ì´ë ‰ì…˜ í…Œì´ë¸”ì€ ìƒìœ„ ë ˆì§€ìŠ¤í„°ì™€ í•˜ìœ„ ë ˆì§€ìŠ¤í„°ê°€ í•œ ìŒì´ë¯€ë¡œ, INTINì—
+    // 2ë¥¼ ê³±í•˜ì—¬ í•´ë‹¹ I/O ë¦¬ë‹¤ì´ë ‰ì…˜ í…Œì´ë¸” ë ˆì§€ìŠ¤í„°ì˜ ì¸ë±ìŠ¤ë¥¼ ê³„ì‚°
     //--------------------------------------------------------------------------
-    // I/O ·¹Áö½ºÅÍ ¼±ÅÃ ·¹Áö½ºÅÍ(0xFEC00000)¿¡ ÇÏÀ§ I/O ¸®´ÙÀÌ·º¼Ç Å×ÀÌºí ·¹Áö½ºÅÍÀÇ
-    // ÀÎµ¦½º¸¦ Àü¼Û
+    // I/O ë ˆì§€ìŠ¤í„° ì„ íƒ ë ˆì§€ìŠ¤í„°(0xFEC00000)ì— í•˜ìœ„ I/O ë¦¬ë‹¤ì´ë ‰ì…˜ í…Œì´ë¸” ë ˆì§€ìŠ¤í„°ì˜
+    // ì¸ë±ìŠ¤ë¥¼ ì „ì†¡
     *( DWORD* ) ( qwIOAPICBaseAddress + IOAPIC_REGISTER_IOREGISTERSELECTOR ) =
         IOAPIC_REGISTERINDEX_LOWIOREDIRECTIONTABLE + iINTIN * 2 ;
-    // I/O À©µµ¿ì ·¹Áö½ºÅÍ(0xFEC00010)¿¡ ÇÏÀ§ I/O ¸®´ÙÀÌ·º¼Ç Å×ÀÌºí ·¹Áö½ºÅÍÀÇ
-    // °ªÀ» ¾¸
+    // I/O ìœˆë„ìš° ë ˆì§€ìŠ¤í„°(0xFEC00010)ì— í•˜ìœ„ I/O ë¦¬ë‹¤ì´ë ‰ì…˜ í…Œì´ë¸” ë ˆì§€ìŠ¤í„°ì˜
+    // ê°’ì„ ì”€
     *( DWORD* ) ( qwIOAPICBaseAddress + IOAPIC_REGISTER_IOWINDOW ) = *pqwData;
 }
 
 /**
- *  I/O APIC¿¡ ¿¬°áµÈ ¸ðµç ÀÎÅÍ·´Æ® ÇÉÀ» ¸¶½ºÅ©ÇÏ¿© ÀÎÅÍ·´Æ®°¡ Àü´ÞµÇÁö ¾Êµµ·Ï ÇÔ
+ *  I/O APICì— ì—°ê²°ëœ ëª¨ë“  ì¸í„°ëŸ½íŠ¸ í•€ì„ ë§ˆìŠ¤í¬í•˜ì—¬ ì¸í„°ëŸ½íŠ¸ê°€ ì „ë‹¬ë˜ì§€ ì•Šë„ë¡ í•¨
  */
 void kMaskAllInterruptInIOAPIC( void )
 {
     IOREDIRECTIONTABLE stEntry;
     int i;
     
-    // ¸ðµç ÀÎÅÍ·´Æ®¸¦ ºñÈ°¼ºÈ­
+    // ëª¨ë“  ì¸í„°ëŸ½íŠ¸ë¥¼ ë¹„í™œì„±í™”
     for( i = 0 ; i < IOAPIC_MAXIOREDIRECTIONTABLECOUNT ; i++ )
     {
-        // I/O ¸®´ÙÀÌ·º¼Ç Å×ÀÌºíÀ» ÀÐ¾î¼­ ÀÎÅÍ·´Æ® ¸¶½ºÅ© ÇÊµå(ºñÆ® 0)¸¦ 1·Î 
-        // ¼³Á¤ÇÏ¿© ´Ù½Ã ÀúÀå
+        // I/O ë¦¬ë‹¤ì´ë ‰ì…˜ í…Œì´ë¸”ì„ ì½ì–´ì„œ ì¸í„°ëŸ½íŠ¸ ë§ˆìŠ¤í¬ í•„ë“œ(ë¹„íŠ¸ 0)ë¥¼ 1ë¡œ 
+        // ì„¤ì •í•˜ì—¬ ë‹¤ì‹œ ì €ìž¥
         kReadIOAPICRedirectionTable( i, &stEntry );
         stEntry.bInterruptMask = IOAPIC_INTERRUPT_MASK;
         kWriteIOAPICRedirectionTable( i, &stEntry );
@@ -153,7 +153,7 @@ void kMaskAllInterruptInIOAPIC( void )
 }
 
 /**
- *  I/O APICÀÇ I/O ¸®´ÙÀÌ·º¼Ç Å×ÀÌºíÀ» ÃÊ±âÈ­
+ *  I/O APICì˜ I/O ë¦¬ë‹¤ì´ë ‰ì…˜ í…Œì´ë¸”ì„ ì´ˆê¸°í™”
  */
 void kInitializeIORedirectionTable( void )
 {
@@ -167,49 +167,49 @@ void kInitializeIORedirectionTable( void )
     int i;
 
     //==========================================================================
-    // I/O APIC¸¦ °ü¸®ÇÏ´Â ÀÚ·á±¸Á¶¸¦ ÃÊ±âÈ­
+    // I/O APICë¥¼ ê´€ë¦¬í•˜ëŠ” ìžë£Œêµ¬ì¡°ë¥¼ ì´ˆê¸°í™”
     //==========================================================================
     kMemSet( &gs_stIOAPICManager, 0, sizeof( gs_stIOAPICManager ) );
     
-    // I/O APICÀÇ ¸Þ¸ð¸® ¸Ê I/O ¾îµå·¹½º ÀúÀå, ¾Æ·¡ ÇÔ¼ö¿¡¼­ ³»ºÎÀûÀ¸·Î Ã³¸®ÇÔ
+    // I/O APICì˜ ë©”ëª¨ë¦¬ ë§µ I/O ì–´ë“œë ˆìŠ¤ ì €ìž¥, ì•„ëž˜ í•¨ìˆ˜ì—ì„œ ë‚´ë¶€ì ìœ¼ë¡œ ì²˜ë¦¬í•¨
     kGetIOAPICBaseAddressOfISA();
     
-    // IRQ¸¦ I/O APICÀÇ INTIN ÇÉ°ú ¿¬°áÇÑ Å×ÀÌºí(IRQ->INTIN ¸ÅÇÎ Å×ÀÌºí)À» ÃÊ±âÈ­
+    // IRQë¥¼ I/O APICì˜ INTIN í•€ê³¼ ì—°ê²°í•œ í…Œì´ë¸”(IRQ->INTIN ë§¤í•‘ í…Œì´ë¸”)ì„ ì´ˆê¸°í™”
     for( i = 0 ; i < IOAPIC_MAXIRQTOINTINMAPCOUNT ; i++ )
     {
         gs_stIOAPICManager.vbIRQToINTINMap[ i ] = 0xFF;
     }
     
     //==========================================================================
-    // I/O APIC¸¦ ¸¶½ºÅ©ÇÏ¿© ÀÎÅÍ·´Æ®°¡ ¹ß»ýÇÏÁö ¾Êµµ·Ï ÇÏ°í I/O ¸®´ÙÀÌ·º¼Ç Å×ÀÌºí ÃÊ±âÈ­
+    // I/O APICë¥¼ ë§ˆìŠ¤í¬í•˜ì—¬ ì¸í„°ëŸ½íŠ¸ê°€ ë°œìƒí•˜ì§€ ì•Šë„ë¡ í•˜ê³  I/O ë¦¬ë‹¤ì´ë ‰ì…˜ í…Œì´ë¸” ì´ˆê¸°í™”
     //==========================================================================
-    // ¸ÕÀú I/O APICÀÇ ÀÎÅÍ·´Æ®¸¦ ¸¶½ºÅ©ÇÏ¿© ÀÎÅÍ·´Æ®°¡ ¹ß»ýÇÏÁö ¾Êµµ·Ï ÇÔ
+    // ë¨¼ì € I/O APICì˜ ì¸í„°ëŸ½íŠ¸ë¥¼ ë§ˆìŠ¤í¬í•˜ì—¬ ì¸í„°ëŸ½íŠ¸ê°€ ë°œìƒí•˜ì§€ ì•Šë„ë¡ í•¨
     kMaskAllInterruptInIOAPIC();
     
-    // IO ÀÎÅÍ·´Æ® ÁöÁ¤ ¿£Æ®¸® Áß¿¡¼­ ISA ¹ö½º¿Í °ü·ÃµÈ ÀÎÅÍ·´Æ®¸¸ Ãß·Á¼­ I/O ¸®´ÙÀÌ·º¼Ç
-    // Å×ÀÌºí¿¡ ¼³Á¤
-    // MP ¼³Á¤ Å×ÀÌºí Çì´õÀÇ ½ÃÀÛ ¾îµå·¹½º¿Í ¿£Æ®¸®ÀÇ ½ÃÀÛ ¾îµå·¹½º¸¦ ÀúÀå
+    // IO ì¸í„°ëŸ½íŠ¸ ì§€ì • ì—”íŠ¸ë¦¬ ì¤‘ì—ì„œ ISA ë²„ìŠ¤ì™€ ê´€ë ¨ëœ ì¸í„°ëŸ½íŠ¸ë§Œ ì¶”ë ¤ì„œ I/O ë¦¬ë‹¤ì´ë ‰ì…˜
+    // í…Œì´ë¸”ì— ì„¤ì •
+    // MP ì„¤ì • í…Œì´ë¸” í—¤ë”ì˜ ì‹œìž‘ ì–´ë“œë ˆìŠ¤ì™€ ì—”íŠ¸ë¦¬ì˜ ì‹œìž‘ ì–´ë“œë ˆìŠ¤ë¥¼ ì €ìž¥
     pstMPManager = kGetMPConfigurationManager();
     pstMPHeader = pstMPManager->pstMPConfigurationTableHeader;
     qwEntryAddress = pstMPManager->qwBaseEntryStartAddress;
     
-    // ¸ðµç ¿£Æ®¸®¸¦ È®ÀÎÇÏ¿© ISA ¹ö½º¿Í °ü·ÃµÈ I/O ÀÎÅÍ·´Æ® ÁöÁ¤ ¿£Æ®¸®¸¦ °Ë»ö
+    // ëª¨ë“  ì—”íŠ¸ë¦¬ë¥¼ í™•ì¸í•˜ì—¬ ISA ë²„ìŠ¤ì™€ ê´€ë ¨ëœ I/O ì¸í„°ëŸ½íŠ¸ ì§€ì • ì—”íŠ¸ë¦¬ë¥¼ ê²€ìƒ‰
     for( i = 0 ; i < pstMPHeader->wEntryCount ; i++ )
     {
         bEntryType = *( BYTE* ) qwEntryAddress;
         switch( bEntryType )
         {
-            // IO ÀÎÅÍ·´Æ® ÁöÁ¤ ¿£Æ®¸®ÀÌ¸é, ISA ¹ö½ºÀÎÁö È®ÀÎÇÏ¿© I/O ¸®´ÙÀÌ·º¼Ç
-            // Å×ÀÌºí¿¡ ¼³Á¤ÇÏ°í IRQ->INITIN ¸ÅÇÎ Å×ÀÌºíÀ» ±¸¼º
+            // IO ì¸í„°ëŸ½íŠ¸ ì§€ì • ì—”íŠ¸ë¦¬ì´ë©´, ISA ë²„ìŠ¤ì¸ì§€ í™•ì¸í•˜ì—¬ I/O ë¦¬ë‹¤ì´ë ‰ì…˜
+            // í…Œì´ë¸”ì— ì„¤ì •í•˜ê³  IRQ->INITIN ë§¤í•‘ í…Œì´ë¸”ì„ êµ¬ì„±
         case MP_ENTRYTYPE_IOINTERRUPTASSIGNMENT:
             pstIOAssignmentEntry = ( IOINTERRUPTASSIGNMENTENTRY* ) qwEntryAddress;
 
-            // ÀÎÅÍ·´Æ® Å¸ÀÔÀÌ ÀÎÅÍ·´Æ®(INT)ÀÎ °Í¸¸ Ã³¸®
+            // ì¸í„°ëŸ½íŠ¸ íƒ€ìž…ì´ ì¸í„°ëŸ½íŠ¸(INT)ì¸ ê²ƒë§Œ ì²˜ë¦¬
             if( ( pstIOAssignmentEntry->bSourceBUSID == pstMPManager->bISABusID ) &&
                 ( pstIOAssignmentEntry->bInterruptType == MP_INTERRUPTTYPE_INT ) )                        
             {
-                // ¸ñÀûÁö ÇÊµå´Â IRQ 0¸¦ Á¦¿ÜÇÏ°í 0x00À¸·Î ¼³Á¤ÇÏ¿© Bootstrap Processor¸¸ Àü´Þ
-                // IRQ 0´Â ½ºÄÉÁÙ·¯¿¡ »ç¿ëÇØ¾ß ÇÏ¹Ç·Î 0xFF·Î ¼³Á¤ÇÏ¿© ¸ðµç ÄÚ¾î·Î Àü´Þ
+                // ëª©ì ì§€ í•„ë“œëŠ” IRQ 0ë¥¼ ì œì™¸í•˜ê³  0x00ìœ¼ë¡œ ì„¤ì •í•˜ì—¬ Bootstrap Processorë§Œ ì „ë‹¬
+                // IRQ 0ëŠ” ìŠ¤ì¼€ì¤„ëŸ¬ì— ì‚¬ìš©í•´ì•¼ í•˜ë¯€ë¡œ 0xFFë¡œ ì„¤ì •í•˜ì—¬ ëª¨ë“  ì½”ì–´ë¡œ ì „ë‹¬
                 if( pstIOAssignmentEntry->bSourceBUSIRQ == 0 )
                 {
                     bDestination = 0xFF;
@@ -219,33 +219,33 @@ void kInitializeIORedirectionTable( void )
                     bDestination = 0x00;
                 }
                 
-                // ISA ¹ö½º´Â ¿§Áö Æ®¸®°Å(Edge Trigger)¿Í 1ÀÏ ¶§ È°¼ºÈ­(Active High)¸¦
-                // »ç¿ë
-                // ¸ñÀûÁö ¸ðµå´Â ¹°¸® ¸ðµå, Àü´Þ ¸ðµå´Â °íÁ¤(Fixed)À¸·Î ÇÒ´ç
-                // ÀÎÅÍ·´Æ® º¤ÅÍ´Â PIC ÄÁÆ®·Ñ·¯ÀÇ º¤ÅÍ¿Í °°ÀÌ 0x20 + IRQ·Î ¼³Á¤
+                // ISA ë²„ìŠ¤ëŠ” ì—£ì§€ íŠ¸ë¦¬ê±°(Edge Trigger)ì™€ 1ì¼ ë•Œ í™œì„±í™”(Active High)ë¥¼
+                // ì‚¬ìš©
+                // ëª©ì ì§€ ëª¨ë“œëŠ” ë¬¼ë¦¬ ëª¨ë“œ, ì „ë‹¬ ëª¨ë“œëŠ” ê³ ì •(Fixed)ìœ¼ë¡œ í• ë‹¹
+                // ì¸í„°ëŸ½íŠ¸ ë²¡í„°ëŠ” PIC ì»¨íŠ¸ë¡¤ëŸ¬ì˜ ë²¡í„°ì™€ ê°™ì´ 0x20 + IRQë¡œ ì„¤ì •
                 kSetIOAPICRedirectionEntry( &stIORedirectionEntry, bDestination, 
                     0x00, IOAPIC_TRIGGERMODE_EDGE | IOAPIC_POLARITY_ACTIVEHIGH |
                     IOAPIC_DESTINATIONMODE_PHYSICALMODE | IOAPIC_DELIVERYMODE_FIXED, 
                     PIC_IRQSTARTVECTOR + pstIOAssignmentEntry->bSourceBUSIRQ );
                 
-                // ISA ¹ö½º¿¡¼­ Àü´ÞµÈ IRQ´Â I/O APICÀÇ INTIN ÇÉ¿¡ ÀÖÀ¸¹Ç·Î, INTIN °ªÀ»
-                // ÀÌ¿ëÇÏ¿© Ã³¸®
+                // ISA ë²„ìŠ¤ì—ì„œ ì „ë‹¬ëœ IRQëŠ” I/O APICì˜ INTIN í•€ì— ìžˆìœ¼ë¯€ë¡œ, INTIN ê°’ì„
+                // ì´ìš©í•˜ì—¬ ì²˜ë¦¬
                 kWriteIOAPICRedirectionTable( pstIOAssignmentEntry->bDestinationIOAPICINTIN, 
                         &stIORedirectionEntry );
                 
-                // IRQ¿Í ÀÎÅÍ·´Æ® ÀÔ·Â ÇÉ(INTIN)ÀÇ °ü°è¸¦ ÀúÀå(IRQ->INTIN ¸ÅÇÎ Å×ÀÌºí ±¸¼º)
+                // IRQì™€ ì¸í„°ëŸ½íŠ¸ ìž…ë ¥ í•€(INTIN)ì˜ ê´€ê³„ë¥¼ ì €ìž¥(IRQ->INTIN ë§¤í•‘ í…Œì´ë¸” êµ¬ì„±)
                 gs_stIOAPICManager.vbIRQToINTINMap[ pstIOAssignmentEntry->bSourceBUSIRQ ] =
                     pstIOAssignmentEntry->bDestinationIOAPICINTIN;                
             }                    
             qwEntryAddress += sizeof( IOINTERRUPTASSIGNMENTENTRY );
             break;
         
-            // ÇÁ·Î¼¼½º ¿£Æ®¸®´Â ¹«½Ã
+            // í”„ë¡œì„¸ìŠ¤ ì—”íŠ¸ë¦¬ëŠ” ë¬´ì‹œ
         case MP_ENTRYTYPE_PROCESSOR:
             qwEntryAddress += sizeof( PROCESSORENTRY );
             break;
             
-            // ¹ö½º ¿£Æ®¸®, I/O APIC ¿£Æ®¸®, ·ÎÄÃ ÀÎÅÍ·´Æ® ÁöÁ¤ ¿£Æ®¸®´Â ¹«½Ã
+            // ë²„ìŠ¤ ì—”íŠ¸ë¦¬, I/O APIC ì—”íŠ¸ë¦¬, ë¡œì»¬ ì¸í„°ëŸ½íŠ¸ ì§€ì • ì—”íŠ¸ë¦¬ëŠ” ë¬´ì‹œ
         case MP_ENTRYTYPE_BUS:
         case MP_ENTRYTYPE_IOAPIC:
         case MP_ENTRYTYPE_LOCALINTERRUPTASSIGNMENT:
@@ -256,7 +256,7 @@ void kInitializeIORedirectionTable( void )
 }
 
 /**
- *  IRQ¿Í I/O APICÀÇ ÀÎÅÍ·´Æ® ÇÉ(INT IN)°£ÀÇ ¸ÅÇÎ °ü°è¸¦ Ãâ·Â
+ *  IRQì™€ I/O APICì˜ ì¸í„°ëŸ½íŠ¸ í•€(INT IN)ê°„ì˜ ë§¤í•‘ ê´€ê³„ë¥¼ ì¶œë ¥
  */
 void kPrintIRQToINTINMap( void )
 {
@@ -271,20 +271,20 @@ void kPrintIRQToINTINMap( void )
 }
 
 /**
- *  IRQ¸¦ ·ÎÄÃ APIC ID·Î Àü´ÞÇÏµµ·Ï º¯°æ
+ *  IRQë¥¼ ë¡œì»¬ APIC IDë¡œ ì „ë‹¬í•˜ë„ë¡ ë³€ê²½
  */
 void kRoutingIRQToAPICID( int iIRQ, BYTE bAPICID )
 {
     int i;
     IOREDIRECTIONTABLE stEntry;
 
-    // ¹üÀ§ °Ë»ç
+    // ë²”ìœ„ ê²€ì‚¬
     if( iIRQ > IOAPIC_MAXIRQTOINTINMAPCOUNT )
     {
         return ;
     }
     
-    // ¼³Á¤µÈ I/O ¸®´ÙÀÌ·º¼Ç Å×ÀÌºíÀ» ÀÐ¾î¼­ ¸ñÀûÁö(Destination) ÇÊµå¸¸ ¼öÁ¤
+    // ì„¤ì •ëœ I/O ë¦¬ë‹¤ì´ë ‰ì…˜ í…Œì´ë¸”ì„ ì½ì–´ì„œ ëª©ì ì§€(Destination) í•„ë“œë§Œ ìˆ˜ì •
     kReadIOAPICRedirectionTable( gs_stIOAPICManager.vbIRQToINTINMap[ iIRQ ],
             &stEntry );
     stEntry.bDestination = bAPICID;

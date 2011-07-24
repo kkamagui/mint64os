@@ -3,7 +3,7 @@
  *  date    2009/01/16
  *  author  kkamagui 
  *          Copyright(c)2008 All rights reserved by kkamagui
- *  brief   GDT ¹× IDT¿¡ °ü·ÃµÈ °¢Á¾ µð½ºÅ©¸³ÅÍ¿¡ ´ëÇÑ ÆÄÀÏ
+ *  brief   GDT ë° IDTì— ê´€ë ¨ëœ ê°ì¢… ë””ìŠ¤í¬ë¦½í„°ì— ëŒ€í•œ íŒŒì¼
  */
 
 #include "Descriptor.h"
@@ -12,11 +12,11 @@
 #include "MultiProcessor.h"
 
 //==============================================================================
-//  GDT ¹× TSS
+//  GDT ë° TSS
 //==============================================================================
 
 /**
- *  GDT Å×ÀÌºíÀ» ÃÊ±âÈ­
+ *  GDT í…Œì´ë¸”ì„ ì´ˆê¸°í™”
  */
 void kInitializeGDTTableAndTSS( void )
 {
@@ -25,46 +25,46 @@ void kInitializeGDTTableAndTSS( void )
     TSSSEGMENT* pstTSS;
     int i;
     
-    // GDTR ¼³Á¤
+    // GDTR ì„¤ì •
     pstGDTR = ( GDTR* ) GDTR_STARTADDRESS;
     pstEntry = ( GDTENTRY8* ) ( GDTR_STARTADDRESS + sizeof( GDTR ) );
     pstGDTR->wLimit = GDT_TABLESIZE - 1;
     pstGDTR->qwBaseAddress = ( QWORD ) pstEntry;
     
-    // TSS ¼¼±×¸ÕÆ® ¿µ¿ª ¼³Á¤, GDT Å×ÀÌºíÀÇ µÚÂÊ¿¡ À§Ä¡
+    // TSS ì„¸ê·¸ë¨¼íŠ¸ ì˜ì—­ ì„¤ì •, GDT í…Œì´ë¸”ì˜ ë’¤ìª½ì— ìœ„ì¹˜
     pstTSS = ( TSSSEGMENT* ) ( ( QWORD ) pstEntry + GDT_TABLESIZE );
 
-   // NULL, Ä¿³Î ÄÚµå/µ¥ÀÌÅÍ, À¯Àú ÄÚµå/µ¥ÀÌÅÍ, TSS¸¦ À§ÇØ ÃÑ 5 + 16°³ÀÇ ¼¼±×¸ÕÆ®¸¦ »ý¼º
+   // NULL, ì»¤ë„ ì½”ë“œ/ë°ì´í„°, ìœ ì € ì½”ë“œ/ë°ì´í„°, TSSë¥¼ ìœ„í•´ ì´ 5 + 16ê°œì˜ ì„¸ê·¸ë¨¼íŠ¸ë¥¼ ìƒì„±
     kSetGDTEntry8( &( pstEntry[ 0 ] ), 0, 0, 0, 0, 0 );
-    // Ä¿³Î ·¹º§ ÄÚµå/µ¥ÀÌÅÍ µð½ºÅ©¸³ÅÍ »ý¼º
+    // ì»¤ë„ ë ˆë²¨ ì½”ë“œ/ë°ì´í„° ë””ìŠ¤í¬ë¦½í„° ìƒì„±
     kSetGDTEntry8( &( pstEntry[ 1 ] ), 0, 0xFFFFF, GDT_FLAGS_UPPER_CODE, 
             GDT_FLAGS_LOWER_KERNELCODE, GDT_TYPE_CODE );
     kSetGDTEntry8( &( pstEntry[ 2 ] ), 0, 0xFFFFF, GDT_FLAGS_UPPER_DATA,
             GDT_FLAGS_LOWER_KERNELDATA, GDT_TYPE_DATA );
-    // À¯Àú ·¹º§ ÄÚµå/µ¥ÀÌÅÍ µð½ºÅ©¸³ÅÍ »ý¼º
+    // ìœ ì € ë ˆë²¨ ì½”ë“œ/ë°ì´í„° ë””ìŠ¤í¬ë¦½í„° ìƒì„±
     kSetGDTEntry8( &( pstEntry[ 3 ] ), 0, 0xFFFFF, GDT_FLAGS_UPPER_DATA,
             GDT_FLAGS_LOWER_USERDATA, GDT_TYPE_DATA );
     kSetGDTEntry8( &( pstEntry[ 4 ] ), 0, 0xFFFFF, GDT_FLAGS_UPPER_CODE, 
             GDT_FLAGS_LOWER_USERCODE, GDT_TYPE_CODE );
     
-    // 16°³ ÄÚ¾î Áö¿øÀ» À§ÇØ 16°³ÀÇ TSS µð½ºÅ©¸³ÅÍ¸¦ »ý¼º
+    // 16ê°œ ì½”ì–´ ì§€ì›ì„ ìœ„í•´ 16ê°œì˜ TSS ë””ìŠ¤í¬ë¦½í„°ë¥¼ ìƒì„±
     for( i = 0 ; i < MAXPROCESSORCOUNT ; i++ )
     {
-        // TSS´Â 16¹ÙÀÌÆ®ÀÌ¹Ç·Î, kSetGDTEntry16() ÇÔ¼ö »ç¿ë
-        // pstEntry´Â 8¹ÙÀÌÆ®ÀÌ¹Ç·Î 2°³¸¦ ÇÕÃÄ¼­ ÇÏ³ª·Î »ç¿ë
+        // TSSëŠ” 16ë°”ì´íŠ¸ì´ë¯€ë¡œ, kSetGDTEntry16() í•¨ìˆ˜ ì‚¬ìš©
+        // pstEntryëŠ” 8ë°”ì´íŠ¸ì´ë¯€ë¡œ 2ê°œë¥¼ í•©ì³ì„œ í•˜ë‚˜ë¡œ ì‚¬ìš©
         kSetGDTEntry16( ( GDTENTRY16* ) &( pstEntry[ GDT_MAXENTRY8COUNT + 
                 ( i * 2 ) ] ), ( QWORD ) pstTSS + ( i * sizeof( TSSSEGMENT ) ), 
                 sizeof( TSSSEGMENT ) - 1, GDT_FLAGS_UPPER_TSS, 
                 GDT_FLAGS_LOWER_TSS, GDT_TYPE_TSS ); 
     }
     
-    // TSS ÃÊ±âÈ­, GDT ÀÌÇÏ ¿µ¿ªÀ» »ç¿ëÇÔ
+    // TSS ì´ˆê¸°í™”, GDT ì´í•˜ ì˜ì—­ì„ ì‚¬ìš©í•¨
     kInitializeTSSSegment( pstTSS );    
 }
 
 /**
- *  8¹ÙÀÌÆ® Å©±âÀÇ GDT ¿£Æ®¸®¿¡ °ªÀ» ¼³Á¤
- *      ÄÚµå¿Í µ¥ÀÌÅÍ ¼¼±×¸ÕÆ® µð½ºÅ©¸³ÅÍ¸¦ ¼³Á¤ÇÏ´Âµ¥ »ç¿ë
+ *  8ë°”ì´íŠ¸ í¬ê¸°ì˜ GDT ì—”íŠ¸ë¦¬ì— ê°’ì„ ì„¤ì •
+ *      ì½”ë“œì™€ ë°ì´í„° ì„¸ê·¸ë¨¼íŠ¸ ë””ìŠ¤í¬ë¦½í„°ë¥¼ ì„¤ì •í•˜ëŠ”ë° ì‚¬ìš©
  */
 void kSetGDTEntry8( GDTENTRY8* pstEntry, DWORD dwBaseAddress, DWORD dwLimit,
         BYTE bUpperFlags, BYTE bLowerFlags, BYTE bType )
@@ -79,8 +79,8 @@ void kSetGDTEntry8( GDTENTRY8* pstEntry, DWORD dwBaseAddress, DWORD dwLimit,
 }
 
 /**
- *  16¹ÙÀÌÆ® Å©±âÀÇ GDT ¿£Æ®¸®¿¡ °ªÀ» ¼³Á¤
- *      TSS ¼¼±×¸ÕÆ® µð½ºÅ©¸³ÅÍ¸¦ ¼³Á¤ÇÏ´Âµ¥ »ç¿ë
+ *  16ë°”ì´íŠ¸ í¬ê¸°ì˜ GDT ì—”íŠ¸ë¦¬ì— ê°’ì„ ì„¤ì •
+ *      TSS ì„¸ê·¸ë¨¼íŠ¸ ë””ìŠ¤í¬ë¦½í„°ë¥¼ ì„¤ì •í•˜ëŠ”ë° ì‚¬ìš©
  */
 void kSetGDTEntry16( GDTENTRY16* pstEntry, QWORD qwBaseAddress, DWORD dwLimit,
         BYTE bUpperFlags, BYTE bLowerFlags, BYTE bType )
@@ -97,27 +97,27 @@ void kSetGDTEntry16( GDTENTRY16* pstEntry, QWORD qwBaseAddress, DWORD dwLimit,
 }
 
 /**
- *  TSS ¼¼±×¸ÕÆ®ÀÇ Á¤º¸¸¦ ÃÊ±âÈ­
+ *  TSS ì„¸ê·¸ë¨¼íŠ¸ì˜ ì •ë³´ë¥¼ ì´ˆê¸°í™”
  */
 void kInitializeTSSSegment( TSSSEGMENT* pstTSS )
 {
     int i;
     
-    // ÃÖ´ë ÇÁ·Î¼¼¼­ ¶Ç´Â ÄÚ¾îÀÇ ¼ö¸¸Å­ ·çÇÁ¸¦ µ¹¸é¼­ »ý¼º
+    // ìµœëŒ€ í”„ë¡œì„¸ì„œ ë˜ëŠ” ì½”ì–´ì˜ ìˆ˜ë§Œí¼ ë£¨í”„ë¥¼ ëŒë©´ì„œ ìƒì„±
     for( i = 0 ; i < MAXPROCESSORCOUNT ; i++ )
     {
-        // 0À¸·Î ÃÊ±âÈ­
+        // 0ìœ¼ë¡œ ì´ˆê¸°í™”
         kMemSet( pstTSS, 0, sizeof( TSSSEGMENT ) );
 
-        // ISTÀÇ µÚ¿¡¼­ºÎÅÍ Àß¶ó¼­ ÇÒ´çÇÔ. (ÁÖÀÇ, IST´Â 16¹ÙÀÌÆ® ´ÜÀ§·Î Á¤·ÄÇØ¾ß ÇÔ)
+        // ISTì˜ ë’¤ì—ì„œë¶€í„° ìž˜ë¼ì„œ í• ë‹¹í•¨. (ì£¼ì˜, ISTëŠ” 16ë°”ì´íŠ¸ ë‹¨ìœ„ë¡œ ì •ë ¬í•´ì•¼ í•¨)
         pstTSS->qwIST[ 0 ] = IST_STARTADDRESS + IST_SIZE - 
             ( IST_SIZE / MAXPROCESSORCOUNT * i );
         
-        // IO MapÀÇ ±âÁØ ÁÖ¼Ò¸¦ TSS µð½ºÅ©¸³ÅÍÀÇ Limit ÇÊµåº¸´Ù Å©°Ô ¼³Á¤ÇÔÀ¸·Î½á 
-        // IO MapÀ» »ç¿ëÇÏÁö ¾Êµµ·Ï ÇÔ
+        // IO Mapì˜ ê¸°ì¤€ ì£¼ì†Œë¥¼ TSS ë””ìŠ¤í¬ë¦½í„°ì˜ Limit í•„ë“œë³´ë‹¤ í¬ê²Œ ì„¤ì •í•¨ìœ¼ë¡œì¨ 
+        // IO Mapì„ ì‚¬ìš©í•˜ì§€ ì•Šë„ë¡ í•¨
         pstTSS->wIOMapBaseAddress = 0xFFFF;
 
-        // ´ÙÀ½ ¿£Æ®¸®·Î ÀÌµ¿
+        // ë‹¤ìŒ ì—”íŠ¸ë¦¬ë¡œ ì´ë™
         pstTSS++;
     }
 }
@@ -127,7 +127,7 @@ void kInitializeTSSSegment( TSSSEGMENT* pstTSS )
 //  IDT
 //==============================================================================
 /**
- *  IDT Å×ÀÌºíÀ» ÃÊ±âÈ­
+ *  IDT í…Œì´ë¸”ì„ ì´ˆê¸°í™”
  */
 void kInitializeIDTTables( void )
 {
@@ -135,15 +135,15 @@ void kInitializeIDTTables( void )
     IDTENTRY* pstEntry;
     int i;
         
-    // IDTRÀÇ ½ÃÀÛ ¾îµå·¹½º
+    // IDTRì˜ ì‹œìž‘ ì–´ë“œë ˆìŠ¤
     pstIDTR = ( IDTR* ) IDTR_STARTADDRESS;
-    // IDT Å×ÀÌºíÀÇ Á¤º¸ »ý¼º
+    // IDT í…Œì´ë¸”ì˜ ì •ë³´ ìƒì„±
     pstEntry = ( IDTENTRY* ) ( IDTR_STARTADDRESS + sizeof( IDTR ) );
     pstIDTR->qwBaseAddress = ( QWORD ) pstEntry;
     pstIDTR->wLimit = IDT_TABLESIZE - 1;
     
     //==========================================================================
-    // ¿¹¿Ü ISR µî·Ï
+    // ì˜ˆì™¸ ISR ë“±ë¡
     //==========================================================================
     kSetIDTEntry( &( pstEntry[ 0 ] ), kISRDivideError, 0x08, IDT_FLAGS_IST1, 
         IDT_FLAGS_KERNEL, IDT_TYPE_INTERRUPT );
@@ -194,7 +194,7 @@ void kInitializeIDTTables( void )
             IDT_FLAGS_KERNEL, IDT_TYPE_INTERRUPT );
     }
     //==========================================================================
-    // ÀÎÅÍ·´Æ® ISR µî·Ï
+    // ì¸í„°ëŸ½íŠ¸ ISR ë“±ë¡
     //==========================================================================
     kSetIDTEntry( &( pstEntry[ 32 ] ), kISRTimer, 0x08, IDT_FLAGS_IST1, 
         IDT_FLAGS_KERNEL, IDT_TYPE_INTERRUPT );
@@ -237,7 +237,7 @@ void kInitializeIDTTables( void )
 }
 
 /**
- *  IDT °ÔÀÌÆ® µð½ºÅ©¸³ÅÍ¿¡ °ªÀ» ¼³Á¤
+ *  IDT ê²Œì´íŠ¸ ë””ìŠ¤í¬ë¦½í„°ì— ê°’ì„ ì„¤ì •
  */
 void kSetIDTEntry( IDTENTRY* pstEntry, void* pvHandler, WORD wSelector, 
         BYTE bIST, BYTE bFlags, BYTE bType )

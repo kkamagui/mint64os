@@ -3,7 +3,7 @@
  *  date    2009/06/06
  *  author  kkamagui 
  *          Copyright(c)2008 All rights reserved by kkamagui
- *  brief   ³×Æ®¿öÅ©·Î µ¥ÀÌÅÍ¸¦ Àü¼ÛÇÏ´Âµ¥ ÇÁ·Î±×·¥ÀÇ ¼Ò½º ÆÄÀÏ
+ *  brief   ë„¤íŠ¸ì›Œí¬ë¡œ ë°ì´í„°ë¥¼ ì „ì†¡í•˜ëŠ”ë° í”„ë¡œê·¸ë¨ì˜ ì†ŒìŠ¤ íŒŒì¼
  */
 
 #include <stdio.h>
@@ -17,16 +17,16 @@
 #include <sys/socket.h>
 #include <netinet/in.h>
 
-// ±âÅ¸ ¸ÅÅ©·Î
+// ê¸°íƒ€ ë§¤í¬ë¡œ
 #define DWORD               unsigned int
 #define BYTE                unsigned char
 #define MIN( x, y )         ( ( ( x ) < ( y ) ) ? ( x ) : ( y ) )
 
-// ½Ã¸®¾ó Æ÷Æ® FIFOÀÇ ÃÖ´ë Å©±â
+// ì‹œë¦¬ì–¼ í¬íŠ¸ FIFOì˜ ìµœëŒ€ í¬ê¸°
 #define SERIAL_FIFOMAXSIZE  16
 
 /**
- *  main ÇÔ¼ö
+ *  main í•¨ìˆ˜
  */
 int main( int argc, char** argv )
 {
@@ -41,21 +41,21 @@ int main( int argc, char** argv )
     FILE* fp;
     
     //--------------------------------------------------------------------------
-    // ÆÄÀÏ ¿­±â
+    // íŒŒì¼ ì—´ê¸°
     //--------------------------------------------------------------------------
-    // ÆÄÀÏ ÀÌ¸§À» ÀÔ·ÂÇÏÁö ¾Ê¾ÒÀ¸¸é ÆÄÀÏ ÀÌ¸§À» ÀÔ·Â ¹ŞÀ½
+    // íŒŒì¼ ì´ë¦„ì„ ì…ë ¥í•˜ì§€ ì•Šì•˜ìœ¼ë©´ íŒŒì¼ ì´ë¦„ì„ ì…ë ¥ ë°›ìŒ
     if( argc < 2 )
     {
         fprintf( stderr, "Input File Name: " );
         gets( vcFileName );
     }
-    // ÆÄÀÏ ÀÌ¸§À» ½ÇÇà ½Ã¿¡ ÀÔ·ÂÇß´Ù¸é º¹»çÇÔ
+    // íŒŒì¼ ì´ë¦„ì„ ì‹¤í–‰ ì‹œì— ì…ë ¥í–ˆë‹¤ë©´ ë³µì‚¬í•¨
     else
     {
         strcpy( vcFileName, argv[ 1 ] );
     }
 
-    // ÆÄÀÏ ¿­±â ½Ãµµ
+    // íŒŒì¼ ì—´ê¸° ì‹œë„
     fp = fopen( vcFileName, "rb" );
     if( fp == NULL )
     {
@@ -63,7 +63,7 @@ int main( int argc, char** argv )
         return 0;
     }
     
-    // fseek·Î ÆÄÀÏ ³¡À¸·Î ÀÌµ¿ÇÏ¿© ÆÄÀÏÀÇ ±æÀÌ¸¦ ÃøÁ¤ÇÑ µÚ, ´Ù½Ã ÆÄÀÏÀÇ Ã³À½À¸·Î ÀÌµ¿
+    // fseekë¡œ íŒŒì¼ ëìœ¼ë¡œ ì´ë™í•˜ì—¬ íŒŒì¼ì˜ ê¸¸ì´ë¥¼ ì¸¡ì •í•œ ë’¤, ë‹¤ì‹œ íŒŒì¼ì˜ ì²˜ìŒìœ¼ë¡œ ì´ë™
     fseek( fp, 0, SEEK_END );
     dwDataLength = ftell( fp );
     fseek( fp, 0, SEEK_SET );
@@ -71,14 +71,14 @@ int main( int argc, char** argv )
             dwDataLength );
     
     //--------------------------------------------------------------------------
-    // ³×Æ®¿öÅ© Á¢¼Ó
+    // ë„¤íŠ¸ì›Œí¬ ì ‘ì†
     //--------------------------------------------------------------------------
-    // Á¢¼ÓÇÒ QEMUÀÇ Address¸¦ ¼³Á¤
+    // ì ‘ì†í•  QEMUì˜ Addressë¥¼ ì„¤ì •
     stSocketAddr.sin_family = AF_INET;
     stSocketAddr.sin_port = htons( 4444 );
     stSocketAddr.sin_addr.s_addr = inet_addr( "127.0.0.1" );
 
-    // ¼ÒÄÏ »ı¼º ÈÄ, QEMU¿¡ Á¢¼Ó ½Ãµµ
+    // ì†Œì¼“ ìƒì„± í›„, QEMUì— ì ‘ì† ì‹œë„
     iSocket = socket( AF_INET, SOCK_STREAM, 0 );
     if( connect( iSocket, ( struct sockaddr* ) &stSocketAddr, 
                  sizeof( stSocketAddr ) ) == -1 )
@@ -92,9 +92,9 @@ int main( int argc, char** argv )
     }
     
     //--------------------------------------------------------------------------
-    // µ¥ÀÌÅÍ Àü¼Û
+    // ë°ì´í„° ì „ì†¡
     //--------------------------------------------------------------------------
-    // µ¥ÀÌÅÍ ±æÀÌ¸¦ Àü¼Û
+    // ë°ì´í„° ê¸¸ì´ë¥¼ ì „ì†¡
     if( send( iSocket, &dwDataLength, 4, 0 ) != 4 )
     {
         fprintf( stderr, "Data Length Send Fail, [%d] Byte\n", dwDataLength );
@@ -104,19 +104,19 @@ int main( int argc, char** argv )
     {
         fprintf( stderr, "Data Length Send Success, [%d] Byte\n", dwDataLength );
     }
-    // Ack¸¦ ¼ö½ÅÇÒ ¶§±îÁö ´ë±â
+    // Ackë¥¼ ìˆ˜ì‹ í•  ë•Œê¹Œì§€ ëŒ€ê¸°
     if( recv( iSocket, &bAck, 1, 0 ) != 1 )
     {
         fprintf( stderr, "Ack Receive Error\n" );
         return 0;
     }
     
-    // µ¥ÀÌÅÍ¸¦ Àü¼Û
+    // ë°ì´í„°ë¥¼ ì „ì†¡
     fprintf( stderr, "Now Data Transfer..." );
     dwSentSize = 0;
     while( dwSentSize < dwDataLength )
     {
-        // ³²Àº Å©±â¿Í FIFOÀÇ ÃÖ´ë Å©±â Áß¿¡¼­ ÀÛÀº °ÍÀ» ¼±ÅÃ
+        // ë‚¨ì€ í¬ê¸°ì™€ FIFOì˜ ìµœëŒ€ í¬ê¸° ì¤‘ì—ì„œ ì‘ì€ ê²ƒì„ ì„ íƒ
         dwTemp = MIN( dwDataLength - dwSentSize, SERIAL_FIFOMAXSIZE );
         dwSentSize += dwTemp;
         
@@ -126,28 +126,28 @@ int main( int argc, char** argv )
             return 0;
         }
         
-        // µ¥ÀÌÅÍ¸¦ Àü¼Û
+        // ë°ì´í„°ë¥¼ ì „ì†¡
         if( send( iSocket, vcDataBuffer, dwTemp, 0 ) != dwTemp )
         {
             fprintf( stderr, "Socket Send Error\n" );
             return 0;
         }
         
-        // Ack°¡ ¼ö½ÅµÉ ¶§±îÁö ´ë±â
+        // Ackê°€ ìˆ˜ì‹ ë  ë•Œê¹Œì§€ ëŒ€ê¸°
         if( recv( iSocket, &bAck, 1, 0 ) != 1 )
         {
             fprintf( stderr, "Ack Receive Error\n" );
             return 0;
         }
-        // ÁøÇà »óÈ² Ç¥½Ã
+        // ì§„í–‰ ìƒí™© í‘œì‹œ
         fprintf( stderr, "#" );
     }
     
-    // ÆÄÀÏ°ú ¼ÒÄÏÀ» ´İÀ½
+    // íŒŒì¼ê³¼ ì†Œì¼“ì„ ë‹«ìŒ
     fclose( fp );
     close( iSocket );
     
-    // Àü¼ÛÀÌ ¿Ï·áµÇ¾úÀ½À» Ç¥½ÃÇÏ°í ¿£ÅÍ Å°¸¦ ´ë±â
+    // ì „ì†¡ì´ ì™„ë£Œë˜ì—ˆìŒì„ í‘œì‹œí•˜ê³  ì—”í„° í‚¤ë¥¼ ëŒ€ê¸°
     fprintf( stderr, "\nSend Complete. Total Size [%d] Byte\n", dwSentSize );
     fprintf( stderr, "Press Enter Key To Exit\n" );
     getchar();

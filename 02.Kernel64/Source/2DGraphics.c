@@ -3,7 +3,7 @@
  *  date    2009/09/5
  *  author  kkamagui 
  *          Copyright(c)2008 All rights reserved by kkamagui
- *  brief   2D Graphic¿¡ ´ëÇÑ ¼Ò½º ÆÄÀÏ
+ *  brief   2D Graphicì— ëŒ€í•œ ì†ŒìŠ¤ íŒŒì¼
  */
 
 #include "2DGraphics.h"
@@ -12,11 +12,11 @@
 #include "Utility.h"
 
 /**
- *  (x, y)°¡ »ç°¢Çü ¿µ¿ª ¾È¿¡ ÀÖ´ÂÁö ¿©ºÎ¸¦ ¹ÝÈ¯
+ *  (x, y)ê°€ ì‚¬ê°í˜• ì˜ì—­ ì•ˆì— ìžˆëŠ”ì§€ ì—¬ë¶€ë¥¼ ë°˜í™˜
  */
 inline BOOL kIsInRectangle( const RECT* pstArea, int iX, int iY )
 {
-    // È­¸é¿¡ Ç¥½ÃµÇ´Â ¿µ¿ªÀ» ¹þ¾î³µ´Ù¸é ±×¸®Áö ¾ÊÀ½
+    // í™”ë©´ì— í‘œì‹œë˜ëŠ” ì˜ì—­ì„ ë²—ì–´ë‚¬ë‹¤ë©´ ê·¸ë¦¬ì§€ ì•ŠìŒ
     if( ( iX <  pstArea->iX1 ) || ( pstArea->iX2 < iX ) ||
         ( iY <  pstArea->iY1 ) || ( pstArea->iY2 < iY ) )
     {
@@ -27,7 +27,7 @@ inline BOOL kIsInRectangle( const RECT* pstArea, int iX, int iY )
 }
 
 /**
- *  »ç°¢ÇüÀÇ ³Êºñ¸¦ ¹ÝÈ¯
+ *  ì‚¬ê°í˜•ì˜ ë„ˆë¹„ë¥¼ ë°˜í™˜
  */
 inline int kGetRectangleWidth( const RECT* pstArea )
 {
@@ -44,7 +44,7 @@ inline int kGetRectangleWidth( const RECT* pstArea )
 }
 
 /**
- *  »ç°¢ÇüÀÇ ³ôÀÌ¸¦ ¹ÝÈ¯
+ *  ì‚¬ê°í˜•ì˜ ë†’ì´ë¥¼ ë°˜í™˜
  */
 inline int kGetRectangleHeight( const RECT* pstArea )
 {
@@ -61,12 +61,12 @@ inline int kGetRectangleHeight( const RECT* pstArea )
 }
 
 /**
- *  µÎ °³ÀÇ »ç°¢ÇüÀÌ ±³Â÷ÇÏ´Â°¡ ÆÇ´ÜÇÏ¿© °á°ú¸¦ ¹ÝÈ¯
+ *  ë‘ ê°œì˜ ì‚¬ê°í˜•ì´ êµì°¨í•˜ëŠ”ê°€ íŒë‹¨í•˜ì—¬ ê²°ê³¼ë¥¼ ë°˜í™˜
  */
 inline BOOL kIsRectangleOverlapped( const RECT* pstArea1, const RECT* pstArea2 )
 {
-    // ¿µ¿ª 1ÀÇ ³¡Á¡ÀÌ ¿µ¿ª 2ÀÇ ½ÃÀÛÁ¡º¸´Ù ÀÛÀº °æ¿ì³ª
-    // ¿µ¿ª 1ÀÇ ½ÃÀÛÁ¡ÀÌ ¿µ¿ª 2ÀÇ ³¡Á¡º¸´Ù Å« °æ¿ì´Â ¼­·Î °ãÄ¡´Â ºÎºÐÀÌ ¾øÀ½
+    // ì˜ì—­ 1ì˜ ëì ì´ ì˜ì—­ 2ì˜ ì‹œìž‘ì ë³´ë‹¤ ìž‘ì€ ê²½ìš°ë‚˜
+    // ì˜ì—­ 1ì˜ ì‹œìž‘ì ì´ ì˜ì—­ 2ì˜ ëì ë³´ë‹¤ í° ê²½ìš°ëŠ” ì„œë¡œ ê²¹ì¹˜ëŠ” ë¶€ë¶„ì´ ì—†ìŒ
     if( ( pstArea1->iX1 > pstArea2->iX2 ) || ( pstArea1->iX2 < pstArea2->iX1 ) ||
         ( pstArea1->iY1 > pstArea2->iY2 ) || ( pstArea1->iY2 < pstArea2->iY1 ) )
     {
@@ -76,7 +76,7 @@ inline BOOL kIsRectangleOverlapped( const RECT* pstArea1, const RECT* pstArea2 )
 }
 
 /**
- *  ¿µ¿ª 1°ú ¿µ¿ª 2ÀÇ °ãÄ¡´Â ¿µ¿ªÀ» ¹ÝÈ¯
+ *  ì˜ì—­ 1ê³¼ ì˜ì—­ 2ì˜ ê²¹ì¹˜ëŠ” ì˜ì—­ì„ ë°˜í™˜
  */
 inline BOOL kGetOverlappedRectangle( const RECT* pstArea1, const RECT* pstArea2, 
         RECT* pstIntersection  )
@@ -86,27 +86,27 @@ inline BOOL kGetOverlappedRectangle( const RECT* pstArea1, const RECT* pstArea2,
     int iMaxY1;
     int iMinY2;
     
-    // XÃàÀÇ ½ÃÀÛÁ¡Àº µÎ Á¡ Áß¿¡¼­ Å« °ÍÀ» Ã£À½
+    // Xì¶•ì˜ ì‹œìž‘ì ì€ ë‘ ì  ì¤‘ì—ì„œ í° ê²ƒì„ ì°¾ìŒ
     iMaxX1 = MAX( pstArea1->iX1, pstArea2->iX1 );
-    // XÃàÀÇ ³¡Á¡Àº µÎ Á¡ Áß¿¡¼­ ÀÛÀº °ÍÀ» Ã£À½
+    // Xì¶•ì˜ ëì ì€ ë‘ ì  ì¤‘ì—ì„œ ìž‘ì€ ê²ƒì„ ì°¾ìŒ
     iMinX2 = MIN( pstArea1->iX2, pstArea2->iX2 );
-    // °è»êÇÑ ½ÃÀÛÁ¡ÀÇ À§Ä¡°¡ ³¡Á¡ÀÇ À§Ä¡º¸´Ù Å©´Ù¸é µÎ »ç°¢ÇüÀº °ãÄ¡Áö ¾ÊÀ½
+    // ê³„ì‚°í•œ ì‹œìž‘ì ì˜ ìœ„ì¹˜ê°€ ëì ì˜ ìœ„ì¹˜ë³´ë‹¤ í¬ë‹¤ë©´ ë‘ ì‚¬ê°í˜•ì€ ê²¹ì¹˜ì§€ ì•ŠìŒ
     if( iMinX2 < iMaxX1 )
     {
         return FALSE;
     }
     
-    // YÃàÀÇ ½ÃÀÛÁ¡Àº µÎ Á¡ Áß¿¡¼­ Å« °ÍÀ» Ã£À½
+    // Yì¶•ì˜ ì‹œìž‘ì ì€ ë‘ ì  ì¤‘ì—ì„œ í° ê²ƒì„ ì°¾ìŒ
     iMaxY1 = MAX( pstArea1->iY1, pstArea2->iY1 );
-    // YÃàÀÇ ³¡Á¡Àº µÎ Á¡ Áß¿¡¼­ ÀÛÀº °ÍÀ» Ã£À½
+    // Yì¶•ì˜ ëì ì€ ë‘ ì  ì¤‘ì—ì„œ ìž‘ì€ ê²ƒì„ ì°¾ìŒ
     iMinY2 = MIN( pstArea1->iY2, pstArea2->iY2 );
-    // °è»êÇÑ ½ÃÀÛÁ¡ÀÇ À§Ä¡°¡ ³¡Á¡ÀÇ À§Ä¡º¸´Ù Å©´Ù¸é µÎ »ç°¢ÇüÀº °ãÄ¡Áö ¾ÊÀ½
+    // ê³„ì‚°í•œ ì‹œìž‘ì ì˜ ìœ„ì¹˜ê°€ ëì ì˜ ìœ„ì¹˜ë³´ë‹¤ í¬ë‹¤ë©´ ë‘ ì‚¬ê°í˜•ì€ ê²¹ì¹˜ì§€ ì•ŠìŒ
     if( iMinY2 < iMaxY1 )
     {
         return FALSE;
     }
     
-    // °ãÄ¡´Â ¿µ¿ªÀÇ Á¤º¸ ÀúÀå
+    // ê²¹ì¹˜ëŠ” ì˜ì—­ì˜ ì •ë³´ ì €ìž¥
     pstIntersection->iX1 = iMaxX1;
     pstIntersection->iY1 = iMaxY1;
     pstIntersection->iX2 = iMinX2;
@@ -116,12 +116,12 @@ inline BOOL kGetOverlappedRectangle( const RECT* pstArea1, const RECT* pstArea2,
 }
 
 /**
- *  »ç°¢Çü ÀÚ·á±¸Á¶¸¦ Ã¤¿ò
- *      x1°ú x2, y1°ú y2¸¦ ºñ±³ÇØ¼­ x1 < x2, y1 < y2°¡ µÇµµ·Ï ÀúÀå
+ *  ì‚¬ê°í˜• ìžë£Œêµ¬ì¡°ë¥¼ ì±„ì›€
+ *      x1ê³¼ x2, y1ê³¼ y2ë¥¼ ë¹„êµí•´ì„œ x1 < x2, y1 < y2ê°€ ë˜ë„ë¡ ì €ìž¥
  */
 inline void kSetRectangleData( int iX1, int iY1, int iX2, int iY2, RECT* pstRect )
 {
-    // x1 < x2°¡ µÇµµ·Ï RECT ÀÚ·á±¸Á¶¿¡ XÁÂÇ¥¸¦ ¼³Á¤
+    // x1 < x2ê°€ ë˜ë„ë¡ RECT ìžë£Œêµ¬ì¡°ì— Xì¢Œí‘œë¥¼ ì„¤ì •
     if( iX1 < iX2 )
     {
         pstRect->iX1 = iX1;
@@ -133,7 +133,7 @@ inline void kSetRectangleData( int iX1, int iY1, int iX2, int iY2, RECT* pstRect
         pstRect->iX2 = iX1;
     }
     
-    // y1 < y2°¡ µÇµµ·Ï RECT ÀÚ·á±¸Á¶¿¡ YÁÂÇ¥¸¦ ¼³Á¤
+    // y1 < y2ê°€ ë˜ë„ë¡ RECT ìžë£Œêµ¬ì¡°ì— Yì¢Œí‘œë¥¼ ì„¤ì •
     if( iY1 < iY2 )
     {
         pstRect->iY1 = iY1;
@@ -147,29 +147,29 @@ inline void kSetRectangleData( int iX1, int iY1, int iX2, int iY2, RECT* pstRect
 }
 
 /**
- *  Á¡ ±×¸®±â
+ *  ì  ê·¸ë¦¬ê¸°
  */
 inline void kInternalDrawPixel( const RECT* pstMemoryArea, COLOR* pstMemoryAddress, 
         int iX, int iY, COLOR stColor )
 {
     int iWidth;
     
-    // Å¬¸®ÇÎ Ã³¸®
-    // È­¸é¿¡ Ç¥½ÃµÇ´Â ¿µ¿ªÀ» ¹þ¾î³µ´Ù¸é ±×¸®Áö ¾ÊÀ½
+    // í´ë¦¬í•‘ ì²˜ë¦¬
+    // í™”ë©´ì— í‘œì‹œë˜ëŠ” ì˜ì—­ì„ ë²—ì–´ë‚¬ë‹¤ë©´ ê·¸ë¦¬ì§€ ì•ŠìŒ
     if( kIsInRectangle( pstMemoryArea, iX, iY ) == FALSE )
     {
         return ;
     }
     
-    // Ãâ·ÂÇÒ ¸Þ¸ð¸® ¿µ¿ªÀÇ ³Êºñ¸¦ ±¸ÇÔ
+    // ì¶œë ¥í•  ë©”ëª¨ë¦¬ ì˜ì—­ì˜ ë„ˆë¹„ë¥¼ êµ¬í•¨
     iWidth = kGetRectangleWidth( pstMemoryArea );
     
-    // ÇÈ¼¿ ¿ÀÇÁ¼ÂÀ¸·Î °è»êÇÏ¿© ÇÈ¼¿ Ãâ·Â
+    // í”½ì…€ ì˜¤í”„ì…‹ìœ¼ë¡œ ê³„ì‚°í•˜ì—¬ í”½ì…€ ì¶œë ¥
     *( pstMemoryAddress + ( iWidth * iY ) + iX ) = stColor;
 }
 
 /**
- *  Á÷¼± ±×¸®±â
+ *  ì§ì„  ê·¸ë¦¬ê¸°
  */
 void kInternalDrawLine( const RECT* pstMemoryArea, COLOR* pstMemoryAddress, 
         int iX1, int iY1, int iX2, int iY2, COLOR stColor )
@@ -181,19 +181,19 @@ void kInternalDrawLine( const RECT* pstMemoryArea, COLOR* pstMemoryAddress,
     int iStepX, iStepY;
     RECT stLineArea;
     
-    // Å¬¸®ÇÎ Ã³¸®
-    // Á÷¼±ÀÌ ±×·ÁÁö´Â ¿µ¿ª°ú ¸Þ¸ð¸® ¿µ¿ªÀÌ °ãÄ¡Áö ¾ÊÀ¸¸é ±×¸®Áö ¾Ê¾Æµµ µÊ
+    // í´ë¦¬í•‘ ì²˜ë¦¬
+    // ì§ì„ ì´ ê·¸ë ¤ì§€ëŠ” ì˜ì—­ê³¼ ë©”ëª¨ë¦¬ ì˜ì—­ì´ ê²¹ì¹˜ì§€ ì•Šìœ¼ë©´ ê·¸ë¦¬ì§€ ì•Šì•„ë„ ë¨
     kSetRectangleData( iX1, iY1, iX2, iY2, &stLineArea );
     if( kIsRectangleOverlapped( pstMemoryArea, &stLineArea ) == FALSE )
     {
         return ;
     }
     
-    // º¯È­·® °è»ê
+    // ë³€í™”ëŸ‰ ê³„ì‚°
     iDeltaX = iX2 - iX1;
     iDeltaY = iY2 - iY1;
 
-    // XÃà º¯È­·®¿¡ µû¶ó XÃà Áõ°¨ ¹æÇâ °è»ê
+    // Xì¶• ë³€í™”ëŸ‰ì— ë”°ë¼ Xì¶• ì¦ê° ë°©í–¥ ê³„ì‚°
     if( iDeltaX < 0 ) 
     {
         iDeltaX = -iDeltaX; 
@@ -204,7 +204,7 @@ void kInternalDrawLine( const RECT* pstMemoryArea, COLOR* pstMemoryAddress,
         iStepX = 1; 
     }
 
-    // YÃà º¯È­·®¿¡ µû¶ó YÃà Áõ°¨ ¹æÇâ °è»ê 
+    // Yì¶• ë³€í™”ëŸ‰ì— ë”°ë¼ Yì¶• ì¦ê° ë°©í–¥ ê³„ì‚° 
     if( iDeltaY < 0 ) 
     {
         iDeltaY = -iDeltaY; 
@@ -215,68 +215,68 @@ void kInternalDrawLine( const RECT* pstMemoryArea, COLOR* pstMemoryAddress,
         iStepY = 1; 
     }
 
-    // XÃà º¯È­·®ÀÌ YÃà º¯È­·®º¸´Ù Å©´Ù¸é XÃàÀ» Áß½ÉÀ¸·Î Á÷¼±À» ±×¸²
+    // Xì¶• ë³€í™”ëŸ‰ì´ Yì¶• ë³€í™”ëŸ‰ë³´ë‹¤ í¬ë‹¤ë©´ Xì¶•ì„ ì¤‘ì‹¬ìœ¼ë¡œ ì§ì„ ì„ ê·¸ë¦¼
     if( iDeltaX > iDeltaY )
     {
-        // ±â¿ï±â·Î ¸Å ÇÈ¼¿¸¶´Ù ´õÇØÁÙ ¿ÀÂ÷, YÃà º¯È­·®ÀÇ 2¹è
-        // ½ÃÇÁÆ® ¿¬»êÀ¸·Î * 2¸¦ ´ëÃ¼
+        // ê¸°ìš¸ê¸°ë¡œ ë§¤ í”½ì…€ë§ˆë‹¤ ë”í•´ì¤„ ì˜¤ì°¨, Yì¶• ë³€í™”ëŸ‰ì˜ 2ë°°
+        // ì‹œí”„íŠ¸ ì—°ì‚°ìœ¼ë¡œ * 2ë¥¼ ëŒ€ì²´
         iDeltaError = iDeltaY << 1;
         iY = iY1;
         for( iX = iX1 ; iX != iX2 ; iX += iStepX )
         {
-            // Á¡ ±×¸®±â
+            // ì  ê·¸ë¦¬ê¸°
             kInternalDrawPixel( pstMemoryArea, pstMemoryAddress, iX, iY, stColor );
 
-            // ¿ÀÂ÷ ´©Àû
+            // ì˜¤ì°¨ ëˆ„ì 
             iError += iDeltaError;
 
-            // ´©ÀûµÈ ¿ÀÂ÷°¡ XÃà º¯È­·®º¸´Ù Å©¸é À§¿¡ Á¡À» ¼±ÅÃÇÏ°í ¿ÀÂ÷¸¦ À§¿¡ Á¡À»
-            // ±âÁØÀ¸·Î °»½Å
+            // ëˆ„ì ëœ ì˜¤ì°¨ê°€ Xì¶• ë³€í™”ëŸ‰ë³´ë‹¤ í¬ë©´ ìœ„ì— ì ì„ ì„ íƒí•˜ê³  ì˜¤ì°¨ë¥¼ ìœ„ì— ì ì„
+            // ê¸°ì¤€ìœ¼ë¡œ ê°±ì‹ 
             if( iError >= iDeltaX )
             {
                 iY += iStepY;
-                // XÃàÀÇ º¯È­·®ÀÇ 2¹è¸¦ »©ÁÜ
-                // ½ÃÇÁÆ® ¿¬»êÀ¸·Î *2¸¦ ´ëÃ¼
+                // Xì¶•ì˜ ë³€í™”ëŸ‰ì˜ 2ë°°ë¥¼ ë¹¼ì¤Œ
+                // ì‹œí”„íŠ¸ ì—°ì‚°ìœ¼ë¡œ *2ë¥¼ ëŒ€ì²´
                 iError -= iDeltaX << 1;
             }
         }
         
-        // iX == iX2ÀÎ ÃÖÁ¾ À§Ä¡¿¡ Á¡ ±×¸®±â
+        // iX == iX2ì¸ ìµœì¢… ìœ„ì¹˜ì— ì  ê·¸ë¦¬ê¸°
         kInternalDrawPixel( pstMemoryArea, pstMemoryAddress, iX, iY, stColor );
     }
-    // YÃà º¯È­·®ÀÌ XÃà º¯È­·®º¸´Ù Å©°Å³ª °°´Ù¸é YÃàÀ» Áß½ÉÀ¸·Î Á÷¼±À» ±×¸²
+    // Yì¶• ë³€í™”ëŸ‰ì´ Xì¶• ë³€í™”ëŸ‰ë³´ë‹¤ í¬ê±°ë‚˜ ê°™ë‹¤ë©´ Yì¶•ì„ ì¤‘ì‹¬ìœ¼ë¡œ ì§ì„ ì„ ê·¸ë¦¼
     else
     {
-        // ±â¿ï±â·Î ¸Å ÇÈ¼¿¸¶´Ù ´õÇØÁÙ ¿ÀÂ÷, XÃà º¯È­·®ÀÇ 2¹è
-        // ½ÃÇÁÆ® ¿¬»êÀ¸·Î * 2¸¦ ´ëÃ¼
+        // ê¸°ìš¸ê¸°ë¡œ ë§¤ í”½ì…€ë§ˆë‹¤ ë”í•´ì¤„ ì˜¤ì°¨, Xì¶• ë³€í™”ëŸ‰ì˜ 2ë°°
+        // ì‹œí”„íŠ¸ ì—°ì‚°ìœ¼ë¡œ * 2ë¥¼ ëŒ€ì²´
         iDeltaError = iDeltaX << 1;
         iX = iX1;
         for( iY = iY1 ; iY != iY2 ; iY += iStepY )
         {
-            // Á¡ ±×¸®±â
+            // ì  ê·¸ë¦¬ê¸°
             kInternalDrawPixel( pstMemoryArea, pstMemoryAddress, iX, iY, stColor );
 
-            // ¿ÀÂ÷ ´©Àû
+            // ì˜¤ì°¨ ëˆ„ì 
             iError += iDeltaError;
 
-            // ´©ÀûµÈ ¿ÀÂ÷°¡ YÃà º¯È­·®º¸´Ù Å©¸é À§¿¡ Á¡À» ¼±ÅÃÇÏ°í ¿ÀÂ÷¸¦ À§¿¡ Á¡À»
-            // ±âÁØÀ¸·Î °»½Å
+            // ëˆ„ì ëœ ì˜¤ì°¨ê°€ Yì¶• ë³€í™”ëŸ‰ë³´ë‹¤ í¬ë©´ ìœ„ì— ì ì„ ì„ íƒí•˜ê³  ì˜¤ì°¨ë¥¼ ìœ„ì— ì ì„
+            // ê¸°ì¤€ìœ¼ë¡œ ê°±ì‹ 
             if( iError >= iDeltaY )
             {
                 iX += iStepX;
-                // YÃàÀÇ º¯È­·®ÀÇ 2¹è¸¦ »©ÁÜ
-                // ½ÃÇÁÆ® ¿¬»êÀ¸·Î *2¸¦ ´ëÃ¼
+                // Yì¶•ì˜ ë³€í™”ëŸ‰ì˜ 2ë°°ë¥¼ ë¹¼ì¤Œ
+                // ì‹œí”„íŠ¸ ì—°ì‚°ìœ¼ë¡œ *2ë¥¼ ëŒ€ì²´
                 iError -= iDeltaY << 1;
             }
         }
 
-        // iY == iY2ÀÎ ÃÖÁ¾ À§Ä¡¿¡ Á¡ ±×¸®±â
+        // iY == iY2ì¸ ìµœì¢… ìœ„ì¹˜ì— ì  ê·¸ë¦¬ê¸°
         kInternalDrawPixel( pstMemoryArea, pstMemoryAddress, iX, iY, stColor );
     }
 }
 
 /**
- *  »ç°¢Çü ±×¸®±â
+ *  ì‚¬ê°í˜• ê·¸ë¦¬ê¸°
  */
 void kInternalDrawRect( const RECT* pstMemoryArea, COLOR* pstMemoryAddress,
         int iX1, int iY1, int iX2, int iY2, COLOR stColor, BOOL bFill )
@@ -288,10 +288,10 @@ void kInternalDrawRect( const RECT* pstMemoryArea, COLOR* pstMemoryAddress,
     RECT stDrawRect;
     RECT stOverlappedArea;
 
-    // Ã¤¿ò ¿©ºÎ¿¡ µû¶ó ÄÚµå¸¦ ºÐ¸®
+    // ì±„ì›€ ì—¬ë¶€ì— ë”°ë¼ ì½”ë“œë¥¼ ë¶„ë¦¬
     if( bFill == FALSE )
     {
-        // ³× Á¡À» ÀÌ¿ôÇÑ °Í³¢¸® Á÷¼±À¸·Î ¿¬°á
+        // ë„¤ ì ì„ ì´ì›ƒí•œ ê²ƒë¼ë¦¬ ì§ì„ ìœ¼ë¡œ ì—°ê²°
         kInternalDrawLine( pstMemoryArea, pstMemoryAddress, iX1, iY1, iX2, iY1, stColor );
         kInternalDrawLine( pstMemoryArea, pstMemoryAddress, iX1, iY1, iX1, iY2, stColor );
         kInternalDrawLine( pstMemoryArea, pstMemoryAddress, iX2, iY1, iX2, iY2, stColor );
@@ -299,48 +299,48 @@ void kInternalDrawRect( const RECT* pstMemoryArea, COLOR* pstMemoryAddress,
     }
     else
     {
-        // Ãâ·ÂÇÒ »ç°¢ÇüÀÇ Á¤º¸¸¦ RECT ÀÚ·á±¸Á¶¿¡ ÀúÀå
+        // ì¶œë ¥í•  ì‚¬ê°í˜•ì˜ ì •ë³´ë¥¼ RECT ìžë£Œêµ¬ì¡°ì— ì €ìž¥
         kSetRectangleData( iX1, iY1, iX2, iY2, &stDrawRect );
         
-        // Ãâ·ÂÇÒ ¸Þ¸ð¸® ¿µ¿ª°ú »ç°¢Çü ¿µ¿ªÀÌ °ãÄ¡´Â ºÎºÐÀ» °è»êÇÏ¿© Å¬¸®ÇÎ Ã³¸®
+        // ì¶œë ¥í•  ë©”ëª¨ë¦¬ ì˜ì—­ê³¼ ì‚¬ê°í˜• ì˜ì—­ì´ ê²¹ì¹˜ëŠ” ë¶€ë¶„ì„ ê³„ì‚°í•˜ì—¬ í´ë¦¬í•‘ ì²˜ë¦¬
         if( kGetOverlappedRectangle( pstMemoryArea, &stDrawRect, 
                 &stOverlappedArea ) == FALSE )
         {
-            // °ãÄ¡´Â ¿µ¿ªÀÌ ¾øÀ¸¸é ±×¸± ÇÊ¿ä ¾øÀ½
+            // ê²¹ì¹˜ëŠ” ì˜ì—­ì´ ì—†ìœ¼ë©´ ê·¸ë¦´ í•„ìš” ì—†ìŒ
             return ;
         }
                 
-        // Å¬¸®ÇÎµÈ »ç°¢ÇüÀÇ ³Êºñ¸¦ °è»ê
+        // í´ë¦¬í•‘ëœ ì‚¬ê°í˜•ì˜ ë„ˆë¹„ë¥¼ ê³„ì‚°
         iWidth = kGetRectangleWidth( &stOverlappedArea );
         
-        // Ãâ·ÂÇÒ ¸Þ¸ð¸® ¿µ¿ªÀÇ ³Êºñ¸¦ °è»ê
+        // ì¶œë ¥í•  ë©”ëª¨ë¦¬ ì˜ì—­ì˜ ë„ˆë¹„ë¥¼ ê³„ì‚°
         iMemoryAreaWidth = kGetRectangleWidth( pstMemoryArea );
         
-        // Ãâ·ÂÇÒ ¸Þ¸ð¸® ¾îµå·¹½ºÀÇ ½ÃÀÛ À§Ä¡¸¦ °è»ê
-        // ÆÄ¶ó¹ÌÅÍ·Î Àü´ÞµÈ »ç°¢ÇüÀ» ±×´ë·Î ±×¸®´Â °ÍÀÌ ¾Æ´Ï¶ó Å¬¸®ÇÎ Ã³¸®µÈ »ç°¢ÇüÀ»
-        // ±âÁØÀ¸·Î ±×¸²
+        // ì¶œë ¥í•  ë©”ëª¨ë¦¬ ì–´ë“œë ˆìŠ¤ì˜ ì‹œìž‘ ìœ„ì¹˜ë¥¼ ê³„ì‚°
+        // íŒŒë¼ë¯¸í„°ë¡œ ì „ë‹¬ëœ ì‚¬ê°í˜•ì„ ê·¸ëŒ€ë¡œ ê·¸ë¦¬ëŠ” ê²ƒì´ ì•„ë‹ˆë¼ í´ë¦¬í•‘ ì²˜ë¦¬ëœ ì‚¬ê°í˜•ì„
+        // ê¸°ì¤€ìœ¼ë¡œ ê·¸ë¦¼
         pstMemoryAddress += stOverlappedArea.iY1 * iMemoryAreaWidth + 
             stOverlappedArea.iX1;
         
-        // ·çÇÁ¸¦ µ¹¸é¼­ °¢ YÃà¸¶´Ù °ªÀ» Ã¤¿ò
+        // ë£¨í”„ë¥¼ ëŒë©´ì„œ ê° Yì¶•ë§ˆë‹¤ ê°’ì„ ì±„ì›€
         for( iY = stOverlappedArea.iY1 ; iY < stOverlappedArea.iY2 ; iY++ )
         {
-            // ¸Þ¸ð¸®¿¡ »ç°¢ÇüÀÇ ³Êºñ¸¸Å­ ÇÈ¼¿À» Ã¤¿ò
+            // ë©”ëª¨ë¦¬ì— ì‚¬ê°í˜•ì˜ ë„ˆë¹„ë§Œí¼ í”½ì…€ì„ ì±„ì›€
             kMemSetWord( pstMemoryAddress, stColor, iWidth );
             
-            // Ãâ·ÂÇÒ ºñµð¿À ¸Þ¸ð¸® ¾îµå·¹½º °»½Å
-            // x, yÁÂÇ¥·Î ¸Å¹ø ºñµð¿À ¸Þ¸ð¸® ¾îµå·¹½º¸¦ °è»êÇÏ´Â °ÍÀ» ÇÇÇÏ·Á°í
-            // XÃà ÇØ»óµµ¸¦ ÀÌ¿ëÇÏ¿© ´ÙÀ½ ¶óÀÎÀÇ yÁÂÇ¥ ¾îµå·¹½º¸¦ °è»ê 
+            // ì¶œë ¥í•  ë¹„ë””ì˜¤ ë©”ëª¨ë¦¬ ì–´ë“œë ˆìŠ¤ ê°±ì‹ 
+            // x, yì¢Œí‘œë¡œ ë§¤ë²ˆ ë¹„ë””ì˜¤ ë©”ëª¨ë¦¬ ì–´ë“œë ˆìŠ¤ë¥¼ ê³„ì‚°í•˜ëŠ” ê²ƒì„ í”¼í•˜ë ¤ê³ 
+            // Xì¶• í•´ìƒë„ë¥¼ ì´ìš©í•˜ì—¬ ë‹¤ìŒ ë¼ì¸ì˜ yì¢Œí‘œ ì–´ë“œë ˆìŠ¤ë¥¼ ê³„ì‚° 
             pstMemoryAddress += iMemoryAreaWidth;
         }
         
-        // ¸Þ¸ð¸®¿¡ »ç°¢ÇüÀÇ ³Êºñ¸¸Å­ ÇÈ¼¿À» Ã¤¿ò, ¸¶Áö¸· ÁÙ Ãâ·Â
+        // ë©”ëª¨ë¦¬ì— ì‚¬ê°í˜•ì˜ ë„ˆë¹„ë§Œí¼ í”½ì…€ì„ ì±„ì›€, ë§ˆì§€ë§‰ ì¤„ ì¶œë ¥
         kMemSetWord( pstMemoryAddress, stColor, iWidth );
     }
 }
 
 /**
- *  ¿ø ±×¸®±â
+ *  ì› ê·¸ë¦¬ê¸°
  */
 void kInternalDrawCircle( const RECT* pstMemoryArea, COLOR* pstMemoryAddress,
         int iX, int iY, int iRadius, COLOR stColor, BOOL bFill )
@@ -348,19 +348,19 @@ void kInternalDrawCircle( const RECT* pstMemoryArea, COLOR* pstMemoryAddress,
     int iCircleX, iCircleY;
     int iDistance;
     
-    // ¹ÝÁö¸§ÀÌ 0º¸´Ù ÀÛ´Ù¸é ±×¸± ÇÊ¿ä ¾øÀ½
+    // ë°˜ì§€ë¦„ì´ 0ë³´ë‹¤ ìž‘ë‹¤ë©´ ê·¸ë¦´ í•„ìš” ì—†ìŒ
     if( iRadius < 0 )
     {
         return ;
     }
     
-    // (0, R)ÀÎ ÁÂÇ¥¿¡¼­ ½ÃÀÛ
+    // (0, R)ì¸ ì¢Œí‘œì—ì„œ ì‹œìž‘
     iCircleY = iRadius;
 
-    // Ã¤¿ò ¿©ºÎ¿¡ µû¶ó ½ÃÀÛÁ¡À» ±×¸²
+    // ì±„ì›€ ì—¬ë¶€ì— ë”°ë¼ ì‹œìž‘ì ì„ ê·¸ë¦¼
     if( bFill == FALSE )
     {
-        // ½ÃÀÛÁ¡Àº ³× Á¢Á¡ ¸ðµÎ ±×¸²
+        // ì‹œìž‘ì ì€ ë„¤ ì ‘ì  ëª¨ë‘ ê·¸ë¦¼
         kInternalDrawPixel( pstMemoryArea, pstMemoryAddress, 0 + iX, iRadius + iY, stColor);
         kInternalDrawPixel( pstMemoryArea, pstMemoryAddress, 0 + iX, -iRadius + iY, stColor);
         kInternalDrawPixel( pstMemoryArea, pstMemoryAddress, iRadius + iX, 0 + iY, stColor);
@@ -368,37 +368,37 @@ void kInternalDrawCircle( const RECT* pstMemoryArea, COLOR* pstMemoryAddress,
     }
     else
     {
-        // ½ÃÀÛ Á÷¼±Àº XÃà°ú YÃà ¸ðµÎ ±×¸²
+        // ì‹œìž‘ ì§ì„ ì€ Xì¶•ê³¼ Yì¶• ëª¨ë‘ ê·¸ë¦¼
         kInternalDrawLine( pstMemoryArea, pstMemoryAddress, 
                    0 + iX, iRadius + iY, 0 + iX, -iRadius + iY, stColor);
         kInternalDrawLine( pstMemoryArea, pstMemoryAddress, 
                 iRadius + iX, 0 + iY, -iRadius + iX, 0 + iY, stColor);
     }
     
-    // ÃÖÃÊ ½ÃÀÛÁ¡ÀÇ Áß½ÉÁ¡°ú ¿øÀÇ °Å¸®
+    // ìµœì´ˆ ì‹œìž‘ì ì˜ ì¤‘ì‹¬ì ê³¼ ì›ì˜ ê±°ë¦¬
     iDistance = -iRadius;
 
-    // ¿ø ±×¸®±â
+    // ì› ê·¸ë¦¬ê¸°
     for( iCircleX = 1 ; iCircleX <= iCircleY ; iCircleX++ )
     {
-        // ¿ø¿¡¼­ ¶³¾îÁø °Å¸® °è»ê
-        // ½ÃÇÁÆ® ¿¬»êÀ¸·Î * 2¸¦ ´ëÃ¼
+        // ì›ì—ì„œ ë–¨ì–´ì§„ ê±°ë¦¬ ê³„ì‚°
+        // ì‹œí”„íŠ¸ ì—°ì‚°ìœ¼ë¡œ * 2ë¥¼ ëŒ€ì²´
         iDistance += ( iCircleX << 1 ) - 1;  //2 * iCircleX - 1;
                     
-        // Áß½ÉÁ¡ÀÌ ¿øÀÇ ¿ÜºÎ¿¡ ÀÖÀ¸¸é ¾Æ·¡¿¡ ÀÖ´Â Á¡ ¼±ÅÃ
+        // ì¤‘ì‹¬ì ì´ ì›ì˜ ì™¸ë¶€ì— ìžˆìœ¼ë©´ ì•„ëž˜ì— ìžˆëŠ” ì  ì„ íƒ
         if( iDistance >= 0 )
         {
             iCircleY--;
             
-            // »õ·Î¿î Á¡¿¡¼­ ´Ù½Ã ¿ø°ú °Å¸® °è»ê
-            // ½ÃÇÁÆ® ¿¬»êÀ¸·Î * 2¸¦ ´ëÃ¼
+            // ìƒˆë¡œìš´ ì ì—ì„œ ë‹¤ì‹œ ì›ê³¼ ê±°ë¦¬ ê³„ì‚°
+            // ì‹œí”„íŠ¸ ì—°ì‚°ìœ¼ë¡œ * 2ë¥¼ ëŒ€ì²´
             iDistance += ( -iCircleY << 1 ) + 2; //-2 * iCircleY + 2;
         }
         
-        // Ã¤¿ò ¿©ºÎ¿¡ µû¶ó ±×¸²
+        // ì±„ì›€ ì—¬ë¶€ì— ë”°ë¼ ê·¸ë¦¼
         if( bFill == FALSE )
         {
-            // 8 ¹æÇâ ¸ðµÎ Á¡ ±×¸²
+            // 8 ë°©í–¥ ëª¨ë‘ ì  ê·¸ë¦¼
             kInternalDrawPixel( pstMemoryArea, pstMemoryAddress, 
                     iCircleX + iX, iCircleY + iY, stColor );
             kInternalDrawPixel( pstMemoryArea, pstMemoryAddress, 
@@ -418,8 +418,8 @@ void kInternalDrawCircle( const RECT* pstMemoryArea, COLOR* pstMemoryAddress,
         }
         else
         {
-            // ´ëÄªµÇ´Â Á¡À» Ã£¾Æ XÃà¿¡ ÆòÇàÇÑ Á÷¼±À» ±×¾î Ã¤¿öÁø ¿øÀ» ±×¸²
-            // ÆòÇà¼±À» ±×¸®´Â °ÍÀº »ç°¢Çü ±×¸®±â ÇÔ¼ö·Î ºü¸£°Ô Ã³¸®ÇÒ ¼ö ÀÖÀ½
+            // ëŒ€ì¹­ë˜ëŠ” ì ì„ ì°¾ì•„ Xì¶•ì— í‰í–‰í•œ ì§ì„ ì„ ê·¸ì–´ ì±„ì›Œì§„ ì›ì„ ê·¸ë¦¼
+            // í‰í–‰ì„ ì„ ê·¸ë¦¬ëŠ” ê²ƒì€ ì‚¬ê°í˜• ê·¸ë¦¬ê¸° í•¨ìˆ˜ë¡œ ë¹ ë¥´ê²Œ ì²˜ë¦¬í•  ìˆ˜ ìžˆìŒ
             kInternalDrawRect( pstMemoryArea, pstMemoryAddress, -iCircleX + iX, iCircleY + iY, 
                     iCircleX + iX, iCircleY + iY, stColor, TRUE );
             kInternalDrawRect( pstMemoryArea, pstMemoryAddress, -iCircleX + iX, -iCircleY + iY, 
@@ -433,7 +433,7 @@ void kInternalDrawCircle( const RECT* pstMemoryArea, COLOR* pstMemoryAddress,
 }
 
 /**
- *  ¹®ÀÚ Ãâ·Â
+ *  ë¬¸ìž ì¶œë ¥
  */
 void kInternalDrawText( const RECT* pstMemoryArea, COLOR* pstMemoryAddress,
         int iX, int iY, COLOR stTextColor, COLOR stBackgroundColor,
@@ -444,10 +444,10 @@ void kInternalDrawText( const RECT* pstMemoryArea, COLOR* pstMemoryAddress,
 
     for( i = 0 ; i < iLength ; )
     {
-        // ÇöÀç ¹®ÀÚ°¡ ÇÑ±ÛÀÌ ¾Æ´Ï¸é ¿µ¹®ÀÚ°¡ ³¡³ª´Â °÷À» °Ë»ö
+        // í˜„ìž¬ ë¬¸ìžê°€ í•œê¸€ì´ ì•„ë‹ˆë©´ ì˜ë¬¸ìžê°€ ëë‚˜ëŠ” ê³³ì„ ê²€ìƒ‰
         if( ( pcString[ i ] & 0x80 ) == 0 )
         {
-            // ¹®ÀÚ¿­ÀÇ ³¡±îÁö °Ë»ö
+            // ë¬¸ìžì—´ì˜ ëê¹Œì§€ ê²€ìƒ‰
             for( j = i ; j < iLength ; j++ )
             {
                 if( pcString[ j ] & 0x80 )
@@ -456,16 +456,16 @@ void kInternalDrawText( const RECT* pstMemoryArea, COLOR* pstMemoryAddress,
                 }
             }
 
-            // ¿µ¹®ÀÚ¸¦ Ãâ·ÂÇÏ´Â ÇÔ¼ö¸¦ È£ÃâÇÏ°í ÇöÀç À§Ä¡¸¦ °»½Å
+            // ì˜ë¬¸ìžë¥¼ ì¶œë ¥í•˜ëŠ” í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•˜ê³  í˜„ìž¬ ìœ„ì¹˜ë¥¼ ê°±ì‹ 
             kInternalDrawEnglishText( pstMemoryArea, pstMemoryAddress,
                     iX + ( i * FONT_ENGLISHWIDTH ), iY, stTextColor, stBackgroundColor,
                     pcString + i, j - i );
             i = j;
         }
-        // ÇöÀç ¹®ÀÚ°¡ ÇÑ±ÛÀÌ¸é ÇÑ±ÛÀÌ ³¡³ª´Â °÷À» °Ë»ö
+        // í˜„ìž¬ ë¬¸ìžê°€ í•œê¸€ì´ë©´ í•œê¸€ì´ ëë‚˜ëŠ” ê³³ì„ ê²€ìƒ‰
         else
         {
-            // ¹®ÀÚ¿­ÀÇ ³¡±îÁö °Ë»ö
+            // ë¬¸ìžì—´ì˜ ëê¹Œì§€ ê²€ìƒ‰
             for( j = i ; j < iLength ; j++ )
             {
                 if( ( pcString[ j ] & 0x80 ) == 0 )
@@ -474,7 +474,7 @@ void kInternalDrawText( const RECT* pstMemoryArea, COLOR* pstMemoryAddress,
                 }
             }
 
-            // ¿µ¹®ÀÚ¸¦ Ãâ·ÂÇÏ´Â ÇÔ¼ö¸¦ È£ÃâÇÏ°í ÇöÀç À§Ä¡¸¦ °»½Å
+            // ì˜ë¬¸ìžë¥¼ ì¶œë ¥í•˜ëŠ” í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•˜ê³  í˜„ìž¬ ìœ„ì¹˜ë¥¼ ê°±ì‹ 
             kInternalDrawHangulText( pstMemoryArea, pstMemoryAddress,
                     iX + i * FONT_ENGLISHWIDTH, iY, stTextColor, stBackgroundColor,
                     pcString + i, j - i );
@@ -484,7 +484,7 @@ void kInternalDrawText( const RECT* pstMemoryArea, COLOR* pstMemoryAddress,
 }
 
 /**
- *  ¿µ¹®ÀÚ ¹®ÀÚ Ãâ·Â
+ *  ì˜ë¬¸ìž ë¬¸ìž ì¶œë ¥
  */
 void kInternalDrawEnglishText( const RECT* pstMemoryArea, COLOR* pstMemoryAddress,
         int iX, int iY, COLOR stTextColor, COLOR stBackgroundColor, 
@@ -503,63 +503,63 @@ void kInternalDrawEnglishText( const RECT* pstMemoryArea, COLOR* pstMemoryAddres
     int iOverlappedWidth;
     int iOverlappedHeight;
 
-    // ¹®ÀÚ¸¦ Ãâ·ÂÇÏ´Â XÁÂÇ¥
+    // ë¬¸ìžë¥¼ ì¶œë ¥í•˜ëŠ” Xì¢Œí‘œ
     iCurrentX = iX;
     
-    // ¸Þ¸ð¸® ¿µ¿ªÀÇ ³Êºñ¸¦ °è»ê
+    // ë©”ëª¨ë¦¬ ì˜ì—­ì˜ ë„ˆë¹„ë¥¼ ê³„ì‚°
     iMemoryAreaWidth = kGetRectangleWidth( pstMemoryArea );
     
-    // ¹®ÀÚÀÇ °³¼ö¸¸Å­ ¹Ýº¹
+    // ë¬¸ìžì˜ ê°œìˆ˜ë§Œí¼ ë°˜ë³µ
     for( k = 0 ; k < iLength ; k++ )
     {
-        // ¹®ÀÚ¸¦ Ãâ·ÂÇÒ À§Ä¡ÀÇ YÁÂÇ¥¸¦ ±¸ÇÔ
+        // ë¬¸ìžë¥¼ ì¶œë ¥í•  ìœ„ì¹˜ì˜ Yì¢Œí‘œë¥¼ êµ¬í•¨
         iCurrentY = iY * iMemoryAreaWidth;
 
-        // ÇöÀç ÆùÆ®¸¦ Ç¥½ÃÇÏ´Â ¿µ¿ªÀ» RECT ÀÚ·á±¸Á¶¿¡ ¼³Á¤
+        // í˜„ìž¬ í°íŠ¸ë¥¼ í‘œì‹œí•˜ëŠ” ì˜ì—­ì„ RECT ìžë£Œêµ¬ì¡°ì— ì„¤ì •
         kSetRectangleData( iCurrentX, iY, iCurrentX + FONT_ENGLISHWIDTH - 1,
                 iY + FONT_ENGLISHHEIGHT - 1, &stFontArea );
 
-        // ÇöÀç ±×·Á¾ß ÇÒ ¹®ÀÚ°¡ ¸Þ¸ð¸® ¿µ¿ª°ú °ãÄ¡´Â ºÎºÐÀÌ ¾øÀ¸¸é ´ÙÀ½ ¹®ÀÚ·Î ÀÌµ¿
+        // í˜„ìž¬ ê·¸ë ¤ì•¼ í•  ë¬¸ìžê°€ ë©”ëª¨ë¦¬ ì˜ì—­ê³¼ ê²¹ì¹˜ëŠ” ë¶€ë¶„ì´ ì—†ìœ¼ë©´ ë‹¤ìŒ ë¬¸ìžë¡œ ì´ë™
         if( kGetOverlappedRectangle( pstMemoryArea, &stFontArea, 
                                      &stOverlappedArea ) == FALSE )
         {
-            // ¹®ÀÚ ÇÏ³ª¸¦ ¶Ù¾î³Ñ¾úÀ¸¹Ç·Î ÆùÆ®ÀÇ ³Êºñ¸¸Å­ xÁÂÇ¥¸¦ ÀÌµ¿ÇÏ¿© ´ÙÀ½ ¹®ÀÚ¸¦ Ãâ·Â
+            // ë¬¸ìž í•˜ë‚˜ë¥¼ ë›°ì–´ë„˜ì—ˆìœ¼ë¯€ë¡œ í°íŠ¸ì˜ ë„ˆë¹„ë§Œí¼ xì¢Œí‘œë¥¼ ì´ë™í•˜ì—¬ ë‹¤ìŒ ë¬¸ìžë¥¼ ì¶œë ¥
             iCurrentX += FONT_ENGLISHWIDTH;
             continue;
         }
         
-        // ºñÆ®¸Ê ÆùÆ® µ¥ÀÌÅÍ¿¡¼­ Ãâ·ÂÇÒ ¹®ÀÚÀÇ ºñÆ®¸ÊÀÌ ½ÃÀÛÇÏ´Â À§Ä¡¸¦ °è»ê
-        // 1¹ÙÀÌÆ® * FONT_HEIGHT·Î ±¸¼ºµÇ¾î ÀÖÀ¸¹Ç·Î ¹®ÀÚÀÇ ºñÆ®¸Ê À§Ä¡´Â
-        // ¾Æ·¡¿Í °°ÀÌ °è»ê °¡´É
+        // ë¹„íŠ¸ë§µ í°íŠ¸ ë°ì´í„°ì—ì„œ ì¶œë ¥í•  ë¬¸ìžì˜ ë¹„íŠ¸ë§µì´ ì‹œìž‘í•˜ëŠ” ìœ„ì¹˜ë¥¼ ê³„ì‚°
+        // 1ë°”ì´íŠ¸ * FONT_HEIGHTë¡œ êµ¬ì„±ë˜ì–´ ìžˆìœ¼ë¯€ë¡œ ë¬¸ìžì˜ ë¹„íŠ¸ë§µ ìœ„ì¹˜ëŠ”
+        // ì•„ëž˜ì™€ ê°™ì´ ê³„ì‚° ê°€ëŠ¥
         iBitmapStartIndex = pcString[ k ] * FONT_ENGLISHHEIGHT;
 
-        // ¹®ÀÚ¸¦ Ãâ·ÂÇÒ ¿µ¿ª°ú ¸Þ¸ð¸® ¿µ¿ªÀÌ °ãÄ¡´Â ºÎºÐÀ» ÀÌ¿ëÇÏ¿© x, y¿ÀÇÁ¼Â°ú
-        // Ãâ·ÂÇÒ ³Êºñ, ³ôÀÌ¸¦ °è»ê
+        // ë¬¸ìžë¥¼ ì¶œë ¥í•  ì˜ì—­ê³¼ ë©”ëª¨ë¦¬ ì˜ì—­ì´ ê²¹ì¹˜ëŠ” ë¶€ë¶„ì„ ì´ìš©í•˜ì—¬ x, yì˜¤í”„ì…‹ê³¼
+        // ì¶œë ¥í•  ë„ˆë¹„, ë†’ì´ë¥¼ ê³„ì‚°
         iStartXOffset = stOverlappedArea.iX1 - iCurrentX;
         iStartYOffset = stOverlappedArea.iY1 - iY;
         iOverlappedWidth = kGetRectangleWidth( &stOverlappedArea );
         iOverlappedHeight = kGetRectangleHeight( &stOverlappedArea );
 
-        // Ãâ·Â¿¡¼­ Á¦¿ÜµÈ y¿ÀÇÁ¼Â¸¸Å­ ºñÆ®¸Ê µ¥ÀÌÅÍ¸¦ Á¦¿Ü
+        // ì¶œë ¥ì—ì„œ ì œì™¸ëœ yì˜¤í”„ì…‹ë§Œí¼ ë¹„íŠ¸ë§µ ë°ì´í„°ë¥¼ ì œì™¸
         iBitmapStartIndex += iStartYOffset;        
         
-        // ¹®ÀÚ Ãâ·Â
-        // °ãÄ¡´Â ¿µ¿ªÀÇ y¿ÀÇÁ¼ÂºÎÅÍ ³ôÀÌ¸¸Å­ Ãâ·Â
+        // ë¬¸ìž ì¶œë ¥
+        // ê²¹ì¹˜ëŠ” ì˜ì—­ì˜ yì˜¤í”„ì…‹ë¶€í„° ë†’ì´ë§Œí¼ ì¶œë ¥
         for( j = iStartYOffset ; j < iOverlappedHeight ; j++ )
         {
-            // ÀÌ¹ø ¶óÀÎ¿¡¼­ Ãâ·ÂÇÒ ÆùÆ® ºñÆ®¸Ê°ú ºñÆ® ¿ÀÇÁ¼Â °è»ê
+            // ì´ë²ˆ ë¼ì¸ì—ì„œ ì¶œë ¥í•  í°íŠ¸ ë¹„íŠ¸ë§µê³¼ ë¹„íŠ¸ ì˜¤í”„ì…‹ ê³„ì‚°
             bBitmap = g_vucEnglishFont[ iBitmapStartIndex++ ];
             bCurrentBitmask = 0x01 << ( FONT_ENGLISHWIDTH - 1 - iStartXOffset );
             
-            // °ãÄ¡´Â ¿µ¿ªÀÇ x¿ÀÇÁ¼ÂºÎÅÍ ³Êºñ¸¸Å­ ÇöÀç ¶óÀÎ¿¡ Ãâ·Â
+            // ê²¹ì¹˜ëŠ” ì˜ì—­ì˜ xì˜¤í”„ì…‹ë¶€í„° ë„ˆë¹„ë§Œí¼ í˜„ìž¬ ë¼ì¸ì— ì¶œë ¥
             for( i = iStartXOffset ; i < iOverlappedWidth ; i++ )
             {
-                // ºñÆ®°¡ ¼³Á¤µÇ¾îÀÖÀ¸¸é È­¸é¿¡ ¹®ÀÚ»öÀ» Ç¥½Ã
+                // ë¹„íŠ¸ê°€ ì„¤ì •ë˜ì–´ìžˆìœ¼ë©´ í™”ë©´ì— ë¬¸ìžìƒ‰ì„ í‘œì‹œ
                 if( bBitmap & bCurrentBitmask )
                 {
                     pstMemoryAddress[ iCurrentY + iCurrentX + i ] = stTextColor;
                 }
-                // ºñÆ®°¡ ¼³Á¤µÇ¾îÀÖÁö ¾ÊÀ¸¸é È­¸é¿¡ ¹è°æ»öÀ» Ç¥½Ã
+                // ë¹„íŠ¸ê°€ ì„¤ì •ë˜ì–´ìžˆì§€ ì•Šìœ¼ë©´ í™”ë©´ì— ë°°ê²½ìƒ‰ì„ í‘œì‹œ
                 else
                 {
                     pstMemoryAddress[ iCurrentY + iCurrentX + i ] = stBackgroundColor;
@@ -568,17 +568,17 @@ void kInternalDrawEnglishText( const RECT* pstMemoryArea, COLOR* pstMemoryAddres
                 bCurrentBitmask = bCurrentBitmask >> 1;
             }
             
-            // ´ÙÀ½ ¶óÀÎÀ¸·Î ÀÌµ¿ÇØ¾ß ÇÏ¹Ç·Î, ÇöÀç yÁÂÇ¥¿¡ ¸Þ¸ð¸® ¿µ¿ªÀÇ ³Êºñ¸¸Å­ ´õÇØÁÜ
+            // ë‹¤ìŒ ë¼ì¸ìœ¼ë¡œ ì´ë™í•´ì•¼ í•˜ë¯€ë¡œ, í˜„ìž¬ yì¢Œí‘œì— ë©”ëª¨ë¦¬ ì˜ì—­ì˜ ë„ˆë¹„ë§Œí¼ ë”í•´ì¤Œ
             iCurrentY += iMemoryAreaWidth;
         }
         
-        // ¹®ÀÚ ÇÏ³ª¸¦ ´Ù Ãâ·ÂÇßÀ¸¸é ÆùÆ®ÀÇ ³ÐÀÌ¸¸Å­ X ÁÂÇ¥¸¦ ÀÌµ¿ÇÏ¿© ´ÙÀ½ ¹®ÀÚ¸¦ Ãâ·Â
+        // ë¬¸ìž í•˜ë‚˜ë¥¼ ë‹¤ ì¶œë ¥í–ˆìœ¼ë©´ í°íŠ¸ì˜ ë„“ì´ë§Œí¼ X ì¢Œí‘œë¥¼ ì´ë™í•˜ì—¬ ë‹¤ìŒ ë¬¸ìžë¥¼ ì¶œë ¥
         iCurrentX += FONT_ENGLISHWIDTH;
     }
 }
 
 /**
- *  ÇÑ±Û Ãâ·Â
+ *  í•œê¸€ ì¶œë ¥
  */
 void kInternalDrawHangulText( const RECT* pstMemoryArea, COLOR* pstMemoryAddress,
         int iX, int iY, COLOR stTextColor, COLOR stBackgroundColor,
@@ -600,52 +600,52 @@ void kInternalDrawHangulText( const RECT* pstMemoryArea, COLOR* pstMemoryAddress
     int iOverlappedWidth;
     int iOverlappedHeight;
 
-    // ¹®ÀÚ¸¦ Ãâ·ÂÇÏ´Â XÁÂÇ¥
+    // ë¬¸ìžë¥¼ ì¶œë ¥í•˜ëŠ” Xì¢Œí‘œ
     iCurrentX = iX;
 
-    // ¸Þ¸ð¸® ¿µ¿ªÀÇ ³Êºñ¸¦ °è»ê
+    // ë©”ëª¨ë¦¬ ì˜ì—­ì˜ ë„ˆë¹„ë¥¼ ê³„ì‚°
     iMemoryAreaWidth = kGetRectangleWidth( pstMemoryArea );
 
-    // ÇÑ±Û ¹®ÀÚÀÇ °³¼ö¸¸Å­ ¹Ýº¹
+    // í•œê¸€ ë¬¸ìžì˜ ê°œìˆ˜ë§Œí¼ ë°˜ë³µ
     for( k = 0 ; k < iLength ; k += 2 )
     {
-        // ¹®ÀÚ¸¦ Ãâ·ÂÇÒ À§Ä¡ÀÇ YÁÂÇ¥¸¦ ±¸ÇÔ
+        // ë¬¸ìžë¥¼ ì¶œë ¥í•  ìœ„ì¹˜ì˜ Yì¢Œí‘œë¥¼ êµ¬í•¨
         iCurrentY = iY * iMemoryAreaWidth;
 
-        // ÇöÀç ÆùÆ®¸¦ Ç¥½ÃÇÏ´Â ¿µ¿ªÀ» RECT ÀÚ·á±¸Á¶¿¡ ¼³Á¤
+        // í˜„ìž¬ í°íŠ¸ë¥¼ í‘œì‹œí•˜ëŠ” ì˜ì—­ì„ RECT ìžë£Œêµ¬ì¡°ì— ì„¤ì •
         kSetRectangleData( iCurrentX, iY, iCurrentX + FONT_HANGULWIDTH - 1,
                 iY + FONT_HANGULHEIGHT - 1, &stFontArea );
 
-        // ÇöÀç ±×·Á¾ß ÇÒ ¹®ÀÚ°¡ ¸Þ¸ð¸® ¿µ¿ª°ú °ãÄ¡´Â ºÎºÐÀÌ ¾øÀ¸¸é ´ÙÀ½ ¹®ÀÚ·Î ÀÌµ¿
+        // í˜„ìž¬ ê·¸ë ¤ì•¼ í•  ë¬¸ìžê°€ ë©”ëª¨ë¦¬ ì˜ì—­ê³¼ ê²¹ì¹˜ëŠ” ë¶€ë¶„ì´ ì—†ìœ¼ë©´ ë‹¤ìŒ ë¬¸ìžë¡œ ì´ë™
         if( kGetOverlappedRectangle( pstMemoryArea, &stFontArea,
                                      &stOverlappedArea ) == FALSE )
         {
-            // ¹®ÀÚ ÇÏ³ª¸¦ ¶Ù¾î³Ñ¾úÀ¸¹Ç·Î ÆùÆ®ÀÇ ³Êºñ¸¸Å­ xÁÂÇ¥¸¦ ÀÌµ¿ÇÏ¿© ´ÙÀ½ ¹®ÀÚ¸¦ Ãâ·Â
+            // ë¬¸ìž í•˜ë‚˜ë¥¼ ë›°ì–´ë„˜ì—ˆìœ¼ë¯€ë¡œ í°íŠ¸ì˜ ë„ˆë¹„ë§Œí¼ xì¢Œí‘œë¥¼ ì´ë™í•˜ì—¬ ë‹¤ìŒ ë¬¸ìžë¥¼ ì¶œë ¥
             iCurrentX += FONT_HANGULWIDTH;
             continue;
         }
 
-        // ºñÆ®¸Ê ÆùÆ® µ¥ÀÌÅÍ¿¡¼­ Ãâ·ÂÇÒ ¹®ÀÚÀÇ ºñÆ®¸ÊÀÌ ½ÃÀÛÇÏ´Â À§Ä¡¸¦ °è»ê
-        // 2¹ÙÀÌÆ® * FONT_HEIGHT·Î ±¸¼ºµÇ¾î ÀÖÀ¸¹Ç·Î ¹®ÀÚÀÇ ºñÆ®¸Ê À§Ä¡´Â
-        // ¾Æ·¡¿Í °°ÀÌ °è»ê °¡´É
-        // ¹ÙÀÌÆ®¸¦ ¿öµå·Î º¯È¯
+        // ë¹„íŠ¸ë§µ í°íŠ¸ ë°ì´í„°ì—ì„œ ì¶œë ¥í•  ë¬¸ìžì˜ ë¹„íŠ¸ë§µì´ ì‹œìž‘í•˜ëŠ” ìœ„ì¹˜ë¥¼ ê³„ì‚°
+        // 2ë°”ì´íŠ¸ * FONT_HEIGHTë¡œ êµ¬ì„±ë˜ì–´ ìžˆìœ¼ë¯€ë¡œ ë¬¸ìžì˜ ë¹„íŠ¸ë§µ ìœ„ì¹˜ëŠ”
+        // ì•„ëž˜ì™€ ê°™ì´ ê³„ì‚° ê°€ëŠ¥
+        // ë°”ì´íŠ¸ë¥¼ ì›Œë“œë¡œ ë³€í™˜
         wHangul = ( ( WORD ) pcString[ k ] << 8 ) | ( BYTE ) ( pcString[ k + 1 ] );
 
-        // ¿Ï¼ºÇü °¡~Èþ±îÁöÀÌ¸é ÀÚ/¸ð ¿ÀÇÁ¼ÂÀ» ´õÇØÁÜ
+        // ì™„ì„±í˜• ê°€~ížê¹Œì§€ì´ë©´ ìž/ëª¨ ì˜¤í”„ì…‹ì„ ë”í•´ì¤Œ
         if( ( 0xB0A1 <= wHangul ) && ( wHangul <= 0xC8FE ) )
         {
             wOffsetInGroup = ( wHangul - 0xB0A1 ) & 0xFF;
             wGroupIndex = ( ( wHangul - 0xB0A1 ) >> 8 ) & 0xFF;
-            // ±×·ì´ç 94°³ ¹®ÀÚ°¡ ÀÖ°í 51°³´Â ¿Ï¼ºÇü¿¡ ¾ø´Â ÀÚ¸ð°¡ µé¾îÀÖÀ¸¹Ç·Î ±×·ì ÀÎµ¦½º¿¡ 94¸¦ °öÇÑ µÚ
-            // ±×·ì ³» ¿ÀÇÁ¼Â¿¡ 51À» ´õÇÏ¸é ÆùÆ® µ¥ÀÌÅÍ¿¡¼­ ¸î ¹øÂ°ÀÎÁö °è»êÇÒ ¼ö ÀÖÀ½
+            // ê·¸ë£¹ë‹¹ 94ê°œ ë¬¸ìžê°€ ìžˆê³  51ê°œëŠ” ì™„ì„±í˜•ì— ì—†ëŠ” ìžëª¨ê°€ ë“¤ì–´ìžˆìœ¼ë¯€ë¡œ ê·¸ë£¹ ì¸ë±ìŠ¤ì— 94ë¥¼ ê³±í•œ ë’¤
+            // ê·¸ë£¹ ë‚´ ì˜¤í”„ì…‹ì— 51ì„ ë”í•˜ë©´ í°íŠ¸ ë°ì´í„°ì—ì„œ ëª‡ ë²ˆì§¸ì¸ì§€ ê³„ì‚°í•  ìˆ˜ ìžˆìŒ
             wHangul = ( wGroupIndex * 94 ) + wOffsetInGroup + 51;
         }
-        // ¸¸¾à ÀÚ/¸ðÀÌ¸é ÀÚÀ½ÀÇ ½ÃÀÛÀÎ ¤¡À» »©¼­ ¿ÀÇÁ¼ÂÀ» ±¸ÇÔ
+        // ë§Œì•½ ìž/ëª¨ì´ë©´ ìžìŒì˜ ì‹œìž‘ì¸ ã„±ì„ ë¹¼ì„œ ì˜¤í”„ì…‹ì„ êµ¬í•¨
         else if( ( 0xA4A1 <= wHangul ) && ( wHangul <= 0xA4D3 ) )
         {
             wHangul = wHangul - 0xA4A1;
         }
-        // À§ÀÇ µÎ °¡Áö °æ¿ì°¡ ¾Æ´Ï¸é Ã³¸®ÇÒ ¼ö ¾øÀ¸¹Ç·Î ´ÙÀ½ ¹®ÀÚ·Î ³Ñ¾î°¨
+        // ìœ„ì˜ ë‘ ê°€ì§€ ê²½ìš°ê°€ ì•„ë‹ˆë©´ ì²˜ë¦¬í•  ìˆ˜ ì—†ìœ¼ë¯€ë¡œ ë‹¤ìŒ ë¬¸ìžë¡œ ë„˜ì–´ê°
         else
         {
             continue ;
@@ -653,33 +653,33 @@ void kInternalDrawHangulText( const RECT* pstMemoryArea, COLOR* pstMemoryAddress
 
         iBitmapStartIndex = wHangul * FONT_HANGULHEIGHT;
 
-        // ¹®ÀÚ¸¦ Ãâ·ÂÇÒ ¿µ¿ª°ú ¸Þ¸ð¸® ¿µ¿ªÀÌ °ãÄ¡´Â ºÎºÐÀ» ÀÌ¿ëÇÏ¿© x, y¿ÀÇÁ¼Â°ú
-        // Ãâ·ÂÇÒ ³Êºñ, ³ôÀÌ¸¦ °è»ê
+        // ë¬¸ìžë¥¼ ì¶œë ¥í•  ì˜ì—­ê³¼ ë©”ëª¨ë¦¬ ì˜ì—­ì´ ê²¹ì¹˜ëŠ” ë¶€ë¶„ì„ ì´ìš©í•˜ì—¬ x, yì˜¤í”„ì…‹ê³¼
+        // ì¶œë ¥í•  ë„ˆë¹„, ë†’ì´ë¥¼ ê³„ì‚°
         iStartXOffset = stOverlappedArea.iX1 - iCurrentX;
         iStartYOffset = stOverlappedArea.iY1 - iY;
         iOverlappedWidth = kGetRectangleWidth( &stOverlappedArea );
         iOverlappedHeight = kGetRectangleHeight( &stOverlappedArea );
 
-        // Ãâ·Â¿¡¼­ Á¦¿ÜµÈ y¿ÀÇÁ¼Â¸¸Å­ ºñÆ®¸Ê µ¥ÀÌÅÍ¸¦ Á¦¿Ü
+        // ì¶œë ¥ì—ì„œ ì œì™¸ëœ yì˜¤í”„ì…‹ë§Œí¼ ë¹„íŠ¸ë§µ ë°ì´í„°ë¥¼ ì œì™¸
         iBitmapStartIndex += iStartYOffset;
 
-        // ¹®ÀÚ Ãâ·Â
-        // °ãÄ¡´Â ¿µ¿ªÀÇ y¿ÀÇÁ¼ÂºÎÅÍ ³ôÀÌ¸¸Å­ Ãâ·Â
+        // ë¬¸ìž ì¶œë ¥
+        // ê²¹ì¹˜ëŠ” ì˜ì—­ì˜ yì˜¤í”„ì…‹ë¶€í„° ë†’ì´ë§Œí¼ ì¶œë ¥
         for( j = iStartYOffset ; j < iOverlappedHeight ; j++ )
         {
-            // ÀÌ¹ø ¶óÀÎ¿¡¼­ Ãâ·ÂÇÒ ÆùÆ® ºñÆ®¸Ê°ú ºñÆ® ¿ÀÇÁ¼Â °è»ê
+            // ì´ë²ˆ ë¼ì¸ì—ì„œ ì¶œë ¥í•  í°íŠ¸ ë¹„íŠ¸ë§µê³¼ ë¹„íŠ¸ ì˜¤í”„ì…‹ ê³„ì‚°
             wBitmap = g_vusHangulFont[ iBitmapStartIndex++ ];
             wCurrentBitmask = 0x01 << ( FONT_HANGULWIDTH - 1 - iStartXOffset );
 
-            // °ãÄ¡´Â ¿µ¿ªÀÇ x¿ÀÇÁ¼ÂºÎÅÍ ³Êºñ¸¸Å­ ÇöÀç ¶óÀÎ¿¡ Ãâ·Â
+            // ê²¹ì¹˜ëŠ” ì˜ì—­ì˜ xì˜¤í”„ì…‹ë¶€í„° ë„ˆë¹„ë§Œí¼ í˜„ìž¬ ë¼ì¸ì— ì¶œë ¥
             for( i = iStartXOffset ; i < iOverlappedWidth ; i++ )
             {
-                // ºñÆ®°¡ ¼³Á¤µÇ¾îÀÖÀ¸¸é È­¸é¿¡ ¹®ÀÚ»öÀ» Ç¥½Ã
+                // ë¹„íŠ¸ê°€ ì„¤ì •ë˜ì–´ìžˆìœ¼ë©´ í™”ë©´ì— ë¬¸ìžìƒ‰ì„ í‘œì‹œ
                 if( wBitmap & wCurrentBitmask )
                 {
                     pstMemoryAddress[ iCurrentY + iCurrentX + i ] = stTextColor;
                 }
-                // ºñÆ®°¡ ¼³Á¤µÇ¾îÀÖÁö ¾ÊÀ¸¸é È­¸é¿¡ ¹è°æ»öÀ» Ç¥½Ã
+                // ë¹„íŠ¸ê°€ ì„¤ì •ë˜ì–´ìžˆì§€ ì•Šìœ¼ë©´ í™”ë©´ì— ë°°ê²½ìƒ‰ì„ í‘œì‹œ
                 else
                 {
                     pstMemoryAddress[ iCurrentY + iCurrentX + i ] = stBackgroundColor;
@@ -688,11 +688,11 @@ void kInternalDrawHangulText( const RECT* pstMemoryArea, COLOR* pstMemoryAddress
                 wCurrentBitmask = wCurrentBitmask >> 1;
             }
 
-            // ´ÙÀ½ ¶óÀÎÀ¸·Î ÀÌµ¿ÇØ¾ß ÇÏ¹Ç·Î, ÇöÀç yÁÂÇ¥¿¡ ¸Þ¸ð¸® ¿µ¿ªÀÇ ³Êºñ¸¸Å­ ´õÇØÁÜ
+            // ë‹¤ìŒ ë¼ì¸ìœ¼ë¡œ ì´ë™í•´ì•¼ í•˜ë¯€ë¡œ, í˜„ìž¬ yì¢Œí‘œì— ë©”ëª¨ë¦¬ ì˜ì—­ì˜ ë„ˆë¹„ë§Œí¼ ë”í•´ì¤Œ
             iCurrentY += iMemoryAreaWidth;
         }
 
-        // ¹®ÀÚ ÇÏ³ª¸¦ ´Ù Ãâ·ÂÇßÀ¸¸é ÆùÆ®ÀÇ ³ÐÀÌ¸¸Å­ X ÁÂÇ¥¸¦ ÀÌµ¿ÇÏ¿© ´ÙÀ½ ¹®ÀÚ¸¦ Ãâ·Â
+        // ë¬¸ìž í•˜ë‚˜ë¥¼ ë‹¤ ì¶œë ¥í–ˆìœ¼ë©´ í°íŠ¸ì˜ ë„“ì´ë§Œí¼ X ì¢Œí‘œë¥¼ ì´ë™í•˜ì—¬ ë‹¤ìŒ ë¬¸ìžë¥¼ ì¶œë ¥
         iCurrentX += FONT_HANGULWIDTH;
     }
 }

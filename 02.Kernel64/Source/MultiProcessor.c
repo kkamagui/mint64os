@@ -3,7 +3,7 @@
  *  date    2009/06/29
  *  author  kkamagui 
  *          Copyright(c)2008 All rights reserved by kkamagui
- *  brief   ¸ÖÆ¼ ÇÁ·Î¼¼¼­ ¶Ç´Â ¸ÖÆ¼ÄÚ¾î ÇÁ·Î¼¼¼­¿¡ °ü·ÃµÈ ¼Ò½º ÆÄÀÏ
+ *  brief   ë©€í‹° í”„ë¡œì„¸ì„œ ë˜ëŠ” ë©€í‹°ì½”ì–´ í”„ë¡œì„¸ì„œì— ê´€ë ¨ëœ ì†ŒìŠ¤ íŒŒì¼
  */
 
 #include "MultiProcessor.h"
@@ -12,29 +12,29 @@
 #include "LocalAPIC.h"
 #include "PIT.h"
 
-// È°¼ºÈ­µÈ Application ProcessorÀÇ °³¼ö
+// í™œì„±í™”ëœ Application Processorì˜ ê°œìˆ˜
 volatile int g_iWakeUpApplicationProcessorCount = 0;
-// APIC ID ·¹Áö½ºÅÍÀÇ ¾îµå·¹½º
+// APIC ID ë ˆì§€ìŠ¤í„°ì˜ ì–´ë“œë ˆìŠ¤
 volatile QWORD g_qwAPICIDAddress = 0;
 
 /**
- *  ·ÎÄÃ APIC¸¦ È°¼ºÈ­ÇÏ°í AP(Application Processor)¸¦ È°¼ºÈ­
+ *  ë¡œì»¬ APICë¥¼ í™œì„±í™”í•˜ê³  AP(Application Processor)ë¥¼ í™œì„±í™”
  */
 BOOL kStartUpApplicationProcessor( void )
 {
-    // MP ¼³Á¤ Å×ÀÌºí ºÐ¼®
+    // MP ì„¤ì • í…Œì´ë¸” ë¶„ì„
     if( kAnalysisMPConfigurationTable() == FALSE )
     {
         return FALSE;
     }
     
-    // ¸ðµç ÇÁ·Î¼¼¼­¿¡¼­ ·ÎÄÃ APIC¸¦ »ç¿ëÇÏµµ·Ï È°¼ºÈ­
+    // ëª¨ë“  í”„ë¡œì„¸ì„œì—ì„œ ë¡œì»¬ APICë¥¼ ì‚¬ìš©í•˜ë„ë¡ í™œì„±í™”
     kEnableGlobalLocalAPIC();
     
-    // BSP(Bootstrap Processor)ÀÇ ·ÎÄÃ APIC¸¦ È°¼ºÈ­
+    // BSP(Bootstrap Processor)ì˜ ë¡œì»¬ APICë¥¼ í™œì„±í™”
     kEnableSoftwareLocalAPIC();    
     
-    // AP¸¦ ±ú¿ò
+    // APë¥¼ ê¹¨ì›€
     if( kWakeUpApplicationProcessor() == FALSE )
     {
         return FALSE;
@@ -44,7 +44,7 @@ BOOL kStartUpApplicationProcessor( void )
 }
 
 /**
- *  AP(Application Processor)¸¦ È°¼ºÈ­
+ *  AP(Application Processor)ë¥¼ í™œì„±í™”
  */
 static BOOL kWakeUpApplicationProcessor( void )
 {
@@ -54,88 +54,88 @@ static BOOL kWakeUpApplicationProcessor( void )
     BOOL bInterruptFlag;
     int i;
 
-    // ÀÎÅÍ·´Æ®¸¦ ºÒ°¡·Î ¼³Á¤
+    // ì¸í„°ëŸ½íŠ¸ë¥¼ ë¶ˆê°€ë¡œ ì„¤ì •
     bInterruptFlag = kSetInterruptFlag( FALSE );
 
-    // MP ¼³Á¤ Å×ÀÌºí Çì´õ¿¡ ÀúÀåµÈ ·ÎÄÃ APICÀÇ ¸Þ¸ð¸® ¸Ê I/O ¾îµå·¹½º¸¦ »ç¿ë
+    // MP ì„¤ì • í…Œì´ë¸” í—¤ë”ì— ì €ìž¥ëœ ë¡œì»¬ APICì˜ ë©”ëª¨ë¦¬ ë§µ I/O ì–´ë“œë ˆìŠ¤ë¥¼ ì‚¬ìš©
     pstMPManager = kGetMPConfigurationManager(); 
     pstMPHeader = pstMPManager->pstMPConfigurationTableHeader;
     qwLocalAPICBaseAddress = pstMPHeader->dwMemoryMapIOAddressOfLocalAPIC;
 
-    // APIC ID ·¹Áö½ºÅÍÀÇ ¾îµå·¹½º(0xFEE00020)¸¦ ÀúÀåÇÏ¿©, Application Processor°¡
-    // ÀÚ½ÅÀÇ APIC ID¸¦ ÀÐÀ» ¼ö ÀÖ°Ô ÇÔ
+    // APIC ID ë ˆì§€ìŠ¤í„°ì˜ ì–´ë“œë ˆìŠ¤(0xFEE00020)ë¥¼ ì €ìž¥í•˜ì—¬, Application Processorê°€
+    // ìžì‹ ì˜ APIC IDë¥¼ ì½ì„ ìˆ˜ ìžˆê²Œ í•¨
     g_qwAPICIDAddress = qwLocalAPICBaseAddress + APIC_REGISTER_APICID;
     
     //--------------------------------------------------------------------------
-    // ÇÏÀ§ ÀÎÅÍ·´Æ® Ä¿¸Çµå ·¹Áö½ºÅÍ(Lower Interrupt Command Register, 0xFEE00300)¿¡
-    // ÃÊ±âÈ­(INIT) IPI¿Í ½ÃÀÛ(Start Up) IPI¸¦ Àü¼ÛÇÏ¿© AP¸¦ ±ú¿ò
+    // í•˜ìœ„ ì¸í„°ëŸ½íŠ¸ ì»¤ë§¨ë“œ ë ˆì§€ìŠ¤í„°(Lower Interrupt Command Register, 0xFEE00300)ì—
+    // ì´ˆê¸°í™”(INIT) IPIì™€ ì‹œìž‘(Start Up) IPIë¥¼ ì „ì†¡í•˜ì—¬ APë¥¼ ê¹¨ì›€
     //--------------------------------------------------------------------------
     //--------------------------------------------------------------------------
-    // ÃÊ±âÈ­(INIT) IPI Àü¼Û
+    // ì´ˆê¸°í™”(INIT) IPI ì „ì†¡
     //--------------------------------------------------------------------------
-    // ÇÏÀ§ ÀÎÅÍ·´Æ® Ä¿¸Çµå ·¹Áö½ºÅÍ(0xFEE00300)À» »ç¿ëÇØ¼­ BSP(Bootstrap Processor)¸¦
-    // Á¦¿ÜÇÑ ³ª¸ÓÁö ÄÚ¾î¿¡ INIT IPI¸¦ Àü¼Û
-    // AP(Application Processor)´Â º¸È£ ¸ðµå Ä¿³Î(0x10000)¿¡¼­ ½ÃÀÛ
+    // í•˜ìœ„ ì¸í„°ëŸ½íŠ¸ ì»¤ë§¨ë“œ ë ˆì§€ìŠ¤í„°(0xFEE00300)ì„ ì‚¬ìš©í•´ì„œ BSP(Bootstrap Processor)ë¥¼
+    // ì œì™¸í•œ ë‚˜ë¨¸ì§€ ì½”ì–´ì— INIT IPIë¥¼ ì „ì†¡
+    // AP(Application Processor)ëŠ” ë³´í˜¸ ëª¨ë“œ ì»¤ë„(0x10000)ì—ì„œ ì‹œìž‘
     // All Excluding Self, Edge Trigger, Assert, Physical Destination, INIT
     *( DWORD* )( qwLocalAPICBaseAddress + APIC_REGISTER_ICR_LOWER ) = 
         APIC_DESTINATIONSHORTHAND_ALLEXCLUDINGSELF | APIC_TRIGGERMODE_EDGE |
         APIC_LEVEL_ASSERT | APIC_DESTINATIONMODE_PHYSICAL | APIC_DELIVERYMODE_INIT;
     
-    // PIT¸¦ Á÷Á¢ Á¦¾îÇÏ¿© 10ms µ¿¾È ´ë±â
+    // PITë¥¼ ì§ì ‘ ì œì–´í•˜ì—¬ 10ms ë™ì•ˆ ëŒ€ê¸°
     kWaitUsingDirectPIT( MSTOCOUNT( 10 ) );
         
-    // ÇÏÀ§ ÀÎÅÍ·´Æ® Ä¿¸Çµå ·¹Áö½ºÅÍ(0xFEE00300)¿¡¼­ Àü´Þ »óÅÂ ºñÆ®(ºñÆ® 12)¸¦ 
-    // È®ÀÎÇÏ¿© ¼º°ø ¿©ºÎ ÆÇº°
+    // í•˜ìœ„ ì¸í„°ëŸ½íŠ¸ ì»¤ë§¨ë“œ ë ˆì§€ìŠ¤í„°(0xFEE00300)ì—ì„œ ì „ë‹¬ ìƒíƒœ ë¹„íŠ¸(ë¹„íŠ¸ 12)ë¥¼ 
+    // í™•ì¸í•˜ì—¬ ì„±ê³µ ì—¬ë¶€ íŒë³„
     if( *( DWORD* )( qwLocalAPICBaseAddress + APIC_REGISTER_ICR_LOWER ) &
             APIC_DELIVERYSTATUS_PENDING )
     {
-        // Å¸ÀÌ¸Ó ÀÎÅÍ·´Æ®°¡ 1ÃÊ¿¡ 1000¹ø ¹ß»ýÇÏµµ·Ï Àç¼³Á¤
+        // íƒ€ì´ë¨¸ ì¸í„°ëŸ½íŠ¸ê°€ 1ì´ˆì— 1000ë²ˆ ë°œìƒí•˜ë„ë¡ ìž¬ì„¤ì •
         kInitializePIT( MSTOCOUNT( 1 ), TRUE );
         
-        // ÀÎÅÍ·´Æ® ÇÃ·¡±×¸¦ º¹¿ø
+        // ì¸í„°ëŸ½íŠ¸ í”Œëž˜ê·¸ë¥¼ ë³µì›
         kSetInterruptFlag( bInterruptFlag );
         return FALSE;
     }
     
     //--------------------------------------------------------------------------
-    // ½ÃÀÛ(Start Up) IPI Àü¼Û, 2È¸ ¹Ýº¹ Àü¼ÛÇÔ
+    // ì‹œìž‘(Start Up) IPI ì „ì†¡, 2íšŒ ë°˜ë³µ ì „ì†¡í•¨
     //--------------------------------------------------------------------------
     for( i = 0 ; i < 2 ; i++ )
     {
-        // ÇÏÀ§ ÀÎÅÍ·´Æ® Ä¿¸Çµå ·¹Áö½ºÅÍ(0xFEE00300)À» »ç¿ëÇØ¼­ BSP¸¦ Á¦¿ÜÇÑ 
-        // ³ª¸ÓÁö ÄÚ¾î¿¡ SIPI ¸Þ½ÃÁö¸¦ Àü¼Û
-        // º¸È£ ¸ðµå Ä¿³ÎÀÌ ½ÃÀÛÇÏ´Â 0x10000¿¡¼­ ½ÇÇà½ÃÅ°·Á°í 0x10(0x10000 / 4Kbyte)¸¦
-        // ÀÎÅÍ·´Æ® º¤ÅÍ·Î ¼³Á¤
+        // í•˜ìœ„ ì¸í„°ëŸ½íŠ¸ ì»¤ë§¨ë“œ ë ˆì§€ìŠ¤í„°(0xFEE00300)ì„ ì‚¬ìš©í•´ì„œ BSPë¥¼ ì œì™¸í•œ 
+        // ë‚˜ë¨¸ì§€ ì½”ì–´ì— SIPI ë©”ì‹œì§€ë¥¼ ì „ì†¡
+        // ë³´í˜¸ ëª¨ë“œ ì»¤ë„ì´ ì‹œìž‘í•˜ëŠ” 0x10000ì—ì„œ ì‹¤í–‰ì‹œí‚¤ë ¤ê³  0x10(0x10000 / 4Kbyte)ë¥¼
+        // ì¸í„°ëŸ½íŠ¸ ë²¡í„°ë¡œ ì„¤ì •
         // All Excluding Self, Edge Trigger, Assert, Physical Destination, Start Up
         *( DWORD* )( qwLocalAPICBaseAddress + APIC_REGISTER_ICR_LOWER ) = 
             APIC_DESTINATIONSHORTHAND_ALLEXCLUDINGSELF | APIC_TRIGGERMODE_EDGE |
             APIC_LEVEL_ASSERT | APIC_DESTINATIONMODE_PHYSICAL | 
             APIC_DELIVERYMODE_STARTUP | 0x10;
         
-        // PIT¸¦ Á÷Á¢ Á¦¾îÇÏ¿© 200us µ¿¾È ´ë±â
+        // PITë¥¼ ì§ì ‘ ì œì–´í•˜ì—¬ 200us ë™ì•ˆ ëŒ€ê¸°
         kWaitUsingDirectPIT( USTOCOUNT( 200 ) );
             
-        // ÇÏÀ§ ÀÎÅÍ·´Æ® Ä¿¸Çµå ·¹Áö½ºÅÍ(0xFEE00300)¿¡¼­ Àü´Þ »óÅÂ ºñÆ®(ºñÆ® 12)¸¦ 
-        // È®ÀÎÇÏ¿© ¼º°ø ¿©ºÎ ÆÇº°
+        // í•˜ìœ„ ì¸í„°ëŸ½íŠ¸ ì»¤ë§¨ë“œ ë ˆì§€ìŠ¤í„°(0xFEE00300)ì—ì„œ ì „ë‹¬ ìƒíƒœ ë¹„íŠ¸(ë¹„íŠ¸ 12)ë¥¼ 
+        // í™•ì¸í•˜ì—¬ ì„±ê³µ ì—¬ë¶€ íŒë³„
         if( *( DWORD* )( qwLocalAPICBaseAddress + APIC_REGISTER_ICR_LOWER ) &
                 APIC_DELIVERYSTATUS_PENDING )
         {
-            // Å¸ÀÌ¸Ó ÀÎÅÍ·´Æ®°¡ 1ÃÊ¿¡ 1000¹ø ¹ß»ýÇÏµµ·Ï Àç¼³Á¤
+            // íƒ€ì´ë¨¸ ì¸í„°ëŸ½íŠ¸ê°€ 1ì´ˆì— 1000ë²ˆ ë°œìƒí•˜ë„ë¡ ìž¬ì„¤ì •
             kInitializePIT( MSTOCOUNT( 1 ), TRUE );
             
-            // ÀÎÅÍ·´Æ® ÇÃ·¡±×¸¦ º¹¿ø
+            // ì¸í„°ëŸ½íŠ¸ í”Œëž˜ê·¸ë¥¼ ë³µì›
             kSetInterruptFlag( bInterruptFlag );
             return FALSE;
         }
     }
     
-    // Å¸ÀÌ¸Ó ÀÎÅÍ·´Æ®°¡ 1ÃÊ¿¡ 1000¹ø ¹ß»ýÇÏµµ·Ï Àç¼³Á¤
+    // íƒ€ì´ë¨¸ ì¸í„°ëŸ½íŠ¸ê°€ 1ì´ˆì— 1000ë²ˆ ë°œìƒí•˜ë„ë¡ ìž¬ì„¤ì •
     kInitializePIT( MSTOCOUNT( 1 ), TRUE );
     
-    // ÀÎÅÍ·´Æ® ÇÃ·¡±×¸¦ º¹¿ø
+    // ì¸í„°ëŸ½íŠ¸ í”Œëž˜ê·¸ë¥¼ ë³µì›
     kSetInterruptFlag( bInterruptFlag );
     
-    // Application Processor°¡ ¸ðµÎ ±ú¾î³¯ ¶§±îÁö ´ë±â
+    // Application Processorê°€ ëª¨ë‘ ê¹¨ì–´ë‚  ë•Œê¹Œì§€ ëŒ€ê¸°
     while( g_iWakeUpApplicationProcessorCount < 
             ( pstMPManager->iProcessorCount - 1 ) )
     {
@@ -145,29 +145,29 @@ static BOOL kWakeUpApplicationProcessor( void )
 }
 
 /**
- *  APIC ID ·¹Áö½ºÅÍ¿¡¼­ APIC ID¸¦ ¹ÝÈ¯
+ *  APIC ID ë ˆì§€ìŠ¤í„°ì—ì„œ APIC IDë¥¼ ë°˜í™˜
  */
 BYTE kGetAPICID( void )
 {
     MPCONFIGURATIONTABLEHEADER* pstMPHeader;
     QWORD qwLocalAPICBaseAddress;
 
-    // APIC ID ¾îµå·¹½ºÀÇ °ªÀÌ ¼³Á¤µÇÁö ¾Ê¾ÒÀ¸¸é, MP ¼³Á¤ Å×ÀÌºí¿¡¼­ °ªÀ» ÀÐ¾î¼­ ¼³Á¤
+    // APIC ID ì–´ë“œë ˆìŠ¤ì˜ ê°’ì´ ì„¤ì •ë˜ì§€ ì•Šì•˜ìœ¼ë©´, MP ì„¤ì • í…Œì´ë¸”ì—ì„œ ê°’ì„ ì½ì–´ì„œ ì„¤ì •
     if( g_qwAPICIDAddress == 0 )
     {
-        // MP ¼³Á¤ Å×ÀÌºí Çì´õ¿¡ ÀúÀåµÈ ·ÎÄÃ APICÀÇ ¸Þ¸ð¸® ¸Ê I/O ¾îµå·¹½º¸¦ »ç¿ë
+        // MP ì„¤ì • í…Œì´ë¸” í—¤ë”ì— ì €ìž¥ëœ ë¡œì»¬ APICì˜ ë©”ëª¨ë¦¬ ë§µ I/O ì–´ë“œë ˆìŠ¤ë¥¼ ì‚¬ìš©
         pstMPHeader = kGetMPConfigurationManager()->pstMPConfigurationTableHeader;
         if( pstMPHeader == NULL )
         {
             return 0;
         }
         
-        // APIC ID ·¹Áö½ºÅÍÀÇ ¾îµå·¹½º((0xFEE00020)¸¦ ÀúÀåÇÏ¿©, ÀÚ½ÅÀÇ APIC ID¸¦
-        // ÀÐÀ» ¼ö ÀÖ°Ô ÇÔ
+        // APIC ID ë ˆì§€ìŠ¤í„°ì˜ ì–´ë“œë ˆìŠ¤((0xFEE00020)ë¥¼ ì €ìž¥í•˜ì—¬, ìžì‹ ì˜ APIC IDë¥¼
+        // ì½ì„ ìˆ˜ ìžˆê²Œ í•¨
         qwLocalAPICBaseAddress = pstMPHeader->dwMemoryMapIOAddressOfLocalAPIC;
         g_qwAPICIDAddress = qwLocalAPICBaseAddress + APIC_REGISTER_APICID;
     }
     
-    // APIC ID ·¹Áö½ºÅÍÀÇ Bit 24~31ÀÇ °ªÀ» ¹ÝÈ¯    
+    // APIC ID ë ˆì§€ìŠ¤í„°ì˜ Bit 24~31ì˜ ê°’ì„ ë°˜í™˜    
     return *( ( DWORD* ) g_qwAPICIDAddress ) >> 24;
 }

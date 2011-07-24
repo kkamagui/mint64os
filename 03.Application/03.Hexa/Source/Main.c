@@ -3,17 +3,17 @@
  *  date    2010/03/10
  *  author  kkamagui 
  *          Copyright(c)2008 All rights reserved by kkamagui
- *  brief   C ¾ð¾î·Î ÀÛ¼ºµÈ ÀÀ¿ëÇÁ·Î±×·¥ÀÇ ¿£Æ®¸® Æ÷ÀÎÆ® ÆÄÀÏ
+ *  brief   C ì–¸ì–´ë¡œ ìž‘ì„±ëœ ì‘ìš©í”„ë¡œê·¸ëž¨ì˜ ì—”íŠ¸ë¦¬ í¬ì¸íŠ¸ íŒŒì¼
  */
 
 #include "MINTOSLibrary.h"
 #include "Main.h"
 
-// °ÔÀÓ °ü·Ã Á¤º¸¸¦ ÀúÀåÇÏ´Â ÀÚ·á±¸Á¶
+// ê²Œìž„ ê´€ë ¨ ì •ë³´ë¥¼ ì €ìž¥í•˜ëŠ” ìžë£Œêµ¬ì¡°
 GAMEINFO g_stGameInfo = { 0, };
 
 /**
- *  ÀÀ¿ëÇÁ·Î±×·¥ÀÇ C ¾ð¾î ¿£Æ®¸® Æ÷ÀÎÆ®
+ *  ì‘ìš©í”„ë¡œê·¸ëž¨ì˜ C ì–¸ì–´ ì—”íŠ¸ë¦¬ í¬ì¸íŠ¸
  */
 int Main( char* pcArgument )
 {
@@ -28,7 +28,7 @@ int Main( char* pcArgument )
     BYTE bBlockKind;
     
     //--------------------------------------------------------------------------
-    // À©µµ¿ì¸¦ È­¸é °¡¿îµ¥¿¡ »ý¼º
+    // ìœˆë„ìš°ë¥¼ í™”ë©´ ê°€ìš´ë°ì— ìƒì„±
     //--------------------------------------------------------------------------
     GetScreenArea( &stScreenArea );
     iX = ( GetRectangleWidth( &stScreenArea ) - WINDOW_WIDTH ) / 2;
@@ -42,55 +42,55 @@ int Main( char* pcArgument )
     }
 
     //--------------------------------------------------------------------------
-    // °ÔÀÓ¿¡ °ü·ÃµÈ Á¤º¸¸¦ ÃÊ±âÈ­ÇÏ°í »ç¿ëÇÒ ¹öÆÛ¸¦ ÇÒ´ç
+    // ê²Œìž„ì— ê´€ë ¨ëœ ì •ë³´ë¥¼ ì´ˆê¸°í™”í•˜ê³  ì‚¬ìš©í•  ë²„í¼ë¥¼ í• ë‹¹
     //--------------------------------------------------------------------------
-    // °ÔÀÓ Á¤º¸¸¦ ÃÊ±âÈ­
+    // ê²Œìž„ ì •ë³´ë¥¼ ì´ˆê¸°í™”
     Initialize();
 
-    // ³­¼ö ÃÊ±ê°ª(Random Seed) ¼³Á¤
+    // ë‚œìˆ˜ ì´ˆê¹ƒê°’(Random Seed) ì„¤ì •
     srand( GetTickCount() );
 
     //--------------------------------------------------------------------------
-    // °ÔÀÓ Á¤º¸¿Í °ÔÀÓ ¿µ¿ªÀ» Ãâ·ÂÇÏ°í °ÔÀÓ ½ÃÀÛ ´ë±â ¸Þ½ÃÁö¸¦ Ç¥½Ã
+    // ê²Œìž„ ì •ë³´ì™€ ê²Œìž„ ì˜ì—­ì„ ì¶œë ¥í•˜ê³  ê²Œìž„ ì‹œìž‘ ëŒ€ê¸° ë©”ì‹œì§€ë¥¼ í‘œì‹œ
     //--------------------------------------------------------------------------
     DrawInformation( qwWindowID );
     DrawGameArea( qwWindowID );
     DrawText( qwWindowID, 7, 200, RGB( 255, 255, 255 ), RGB( 0, 0, 0 ),
             pcStartMessage, strlen( pcStartMessage ) );
 
-    // Ãâ·ÂµÈ ¸Þ½ÃÁö¸¦ È­¸é¿¡ Ç¥½Ã
+    // ì¶œë ¥ëœ ë©”ì‹œì§€ë¥¼ í™”ë©´ì— í‘œì‹œ
     ShowWindow( qwWindowID, TRUE );
 
     //--------------------------------------------------------------------------
-    // GUI ÅÂ½ºÅ©ÀÇ ÀÌº¥Æ®¿Í °ÔÀÓ ·çÇÁ¸¦ Ã³¸®ÇÏ´Â ºÎºÐ
+    // GUI íƒœìŠ¤í¬ì˜ ì´ë²¤íŠ¸ì™€ ê²Œìž„ ë£¨í”„ë¥¼ ì²˜ë¦¬í•˜ëŠ” ë¶€ë¶„
     //--------------------------------------------------------------------------
     qwLastTickCount = GetTickCount();
     while( 1 )
     {
         //----------------------------------------------------------------------
-        // ÀÌº¥Æ® Ã³¸® ºÎºÐ
+        // ì´ë²¤íŠ¸ ì²˜ë¦¬ ë¶€ë¶„
         //----------------------------------------------------------------------
-        // ÀÌº¥Æ® Å¥¿¡¼­ ÀÌº¥Æ®¸¦ ¼ö½Å
+        // ì´ë²¤íŠ¸ íì—ì„œ ì´ë²¤íŠ¸ë¥¼ ìˆ˜ì‹ 
         if( ReceiveEventFromWindowQueue( qwWindowID, &stEvent ) == TRUE )
         {
-            // ¼ö½ÅµÈ ÀÌº¥Æ®¸¦ Å¸ÀÔ¿¡ µû¶ó ³ª´©¾î Ã³¸®
+            // ìˆ˜ì‹ ëœ ì´ë²¤íŠ¸ë¥¼ íƒ€ìž…ì— ë”°ë¼ ë‚˜ëˆ„ì–´ ì²˜ë¦¬
             switch( stEvent.qwType )
             {
-                // ¸¶¿ì½º Å¬¸¯ Ã³¸®
+                // ë§ˆìš°ìŠ¤ í´ë¦­ ì²˜ë¦¬
             case EVENT_MOUSE_LBUTTONDOWN:
-                // °ÔÀÓ ½ÃÀÛÀ» ¿øÇÏ´Â Å¬¸¯ÀÌ¸é °ÔÀÓÀ» ½ÃÀÛ
+                // ê²Œìž„ ì‹œìž‘ì„ ì›í•˜ëŠ” í´ë¦­ì´ë©´ ê²Œìž„ì„ ì‹œìž‘
                 if( g_stGameInfo.bGameStart == FALSE )
                 {
-                    // °ÔÀÓ Á¤º¸¸¦ ÃÊ±âÈ­
+                    // ê²Œìž„ ì •ë³´ë¥¼ ì´ˆê¸°í™”
                     Initialize();
 
-                    // °ÔÀÓ ½ÃÀÛ ÇÃ·¡±×¸¦ ¼³Á¤
+                    // ê²Œìž„ ì‹œìž‘ í”Œëž˜ê·¸ë¥¼ ì„¤ì •
                     g_stGameInfo.bGameStart = TRUE;
                     break;
                 }
                 break;
 
-                // Å°º¸µå ´­¸² Ã³¸®
+                // í‚¤ë³´ë“œ ëˆŒë¦¼ ì²˜ë¦¬
             case EVENT_KEY_DOWN:
                 pstKeyEvent = &( stEvent.stKeyEvent );
                 if( g_stGameInfo.bGameStart == FALSE )
@@ -100,7 +100,7 @@ int Main( char* pcArgument )
 
                 switch( pstKeyEvent->bASCIICode )
                 {
-                    // ¿ÞÂÊÀ¸·Î ÀÌµ¿
+                    // ì™¼ìª½ìœ¼ë¡œ ì´ë™
                 case KEY_LEFT:
                     if( IsMovePossible( g_stGameInfo.iBlockX - 1,
                                         g_stGameInfo.iBlockY ) == TRUE )
@@ -110,7 +110,7 @@ int Main( char* pcArgument )
                     }
                     break;
 
-                    // ¿À¸¥ÂÊÀ¸·Î ÀÌµ¿
+                    // ì˜¤ë¥¸ìª½ìœ¼ë¡œ ì´ë™
                 case KEY_RIGHT:
                     if( IsMovePossible( g_stGameInfo.iBlockX + 1,
                                         g_stGameInfo.iBlockY ) == TRUE )
@@ -120,7 +120,7 @@ int Main( char* pcArgument )
                     }
                     break;
 
-                    // ¿òÁ÷ÀÌ´Â ºí·ÏÀ» ±¸¼ºÇÏ´Â ÀÛÀº ºí·ÏÀÇ ¼ø¼­¸¦ º¯°æ
+                    // ì›€ì§ì´ëŠ” ë¸”ë¡ì„ êµ¬ì„±í•˜ëŠ” ìž‘ì€ ë¸”ë¡ì˜ ìˆœì„œë¥¼ ë³€ê²½
                 case KEY_UP:
                     bBlockKind = g_stGameInfo.vbBlock[ 0 ];
                     memcpy( &( g_stGameInfo.vbBlock ), &( g_stGameInfo.vbBlock[ 1 ] ),
@@ -130,7 +130,7 @@ int Main( char* pcArgument )
                     DrawGameArea( qwWindowID );
                     break;
 
-                    // ºí·ÏÀ» ¾Æ·¡·Î ÀÌµ¿
+                    // ë¸”ë¡ì„ ì•„ëž˜ë¡œ ì´ë™
                 case KEY_DOWN:
                     if( IsMovePossible( g_stGameInfo.iBlockX,
                                         g_stGameInfo.iBlockY + 1 ) == TRUE )
@@ -140,7 +140,7 @@ int Main( char* pcArgument )
                     DrawGameArea( qwWindowID );
                     break;
 
-                    // ºí·ÏÀ» ¾Æ·¡·Î ³¡±îÁö ÀÌµ¿
+                    // ë¸”ë¡ì„ ì•„ëž˜ë¡œ ëê¹Œì§€ ì´ë™
                 case ' ':
                     while( IsMovePossible( g_stGameInfo.iBlockX,
                                            g_stGameInfo.iBlockY + 1 ) == TRUE )
@@ -151,13 +151,13 @@ int Main( char* pcArgument )
                     break;
                 }
 
-                // º¯°æµÈ ³»¿ëÀ» È­¸é¿¡ Ç¥½Ã
+                // ë³€ê²½ëœ ë‚´ìš©ì„ í™”ë©´ì— í‘œì‹œ
                 ShowWindow( qwWindowID, TRUE );
                 break;
 
-                // À©µµ¿ì ´Ý±â ¹öÆ° Ã³¸®
+                // ìœˆë„ìš° ë‹«ê¸° ë²„íŠ¼ ì²˜ë¦¬
             case EVENT_WINDOW_CLOSE:
-                // À©µµ¿ì¸¦ »èÁ¦
+                // ìœˆë„ìš°ë¥¼ ì‚­ì œ
                 DeleteWindow( qwWindowID );
                 return 0;
                 break;
@@ -165,47 +165,47 @@ int Main( char* pcArgument )
         }
 
         //----------------------------------------------------------------------
-        // °ÔÀÓ ·çÇÁ Ã³¸® ºÎºÐ
+        // ê²Œìž„ ë£¨í”„ ì²˜ë¦¬ ë¶€ë¶„
         //----------------------------------------------------------------------
-        // °ÔÀÓÀÌ ½ÃÀÛ µÇ¾ú´Ù¸é ·¹º§¿¡ µû¶ó ÀÏÁ¤ ½Ã°£ ´ë±âÇÑ µÚ¿¡ ºí·ÏÀ» ¾Æ·¡·Î ÀÌµ¿
+        // ê²Œìž„ì´ ì‹œìž‘ ë˜ì—ˆë‹¤ë©´ ë ˆë²¨ì— ë”°ë¼ ì¼ì • ì‹œê°„ ëŒ€ê¸°í•œ ë’¤ì— ë¸”ë¡ì„ ì•„ëž˜ë¡œ ì´ë™
         if( ( g_stGameInfo.bGameStart == TRUE ) &&
             ( ( GetTickCount() - qwLastTickCount ) >
               ( 300 - ( g_stGameInfo.qwLevel * 10 ) ) ) )
         {
             qwLastTickCount = GetTickCount();
 
-            // ºí·ÏÀ» ÇÑ Ä­ ¾Æ·¡·Î ³»¸®°í ´õ ÀÌ»ó ³»¸± ¼ö ¾ø´Ù¸é ºí·ÏÀ» °íÁ¤
+            // ë¸”ë¡ì„ í•œ ì¹¸ ì•„ëž˜ë¡œ ë‚´ë¦¬ê³  ë” ì´ìƒ ë‚´ë¦´ ìˆ˜ ì—†ë‹¤ë©´ ë¸”ë¡ì„ ê³ ì •
             if( IsMovePossible( g_stGameInfo.iBlockX, g_stGameInfo.iBlockY + 1 ) ==
                     FALSE )
             {
-                // ºí·Ï °íÁ¤ÇÒ ¼ö ¾øÀ¸¸é °ÔÀÓ Á¾·á
+                // ë¸”ë¡ ê³ ì •í•  ìˆ˜ ì—†ìœ¼ë©´ ê²Œìž„ ì¢…ë£Œ
                 if( FreezeBlock( g_stGameInfo.iBlockX, g_stGameInfo.iBlockY ) ==
                         FALSE )
                 {
                     g_stGameInfo.bGameStart = FALSE;
 
-                    // °ÔÀÓ Á¾·á ¸Þ½ÃÁö¸¦ Ãâ·Â
+                    // ê²Œìž„ ì¢…ë£Œ ë©”ì‹œì§€ë¥¼ ì¶œë ¥
                     DrawText( qwWindowID, 82, 230, RGB( 255, 255, 255 ), RGB( 0, 0, 0 ),
                             "Game Over~!!!", 13 );
                     DrawText( qwWindowID, 7, 250, RGB( 255, 255, 255 ), RGB( 0, 0, 0 ),
                             pcStartMessage, strlen( pcStartMessage ) );
                 }
 
-                // º¸µå¿¡ ºí·ÏÀ» °Ë»çÇÏ¿© 3°³ ÀÌ»ó ¿¬¼ÓµÈ ºí·ÏÀ» »èÁ¦ÇÏ°í È­¸é¿¡ Ç¥½Ã
+                // ë³´ë“œì— ë¸”ë¡ì„ ê²€ì‚¬í•˜ì—¬ 3ê°œ ì´ìƒ ì—°ì†ëœ ë¸”ë¡ì„ ì‚­ì œí•˜ê³  í™”ë©´ì— í‘œì‹œ
                 EraseAllContinuousBlockOnBoard( qwWindowID );
 
-                // »õ·Î¿î ºí·ÏÀ» »ý¼º
+                // ìƒˆë¡œìš´ ë¸”ë¡ì„ ìƒì„±
                 CreateBlock();
             }
             else
             {
                 g_stGameInfo.iBlockY++;
 
-                // °ÔÀÓ ¿µ¿ªÀ» »õ·Î ±×¸²
+                // ê²Œìž„ ì˜ì—­ì„ ìƒˆë¡œ ê·¸ë¦¼
                 DrawGameArea( qwWindowID );
             }
 
-            // º¯°æµÈ ³»¿ëÀ» È­¸é¿¡ Ç¥½Ã
+            // ë³€ê²½ëœ ë‚´ìš©ì„ í™”ë©´ì— í‘œì‹œ
             ShowWindow( qwWindowID, TRUE );
         }
         else
@@ -218,14 +218,14 @@ int Main( char* pcArgument )
 }
 
 /**
- *  °ÔÀÓ Á¤º¸¸¦ ÃÊ±âÈ­
+ *  ê²Œìž„ ì •ë³´ë¥¼ ì´ˆê¸°í™”
  */
 void Initialize( void )
 {
-    // °ÔÀÓ Á¤º¸ ÀÚ·á±¸Á¶ ÀüÃ¼¸¦ ÃÊ±âÈ­
+    // ê²Œìž„ ì •ë³´ ìžë£Œêµ¬ì¡° ì „ì²´ë¥¼ ì´ˆê¸°í™”
     memset( &g_stGameInfo, 0, sizeof( g_stGameInfo ) );
 
-    // ºí·ÏÀÇ »ö±òÀ» ¼³Á¤
+    // ë¸”ë¡ì˜ ìƒ‰ê¹”ì„ ì„¤ì •
     g_stGameInfo.vstBlockColor[ 1 ] = RGB( 230, 0, 0 );
     g_stGameInfo.vstBlockColor[ 2 ] = RGB( 0, 230, 0 );
     g_stGameInfo.vstBlockColor[ 3 ] = RGB( 230, 0, 230 );
@@ -237,23 +237,23 @@ void Initialize( void )
     g_stGameInfo.vstEdgeColor[ 4 ] = RGB( 150, 150, 0 );
     g_stGameInfo.vstEdgeColor[ 5 ] = RGB( 0, 150, 150 );
 
-    // ¿òÁ÷ÀÌ´Â ºí·ÏÀÇ À§Ä¡¸¦ ¼³Á¤
+    // ì›€ì§ì´ëŠ” ë¸”ë¡ì˜ ìœ„ì¹˜ë¥¼ ì„¤ì •
     g_stGameInfo.iBlockX = -1;
     g_stGameInfo.iBlockX = -1;
 }
 
 /**
- *  ¿òÁ÷ÀÌ´Â ºí·ÏÀ» »ý¼º
+ *  ì›€ì§ì´ëŠ” ë¸”ë¡ì„ ìƒì„±
  */
 void CreateBlock( void )
 {
     int i;
 
-    // ºí·ÏÀÇ ½ÃÀÛ ÁÂÇ¥´Â À§ÂÊ °¡¿îµ¥¿¡¼­ °¡Àå ¾Æ·¡ ºí·ÏºÎÅÍ È­¸é¿¡ Ç¥½ÃµÇµµ·Ï ÇÔ
+    // ë¸”ë¡ì˜ ì‹œìž‘ ì¢Œí‘œëŠ” ìœ„ìª½ ê°€ìš´ë°ì—ì„œ ê°€ìž¥ ì•„ëž˜ ë¸”ë¡ë¶€í„° í™”ë©´ì— í‘œì‹œë˜ë„ë¡ í•¨
     g_stGameInfo.iBlockX = BOARDWIDTH / 2;
     g_stGameInfo.iBlockY = -BLOCKCOUNT;
 
-    // ¿òÁ÷ÀÌ´Â ºí·ÏÀ» ±¸¼ºÇÏ´Â ÀÛÀº ºí·ÏÀÇ Á¾·ù¸¦ °áÁ¤
+    // ì›€ì§ì´ëŠ” ë¸”ë¡ì„ êµ¬ì„±í•˜ëŠ” ìž‘ì€ ë¸”ë¡ì˜ ì¢…ë¥˜ë¥¼ ê²°ì •
     for( i = 0 ; i < BLOCKCOUNT ; i++ )
     {
         g_stGameInfo.vbBlock[ i ] = ( rand() % BLOCKKIND ) + 1;
@@ -261,18 +261,18 @@ void CreateBlock( void )
 }
 
 /**
- *  ¿òÁ÷ÀÌ´Â ºí·ÏÀ» Æ¯Á¤ À§Ä¡·Î ¿Å±æ ¼ö ÀÖ´ÂÁö È®ÀÎ
+ *  ì›€ì§ì´ëŠ” ë¸”ë¡ì„ íŠ¹ì • ìœ„ì¹˜ë¡œ ì˜®ê¸¸ ìˆ˜ ìžˆëŠ”ì§€ í™•ì¸
  */
 BOOL IsMovePossible( int iBlockX, int iBlockY )
 {
-    // ºí·ÏÀÇ ÁÂÇ¥°¡ °ÔÀÓ ¿µ¿ª ¾È¿¡ ÀÖ´ÂÁö¸¦ È®ÀÎ
+    // ë¸”ë¡ì˜ ì¢Œí‘œê°€ ê²Œìž„ ì˜ì—­ ì•ˆì— ìžˆëŠ”ì§€ë¥¼ í™•ì¸
     if( ( iBlockX < 0 ) || ( iBlockX >= BOARDWIDTH ) ||
         ( ( iBlockY + BLOCKCOUNT ) > BOARDHEIGHT ) )
     {
         return FALSE;
     }
 
-    // ¸¶Áö¸· ºí·ÏÀÌ À§Ä¡ÇÒ °÷À» È®ÀÎÇÏ¿© °ÔÀÓÆÇ¿¡ ¿òÁ÷ÀÏ ¿µ¿ªÀÌ ºñ¾îÀÖÁö ¾ÊÀ¸¸é ½ÇÆÐ
+    // ë§ˆì§€ë§‰ ë¸”ë¡ì´ ìœ„ì¹˜í•  ê³³ì„ í™•ì¸í•˜ì—¬ ê²Œìž„íŒì— ì›€ì§ì¼ ì˜ì—­ì´ ë¹„ì–´ìžˆì§€ ì•Šìœ¼ë©´ ì‹¤íŒ¨
     if( g_stGameInfo.vvbBoard[ iBlockY + BLOCKCOUNT - 1 ][ iBlockX ] != EMPTYBLOCK )
     {
         return FALSE;
@@ -282,31 +282,31 @@ BOOL IsMovePossible( int iBlockX, int iBlockY )
 }
 
 /**
- *  ºí·ÏÀ» °ÔÀÓÆÇ¿¡ °íÁ¤
+ *  ë¸”ë¡ì„ ê²Œìž„íŒì— ê³ ì •
  */
 BOOL FreezeBlock( int iBlockX, int iBlockY )
 {
     int i;
 
-    // ºí·ÏÀ» °íÁ¤ÇÏ´Â À§Ä¡°¡ 0º¸´Ù ÀÛÀ¸¸é ÇöÀç À§Ä¡¿¡ ºí·ÏÀÌ °¡µæ Ã¡´Ù´Â ¶æÀÌ¹Ç·Î ½ÇÆÐ
+    // ë¸”ë¡ì„ ê³ ì •í•˜ëŠ” ìœ„ì¹˜ê°€ 0ë³´ë‹¤ ìž‘ìœ¼ë©´ í˜„ìž¬ ìœ„ì¹˜ì— ë¸”ë¡ì´ ê°€ë“ ì°¼ë‹¤ëŠ” ëœ»ì´ë¯€ë¡œ ì‹¤íŒ¨
     if( iBlockY < 0 )
     {
         return FALSE;
     }
 
-    // ¿òÁ÷ÀÌ´Â ºí·ÏÀ» ÇöÀç ÁÂÇ¥ ±×´ë·Î °ÔÀÓÆÇ¿¡ °íÁ¤
+    // ì›€ì§ì´ëŠ” ë¸”ë¡ì„ í˜„ìž¬ ì¢Œí‘œ ê·¸ëŒ€ë¡œ ê²Œìž„íŒì— ê³ ì •
     for( i = 0 ; i < BLOCKCOUNT ; i++ )
     {
         g_stGameInfo.vvbBoard[ iBlockY + i ][ iBlockX ] = g_stGameInfo.vbBlock[ i ];
     }
 
-    // ºí·ÏÀÌ °íÁ¤µÇ¾úÀ¸¹Ç·Î ºí·ÏÀÇ XÃà ÁÂÇ¥¸¦ -1·Î ¼³Á¤
+    // ë¸”ë¡ì´ ê³ ì •ë˜ì—ˆìœ¼ë¯€ë¡œ ë¸”ë¡ì˜ Xì¶• ì¢Œí‘œë¥¼ -1ë¡œ ì„¤ì •
     g_stGameInfo.iBlockX = -1;
     return TRUE;
 }
 
 /**
- * °¡·Î ¹æÇâÀ¸·Î ÀÏÄ¡ÇÏ´Â ºí·ÏÀ» Ã£¾Æ¼­ Ç¥½Ã
+ * ê°€ë¡œ ë°©í–¥ìœ¼ë¡œ ì¼ì¹˜í•˜ëŠ” ë¸”ë¡ì„ ì°¾ì•„ì„œ í‘œì‹œ
  */
 BOOL MarkContinuousHorizonBlockOnBoard( void )
 {
@@ -319,7 +319,7 @@ BOOL MarkContinuousHorizonBlockOnBoard( void )
 
     bMarked = FALSE;
 
-    // °ÔÀÓÆÇ ÀüÃ¼¸¦ °Ë»öÇÏ¿© °¡·Î ¹æÇâÀ¸·Î 3°³ ÀÌ»óÀÎ °ÍÀ» Ã£¾Æ¼­ Ç¥½Ã
+    // ê²Œìž„íŒ ì „ì²´ë¥¼ ê²€ìƒ‰í•˜ì—¬ ê°€ë¡œ ë°©í–¥ìœ¼ë¡œ 3ê°œ ì´ìƒì¸ ê²ƒì„ ì°¾ì•„ì„œ í‘œì‹œ
     for( j = 0 ; j < BOARDHEIGHT ; j++ )
     {
         iMatchCount = 0;
@@ -327,7 +327,7 @@ BOOL MarkContinuousHorizonBlockOnBoard( void )
 
         for( i = 0 ; i < BOARDWIDTH ; i++ )
         {
-            // Ã¹ ¹øÂ°ÀÌ¸é ºí·Ï Á¾·ù¸¦ ÀúÀå
+            // ì²« ë²ˆì§¸ì´ë©´ ë¸”ë¡ ì¢…ë¥˜ë¥¼ ì €ìž¥
             if( ( iMatchCount == 0 ) &&
                 ( g_stGameInfo.vvbBoard[ j ][ i ] != EMPTYBLOCK ) )
             {
@@ -336,11 +336,11 @@ BOOL MarkContinuousHorizonBlockOnBoard( void )
             }
             else
             {
-                // Á¾·ù°¡ ÀÏÄ¡ÇÏ¸é ÀÏÄ¡ÇÑ ºí·ÏÀÇ ¼ö¸¦ Áõ°¡
+                // ì¢…ë¥˜ê°€ ì¼ì¹˜í•˜ë©´ ì¼ì¹˜í•œ ë¸”ë¡ì˜ ìˆ˜ë¥¼ ì¦ê°€
                 if( g_stGameInfo.vvbBoard[ j ][ i ] == bBlockKind )
                 {
                     iMatchCount++;
-                    // ¿¬¼ÓµÈ ºí·ÏÀÌ 3°³ÀÌ¸é ¸ð¾ÆµÐ ÀÌÀü 3ºí·ÏÀ» Áö¿ï ºí·ÏÀ¸·Î Ç¥½Ã
+                    // ì—°ì†ëœ ë¸”ë¡ì´ 3ê°œì´ë©´ ëª¨ì•„ë‘” ì´ì „ 3ë¸”ë¡ì„ ì§€ìš¸ ë¸”ë¡ìœ¼ë¡œ í‘œì‹œ
                     if( iMatchCount == BLOCKCOUNT )
                     {
                         for( k = 0 ; k < iMatchCount ; k++ )
@@ -348,21 +348,21 @@ BOOL MarkContinuousHorizonBlockOnBoard( void )
                             g_stGameInfo.vvbEraseBlock[ j ][ i - k ] = ERASEBLOCK;
                         }
 
-                        // Ç¥½ÃµÈ °ÍÀÌ ÀÖ´Â °ÍÀ¸·Î ÀúÀå
+                        // í‘œì‹œëœ ê²ƒì´ ìžˆëŠ” ê²ƒìœ¼ë¡œ ì €ìž¥
                         bMarked = TRUE;
                     }
-                    // ¿¬¼ÓµÈ ºí·ÏÀÌ 4°³ ÀÌ»óÀÌ¸é Áï½Ã Áö¿ï ºí·ÏÀ¸·Î Ç¥½Ã
+                    // ì—°ì†ëœ ë¸”ë¡ì´ 4ê°œ ì´ìƒì´ë©´ ì¦‰ì‹œ ì§€ìš¸ ë¸”ë¡ìœ¼ë¡œ í‘œì‹œ
                     else if( iMatchCount > BLOCKCOUNT )
                     {
                         g_stGameInfo.vvbEraseBlock[ j ][ i ] = ERASEBLOCK;
                     }
                 }
-                // ÀÏÄ¡ÇÏÁö ¾ÊÀ¸¸é »õ·Î¿î ºí·ÏÀ¸·Î ¼³Á¤
+                // ì¼ì¹˜í•˜ì§€ ì•Šìœ¼ë©´ ìƒˆë¡œìš´ ë¸”ë¡ìœ¼ë¡œ ì„¤ì •
                 else
                 {
                     if( g_stGameInfo.vvbBoard[ j ][ i ] != EMPTYBLOCK )
                     {
-                        // »õ·Î¿î ºí·ÏÀ¸·Î ¼³Á¤
+                        // ìƒˆë¡œìš´ ë¸”ë¡ìœ¼ë¡œ ì„¤ì •
                         iMatchCount = 1;
                         bBlockKind = g_stGameInfo.vvbBoard[ j ][ i ];
                     }
@@ -380,7 +380,7 @@ BOOL MarkContinuousHorizonBlockOnBoard( void )
 }
 
 /**
- * ¼¼·Î ¹æÇâÀ¸·Î ÀÏÄ¡ÇÏ´Â ºí·ÏÀ» Ã£¾Æ¼­ Ç¥½Ã
+ * ì„¸ë¡œ ë°©í–¥ìœ¼ë¡œ ì¼ì¹˜í•˜ëŠ” ë¸”ë¡ì„ ì°¾ì•„ì„œ í‘œì‹œ
  */
 BOOL MarkContinuousVerticalBlockOnBoard( void )
 {
@@ -392,7 +392,7 @@ BOOL MarkContinuousVerticalBlockOnBoard( void )
     BOOL bMarked;
 
     bMarked = FALSE;
-    // °ÔÀÓÆÇ ÀüÃ¼¸¦ °Ë»öÇÏ¿© ¼¼·Î ¹æÇâÀ¸·Î 3°³ ÀÌ»óÀÎ °ÍÀ» Ã£¾Æ¼­ Ç¥½Ã
+    // ê²Œìž„íŒ ì „ì²´ë¥¼ ê²€ìƒ‰í•˜ì—¬ ì„¸ë¡œ ë°©í–¥ìœ¼ë¡œ 3ê°œ ì´ìƒì¸ ê²ƒì„ ì°¾ì•„ì„œ í‘œì‹œ
     for( i = 0 ; i < BOARDWIDTH ; i++ )
     {
         iMatchCount = 0;
@@ -400,7 +400,7 @@ BOOL MarkContinuousVerticalBlockOnBoard( void )
 
         for( j = 0 ; j < BOARDHEIGHT ; j++ )
         {
-            // Ã¹ ¹øÂ°ÀÌ¸é ºí·Ï Á¾·ù¸¦ ÀúÀå
+            // ì²« ë²ˆì§¸ì´ë©´ ë¸”ë¡ ì¢…ë¥˜ë¥¼ ì €ìž¥
             if( ( iMatchCount == 0 ) &&
                 ( g_stGameInfo.vvbBoard[ j ][ i ] != EMPTYBLOCK ) )
             {
@@ -409,11 +409,11 @@ BOOL MarkContinuousVerticalBlockOnBoard( void )
             }
             else
             {
-                // Á¾·ù°¡ ÀÏÄ¡ÇÏ¸é ÀÏÄ¡ÇÑ ºí·ÏÀÇ ¼ö¸¦ Áõ°¡
+                // ì¢…ë¥˜ê°€ ì¼ì¹˜í•˜ë©´ ì¼ì¹˜í•œ ë¸”ë¡ì˜ ìˆ˜ë¥¼ ì¦ê°€
                 if( g_stGameInfo.vvbBoard[ j ][ i ] == bBlockKind )
                 {
                     iMatchCount++;
-                    // ¿¬¼ÓµÈ ºí·ÏÀÌ 3°³ÀÌ¸é ¸ð¾ÆµÐ ÀÌÀü 3ºí·ÏÀ» Áö¿ï ºí·ÏÀ¸·Î Ç¥½Ã
+                    // ì—°ì†ëœ ë¸”ë¡ì´ 3ê°œì´ë©´ ëª¨ì•„ë‘” ì´ì „ 3ë¸”ë¡ì„ ì§€ìš¸ ë¸”ë¡ìœ¼ë¡œ í‘œì‹œ
                     if( iMatchCount == BLOCKCOUNT )
                     {
                         for( k = 0 ; k < iMatchCount ; k++ )
@@ -423,18 +423,18 @@ BOOL MarkContinuousVerticalBlockOnBoard( void )
 
                         bMarked = TRUE;
                     }
-                    // ¿¬¼ÓµÈ ºí·ÏÀÌ 4°³ ÀÌ»óÀÌ¸é Áï½Ã Áö¿ï ºí·ÏÀ¸·Î Ç¥½Ã
+                    // ì—°ì†ëœ ë¸”ë¡ì´ 4ê°œ ì´ìƒì´ë©´ ì¦‰ì‹œ ì§€ìš¸ ë¸”ë¡ìœ¼ë¡œ í‘œì‹œ
                     else if( iMatchCount > BLOCKCOUNT )
                     {
                         g_stGameInfo.vvbEraseBlock[ j ][ i ] = ERASEBLOCK;
                     }
                 }
-                // ÀÏÄ¡ÇÏÁö ¾ÊÀ¸¸é »õ·Î¿î ºí·ÏÀ¸·Î ¼³Á¤
+                // ì¼ì¹˜í•˜ì§€ ì•Šìœ¼ë©´ ìƒˆë¡œìš´ ë¸”ë¡ìœ¼ë¡œ ì„¤ì •
                 else
                 {
                     if( g_stGameInfo.vvbBoard[ j ][ i ] != EMPTYBLOCK )
                     {
-                        // »õ·Î¿î ºí·ÏÀ¸·Î ¼³Á¤
+                        // ìƒˆë¡œìš´ ë¸”ë¡ìœ¼ë¡œ ì„¤ì •
                         iMatchCount = 1;
                         bBlockKind = g_stGameInfo.vvbBoard[ j ][ i ];
                     }
@@ -452,7 +452,7 @@ BOOL MarkContinuousVerticalBlockOnBoard( void )
 }
 
 /**
- * ´ë°¢¼± ¹æÇâÀ¸·Î ÀÏÄ¡ÇÏ´Â ºí·ÏÀ» Ã£¾Æ¼­ Ç¥½Ã
+ * ëŒ€ê°ì„  ë°©í–¥ìœ¼ë¡œ ì¼ì¹˜í•˜ëŠ” ë¸”ë¡ì„ ì°¾ì•„ì„œ í‘œì‹œ
  */
 BOOL MarkContinuousDiagonalBlockInBoard( void )
 {
@@ -467,8 +467,8 @@ BOOL MarkContinuousDiagonalBlockInBoard( void )
     bMarked = FALSE;
 
     //--------------------------------------------------------------------------
-    // °ÔÀÓÆÇ ÀüÃ¼¸¦ °Ë»öÇÏ¿© À§¿¡¼­ ¾Æ·¡ÀÇ ´ë°¢¼± ¹æÇâÀ¸·Î 3°³ ÀÌ»óÀÎ °ÍÀ»
-    // Ã£¾Æ¼­ Ç¥½Ã
+    // ê²Œìž„íŒ ì „ì²´ë¥¼ ê²€ìƒ‰í•˜ì—¬ ìœ„ì—ì„œ ì•„ëž˜ì˜ ëŒ€ê°ì„  ë°©í–¥ìœ¼ë¡œ 3ê°œ ì´ìƒì¸ ê²ƒì„
+    // ì°¾ì•„ì„œ í‘œì‹œ
     //--------------------------------------------------------------------------
     for( i = 0 ; i < BOARDWIDTH ; i++ )
     {
@@ -479,7 +479,7 @@ BOOL MarkContinuousDiagonalBlockInBoard( void )
 
             for( k = 0 ; ( ( i + k ) < BOARDWIDTH ) && ( ( j + k ) < BOARDHEIGHT ) ; k++ )
             {
-                // Ã¹ ¹øÂ°ÀÌ¸é ºí·Ï Á¾·ù¸¦ ÀúÀå
+                // ì²« ë²ˆì§¸ì´ë©´ ë¸”ë¡ ì¢…ë¥˜ë¥¼ ì €ìž¥
                 if( ( iMatchCount == 0 ) &&
                     ( g_stGameInfo.vvbBoard[ j + k ][ i + k ] != EMPTYBLOCK ) )
                 {
@@ -488,11 +488,11 @@ BOOL MarkContinuousDiagonalBlockInBoard( void )
                 }
                 else
                 {
-                    // Á¾·ù°¡ ÀÏÄ¡ÇÏ¸é ÀÏÄ¡ÇÑ ºí·ÏÀÇ ¼ö¸¦ Áõ°¡
+                    // ì¢…ë¥˜ê°€ ì¼ì¹˜í•˜ë©´ ì¼ì¹˜í•œ ë¸”ë¡ì˜ ìˆ˜ë¥¼ ì¦ê°€
                     if( g_stGameInfo.vvbBoard[ j + k ][ i + k ] == bBlockKind )
                     {
                         iMatchCount++;
-                        // ¿¬¼ÓµÈ ºí·ÏÀÌ 3°³ÀÌ¸é ¸ð¾ÆµÐ ÀÌÀü 3ºí·ÏÀ» Áö¿ï ºí·ÏÀ¸·Î Ç¥½Ã
+                        // ì—°ì†ëœ ë¸”ë¡ì´ 3ê°œì´ë©´ ëª¨ì•„ë‘” ì´ì „ 3ë¸”ë¡ì„ ì§€ìš¸ ë¸”ë¡ìœ¼ë¡œ í‘œì‹œ
                         if( iMatchCount == BLOCKCOUNT )
                         {
                             for( l = 0 ; l < iMatchCount ; l++ )
@@ -502,18 +502,18 @@ BOOL MarkContinuousDiagonalBlockInBoard( void )
                             }
                             bMarked = TRUE;
                         }
-                        // ¿¬¼ÓµÈ ºí·ÏÀÌ 4°³ ÀÌ»óÀÌ¸é Áï½Ã Áö¿ï ºí·ÏÀ¸·Î Ç¥½Ã
+                        // ì—°ì†ëœ ë¸”ë¡ì´ 4ê°œ ì´ìƒì´ë©´ ì¦‰ì‹œ ì§€ìš¸ ë¸”ë¡ìœ¼ë¡œ í‘œì‹œ
                         else if( iMatchCount > BLOCKCOUNT )
                         {
                             g_stGameInfo.vvbEraseBlock[ j + k ][ i + k ] = ERASEBLOCK;
                         }
                     }
-                    // ÀÏÄ¡ÇÏÁö ¾ÊÀ¸¸é »õ·Î¿î ºí·ÏÀ¸·Î ¼³Á¤
+                    // ì¼ì¹˜í•˜ì§€ ì•Šìœ¼ë©´ ìƒˆë¡œìš´ ë¸”ë¡ìœ¼ë¡œ ì„¤ì •
                     else
                     {
                         if( g_stGameInfo.vvbBoard[ j + k ][ i + k ] != EMPTYBLOCK )
                         {
-                            // »õ·Î¿î ºí·ÏÀ¸·Î ¼³Á¤
+                            // ìƒˆë¡œìš´ ë¸”ë¡ìœ¼ë¡œ ì„¤ì •
                             iMatchCount = 1;
                             bBlockKind = g_stGameInfo.vvbBoard[ j + k ][ i + k ];
                         }
@@ -529,8 +529,8 @@ BOOL MarkContinuousDiagonalBlockInBoard( void )
     }
 
     //--------------------------------------------------------------------------
-    // °ÔÀÓÆÇ ÀüÃ¼¸¦ °Ë»öÇÏ¿© ¾Æ·¡¿¡¼­ À§ÀÇ ´ë°¢¼± ¹æÇâÀ¸·Î 3°³ ÀÌ»óÀÎ °ÍÀ»
-    // Ã£¾Æ¼­ Ç¥½Ã
+    // ê²Œìž„íŒ ì „ì²´ë¥¼ ê²€ìƒ‰í•˜ì—¬ ì•„ëž˜ì—ì„œ ìœ„ì˜ ëŒ€ê°ì„  ë°©í–¥ìœ¼ë¡œ 3ê°œ ì´ìƒì¸ ê²ƒì„
+    // ì°¾ì•„ì„œ í‘œì‹œ
     //--------------------------------------------------------------------------
     for( i = 0 ; i < BOARDWIDTH ; i++ )
     {
@@ -541,7 +541,7 @@ BOOL MarkContinuousDiagonalBlockInBoard( void )
 
             for( k = 0 ; ( ( i + k ) < BOARDWIDTH ) && ( ( j - k ) >= 0 ) ; k++ )
             {
-                // Ã¹ ¹øÂ°ÀÌ¸é ºí·Ï Á¾·ù¸¦ ÀúÀå
+                // ì²« ë²ˆì§¸ì´ë©´ ë¸”ë¡ ì¢…ë¥˜ë¥¼ ì €ìž¥
                 if( ( iMatchCount == 0 ) &&
                     ( g_stGameInfo.vvbBoard[ j - k ][ i + k ] != EMPTYBLOCK ) )
                 {
@@ -550,11 +550,11 @@ BOOL MarkContinuousDiagonalBlockInBoard( void )
                 }
                 else
                 {
-                    // Á¾·ù°¡ ÀÏÄ¡ÇÏ¸é ÀÏÄ¡ÇÑ ºí·ÏÀÇ ¼ö¸¦ Áõ°¡
+                    // ì¢…ë¥˜ê°€ ì¼ì¹˜í•˜ë©´ ì¼ì¹˜í•œ ë¸”ë¡ì˜ ìˆ˜ë¥¼ ì¦ê°€
                     if( g_stGameInfo.vvbBoard[ j - k ][ i + k ] == bBlockKind )
                     {
                         iMatchCount++;
-                        // ¿¬¼ÓµÈ ºí·ÏÀÌ 3°³ÀÌ¸é ¸ð¾ÆµÐ ÀÌÀü 3ºí·ÏÀ» Áö¿ï ºí·ÏÀ¸·Î Ç¥½Ã
+                        // ì—°ì†ëœ ë¸”ë¡ì´ 3ê°œì´ë©´ ëª¨ì•„ë‘” ì´ì „ 3ë¸”ë¡ì„ ì§€ìš¸ ë¸”ë¡ìœ¼ë¡œ í‘œì‹œ
                         if( iMatchCount == BLOCKCOUNT )
                         {
                             for( l = 0 ; l < iMatchCount ; l++ )
@@ -564,18 +564,18 @@ BOOL MarkContinuousDiagonalBlockInBoard( void )
                             }
                             bMarked = TRUE;
                         }
-                        // ¿¬¼ÓµÈ ºí·ÏÀÌ 4°³ ÀÌ»óÀÌ¸é Áï½Ã Áö¿ï ºí·ÏÀ¸·Î Ç¥½Ã
+                        // ì—°ì†ëœ ë¸”ë¡ì´ 4ê°œ ì´ìƒì´ë©´ ì¦‰ì‹œ ì§€ìš¸ ë¸”ë¡ìœ¼ë¡œ í‘œì‹œ
                         else if( iMatchCount > BLOCKCOUNT )
                         {
                             g_stGameInfo.vvbEraseBlock[ j - k ][ i + k ] = ERASEBLOCK;
                         }
                     }
-                    // ÀÏÄ¡ÇÏÁö ¾ÊÀ¸¸é »õ·Î¿î ºí·ÏÀ¸·Î ¼³Á¤
+                    // ì¼ì¹˜í•˜ì§€ ì•Šìœ¼ë©´ ìƒˆë¡œìš´ ë¸”ë¡ìœ¼ë¡œ ì„¤ì •
                     else
                     {
                         if( g_stGameInfo.vvbBoard[ j - k ][ i + k ] != EMPTYBLOCK )
                         {
-                            // »õ·Î¿î ºí·ÏÀ¸·Î ¼³Á¤
+                            // ìƒˆë¡œìš´ ë¸”ë¡ìœ¼ë¡œ ì„¤ì •
                             iMatchCount = 1;
                             bBlockKind = g_stGameInfo.vvbBoard[ j - k ][ i + k ];
                         }
@@ -594,7 +594,7 @@ BOOL MarkContinuousDiagonalBlockInBoard( void )
 }
 
 /**
- *  Á¦°ÅÇÒ ºí·ÏÀ¸·Î Ç¥½ÃµÈ ºí·ÏÀ» °ÔÀÓÆÇ¿¡¼­ Á¦°ÅÇÏ°í Á¡¼ö¸¦ Áõ°¡
+ *  ì œê±°í•  ë¸”ë¡ìœ¼ë¡œ í‘œì‹œëœ ë¸”ë¡ì„ ê²Œìž„íŒì—ì„œ ì œê±°í•˜ê³  ì ìˆ˜ë¥¼ ì¦ê°€
  */
 void EraseMarkedBlock( void )
 {
@@ -605,13 +605,13 @@ void EraseMarkedBlock( void )
     {
         for( i = 0 ; i < BOARDWIDTH ; i++ )
         {
-            // Áö¿ï ºí·ÏÀÌ¸é °ÔÀÓÆÇ¿¡¼­ »èÁ¦
+            // ì§€ìš¸ ë¸”ë¡ì´ë©´ ê²Œìž„íŒì—ì„œ ì‚­ì œ
             if( g_stGameInfo.vvbEraseBlock[ j ][ i ] == ERASEBLOCK )
             {
-                // °ÔÀÓÆÇ¿¡ ºí·ÏÀ» ºó °ÍÀ¸·Î ¼³Á¤
+                // ê²Œìž„íŒì— ë¸”ë¡ì„ ë¹ˆ ê²ƒìœ¼ë¡œ ì„¤ì •
                 g_stGameInfo.vvbBoard[ j ][ i ] = EMPTYBLOCK;
 
-                // Á¡¼ö¸¦ Áõ°¡
+                // ì ìˆ˜ë¥¼ ì¦ê°€
                 g_stGameInfo.qwScore++;
             }
         }
@@ -619,7 +619,7 @@ void EraseMarkedBlock( void )
 }
 
 /**
- *  ºó ¿µ¿ªÀÇ ºí·ÏÀ» ¾Æ·¡·Î ÀÌµ¿
+ *  ë¹ˆ ì˜ì—­ì˜ ë¸”ë¡ì„ ì•„ëž˜ë¡œ ì´ë™
  */
 void CompactBlockOnBoard( void )
 {
@@ -627,31 +627,31 @@ void CompactBlockOnBoard( void )
     int j;
     int iEmptyPosition;
 
-    // °ÔÀÓÆÇÀÇ ¸ðµç ¿µ¿ªÀ» µ¹¸é¼­ ºó ¿µ¿ª¿¡ ºí·ÏÀ» Ã¤¿ò
+    // ê²Œìž„íŒì˜ ëª¨ë“  ì˜ì—­ì„ ëŒë©´ì„œ ë¹ˆ ì˜ì—­ì— ë¸”ë¡ì„ ì±„ì›€
     for( i = 0 ; i < BOARDWIDTH ; i++ )
     {
         iEmptyPosition = -1;
 
-        // ¾Æ·¡¿¡¼­ À§·Î ¿Ã¶ó°¡¸é¼­ ºó ¿µ¿ªÀ» Ã£¾Æ ºí·ÏÀ» Ã¤¿ò
+        // ì•„ëž˜ì—ì„œ ìœ„ë¡œ ì˜¬ë¼ê°€ë©´ì„œ ë¹ˆ ì˜ì—­ì„ ì°¾ì•„ ë¸”ë¡ì„ ì±„ì›€
         for( j = BOARDHEIGHT - 1 ; j >= 0 ; j-- )
         {
-            // ºó ºí·ÏÀÌ¸é ÇöÀç À§Ä¡¸¦ ÀúÀåÇØµÎ¾ú´Ù°¡ ºí·ÏÀ» ¿Å±æ ¶§ »ç¿ë
+            // ë¹ˆ ë¸”ë¡ì´ë©´ í˜„ìž¬ ìœ„ì¹˜ë¥¼ ì €ìž¥í•´ë‘ì—ˆë‹¤ê°€ ë¸”ë¡ì„ ì˜®ê¸¸ ë•Œ ì‚¬ìš©
             if( ( iEmptyPosition == -1 ) &&
                 ( g_stGameInfo.vvbBoard[ j ][ i ] == EMPTYBLOCK ) )
             {
                 iEmptyPosition = j;
             }
-            // Áß°£¿¡ ºó ºí·ÏÀÌ °ËÃâµÇ¾ú°í ÇöÀç À§Ä¡¿¡ ºí·ÏÀÌ ÀÖÀ¸¸é ¾Æ·¡·Î ÀÌµ¿
+            // ì¤‘ê°„ì— ë¹ˆ ë¸”ë¡ì´ ê²€ì¶œë˜ì—ˆê³  í˜„ìž¬ ìœ„ì¹˜ì— ë¸”ë¡ì´ ìžˆìœ¼ë©´ ì•„ëž˜ë¡œ ì´ë™
             else if( ( iEmptyPosition != -1 ) &&
                      ( g_stGameInfo.vvbBoard[ j ][ i ] != EMPTYBLOCK ) )
             {
                 g_stGameInfo.vvbBoard[ iEmptyPosition ][ i ] =
                         g_stGameInfo.vvbBoard[ j ][ i ];
 
-                // ºó ºí·ÏÀÇ YÁÂÇ¥¸¦ À§·Î ÇÑ Ä­ ¿Ã·Á¼­ °è¼Ó ½×¾Æ ¿Ã¸± ¼ö ÀÖµµ·Ï ÇÔ
+                // ë¹ˆ ë¸”ë¡ì˜ Yì¢Œí‘œë¥¼ ìœ„ë¡œ í•œ ì¹¸ ì˜¬ë ¤ì„œ ê³„ì† ìŒ“ì•„ ì˜¬ë¦´ ìˆ˜ ìžˆë„ë¡ í•¨
                 iEmptyPosition--;
 
-                // ÇöÀç À§Ä¡ÀÇ ºí·ÏÀº ¿Å°ÜÁ³À¸¹Ç·Î ºó ºí·ÏÀ¸·Î ¼³Á¤
+                // í˜„ìž¬ ìœ„ì¹˜ì˜ ë¸”ë¡ì€ ì˜®ê²¨ì¡Œìœ¼ë¯€ë¡œ ë¹ˆ ë¸”ë¡ìœ¼ë¡œ ì„¤ì •
                 g_stGameInfo.vvbBoard[ j ][ i ] = EMPTYBLOCK;
             }
         }
@@ -660,78 +660,78 @@ void CompactBlockOnBoard( void )
 
 
 /**
- *  ´õÀÌ»ó Á¦°ÅÇÒ ºí·ÏÀÌ ¾øÀ» ¶§±îÁö ¹Ýº¹ÇÏ¿© °ÔÀÓÆÇÀÇ ºí·ÏÀ» Á¦°ÅÇÏ°í ¾ÐÃà
+ *  ë”ì´ìƒ ì œê±°í•  ë¸”ë¡ì´ ì—†ì„ ë•Œê¹Œì§€ ë°˜ë³µí•˜ì—¬ ê²Œìž„íŒì˜ ë¸”ë¡ì„ ì œê±°í•˜ê³  ì••ì¶•
  */
 void EraseAllContinuousBlockOnBoard( QWORD qwWindowID )
 {
     BOOL bMarked;
 
-    // °ÔÀÓ Á¤º¸ ÀÚ·á±¸Á¶¿¡ ÀÖ´Â »èÁ¦ÇÒ ºí·Ï ÇÊµå¸¦ ÃÊ±âÈ­
+    // ê²Œìž„ ì •ë³´ ìžë£Œêµ¬ì¡°ì— ìžˆëŠ” ì‚­ì œí•  ë¸”ë¡ í•„ë“œë¥¼ ì´ˆê¸°í™”
     memset( g_stGameInfo.vvbEraseBlock, 0, sizeof( g_stGameInfo.vvbEraseBlock ) );
 
     while( 1 )
     {
-        // ºí·ÏÀ» Á¦°ÅÇÏ±â Àü¿¡ Àá½Ã ´ë±âÇÏ¿© ÇöÀç °ÔÀÓÆÇÀÇ »óÅÂ¿Í ºí·ÏÀÇ »óÅÂ¸¦ À¯Áö
+        // ë¸”ë¡ì„ ì œê±°í•˜ê¸° ì „ì— ìž ì‹œ ëŒ€ê¸°í•˜ì—¬ í˜„ìž¬ ê²Œìž„íŒì˜ ìƒíƒœì™€ ë¸”ë¡ì˜ ìƒíƒœë¥¼ ìœ ì§€
         Sleep( 300 );
 
         bMarked = FALSE;
 
-        // °¡·Î ¹æÇâÀ¸·Î »èÁ¦ÇÒ ºí·ÏÀ» Ç¥½Ã
+        // ê°€ë¡œ ë°©í–¥ìœ¼ë¡œ ì‚­ì œí•  ë¸”ë¡ì„ í‘œì‹œ
         bMarked |= MarkContinuousHorizonBlockOnBoard();
-        // »õ·Î ¹æÇâÀ¸·Î »èÁ¦ÇÒ ºí·ÏÀ» Ç¥½Ã
+        // ìƒˆë¡œ ë°©í–¥ìœ¼ë¡œ ì‚­ì œí•  ë¸”ë¡ì„ í‘œì‹œ
         bMarked |= MarkContinuousVerticalBlockOnBoard();
-        // ´ë°¢¼± ¹æÇâÀ¸·Î »èÁ¦ÇÒ ºí·ÏÀ» Ç¥½Ã
+        // ëŒ€ê°ì„  ë°©í–¥ìœ¼ë¡œ ì‚­ì œí•  ë¸”ë¡ì„ í‘œì‹œ
         bMarked |= MarkContinuousDiagonalBlockInBoard();
 
-        // Á¦°ÅÇÒ ºí·ÏÀÌ ¾øÀ¸¸é ´õ ÀÌ»ó ¼öÇàÇÒ ÇÊ¿ä°¡ ¾øÀ½
+        // ì œê±°í•  ë¸”ë¡ì´ ì—†ìœ¼ë©´ ë” ì´ìƒ ìˆ˜í–‰í•  í•„ìš”ê°€ ì—†ìŒ
         if( bMarked == FALSE )
         {
             break;
         }
 
-        // Ç¥½ÃµÈ ºí·ÏÀ» Á¦°Å
+        // í‘œì‹œëœ ë¸”ë¡ì„ ì œê±°
         EraseMarkedBlock();
 
-        // ºí·ÏÀ» À§¿¡¼­ ¾Æ·¡·Î ÀÌµ¿½ÃÄÑ ºó ¿µ¿ªÀ» Ã¤¿ò
+        // ë¸”ë¡ì„ ìœ„ì—ì„œ ì•„ëž˜ë¡œ ì´ë™ì‹œì¼œ ë¹ˆ ì˜ì—­ì„ ì±„ì›€
         CompactBlockOnBoard();
 
-        // °ÔÀÓÀÇ ·¹º§À» 30Á¡ ´ÜÀ§·Î Áõ°¡
+        // ê²Œìž„ì˜ ë ˆë²¨ì„ 30ì  ë‹¨ìœ„ë¡œ ì¦ê°€
         g_stGameInfo.qwLevel = ( g_stGameInfo.qwScore / 30 ) + 1;
 
-        // Áö¿î ºí·ÏÀÌ ÀÖÀ¸¸é °ÔÀÓ Á¤º¸ ¿µ¿ª°ú °ÔÀÓ ¿µ¿ªÀ» ´Ù½Ã ±×¸²
+        // ì§€ìš´ ë¸”ë¡ì´ ìžˆìœ¼ë©´ ê²Œìž„ ì •ë³´ ì˜ì—­ê³¼ ê²Œìž„ ì˜ì—­ì„ ë‹¤ì‹œ ê·¸ë¦¼
         DrawGameArea( qwWindowID );
         DrawInformation( qwWindowID );
 
-        // À©µµ¿ì¸¦ È­¸é¿¡ Ç¥½Ã
+        // ìœˆë„ìš°ë¥¼ í™”ë©´ì— í‘œì‹œ
         ShowWindow( qwWindowID, TRUE );
     }
 }
 
 /**
- *  °ÔÀÓ Á¤º¸¸¦ È­¸é¿¡ Ãâ·Â
+ *  ê²Œìž„ ì •ë³´ë¥¼ í™”ë©´ì— ì¶œë ¥
  */
 void DrawInformation( QWORD qwWindowID )
 {
     char vcBuffer[ 200 ];
     int iLength;
 
-    // °ÔÀÓ Á¤º¸ ¿µ¿ªÀÇ ¹è°æÀ» Ãâ·Â
+    // ê²Œìž„ ì •ë³´ ì˜ì—­ì˜ ë°°ê²½ì„ ì¶œë ¥
     DrawRect( qwWindowID, 1, WINDOW_TITLEBAR_HEIGHT - 1, WINDOW_WIDTH - 2,
               WINDOW_TITLEBAR_HEIGHT + INFORMATION_HEIGHT, RGB( 55, 215, 47 ), TRUE );
 
-    // ÀÓ½Ã ¹öÆÛ¿¡ Ãâ·ÂÇÒ Á¤º¸¸¦ ÀúÀå
+    // ìž„ì‹œ ë²„í¼ì— ì¶œë ¥í•  ì •ë³´ë¥¼ ì €ìž¥
     sprintf( vcBuffer, "Level: %d, Score: %d\n", g_stGameInfo.qwLevel,
             g_stGameInfo.qwScore );
     iLength = strlen( vcBuffer );
 
-    // ÀúÀåµÈ Á¤º¸¸¦ °ÔÀÓ Á¤º¸ Ç¥½Ã ¿µ¿ªÀÇ °¡¿îµ¥¿¡ Ãâ·Â
+    // ì €ìž¥ëœ ì •ë³´ë¥¼ ê²Œìž„ ì •ë³´ í‘œì‹œ ì˜ì—­ì˜ ê°€ìš´ë°ì— ì¶œë ¥
     DrawText( qwWindowID, ( WINDOW_WIDTH - iLength * FONT_ENGLISHWIDTH ) / 2,
             WINDOW_TITLEBAR_HEIGHT + 2, RGB( 255, 255, 255 ), RGB( 55, 215, 47 ),
             vcBuffer, strlen( vcBuffer ) );
 }
 
 /**
- *  °ÔÀÓ ¿µ¿ªÀ» È­¸é¿¡ Ãâ·Â
+ *  ê²Œìž„ ì˜ì—­ì„ í™”ë©´ì— ì¶œë ¥
  */
 void DrawGameArea( QWORD qwWindowID )
 {
@@ -740,28 +740,28 @@ void DrawGameArea( QWORD qwWindowID )
     int j;
     int iY;
 
-    // °ÔÀÓ ¿µ¿ªÀÌ ½ÃÀÛµÇ´Â À§Ä¡
+    // ê²Œìž„ ì˜ì—­ì´ ì‹œìž‘ë˜ëŠ” ìœ„ì¹˜
     iY = WINDOW_TITLEBAR_HEIGHT + INFORMATION_HEIGHT;
 
-    // °ÔÀÓ ¿µ¿ªÀÇ ¹è°æÀ» Ãâ·Â
+    // ê²Œìž„ ì˜ì—­ì˜ ë°°ê²½ì„ ì¶œë ¥
     DrawRect( qwWindowID, 0, iY, BLOCKSIZE * BOARDWIDTH, iY + BLOCKSIZE * BOARDHEIGHT,
             RGB( 0, 0, 0 ), TRUE );
 
-    // °ÔÀÓÆÇÀÇ ³»¿ëÀ» È­¸é¿¡ Ç¥½Ã
+    // ê²Œìž„íŒì˜ ë‚´ìš©ì„ í™”ë©´ì— í‘œì‹œ
     for( j = 0 ; j < BOARDHEIGHT ; j++ )
     {
         for( i = 0 ; i < BOARDWIDTH ; i++ )
         {
-            // ºó ºí·ÏÀÌ ¾Æ´Ï¸é ºí·ÏÀ» Ç¥½ÃÇÔ
+            // ë¹ˆ ë¸”ë¡ì´ ì•„ë‹ˆë©´ ë¸”ë¡ì„ í‘œì‹œí•¨
             if( g_stGameInfo.vvbBoard[ j ][ i ] != EMPTYBLOCK )
             {
-                // ºí·ÏÀÇ ³»ºÎ¸¦ ±×¸²
+                // ë¸”ë¡ì˜ ë‚´ë¶€ë¥¼ ê·¸ë¦¼
                 stColor = g_stGameInfo.vstBlockColor[ g_stGameInfo.vvbBoard[ j ][ i ] ];
                 DrawRect( qwWindowID, i * BLOCKSIZE, iY + ( j * BLOCKSIZE ),
                         ( i + 1 ) * BLOCKSIZE, iY + ( ( j + 1 ) * BLOCKSIZE ),
                         stColor, TRUE );
 
-                // ºí·ÏÀÇ ¿ÜºÎ Å×µÎ¸®¸¦ ±×¸²
+                // ë¸”ë¡ì˜ ì™¸ë¶€ í…Œë‘ë¦¬ë¥¼ ê·¸ë¦¼
                 stColor = g_stGameInfo.vstEdgeColor[ g_stGameInfo.vvbBoard[ j ][ i ] ];
                 DrawRect( qwWindowID, i * BLOCKSIZE, iY + ( j * BLOCKSIZE ),
                         ( i + 1 ) * BLOCKSIZE, iY + ( ( j + 1 ) * BLOCKSIZE ),
@@ -774,16 +774,16 @@ void DrawGameArea( QWORD qwWindowID )
         }
     }
 
-    // ÇöÀç ¿òÁ÷ÀÌ´Â ºí·ÏÀ» È­¸é¿¡ Ç¥½Ã
+    // í˜„ìž¬ ì›€ì§ì´ëŠ” ë¸”ë¡ì„ í™”ë©´ì— í‘œì‹œ
     if( g_stGameInfo.iBlockX != -1 )
     {
         for( i = 0 ; i < BLOCKCOUNT ; i++ )
         {
-            // Á¦¸ñ Ç¥½ÃÁÙ ¾Æ·¡¿¡ ºí·ÏÀÌ Ç¥½ÃµÉ ¶§¸¸ Ç¥½Ã
+            // ì œëª© í‘œì‹œì¤„ ì•„ëž˜ì— ë¸”ë¡ì´ í‘œì‹œë  ë•Œë§Œ í‘œì‹œ
             if( WINDOW_TITLEBAR_HEIGHT <
                     ( iY + ( ( g_stGameInfo.iBlockY + i ) * BLOCKSIZE ) ) )
             {
-                // ºí·ÏÀÇ ³»ºÎ¸¦ ±×¸²
+                // ë¸”ë¡ì˜ ë‚´ë¶€ë¥¼ ê·¸ë¦¼
                 stColor = g_stGameInfo.vstBlockColor[ g_stGameInfo.vbBlock[ i ] ];
                 DrawRect( qwWindowID, g_stGameInfo.iBlockX * BLOCKSIZE,
                     iY + ( ( g_stGameInfo.iBlockY + i ) * BLOCKSIZE ),
@@ -791,7 +791,7 @@ void DrawGameArea( QWORD qwWindowID )
                     iY + ( ( g_stGameInfo.iBlockY + i + 1 ) * BLOCKSIZE ),
                     stColor, TRUE );
 
-                // ºí·ÏÀÇ ¿ÜºÎ Å×µÎ¸®¸¦ ±×¸²
+                // ë¸”ë¡ì˜ ì™¸ë¶€ í…Œë‘ë¦¬ë¥¼ ê·¸ë¦¼
                 stColor = g_stGameInfo.vstEdgeColor[ g_stGameInfo.vbBlock[ i ] ];
                 DrawRect( qwWindowID, g_stGameInfo.iBlockX * BLOCKSIZE,
                     iY + ( ( g_stGameInfo.iBlockY + i ) * BLOCKSIZE ),
@@ -807,7 +807,7 @@ void DrawGameArea( QWORD qwWindowID )
         }
     }
 
-    // °ÔÀÓ ¿µ¿ªÀÇ Å×µÎ¸®¸¦ ±×¸²
+    // ê²Œìž„ ì˜ì—­ì˜ í…Œë‘ë¦¬ë¥¼ ê·¸ë¦¼
     DrawRect( qwWindowID, 0, iY, BLOCKSIZE * BOARDWIDTH - 1,
             iY + BLOCKSIZE * BOARDHEIGHT - 1, RGB( 0, 255, 0 ), FALSE );
 }

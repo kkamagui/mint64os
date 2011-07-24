@@ -2,41 +2,41 @@
 # date      2009/12/12
 # author    kkamagui 
 #           Copyright(c)2008 All rights reserved by kkamagui
-# brief     ½Ã½ºÅÛ ÄÝ ¿£Æ®¸® Æ÷ÀÎÆ®¿¡ °ü·ÃµÈ ¼Ò½º ÆÄÀÏ
+# brief     ì‹œìŠ¤í…œ ì½œ ì—”íŠ¸ë¦¬ í¬ì¸íŠ¸ì— ê´€ë ¨ëœ ì†ŒìŠ¤ íŒŒì¼
 
-[BITS 64]           ; ÀÌÇÏÀÇ ÄÚµå´Â 64ºñÆ® ÄÚµå·Î ¼³Á¤
+[BITS 64]           ; ì´í•˜ì˜ ì½”ë“œëŠ” 64ë¹„íŠ¸ ì½”ë“œë¡œ ì„¤ì •
 
-SECTION .text       ; text ¼½¼Ç(¼¼±×¸ÕÆ®)À» Á¤ÀÇ
+SECTION .text       ; text ì„¹ì…˜(ì„¸ê·¸ë¨¼íŠ¸)ì„ ì •ì˜
 
-; ¿ÜºÎ¿¡¼­ Á¤ÀÇµÈ ÇÔ¼ö¸¦ ¾µ ¼ö ÀÖµµ·Ï ¼±¾ðÇÔ(Import)
+; ì™¸ë¶€ì—ì„œ ì •ì˜ëœ í•¨ìˆ˜ë¥¼ ì“¸ ìˆ˜ ìžˆë„ë¡ ì„ ì–¸í•¨(Import)
 extern kProcessSystemCall
 
-; C ¾ð¾î¿¡¼­ È£ÃâÇÒ ¼ö ÀÖµµ·Ï ÀÌ¸§À» ³ëÃâÇÔ(Export)
+; C ì–¸ì–´ì—ì„œ í˜¸ì¶œí•  ìˆ˜ ìžˆë„ë¡ ì´ë¦„ì„ ë…¸ì¶œí•¨(Export)
 global kSystemCallEntryPoint, kSystemCallTestTask
 
 
-; À¯Àú ·¹º§¿¡¼­ SYSCALLÀ» ½ÇÇàÇßÀ» ¶§ È£ÃâµÇ´Â ½Ã½ºÅÛ ÄÝ ¿£Æ®¸® Æ÷ÀÎÆ®
+; ìœ ì € ë ˆë²¨ì—ì„œ SYSCALLì„ ì‹¤í–‰í–ˆì„ ë•Œ í˜¸ì¶œë˜ëŠ” ì‹œìŠ¤í…œ ì½œ ì—”íŠ¸ë¦¬ í¬ì¸íŠ¸
 ;   PARAM: QWORD qwServiceNumber, PARAMETERTABLE* pstParameter
 kSystemCallEntryPoint:
-    push rcx        ; SYSRET·Î µÇµ¹¾Æ°¥ ¶§ »ç¿ëÇÒ RIP ·¹Áö½ºÅÍÀÇ °ª°ú RFLAGS ·¹Áö½ºÅÍÀÇ
-    push r11        ; °ªÀ» ÀúÀå 
-    mov cx, ds      ; CS¿Í SS ¼¼±×¸ÕÆ® ¼¿·ºÅÍ¸¦ Á¦¿ÜÇÑ ³ª¸ÓÁö ¼¼±×¸ÕÆ® ¼¿·ºÅÍÀÇ 
-    push cx         ; °ªÀ» ½ºÅÃ¿¡ ÀúÀå
-    mov cx, es      ; DS ¼¼±×¸ÕÆ® ¼¿·ºÅÍ¿Í ES ¼¼±×¸ÕÆ® ¼¿·ºÅÍ´Â ½ºÅÃ¿¡ ¹Ù·Î ÀúÀåÇÒ ¼ö
-    push cx         ; ¾øÀ¸¹Ç·Î CX ·¹Áö½ºÅÍ·Î ¿Å±ä µÚ ÀúÀå
+    push rcx        ; SYSRETë¡œ ë˜ëŒì•„ê°ˆ ë•Œ ì‚¬ìš©í•  RIP ë ˆì§€ìŠ¤í„°ì˜ ê°’ê³¼ RFLAGS ë ˆì§€ìŠ¤í„°ì˜
+    push r11        ; ê°’ì„ ì €ìž¥ 
+    mov cx, ds      ; CSì™€ SS ì„¸ê·¸ë¨¼íŠ¸ ì…€ë ‰í„°ë¥¼ ì œì™¸í•œ ë‚˜ë¨¸ì§€ ì„¸ê·¸ë¨¼íŠ¸ ì…€ë ‰í„°ì˜ 
+    push cx         ; ê°’ì„ ìŠ¤íƒì— ì €ìž¥
+    mov cx, es      ; DS ì„¸ê·¸ë¨¼íŠ¸ ì…€ë ‰í„°ì™€ ES ì„¸ê·¸ë¨¼íŠ¸ ì…€ë ‰í„°ëŠ” ìŠ¤íƒì— ë°”ë¡œ ì €ìž¥í•  ìˆ˜
+    push cx         ; ì—†ìœ¼ë¯€ë¡œ CX ë ˆì§€ìŠ¤í„°ë¡œ ì˜®ê¸´ ë’¤ ì €ìž¥
     push fs         
     push gs
     
-    mov cx, 0x10    ; Ä¿³Î µ¥ÀÌÅÍ ¼¼±×¸ÕÆ® ¼¿·ºÅÍÀÇ ÀÎµ¦½º¸¦ CX ·¹Áö½ºÅÍ¿¡ ÀúÀå
-    mov ds, cx      ; ¼¼±×¸ÕÆ® ¼¿·ºÅÍ¸¦ Ä¿³Î µ¥ÀÌÅÍ ¼¼±×¸ÕÆ® ¼¿·ºÅÍ·Î ±³Ã¼
+    mov cx, 0x10    ; ì»¤ë„ ë°ì´í„° ì„¸ê·¸ë¨¼íŠ¸ ì…€ë ‰í„°ì˜ ì¸ë±ìŠ¤ë¥¼ CX ë ˆì§€ìŠ¤í„°ì— ì €ìž¥
+    mov ds, cx      ; ì„¸ê·¸ë¨¼íŠ¸ ì…€ë ‰í„°ë¥¼ ì»¤ë„ ë°ì´í„° ì„¸ê·¸ë¨¼íŠ¸ ì…€ë ‰í„°ë¡œ êµì²´
     mov es, cx
     mov fs, cx
     mov gs, cx
     
-    call kProcessSystemCall     ; ¼­ºñ½º ¹øÈ£¿¡ µû¶ó Ä¿³Î ·¹º§ ÇÔ¼ö¸¦ È£Ãâ
+    call kProcessSystemCall     ; ì„œë¹„ìŠ¤ ë²ˆí˜¸ì— ë”°ë¼ ì»¤ë„ ë ˆë²¨ í•¨ìˆ˜ë¥¼ í˜¸ì¶œ
 
-    pop gs          ; ½ºÅÃ¿¡ ÀúÀåµÈ °ªÀ¸·Î ¼¼±×¸ÕÆ® ¼¿·ºÅÍÀÇ °ª°ú RCX, R11 
-    pop fs          ; ·¹Áö½ºÅÍ¸¦ º¹¿ø
+    pop gs          ; ìŠ¤íƒì— ì €ìž¥ëœ ê°’ìœ¼ë¡œ ì„¸ê·¸ë¨¼íŠ¸ ì…€ë ‰í„°ì˜ ê°’ê³¼ RCX, R11 
+    pop fs          ; ë ˆì§€ìŠ¤í„°ë¥¼ ë³µì›
     pop cx
     mov es, cx
     pop cx
@@ -44,25 +44,25 @@ kSystemCallEntryPoint:
     pop r11
     pop rcx
 
-    o64 sysret      ; SYSCALL ¸í·É¾î·Î È£ÃâµÇ¾úÀ¸¹Ç·Î SYSRET ¸í·É¾î·Î º¹±ÍÇØ¾ß ÇÔ
+    o64 sysret      ; SYSCALL ëª…ë ¹ì–´ë¡œ í˜¸ì¶œë˜ì—ˆìœ¼ë¯€ë¡œ SYSRET ëª…ë ¹ì–´ë¡œ ë³µê·€í•´ì•¼ í•¨
 
-; ½Ã½ºÅÛ ÄÝÀ» Å×½ºÆ®ÇÏ´Â À¯Àú ·¹º§ ÅÂ½ºÅ©
-;   Å×½ºÆ® ½Ã½ºÅÛ ÄÝ ¼­ºñ½º¸¦ 3¹ø ¿¬¼ÓÀ¸·Î È£ÃâÇÑ µÚ exit() ¼­ºñ½º¸¦ È£ÃâÇÏ¿© Á¾·á
-;   PARAM: ¾øÀ½
+; ì‹œìŠ¤í…œ ì½œì„ í…ŒìŠ¤íŠ¸í•˜ëŠ” ìœ ì € ë ˆë²¨ íƒœìŠ¤í¬
+;   í…ŒìŠ¤íŠ¸ ì‹œìŠ¤í…œ ì½œ ì„œë¹„ìŠ¤ë¥¼ 3ë²ˆ ì—°ì†ìœ¼ë¡œ í˜¸ì¶œí•œ ë’¤ exit() ì„œë¹„ìŠ¤ë¥¼ í˜¸ì¶œí•˜ì—¬ ì¢…ë£Œ
+;   PARAM: ì—†ìŒ
 kSystemCallTestTask:
-    mov rdi, 0xFFFFFFFF ; ¼­ºñ½º ¹øÈ£¿¡ Å×½ºÆ® ½Ã½ºÅÛ ÄÝ(SYSCALL_TEST, 0xFFFFFFFF)¸¦ ÀúÀå
-    mov rsi, 0x00   ; ½Ã½ºÅÛ ÄÝÀ» È£ÃâÇÒ ¶§ »ç¿ëÇÏ´Â ÆÄ¶ó¹ÌÅÍ Å×ÀÌºí Æ÷ÀÎÅÍ¿¡ NULLÀ» ÀúÀå
-    syscall         ; ½Ã½ºÅÛ ÄÝÀ» È£Ãâ
+    mov rdi, 0xFFFFFFFF ; ì„œë¹„ìŠ¤ ë²ˆí˜¸ì— í…ŒìŠ¤íŠ¸ ì‹œìŠ¤í…œ ì½œ(SYSCALL_TEST, 0xFFFFFFFF)ë¥¼ ì €ìž¥
+    mov rsi, 0x00   ; ì‹œìŠ¤í…œ ì½œì„ í˜¸ì¶œí•  ë•Œ ì‚¬ìš©í•˜ëŠ” íŒŒë¼ë¯¸í„° í…Œì´ë¸” í¬ì¸í„°ì— NULLì„ ì €ìž¥
+    syscall         ; ì‹œìŠ¤í…œ ì½œì„ í˜¸ì¶œ
 
-    mov rdi, 0xFFFFFFFF ; ¼­ºñ½º ¹øÈ£¿¡ Å×½ºÆ® ½Ã½ºÅÛ ÄÝ(SYSCALL_TEST, 0xFFFFFFFF)¸¦ ÀúÀå
-    mov rsi, 0x00   ; ½Ã½ºÅÛ ÄÝÀ» È£ÃâÇÒ ¶§ »ç¿ëÇÏ´Â ÆÄ¶ó¹ÌÅÍ Å×ÀÌºí Æ÷ÀÎÅÍ¿¡ NULLÀ» ÀúÀå
-    syscall         ; ½Ã½ºÅÛ ÄÝÀ» È£Ãâ
+    mov rdi, 0xFFFFFFFF ; ì„œë¹„ìŠ¤ ë²ˆí˜¸ì— í…ŒìŠ¤íŠ¸ ì‹œìŠ¤í…œ ì½œ(SYSCALL_TEST, 0xFFFFFFFF)ë¥¼ ì €ìž¥
+    mov rsi, 0x00   ; ì‹œìŠ¤í…œ ì½œì„ í˜¸ì¶œí•  ë•Œ ì‚¬ìš©í•˜ëŠ” íŒŒë¼ë¯¸í„° í…Œì´ë¸” í¬ì¸í„°ì— NULLì„ ì €ìž¥
+    syscall         ; ì‹œìŠ¤í…œ ì½œì„ í˜¸ì¶œ
 
-    mov rdi, 0xFFFFFFFF ; ¼­ºñ½º ¹øÈ£¿¡ Å×½ºÆ® ½Ã½ºÅÛ ÄÝ(SYSCALL_TEST, 0xFFFFFFFF)¸¦ ÀúÀå
-    mov rsi, 0x00   ; ½Ã½ºÅÛ ÄÝÀ» È£ÃâÇÒ ¶§ »ç¿ëÇÏ´Â ÆÄ¶ó¹ÌÅÍ Å×ÀÌºí Æ÷ÀÎÅÍ¿¡ NULLÀ» ÀúÀå
-    syscall         ; ½Ã½ºÅÛ ÄÝÀ» È£Ãâ
+    mov rdi, 0xFFFFFFFF ; ì„œë¹„ìŠ¤ ë²ˆí˜¸ì— í…ŒìŠ¤íŠ¸ ì‹œìŠ¤í…œ ì½œ(SYSCALL_TEST, 0xFFFFFFFF)ë¥¼ ì €ìž¥
+    mov rsi, 0x00   ; ì‹œìŠ¤í…œ ì½œì„ í˜¸ì¶œí•  ë•Œ ì‚¬ìš©í•˜ëŠ” íŒŒë¼ë¯¸í„° í…Œì´ë¸” í¬ì¸í„°ì— NULLì„ ì €ìž¥
+    syscall         ; ì‹œìŠ¤í…œ ì½œì„ í˜¸ì¶œ
 
-    mov rdi, 24     ; ¼­ºñ½º ¹øÈ£¿¡ ÅÂ½ºÅ© Á¾·á(SYSCALL_EXITTASK, 24)¸¦ ÀúÀå
-    mov rsi, 0x00   ; ½Ã½ºÅÛ ÄÝÀ» È£ÃâÇÒ ¶§ »ç¿ëÇÏ´Â ÆÄ¶ó¹ÌÅÍ Å×ÀÌºí Æ÷ÀÎÅÍ¿¡ NULLÀ» ÀúÀå
-    syscall         ; ½Ã½ºÅÛ ÄÝÀ» È£Ãâ
+    mov rdi, 24     ; ì„œë¹„ìŠ¤ ë²ˆí˜¸ì— íƒœìŠ¤í¬ ì¢…ë£Œ(SYSCALL_EXITTASK, 24)ë¥¼ ì €ìž¥
+    mov rsi, 0x00   ; ì‹œìŠ¤í…œ ì½œì„ í˜¸ì¶œí•  ë•Œ ì‚¬ìš©í•˜ëŠ” íŒŒë¼ë¯¸í„° í…Œì´ë¸” í¬ì¸í„°ì— NULLì„ ì €ìž¥
+    syscall         ; ì‹œìŠ¤í…œ ì½œì„ í˜¸ì¶œ
     jmp $

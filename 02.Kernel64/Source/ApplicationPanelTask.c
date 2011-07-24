@@ -3,7 +3,7 @@
  *  date    2009/11/03
  *  author  kkamagui 
  *          Copyright(c)2008 All rights reserved by kkamagui 
- *  brief   ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ÆĞ³Î¿¡ °ü·ÃµÈ ¼Ò½º ÆÄÀÏ
+ *  brief   ì• í”Œë¦¬ì¼€ì´ì…˜ íŒ¨ë„ì— ê´€ë ¨ëœ ì†ŒìŠ¤ íŒŒì¼
  */
 
 #include "ApplicationPanelTask.h"
@@ -11,7 +11,7 @@
 #include "Task.h"
 #include "GUITask.h"
 
-// ¾ÖÇÃ¸®ÄÉÀÌ¼Ç Å×ÀÌºí
+// ì• í”Œë¦¬ì¼€ì´ì…˜ í…Œì´ë¸”
 APPLICATIONENTRY gs_vstApplicationTable[] =
 {
         { "Base GUI Task", kBaseGUITask },
@@ -21,11 +21,11 @@ APPLICATIONENTRY gs_vstApplicationTable[] =
         { "Image Viewer Task", kImageViewerTask },
 };
 
-// ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ÆĞ³Î¿¡¼­ »ç¿ëÇÏ´Â ÀÚ·á±¸Á¶
+// ì• í”Œë¦¬ì¼€ì´ì…˜ íŒ¨ë„ì—ì„œ ì‚¬ìš©í•˜ëŠ” ìë£Œêµ¬ì¡°
 APPLICATIONPANELDATA gs_stApplicationPanelData;
 
 /**
- *  ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ÆĞ³Î ÅÂ½ºÅ©
+ *  ì• í”Œë¦¬ì¼€ì´ì…˜ íŒ¨ë„ íƒœìŠ¤í¬
  */
 void kApplicationPanelGUITask( void )
 {
@@ -34,20 +34,20 @@ void kApplicationPanelGUITask( void )
     BOOL bApplicationListEventResult;
 
     //--------------------------------------------------------------------------
-    // ±×·¡ÇÈ ¸ğµå ÆÇ´Ü
+    // ê·¸ë˜í”½ ëª¨ë“œ íŒë‹¨
     //--------------------------------------------------------------------------
-    // MINT64 OS°¡ ±×·¡ÇÈ ¸ğµå·Î ½ÃÀÛÇß´ÂÁö È®ÀÎ
+    // MINT64 OSê°€ ê·¸ë˜í”½ ëª¨ë“œë¡œ ì‹œì‘í–ˆëŠ”ì§€ í™•ì¸
     if( kIsGraphicMode() == FALSE )
     {        
-        // MINT64 OS°¡ ±×·¡ÇÈ ¸ğµå·Î ½ÃÀÛÇÏÁö ¾Ê¾Ò´Ù¸é ½ÇÆĞ
+        // MINT64 OSê°€ ê·¸ë˜í”½ ëª¨ë“œë¡œ ì‹œì‘í•˜ì§€ ì•Šì•˜ë‹¤ë©´ ì‹¤íŒ¨
         kPrintf( "This task can run only GUI mode~!!!\n" );
         return ;
     }
 
     //--------------------------------------------------------------------------
-    // À©µµ¿ì¸¦ »ı¼º
+    // ìœˆë„ìš°ë¥¼ ìƒì„±
     //--------------------------------------------------------------------------
-    // ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ÆĞ³Î À©µµ¿ì¿Í ÀÀ¿ëÇÁ·Î±×·¥ ¸®½ºÆ® À©µµ¿ì¸¦ »ı¼º
+    // ì• í”Œë¦¬ì¼€ì´ì…˜ íŒ¨ë„ ìœˆë„ìš°ì™€ ì‘ìš©í”„ë¡œê·¸ë¨ ë¦¬ìŠ¤íŠ¸ ìœˆë„ìš°ë¥¼ ìƒì„±
     if( ( kCreateApplicationPanelWindow() == FALSE ) ||
         ( kCreateApplicationListWindow() == FALSE ) )
     {
@@ -55,15 +55,15 @@ void kApplicationPanelGUITask( void )
     }
 
     //--------------------------------------------------------------------------
-    // GUI ÅÂ½ºÅ©ÀÇ ÀÌº¥Æ® Ã³¸® ·çÇÁ
+    // GUI íƒœìŠ¤í¬ì˜ ì´ë²¤íŠ¸ ì²˜ë¦¬ ë£¨í”„
     //--------------------------------------------------------------------------
     while( 1 )
     {
-        // À©µµ¿ì ÀÌº¥Æ®¸¦ Ã³¸®
+        // ìœˆë„ìš° ì´ë²¤íŠ¸ë¥¼ ì²˜ë¦¬
         bApplicationPanelEventResult = kProcessApplicationPanelWindowEvent();
         bApplicationListEventResult = kProcessApplicationListWindowEvent();
         
-        // Ã³¸®ÇÑ ÀÌº¥Æ®°¡ ¾øÀ¸¸é ÇÁ·Î¼¼¼­¸¦ ¹İÈ¯
+        // ì²˜ë¦¬í•œ ì´ë²¤íŠ¸ê°€ ì—†ìœ¼ë©´ í”„ë¡œì„¸ì„œë¥¼ ë°˜í™˜
         if( ( bApplicationPanelEventResult == FALSE ) &&
             ( bApplicationListEventResult == FALSE ) )
         {
@@ -73,26 +73,26 @@ void kApplicationPanelGUITask( void )
 }
 
 /**
- *  ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ÆĞ³Î À©µµ¿ì¸¦ »ı¼º
+ *  ì• í”Œë¦¬ì¼€ì´ì…˜ íŒ¨ë„ ìœˆë„ìš°ë¥¼ ìƒì„±
  */
 static BOOL kCreateApplicationPanelWindow( void )
 {
     WINDOWMANAGER* pstWindowManager;
     QWORD qwWindowID;
     
-    // À©µµ¿ì ¸Å´ÏÀú¸¦ ¹İÈ¯
+    // ìœˆë„ìš° ë§¤ë‹ˆì €ë¥¼ ë°˜í™˜
     pstWindowManager = kGetWindowManager();
     
-    // È­¸é À§ÂÊ¿¡ ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ÆĞ³Î À©µµ¿ì¸¦ »ı¼º, °¡·Î·Î °¡µæ Â÷µµ·Ï »ı¼º
+    // í™”ë©´ ìœ„ìª½ì— ì• í”Œë¦¬ì¼€ì´ì…˜ íŒ¨ë„ ìœˆë„ìš°ë¥¼ ìƒì„±, ê°€ë¡œë¡œ ê°€ë“ ì°¨ë„ë¡ ìƒì„±
     qwWindowID = kCreateWindow( 0, 0, pstWindowManager->stScreenArea.iX2 + 1,
         APPLICATIONPANEL_HEIGHT, NULL, APPLICATIONPANEL_TITLE );
-    // À©µµ¿ì¸¦ »ı¼ºÇÏÁö ¸øÇßÀ¸¸é ½ÇÆĞ
+    // ìœˆë„ìš°ë¥¼ ìƒì„±í•˜ì§€ ëª»í–ˆìœ¼ë©´ ì‹¤íŒ¨
     if( qwWindowID == WINDOW_INVALIDID )
     {
         return FALSE;
     }
     
-    // ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ÆĞ³Î À©µµ¿ìÀÇ Å×µÎ¸®¿Í ³»ºÎ¸¦ Ç¥½Ã
+    // ì• í”Œë¦¬ì¼€ì´ì…˜ íŒ¨ë„ ìœˆë„ìš°ì˜ í…Œë‘ë¦¬ì™€ ë‚´ë¶€ë¥¼ í‘œì‹œ
     kDrawRect( qwWindowID, 0, 0, pstWindowManager->stScreenArea.iX2, 
             APPLICATIONPANEL_HEIGHT - 1, APPLICATIONPANEL_COLOR_OUTERLINE, FALSE );   
     kDrawRect( qwWindowID, 1, 1, pstWindowManager->stScreenArea.iX2 - 1, 
@@ -102,25 +102,25 @@ static BOOL kCreateApplicationPanelWindow( void )
     kDrawRect( qwWindowID, 3, 3, pstWindowManager->stScreenArea.iX2 - 3, 
             APPLICATIONPANEL_HEIGHT - 4, APPLICATIONPANEL_COLOR_BACKGROUND, TRUE );
     
-    // ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ÆĞ³ÎÀÇ ¿ŞÂÊ¿¡ GUI ÅÂ½ºÅ©ÀÇ ¸®½ºÆ®¸¦ º¸¿©ÁÖ´Â ¹öÆ°À» Ç¥½Ã
+    // ì• í”Œë¦¬ì¼€ì´ì…˜ íŒ¨ë„ì˜ ì™¼ìª½ì— GUI íƒœìŠ¤í¬ì˜ ë¦¬ìŠ¤íŠ¸ë¥¼ ë³´ì—¬ì£¼ëŠ” ë²„íŠ¼ì„ í‘œì‹œ
     kSetRectangleData( 5, 5, 120, 25, &( gs_stApplicationPanelData.stButtonArea ) );
     kDrawButton( qwWindowID, &( gs_stApplicationPanelData.stButtonArea ), 
                  APPLICATIONPANEL_COLOR_ACTIVE, "Application", RGB( 255, 255, 255 ) );
     
-    // ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ÆĞ³Î À©µµ¿ìÀÇ ¿À¸¥ÂÊ¿¡ ½Ã°è¸¦ Ç¥½Ã
+    // ì• í”Œë¦¬ì¼€ì´ì…˜ íŒ¨ë„ ìœˆë„ìš°ì˜ ì˜¤ë¥¸ìª½ì— ì‹œê³„ë¥¼ í‘œì‹œ
     kDrawDigitalClock( qwWindowID );
     
-    // ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ÆĞ³ÎÀ» È­¸é¿¡ Ç¥½Ã
+    // ì• í”Œë¦¬ì¼€ì´ì…˜ íŒ¨ë„ì„ í™”ë©´ì— í‘œì‹œ
     kShowWindow( qwWindowID, TRUE );    
     
-    // ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ÆĞ³Î ÀÚ·á±¸Á¶¿¡ À©µµ¿ì ID ÀúÀå
+    // ì• í”Œë¦¬ì¼€ì´ì…˜ íŒ¨ë„ ìë£Œêµ¬ì¡°ì— ìœˆë„ìš° ID ì €ì¥
     gs_stApplicationPanelData.qwApplicationPanelID = qwWindowID;
     
     return TRUE;
 }
 
 /**
- *  ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ÆĞ³Î¿¡ ½Ã°è¸¦ Ç¥½Ã
+ *  ì• í”Œë¦¬ì¼€ì´ì…˜ íŒ¨ë„ì— ì‹œê³„ë¥¼ í‘œì‹œ
  */
 static void kDrawDigitalClock( QWORD qwWindowID )
 {
@@ -130,22 +130,22 @@ static void kDrawDigitalClock( QWORD qwWindowID )
     BYTE bHour, bMinute, bSecond;
     char vcBuffer[ 10 ] = "00:00 AM";
 
-    // ÇöÀç ½Ã°£À» RTC¿¡¼­ ¹İÈ¯
+    // í˜„ì¬ ì‹œê°„ì„ RTCì—ì„œ ë°˜í™˜
     kReadRTCTime( &bHour, &bMinute, &bSecond );
     
-    // ÀÌÀü ½Ã°£°ú º¯È­°¡ ¾øÀ¸¸é ½Ã°è¸¦ Ç¥½ÃÇÒ ÇÊ¿ä ¾øÀ½
+    // ì´ì „ ì‹œê°„ê³¼ ë³€í™”ê°€ ì—†ìœ¼ë©´ ì‹œê³„ë¥¼ í‘œì‹œí•  í•„ìš” ì—†ìŒ
     if( ( s_bPreviousHour == bHour ) && ( s_bPreviousMinute == bMinute ) &&
         ( s_bPreviousSecond == bSecond ) )
     {
         return ;
     }
     
-    // ´ÙÀ½ ºñ±³¸¦ À§ÇØ ½Ã, ºĞ, ÃÊ¸¦ ¾÷µ¥ÀÌÆ®
+    // ë‹¤ìŒ ë¹„êµë¥¼ ìœ„í•´ ì‹œ, ë¶„, ì´ˆë¥¼ ì—…ë°ì´íŠ¸
     s_bPreviousHour = bHour;
     s_bPreviousMinute = bMinute;
     s_bPreviousSecond = bSecond;
 
-    // ½Ã°£ÀÌ 12½Ã°¡ ³ÑÀ¸¸é PMÀ¸·Î º¯°æ
+    // ì‹œê°„ì´ 12ì‹œê°€ ë„˜ìœ¼ë©´ PMìœ¼ë¡œ ë³€ê²½
     if( bHour >= 12 )
     {
         if( bHour > 12 )
@@ -155,14 +155,14 @@ static void kDrawDigitalClock( QWORD qwWindowID )
         vcBuffer[ 6 ] = 'P';
     }
     
-    // ½Ã°£ ¼³Á¤
+    // ì‹œê°„ ì„¤ì •
     vcBuffer[ 0 ] = '0' + bHour / 10;
     vcBuffer[ 1 ] = '0' + bHour % 10;
-    // ºĞ ¼³Á¤
+    // ë¶„ ì„¤ì •
     vcBuffer[ 3 ] = '0' + bMinute / 10;
     vcBuffer[ 4 ] = '0' + bMinute % 10;
     
-    // ÃÊ¿¡ µû¶ó¼­ °¡¿îµ¥ :¸¦ ±ôºıÀÓ
+    // ì´ˆì— ë”°ë¼ì„œ ê°€ìš´ë° :ë¥¼ ê¹œë¹¡ì„
     if( ( bSecond % 2 ) == 1 )
     {
         vcBuffer[ 2 ] = ' ';
@@ -172,27 +172,27 @@ static void kDrawDigitalClock( QWORD qwWindowID )
         vcBuffer[ 2 ] = ':';
     }
     
-    // ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ÆĞ³Î À©µµ¿ìÀÇ À§Ä¡¸¦ ¹İÈ¯
+    // ì• í”Œë¦¬ì¼€ì´ì…˜ íŒ¨ë„ ìœˆë„ìš°ì˜ ìœ„ì¹˜ë¥¼ ë°˜í™˜
     kGetWindowArea( qwWindowID, &stWindowArea );
     
-    // ½Ã°è ¿µ¿ªÀÇ Å×µÎ¸®¸¦ Ç¥½Ã
+    // ì‹œê³„ ì˜ì—­ì˜ í…Œë‘ë¦¬ë¥¼ í‘œì‹œ
     kSetRectangleData( stWindowArea.iX2 - APPLICATIONPANEL_CLOCKWIDTH - 13, 5,
                        stWindowArea.iX2 - 5, 25, &stUpdateArea );    
     kDrawRect( qwWindowID, stUpdateArea.iX1, stUpdateArea.iY1, 
             stUpdateArea.iX2, stUpdateArea.iY2, APPLICATIONPANEL_COLOR_INNERLINE, 
             FALSE );
     
-    // ½Ã°è¸¦ Ç¥½Ã
+    // ì‹œê³„ë¥¼ í‘œì‹œ
     kDrawText( qwWindowID, stUpdateArea.iX1 + 4, stUpdateArea.iY1 + 3, 
             RGB( 255, 255, 255 ), APPLICATIONPANEL_COLOR_BACKGROUND, vcBuffer, 
             kStrLen( vcBuffer ) );
     
-    // ½Ã°è°¡ ±×·ÁÁø ¿µ¿ª¸¸ È­¸é¿¡ ¾÷µ¥ÀÌÆ®
+    // ì‹œê³„ê°€ ê·¸ë ¤ì§„ ì˜ì—­ë§Œ í™”ë©´ì— ì—…ë°ì´íŠ¸
     kUpdateScreenByWindowArea( qwWindowID, &stUpdateArea );
 }
 
 /**
- *  ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ÆĞ³Î¿¡ ¼ö½ÅµÈ ÀÌº¥Æ®¸¦ Ã³¸®
+ *  ì• í”Œë¦¬ì¼€ì´ì…˜ íŒ¨ë„ì— ìˆ˜ì‹ ëœ ì´ë²¤íŠ¸ë¥¼ ì²˜ë¦¬
  */
 static BOOL kProcessApplicationPanelWindowEvent( void )
 {
@@ -202,18 +202,18 @@ static BOOL kProcessApplicationPanelWindowEvent( void )
     QWORD qwApplicationPanelID;
     QWORD qwApplicationListID;
 
-    // À©µµ¿ì ID ÀúÀå
+    // ìœˆë„ìš° ID ì €ì¥
     qwApplicationPanelID = gs_stApplicationPanelData.qwApplicationPanelID;
     qwApplicationListID = gs_stApplicationPanelData.qwApplicationListID;
     bProcessResult = FALSE;
     
-    // ÀÌº¥Æ®¸¦ Ã³¸®ÇÏ´Â ·çÇÁ
+    // ì´ë²¤íŠ¸ë¥¼ ì²˜ë¦¬í•˜ëŠ” ë£¨í”„
     while( 1 )
     {
-        // ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ÆĞ³Î À©µµ¿ìÀÇ ¿À¸¥ÂÊ¿¡ ½Ã°è¸¦ Ç¥½Ã
+        // ì• í”Œë¦¬ì¼€ì´ì…˜ íŒ¨ë„ ìœˆë„ìš°ì˜ ì˜¤ë¥¸ìª½ì— ì‹œê³„ë¥¼ í‘œì‹œ
         kDrawDigitalClock( gs_stApplicationPanelData.qwApplicationPanelID );
         
-        // ÀÌº¥Æ® Å¥¿¡¼­ ÀÌº¥Æ®¸¦ ¼ö½Å
+        // ì´ë²¤íŠ¸ íì—ì„œ ì´ë²¤íŠ¸ë¥¼ ìˆ˜ì‹ 
         if( kReceiveEventFromWindowQueue( qwApplicationPanelID, &stReceivedEvent ) 
                 == FALSE )
         {
@@ -222,33 +222,33 @@ static BOOL kProcessApplicationPanelWindowEvent( void )
 
         bProcessResult = TRUE;
         
-        // ¼ö½ÅµÈ ÀÌº¥Æ®¸¦ Å¸ÀÔ¿¡ µû¶ó ³ª´©¾î Ã³¸®
+        // ìˆ˜ì‹ ëœ ì´ë²¤íŠ¸ë¥¼ íƒ€ì…ì— ë”°ë¼ ë‚˜ëˆ„ì–´ ì²˜ë¦¬
         switch( stReceivedEvent.qwType )
         {
-            // ¸¶¿ì½º ¿ŞÂÊ ¹öÆ° Ã³¸®
+            // ë§ˆìš°ìŠ¤ ì™¼ìª½ ë²„íŠ¼ ì²˜ë¦¬
         case EVENT_MOUSE_LBUTTONDOWN:
             pstMouseEvent = &( stReceivedEvent.stMouseEvent );
-            // ¸¶¿ì½º ¿ŞÂÊ ¹öÆ°ÀÌ ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ÆĞ³ÎÀÇ ¹öÆ° ³»ºÎ¿¡¼­ ´­·ÈÀ¸¸é
-            // ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ¸®½ºÆ® À©µµ¿ì¸¦ Ç¥½Ã
+            // ë§ˆìš°ìŠ¤ ì™¼ìª½ ë²„íŠ¼ì´ ì• í”Œë¦¬ì¼€ì´ì…˜ íŒ¨ë„ì˜ ë²„íŠ¼ ë‚´ë¶€ì—ì„œ ëˆŒë ¸ìœ¼ë©´
+            // ì• í”Œë¦¬ì¼€ì´ì…˜ ë¦¬ìŠ¤íŠ¸ ìœˆë„ìš°ë¥¼ í‘œì‹œ
             if( kIsInRectangle( &( gs_stApplicationPanelData.stButtonArea ), 
                     pstMouseEvent->stPoint.iX, pstMouseEvent->stPoint.iY ) == FALSE )
             {
                 break;
             }
             
-            // ¹öÆ°ÀÌ ¶³¾îÁø »óÅÂ¿¡¼­ ´­¸®´Â °æ¿ì
+            // ë²„íŠ¼ì´ ë–¨ì–´ì§„ ìƒíƒœì—ì„œ ëˆŒë¦¬ëŠ” ê²½ìš°
             if( gs_stApplicationPanelData.bApplicationWindowVisible == FALSE )
             {
-                // ¹öÆ°À» ´­¸° »óÅÂ·Î Ç¥½Ã
+                // ë²„íŠ¼ì„ ëˆŒë¦° ìƒíƒœë¡œ í‘œì‹œ
                 kDrawButton( qwApplicationPanelID, &( gs_stApplicationPanelData.stButtonArea ), 
                              APPLICATIONPANEL_COLOR_BACKGROUND, "Application", 
                              RGB( 255, 255, 255 ) );
-                // ¹öÆ°ÀÌ ÀÖ´Â ¿µ¿ª¸¸ È­¸é ¾÷µ¥ÀÌÆ®
+                // ë²„íŠ¼ì´ ìˆëŠ” ì˜ì—­ë§Œ í™”ë©´ ì—…ë°ì´íŠ¸
                 kUpdateScreenByWindowArea( qwApplicationPanelID, 
                         &( gs_stApplicationPanelData.stButtonArea ) );
         
-                // ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ¸®½ºÆ® À©µµ¿ì¿¡ ¾Æ¹«°Íµµ ¼±ÅÃµÇÁö ¾ÊÀº °ÍÀ¸·Î ÃÊ±âÈ­ÇÏ°í 
-                // À©µµ¿ì¸¦ È­¸é¿¡ ÃÖ»óÀ§·Î Ç¥½Ã
+                // ì• í”Œë¦¬ì¼€ì´ì…˜ ë¦¬ìŠ¤íŠ¸ ìœˆë„ìš°ì— ì•„ë¬´ê²ƒë„ ì„ íƒë˜ì§€ ì•Šì€ ê²ƒìœ¼ë¡œ ì´ˆê¸°í™”í•˜ê³  
+                // ìœˆë„ìš°ë¥¼ í™”ë©´ì— ìµœìƒìœ„ë¡œ í‘œì‹œ
                 if( gs_stApplicationPanelData.iPreviousMouseOverIndex != -1 )
                 {
                     kDrawApplicationListItem( 
@@ -257,29 +257,29 @@ static BOOL kProcessApplicationPanelWindowEvent( void )
                 }
                 kMoveWindowToTop( gs_stApplicationPanelData.qwApplicationListID );
                 kShowWindow( gs_stApplicationPanelData.qwApplicationListID, TRUE );
-                // ÇÃ·¡±×´Â È­¸é¿¡ Ç¥½ÃµÈ °ÍÀ¸·Î ¼³Á¤
+                // í”Œë˜ê·¸ëŠ” í™”ë©´ì— í‘œì‹œëœ ê²ƒìœ¼ë¡œ ì„¤ì •
                 gs_stApplicationPanelData.bApplicationWindowVisible = TRUE;
             }
-            // ¹öÆ°ÀÌ ´­¸° »óÅÂ¿¡¼­ ¶³¾îÁø °æ¿ì
+            // ë²„íŠ¼ì´ ëˆŒë¦° ìƒíƒœì—ì„œ ë–¨ì–´ì§„ ê²½ìš°
             else
             {
-                // ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ÆĞ³ÎÀÇ ¹öÆ°À» ¶³¾îÁø »óÅÂ·Î Ç¥½Ã
+                // ì• í”Œë¦¬ì¼€ì´ì…˜ íŒ¨ë„ì˜ ë²„íŠ¼ì„ ë–¨ì–´ì§„ ìƒíƒœë¡œ í‘œì‹œ
                 kDrawButton( qwApplicationPanelID, 
                          &( gs_stApplicationPanelData.stButtonArea ), 
                          APPLICATIONPANEL_COLOR_ACTIVE, "Application", 
                          RGB( 255, 255, 255 ) );
-                // ¹öÆ°ÀÌ ÀÖ´Â ¿µ¿ª¸¸ È­¸é ¾÷µ¥ÀÌÆ®
+                // ë²„íŠ¼ì´ ìˆëŠ” ì˜ì—­ë§Œ í™”ë©´ ì—…ë°ì´íŠ¸
                 kUpdateScreenByWindowArea( qwApplicationPanelID, 
                          &( gs_stApplicationPanelData.stButtonArea ) );
 
-                // ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ¸®½ºÆ® À©µµ¿ì¸¦ ¼û±è
+                // ì• í”Œë¦¬ì¼€ì´ì…˜ ë¦¬ìŠ¤íŠ¸ ìœˆë„ìš°ë¥¼ ìˆ¨ê¹€
                 kShowWindow( qwApplicationListID, FALSE );
-                // ÇÃ·¡±×´Â È­¸é¿¡ Ç¥½ÃµÇÁö ¾ÊÀº °ÍÀ¸·Î ¼³Á¤
+                // í”Œë˜ê·¸ëŠ” í™”ë©´ì— í‘œì‹œë˜ì§€ ì•Šì€ ê²ƒìœ¼ë¡œ ì„¤ì •
                 gs_stApplicationPanelData.bApplicationWindowVisible = FALSE;            
             }
             break;
             
-            // ±× ¿Ü ÀÌº¥Æ® Ã³¸®
+            // ê·¸ ì™¸ ì´ë²¤íŠ¸ ì²˜ë¦¬
         default:
             break;
         }
@@ -289,7 +289,7 @@ static BOOL kProcessApplicationPanelWindowEvent( void )
 }
 
 /**
- *  ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ¸®½ºÆ® À©µµ¿ì¸¦ »ı¼º
+ *  ì• í”Œë¦¬ì¼€ì´ì…˜ ë¦¬ìŠ¤íŠ¸ ìœˆë„ìš°ë¥¼ ìƒì„±
  */
 static BOOL kCreateApplicationListWindow( void )
 {
@@ -302,7 +302,7 @@ static BOOL kCreateApplicationListWindow( void )
     int iY;
     int iWindowWidth;
     
-    // ¾ÖÇÃ¸®ÄÉÀÌ¼Ç Å×ÀÌºí¿¡ Á¤ÀÇµÈ ÀÌ¸§ Áß¿¡¼­ °¡Àå ±ä °ÍÀ» °Ë»ö
+    // ì• í”Œë¦¬ì¼€ì´ì…˜ í…Œì´ë¸”ì— ì •ì˜ëœ ì´ë¦„ ì¤‘ì—ì„œ ê°€ì¥ ê¸´ ê²ƒì„ ê²€ìƒ‰
     iMaxNameLength = 0;
     iCount = sizeof( gs_vstApplicationTable ) / sizeof( APPLICATIONENTRY );
     for( i = 0 ; i < iCount ; i++ )
@@ -314,36 +314,36 @@ static BOOL kCreateApplicationListWindow( void )
         }
     }
     
-    // À©µµ¿ìÀÇ ³Êºñ °è»ê, 20Àº ÁÂ¿ì 10ÇÈ¼¿ÀÇ ¿©À¯°ø°£
+    // ìœˆë„ìš°ì˜ ë„ˆë¹„ ê³„ì‚°, 20ì€ ì¢Œìš° 10í”½ì…€ì˜ ì—¬ìœ ê³µê°„
     iWindowWidth = iMaxNameLength * FONT_ENGLISHWIDTH + 20;
     
-    // À©µµ¿ìÀÇ À§Ä¡´Â ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ÆĞ³ÎÀÇ ¹öÆ° ¾Æ·¡·Î ¼³Á¤
+    // ìœˆë„ìš°ì˜ ìœ„ì¹˜ëŠ” ì• í”Œë¦¬ì¼€ì´ì…˜ íŒ¨ë„ì˜ ë²„íŠ¼ ì•„ë˜ë¡œ ì„¤ì •
     iX = gs_stApplicationPanelData.stButtonArea.iX1;
     iY = gs_stApplicationPanelData.stButtonArea.iY2 + 5;
     
-    // ¾ÆÀÌÅÛÀÇ °³¼ö¿Í ÃÖ´ë ±æÀÌ·Î ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ¸®½ºÆ® À©µµ¿ì¸¦ »ı¼º
-    // ¾ÖÇÃ¸®ÄÉÀÌ¼Ç À©µµ¿ì´Â À©µµ¿ì Á¦¸ñ Ç¥½ÃÁÙÀÌ ÇÊ¿ä ¾øÀ¸¹Ç·Î ¼Ó¼ºÀº NULL·Î Àü´Ş
+    // ì•„ì´í…œì˜ ê°œìˆ˜ì™€ ìµœëŒ€ ê¸¸ì´ë¡œ ì• í”Œë¦¬ì¼€ì´ì…˜ ë¦¬ìŠ¤íŠ¸ ìœˆë„ìš°ë¥¼ ìƒì„±
+    // ì• í”Œë¦¬ì¼€ì´ì…˜ ìœˆë„ìš°ëŠ” ìœˆë„ìš° ì œëª© í‘œì‹œì¤„ì´ í•„ìš” ì—†ìœ¼ë¯€ë¡œ ì†ì„±ì€ NULLë¡œ ì „ë‹¬
     qwWindowID = kCreateWindow( iX, iY, iWindowWidth, 
         iCount * APPLICATIONPANEL_LISTITEMHEIGHT + 1, NULL, 
         APPLICATIONPANEL_LISTTITLE );
-    // À©µµ¿ì¸¦ »ı¼ºÇÏÁö ¸øÇßÀ¸¸é ½ÇÆĞ
+    // ìœˆë„ìš°ë¥¼ ìƒì„±í•˜ì§€ ëª»í–ˆìœ¼ë©´ ì‹¤íŒ¨
     if( qwWindowID == WINDOW_INVALIDID )
     {
         return FALSE;
     }
     
-    // ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ÆĞ³Î ÀÚ·á±¸Á¶¿¡ À©µµ¿ìÀÇ ³Êºñ¸¦ ÀúÀå
+    // ì• í”Œë¦¬ì¼€ì´ì…˜ íŒ¨ë„ ìë£Œêµ¬ì¡°ì— ìœˆë„ìš°ì˜ ë„ˆë¹„ë¥¼ ì €ì¥
     gs_stApplicationPanelData.iApplicationListWidth = iWindowWidth;
     
-    // ½ÃÀÛÇÒ ¶§ ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ¸®½ºÆ®´Â ¼û°Ü³õÀ½
+    // ì‹œì‘í•  ë•Œ ì• í”Œë¦¬ì¼€ì´ì…˜ ë¦¬ìŠ¤íŠ¸ëŠ” ìˆ¨ê²¨ë†“ìŒ
     gs_stApplicationPanelData.bApplicationWindowVisible = FALSE;
 
-    // ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ÆĞ³Î ÀÚ·á±¸Á¶¿¡ À©µµ¿ì ID¸¦ ÀúÀåÇÏ°í ÀÌÀü¿¡ ¸¶¿ì½º°¡ À§Ä¡ÇÑ ¾ÆÀÌÅÛÀº 
-    // ¾ø´Â °ÍÀ¸·Î ¼³Á¤
+    // ì• í”Œë¦¬ì¼€ì´ì…˜ íŒ¨ë„ ìë£Œêµ¬ì¡°ì— ìœˆë„ìš° IDë¥¼ ì €ì¥í•˜ê³  ì´ì „ì— ë§ˆìš°ìŠ¤ê°€ ìœ„ì¹˜í•œ ì•„ì´í…œì€ 
+    // ì—†ëŠ” ê²ƒìœ¼ë¡œ ì„¤ì •
     gs_stApplicationPanelData.qwApplicationListID = qwWindowID;
     gs_stApplicationPanelData.iPreviousMouseOverIndex = -1;
 
-    // À©µµ¿ì ³»ºÎ¿¡ ÀÀ¿ëÇÁ·Î±×·¥ ÀÌ¸§°ú ¿µ¿ªÀ» Ç¥½Ã
+    // ìœˆë„ìš° ë‚´ë¶€ì— ì‘ìš©í”„ë¡œê·¸ë¨ ì´ë¦„ê³¼ ì˜ì—­ì„ í‘œì‹œ
     for( i = 0 ; i < iCount ; i++ )
     {
         kDrawApplicationListItem( i, FALSE );
@@ -355,7 +355,7 @@ static BOOL kCreateApplicationListWindow( void )
 }
 
 /**
- *  ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ¸®½ºÆ® À©µµ¿ì¿¡ GUI ÅÂ½ºÅ© ¾ÆÀÌÅÛÀ» Ç¥½Ã
+ *  ì• í”Œë¦¬ì¼€ì´ì…˜ ë¦¬ìŠ¤íŠ¸ ìœˆë„ìš°ì— GUI íƒœìŠ¤í¬ ì•„ì´í…œì„ í‘œì‹œ
  */
 static void kDrawApplicationListItem( int iIndex, BOOL bMouseOver )
 {
@@ -364,11 +364,11 @@ static void kDrawApplicationListItem( int iIndex, BOOL bMouseOver )
     COLOR stColor;
     RECT stItemArea;
     
-    // ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ¸®½ºÆ® À©µµ¿ìÀÇ ID¿Í ³Êºñ
+    // ì• í”Œë¦¬ì¼€ì´ì…˜ ë¦¬ìŠ¤íŠ¸ ìœˆë„ìš°ì˜ IDì™€ ë„ˆë¹„
     qwWindowID = gs_stApplicationPanelData.qwApplicationListID;
     iWindowWidth = gs_stApplicationPanelData.iApplicationListWidth;
     
-    // ¸¶¿ì½º°¡ À§¿¡ ÀÖ´ÂÁö ¿©ºÎ¿¡ µû¶ó ³»ºÎ »öÀ» ´Ù¸£°Ô Ç¥½Ã
+    // ë§ˆìš°ìŠ¤ê°€ ìœ„ì— ìˆëŠ”ì§€ ì—¬ë¶€ì— ë”°ë¼ ë‚´ë¶€ ìƒ‰ì„ ë‹¤ë¥´ê²Œ í‘œì‹œ
     if( bMouseOver == TRUE )
     {
         stColor = APPLICATIONPANEL_COLOR_ACTIVE;
@@ -378,29 +378,29 @@ static void kDrawApplicationListItem( int iIndex, BOOL bMouseOver )
         stColor = APPLICATIONPANEL_COLOR_BACKGROUND;        
     }
     
-    // ¸®½ºÆ® ¾ÆÀÌÅÛ¿¡ Å×µÎ¸®¸¦ Ç¥½Ã
+    // ë¦¬ìŠ¤íŠ¸ ì•„ì´í…œì— í…Œë‘ë¦¬ë¥¼ í‘œì‹œ
     kSetRectangleData( 0, iIndex * APPLICATIONPANEL_LISTITEMHEIGHT,
         iWindowWidth - 1, ( iIndex + 1 ) * APPLICATIONPANEL_LISTITEMHEIGHT,
         &stItemArea );
     kDrawRect( qwWindowID, stItemArea.iX1, stItemArea.iY1, stItemArea.iX2, 
             stItemArea.iY2, APPLICATIONPANEL_COLOR_INNERLINE, FALSE );
     
-    // ¸®½ºÆ® ¾ÆÀÌÅÛÀÇ ³»ºÎ¸¦ Ã¤¿ò
+    // ë¦¬ìŠ¤íŠ¸ ì•„ì´í…œì˜ ë‚´ë¶€ë¥¼ ì±„ì›€
     kDrawRect( qwWindowID, stItemArea.iX1 + 1, stItemArea.iY1 + 1, 
                stItemArea.iX2 - 1, stItemArea.iY2 - 1, stColor, TRUE );
     
-    // GUI ÅÂ½ºÅ©ÀÇ ÀÌ¸§À» Ç¥½Ã
+    // GUI íƒœìŠ¤í¬ì˜ ì´ë¦„ì„ í‘œì‹œ
     kDrawText( qwWindowID, stItemArea.iX1 + 10, stItemArea.iY1 + 2, 
             RGB( 255, 255, 255 ), stColor,
             gs_vstApplicationTable[ iIndex ].pcApplicationName,
             kStrLen( gs_vstApplicationTable[ iIndex ].pcApplicationName ) );    
     
-    // ¾÷µ¥ÀÌÆ®µÈ ¾ÆÀÌÅÛÀ» È­¸é¿¡ ¾÷µ¥ÀÌÆ®
+    // ì—…ë°ì´íŠ¸ëœ ì•„ì´í…œì„ í™”ë©´ì— ì—…ë°ì´íŠ¸
     kUpdateScreenByWindowArea( qwWindowID, &stItemArea );
 }
 
 /**
- *  ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ¸®½ºÆ®¿¡ ¼ö½ÅµÈ ÀÌº¥Æ®¸¦ Ã³¸®
+ *  ì• í”Œë¦¬ì¼€ì´ì…˜ ë¦¬ìŠ¤íŠ¸ì— ìˆ˜ì‹ ëœ ì´ë²¤íŠ¸ë¥¼ ì²˜ë¦¬
  */
 static BOOL kProcessApplicationListWindowEvent( void )
 {
@@ -412,15 +412,15 @@ static BOOL kProcessApplicationListWindowEvent( void )
     int iMouseOverIndex;
     EVENT stEvent;
     
-    // À©µµ¿ì ID ÀúÀå
+    // ìœˆë„ìš° ID ì €ì¥
     qwApplicationPanelID = gs_stApplicationPanelData.qwApplicationPanelID;
     qwApplicationListID = gs_stApplicationPanelData.qwApplicationListID;
     bProcessResult = FALSE;
     
-    // ÀÌº¥Æ®¸¦ Ã³¸®ÇÏ´Â ·çÇÁ
+    // ì´ë²¤íŠ¸ë¥¼ ì²˜ë¦¬í•˜ëŠ” ë£¨í”„
     while( 1 )
     {
-        // ÀÌº¥Æ® Å¥¿¡¼­ ÀÌº¥Æ®¸¦ ¼ö½Å
+        // ì´ë²¤íŠ¸ íì—ì„œ ì´ë²¤íŠ¸ë¥¼ ìˆ˜ì‹ 
         if( kReceiveEventFromWindowQueue( qwApplicationListID, &stReceivedEvent ) 
                 == FALSE )
         {
@@ -429,54 +429,54 @@ static BOOL kProcessApplicationListWindowEvent( void )
 
         bProcessResult = TRUE;
         
-        // ¼ö½ÅµÈ ÀÌº¥Æ®¸¦ Å¸ÀÔ¿¡ µû¶ó ³ª´©¾î Ã³¸®
+        // ìˆ˜ì‹ ëœ ì´ë²¤íŠ¸ë¥¼ íƒ€ì…ì— ë”°ë¼ ë‚˜ëˆ„ì–´ ì²˜ë¦¬
         switch( stReceivedEvent.qwType )
         {
-            // ¸¶¿ì½º ÀÌµ¿ Ã³¸®
+            // ë§ˆìš°ìŠ¤ ì´ë™ ì²˜ë¦¬
         case EVENT_MOUSE_MOVE:
             pstMouseEvent = &( stReceivedEvent.stMouseEvent );
 
-            // ¸¶¿ì½º°¡ À§Ä¡ÇÑ ¾ÆÀÌÅÛ °è»ê
+            // ë§ˆìš°ìŠ¤ê°€ ìœ„ì¹˜í•œ ì•„ì´í…œ ê³„ì‚°
             iMouseOverIndex = kGetMouseOverItemIndex( pstMouseEvent->stPoint.iY );
             
-            // ÇöÀç ¸¶¿ì½º°¡ À§Ä¡ÇÑ ¾ÆÀÌÅÛ°ú ÀÌÀü¿¡ À§Ä¡ÇÑ ¾ÆÀÌÅÛÀÌ ´Ù¸¦ ¶§¸¸ ¼öÇà
+            // í˜„ì¬ ë§ˆìš°ìŠ¤ê°€ ìœ„ì¹˜í•œ ì•„ì´í…œê³¼ ì´ì „ì— ìœ„ì¹˜í•œ ì•„ì´í…œì´ ë‹¤ë¥¼ ë•Œë§Œ ìˆ˜í–‰
             if( ( iMouseOverIndex == gs_stApplicationPanelData.iPreviousMouseOverIndex ) ||
                 ( iMouseOverIndex == -1 ) )
             {
                 break;
             }
             
-            // ÀÌÀü¿¡ ¸¶¿ì½º°¡ À§Ä¡ÇÑ ¾ÆÀÌÅÛÀº ±âº» »óÅÂ·Î Ç¥½Ã
+            // ì´ì „ì— ë§ˆìš°ìŠ¤ê°€ ìœ„ì¹˜í•œ ì•„ì´í…œì€ ê¸°ë³¸ ìƒíƒœë¡œ í‘œì‹œ
             if( gs_stApplicationPanelData.iPreviousMouseOverIndex != -1 )
             {
                 kDrawApplicationListItem( 
                     gs_stApplicationPanelData.iPreviousMouseOverIndex, FALSE );
             }
             
-            // Áö±İ ¸¶¿ì½º Ä¿¼­°¡ ÀÖ´Â À§Ä¡´Â ¸¶¿ì½º°¡ À§Ä¡ÇÑ »óÅÂ·Î Ç¥½Ã
+            // ì§€ê¸ˆ ë§ˆìš°ìŠ¤ ì»¤ì„œê°€ ìˆëŠ” ìœ„ì¹˜ëŠ” ë§ˆìš°ìŠ¤ê°€ ìœ„ì¹˜í•œ ìƒíƒœë¡œ í‘œì‹œ
             kDrawApplicationListItem( iMouseOverIndex, TRUE );
             
-            // ¸¶¿ì½º°¡ À§Ä¡ÇÑ ¾ÆÀÌÅÛÀ» ÀúÀåÇØµÒ
+            // ë§ˆìš°ìŠ¤ê°€ ìœ„ì¹˜í•œ ì•„ì´í…œì„ ì €ì¥í•´ë‘ 
             gs_stApplicationPanelData.iPreviousMouseOverIndex = iMouseOverIndex;            
             break;
             
-            // ¸¶¿ì½º ¿ŞÂÊ ¹öÆ° Ã³¸®
+            // ë§ˆìš°ìŠ¤ ì™¼ìª½ ë²„íŠ¼ ì²˜ë¦¬
         case EVENT_MOUSE_LBUTTONDOWN:
             pstMouseEvent = &( stReceivedEvent.stMouseEvent );
             
-            // Áö±İ ¸¶¿ì½º Ä¿¼­°¡ ÀÖ´Â À§Ä¡´Â ¼±ÅÃµÈ °ÍÀ¸·Î Ç¥½Ã
+            // ì§€ê¸ˆ ë§ˆìš°ìŠ¤ ì»¤ì„œê°€ ìˆëŠ” ìœ„ì¹˜ëŠ” ì„ íƒëœ ê²ƒìœ¼ë¡œ í‘œì‹œ
             iMouseOverIndex = kGetMouseOverItemIndex( pstMouseEvent->stPoint.iY );
             if( iMouseOverIndex == -1 )
             {
                 break;
             }
 
-            // ¼±ÅÃµÈ ¾ÆÀÌÅÛÀ» ½ÇÇà
+            // ì„ íƒëœ ì•„ì´í…œì„ ì‹¤í–‰
             kCreateTask( TASK_FLAGS_LOW | TASK_FLAGS_THREAD, 0, 0, 
                     ( QWORD ) gs_vstApplicationTable[ iMouseOverIndex ].pvEntryPoint, 
                     TASK_LOADBALANCINGID );            
 
-            // ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ÆĞ³Î¿¡ ¸¶¿ì½º ¿ŞÂÊ ¹öÆ°ÀÌ ´­·È´Ù´Â ¸Ş½ÃÁö¸¦ Àü¼ÛÇÏ¿© Ã³¸®
+            // ì• í”Œë¦¬ì¼€ì´ì…˜ íŒ¨ë„ì— ë§ˆìš°ìŠ¤ ì™¼ìª½ ë²„íŠ¼ì´ ëˆŒë ¸ë‹¤ëŠ” ë©”ì‹œì§€ë¥¼ ì „ì†¡í•˜ì—¬ ì²˜ë¦¬
             kSetMouseEvent( qwApplicationPanelID, EVENT_MOUSE_LBUTTONDOWN,
                     gs_stApplicationPanelData.stButtonArea.iX1 + 1, 
                     gs_stApplicationPanelData.stButtonArea.iY1 + 1, 
@@ -484,7 +484,7 @@ static BOOL kProcessApplicationListWindowEvent( void )
             kSendEventToWindow( qwApplicationPanelID, &stEvent );            
             break;
             
-            // ±× ¿Ü ÀÌº¥Æ® Ã³¸®
+            // ê·¸ ì™¸ ì´ë²¤íŠ¸ ì²˜ë¦¬
         default:
             break;
         }
@@ -494,19 +494,19 @@ static BOOL kProcessApplicationListWindowEvent( void )
 }
 
 /**
- *  ¸¶¿ì½º Ä¿¼­°¡ À§Ä¡ÇÑ ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ¸®½ºÆ® À©µµ¿ìÀÇ ¾ÆÀÌÅÛ ÀÎµ¦½º¸¦ ¹İÈ¯
+ *  ë§ˆìš°ìŠ¤ ì»¤ì„œê°€ ìœ„ì¹˜í•œ ì• í”Œë¦¬ì¼€ì´ì…˜ ë¦¬ìŠ¤íŠ¸ ìœˆë„ìš°ì˜ ì•„ì´í…œ ì¸ë±ìŠ¤ë¥¼ ë°˜í™˜
  */
 static int kGetMouseOverItemIndex( int iMouseY )
 {
     int iCount;
     int iItemIndex;
     
-    // ¾ÖÇÃ¸®ÄÉÀÌ¼Ç Å×ÀÌºíÀÇ ÃÑ ¾ÆÀÌÅÛ ¼ö
+    // ì• í”Œë¦¬ì¼€ì´ì…˜ í…Œì´ë¸”ì˜ ì´ ì•„ì´í…œ ìˆ˜
     iCount = sizeof( gs_vstApplicationTable ) / sizeof( APPLICATIONENTRY );
     
-    // ¸¶¿ì½º ÁÂÇ¥·Î ¾ÆÀÌÅÛÀÇ ÀÎµ¦½º¸¦ °è»ê
+    // ë§ˆìš°ìŠ¤ ì¢Œí‘œë¡œ ì•„ì´í…œì˜ ì¸ë±ìŠ¤ë¥¼ ê³„ì‚°
     iItemIndex = iMouseY / APPLICATIONPANEL_LISTITEMHEIGHT;
-    // ¹üÀ§¸¦ ¹ş¾î³ª¸é -1À» ¹İÈ¯
+    // ë²”ìœ„ë¥¼ ë²—ì–´ë‚˜ë©´ -1ì„ ë°˜í™˜
     if( ( iItemIndex < 0 ) || ( iItemIndex >= iCount ) )
     {
         return -1;

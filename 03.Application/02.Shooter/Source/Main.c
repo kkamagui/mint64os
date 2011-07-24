@@ -3,17 +3,17 @@
  *  date    2010/02/20
  *  author  kkamagui 
  *          Copyright(c)2008 All rights reserved by kkamagui
- *  brief   C ¾ð¾î·Î ÀÛ¼ºµÈ ÀÀ¿ëÇÁ·Î±×·¥ÀÇ ¿£Æ®¸® Æ÷ÀÎÆ® ÆÄÀÏ
+ *  brief   C ì–¸ì–´ë¡œ ìž‘ì„±ëœ ì‘ìš©í”„ë¡œê·¸ëž¨ì˜ ì—”íŠ¸ë¦¬ í¬ì¸íŠ¸ íŒŒì¼
  */
 
 #include "MINTOSLibrary.h"
 #include "Main.h"
 
-// °ÔÀÓ °ü·Ã Á¤º¸¸¦ ÀúÀåÇÏ´Â ÀÚ·á±¸Á¶
+// ê²Œìž„ ê´€ë ¨ ì •ë³´ë¥¼ ì €ìž¥í•˜ëŠ” ìžë£Œêµ¬ì¡°
 GAMEINFO g_stGameInfo = { 0, };
 
 /**
- *  ÀÀ¿ëÇÁ·Î±×·¥ÀÇ C ¾ð¾î ¿£Æ®¸® Æ÷ÀÎÆ®
+ *  ì‘ìš©í”„ë¡œê·¸ëž¨ì˜ C ì–¸ì–´ ì—”íŠ¸ë¦¬ í¬ì¸íŠ¸
  */
 int Main( char* pcArgument )
 {
@@ -27,7 +27,7 @@ int Main( char* pcArgument )
     int iY;
     
     //--------------------------------------------------------------------------
-    // À©µµ¿ì¸¦ È­¸é °¡¿îµ¥¿¡ °¡·Îx¼¼·Î 250x350 Å©±â·Î »ý¼º
+    // ìœˆë„ìš°ë¥¼ í™”ë©´ ê°€ìš´ë°ì— ê°€ë¡œxì„¸ë¡œ 250x350 í¬ê¸°ë¡œ ìƒì„±
     //--------------------------------------------------------------------------
     GetScreenArea( &stScreenArea );
     iX = ( GetRectangleWidth( &stScreenArea ) - WINDOW_WIDTH ) / 2;
@@ -41,80 +41,80 @@ int Main( char* pcArgument )
     }
 
     //--------------------------------------------------------------------------
-    // °ÔÀÓ¿¡ °ü·ÃµÈ Á¤º¸¸¦ ÃÊ±âÈ­ÇÏ°í »ç¿ëÇÒ ¹öÆÛ¸¦ ÇÒ´ç
+    // ê²Œìž„ì— ê´€ë ¨ëœ ì •ë³´ë¥¼ ì´ˆê¸°í™”í•˜ê³  ì‚¬ìš©í•  ë²„í¼ë¥¼ í• ë‹¹
     //--------------------------------------------------------------------------
-    // ¸¶¿ì½º ÁÂÇ¥ ¼³Á¤
+    // ë§ˆìš°ìŠ¤ ì¢Œí‘œ ì„¤ì •
     stMouseXY.iX = WINDOW_WIDTH / 2;
     stMouseXY.iY = WINDOW_HEIGHT / 2;
 
-    // °ÔÀÓ Á¤º¸¸¦ ÃÊ±âÈ­
+    // ê²Œìž„ ì •ë³´ë¥¼ ì´ˆê¸°í™”
     if( Initialize() == FALSE )
     {
-        // ÃÊ±âÈ­¿¡ ½ÇÆÐÇÏ¸é À©µµ¿ì¸¦ »èÁ¦
+        // ì´ˆê¸°í™”ì— ì‹¤íŒ¨í•˜ë©´ ìœˆë„ìš°ë¥¼ ì‚­ì œ
         DeleteWindow( qwWindowID );
         return -1;
     }
 
-    // ³­¼ö ÃÊ±ê°ª(Random Seed) ¼³Á¤
+    // ë‚œìˆ˜ ì´ˆê¹ƒê°’(Random Seed) ì„¤ì •
     srand( GetTickCount() );
 
     //--------------------------------------------------------------------------
-    // °ÔÀÓ Á¤º¸¿Í °ÔÀÓ ¿µ¿ªÀ» Ãâ·ÂÇÏ°í °ÔÀÓ ½ÃÀÛ ´ë±â ¸Þ½ÃÁö¸¦ Ç¥½Ã
+    // ê²Œìž„ ì •ë³´ì™€ ê²Œìž„ ì˜ì—­ì„ ì¶œë ¥í•˜ê³  ê²Œìž„ ì‹œìž‘ ëŒ€ê¸° ë©”ì‹œì§€ë¥¼ í‘œì‹œ
     //--------------------------------------------------------------------------
     DrawInformation( qwWindowID );
     DrawGameArea( qwWindowID, &stMouseXY );
     DrawText( qwWindowID, 5, 150, RGB( 255, 255, 255 ), RGB( 0, 0, 0 ),
             pcStartMessage, strlen( pcStartMessage ) );
 
-    // Ãâ·ÂµÈ ¸Þ½ÃÁö¸¦ È­¸é¿¡ Ç¥½Ã
+    // ì¶œë ¥ëœ ë©”ì‹œì§€ë¥¼ í™”ë©´ì— í‘œì‹œ
     ShowWindow( qwWindowID, TRUE );
 
     //--------------------------------------------------------------------------
-    // GUI ÅÂ½ºÅ©ÀÇ ÀÌº¥Æ®¿Í °ÔÀÓ ·çÇÁ¸¦ Ã³¸®ÇÏ´Â ºÎºÐ
+    // GUI íƒœìŠ¤í¬ì˜ ì´ë²¤íŠ¸ì™€ ê²Œìž„ ë£¨í”„ë¥¼ ì²˜ë¦¬í•˜ëŠ” ë¶€ë¶„
     //--------------------------------------------------------------------------
     qwLastTickCount = GetTickCount();
     while( 1 )
     {
         //----------------------------------------------------------------------
-        // ÀÌº¥Æ® Ã³¸® ºÎºÐ
+        // ì´ë²¤íŠ¸ ì²˜ë¦¬ ë¶€ë¶„
         //----------------------------------------------------------------------
-        // ÀÌº¥Æ® Å¥¿¡¼­ ÀÌº¥Æ®¸¦ ¼ö½Å
+        // ì´ë²¤íŠ¸ íì—ì„œ ì´ë²¤íŠ¸ë¥¼ ìˆ˜ì‹ 
         if( ReceiveEventFromWindowQueue( qwWindowID, &stEvent ) == TRUE )
         {
-            // ¼ö½ÅµÈ ÀÌº¥Æ®¸¦ Å¸ÀÔ¿¡ µû¶ó ³ª´©¾î Ã³¸®
+            // ìˆ˜ì‹ ëœ ì´ë²¤íŠ¸ë¥¼ íƒ€ìž…ì— ë”°ë¼ ë‚˜ëˆ„ì–´ ì²˜ë¦¬
             switch( stEvent.qwType )
             {
-                // ¸¶¿ì½º Å¬¸¯ Ã³¸®
+                // ë§ˆìš°ìŠ¤ í´ë¦­ ì²˜ë¦¬
             case EVENT_MOUSE_LBUTTONDOWN:
-                // °ÔÀÓ ½ÃÀÛÀ» ¿øÇÏ´Â Å¬¸¯ÀÌ¸é °ÔÀÓÀ» ½ÃÀÛ
+                // ê²Œìž„ ì‹œìž‘ì„ ì›í•˜ëŠ” í´ë¦­ì´ë©´ ê²Œìž„ì„ ì‹œìž‘
                 if( g_stGameInfo.bGameStart == FALSE )
                 {
-                    // °ÔÀÓ Á¤º¸¸¦ ÃÊ±âÈ­
+                    // ê²Œìž„ ì •ë³´ë¥¼ ì´ˆê¸°í™”
                     Initialize();
 
-                    // °ÔÀÓ ½ÃÀÛ ÇÃ·¡±×¸¦ ¼³Á¤
+                    // ê²Œìž„ ì‹œìž‘ í”Œëž˜ê·¸ë¥¼ ì„¤ì •
                     g_stGameInfo.bGameStart = TRUE;
                     break;
                 }
 
-                // ¸¶¿ì½º°¡ Å¬¸¯µÈ °÷¿¡ ÀÖ´Â ¹°¹æ¿ïÀ» »èÁ¦
+                // ë§ˆìš°ìŠ¤ê°€ í´ë¦­ëœ ê³³ì— ìžˆëŠ” ë¬¼ë°©ìš¸ì„ ì‚­ì œ
                 DeleteBubbleUnderMouse( &( stEvent.stMouseEvent.stPoint ) );
 
-                // ¸¶¿ì½º À§Ä¡ ÀúÀå
+                // ë§ˆìš°ìŠ¤ ìœ„ì¹˜ ì €ìž¥
                 memcpy( &stMouseXY, &( stEvent.stMouseEvent.stPoint ),
                         sizeof( stMouseXY ) );
                 break;
 
-                // ¸¶¿ì½º ÀÌµ¿  Á¤º¸
+                // ë§ˆìš°ìŠ¤ ì´ë™  ì •ë³´
             case EVENT_MOUSE_MOVE:
-                // ¸¶¿ì½º À§Ä¡ ÀúÀå
+                // ë§ˆìš°ìŠ¤ ìœ„ì¹˜ ì €ìž¥
                 memcpy( &stMouseXY, &( stEvent.stMouseEvent.stPoint ),
                         sizeof( stMouseXY ) );
                 break;
 
-                // À©µµ¿ì ´Ý±â ¹öÆ° Ã³¸®
+                // ìœˆë„ìš° ë‹«ê¸° ë²„íŠ¼ ì²˜ë¦¬
             case EVENT_WINDOW_CLOSE:
-                // À©µµ¿ì¸¦ »èÁ¦ÇÏ°í ¸Þ¸ð¸®¸¦ ÇØÁ¦
+                // ìœˆë„ìš°ë¥¼ ì‚­ì œí•˜ê³  ë©”ëª¨ë¦¬ë¥¼ í•´ì œ
                 DeleteWindow( qwWindowID );
                 free( g_stGameInfo.pstBubbleBuffer );
                 return 0;
@@ -123,42 +123,42 @@ int Main( char* pcArgument )
         }
 
         //----------------------------------------------------------------------
-        // °ÔÀÓ ·çÇÁ Ã³¸® ºÎºÐ
+        // ê²Œìž„ ë£¨í”„ ì²˜ë¦¬ ë¶€ë¶„
         //----------------------------------------------------------------------
-        // °ÔÀÓÀÌ ½ÃÀÛ µÇ¾ú´Ù¸é 50ms¸¶´Ù »ý¼ºµÈ ¹°¹æ¿ïÀ» ¾Æ·¡·Î ÀÌµ¿
+        // ê²Œìž„ì´ ì‹œìž‘ ë˜ì—ˆë‹¤ë©´ 50msë§ˆë‹¤ ìƒì„±ëœ ë¬¼ë°©ìš¸ì„ ì•„ëž˜ë¡œ ì´ë™
         if( ( g_stGameInfo.bGameStart == TRUE ) &&
             ( ( GetTickCount() - qwLastTickCount ) > 50 ) )
         {
             qwLastTickCount = GetTickCount();
 
-            // ¹°¹æ¿ïÀ» »ý¼º
+            // ë¬¼ë°©ìš¸ì„ ìƒì„±
             if( ( rand() % 7 ) == 1 )
             {
                 CreateBubble();
             }
 
-            // ¹°¹æ¿ïÀ» ÀÌµ¿
+            // ë¬¼ë°©ìš¸ì„ ì´ë™
             MoveBubble();
 
-            // °ÔÀÓ ¿µ¿ªÀ» Ç¥½Ã
+            // ê²Œìž„ ì˜ì—­ì„ í‘œì‹œ
             DrawGameArea( qwWindowID, &stMouseXY );
 
-            // °ÔÀÓ Á¤º¸¸¦ Ç¥½Ã
+            // ê²Œìž„ ì •ë³´ë¥¼ í‘œì‹œ
             DrawInformation( qwWindowID );
 
-            // ÇÃ·¹ÀÌ¾îÀÇ »ý¸íÀÌ 0ÀÌ¶ó¸é °ÔÀÓ Á¾·á
+            // í”Œë ˆì´ì–´ì˜ ìƒëª…ì´ 0ì´ë¼ë©´ ê²Œìž„ ì¢…ë£Œ
             if( g_stGameInfo.iLife <= 0 )
             {
                 g_stGameInfo.bGameStart = FALSE;
 
-                // °ÔÀÓ Á¾·á ¸Þ½ÃÁö¸¦ Ãâ·Â
+                // ê²Œìž„ ì¢…ë£Œ ë©”ì‹œì§€ë¥¼ ì¶œë ¥
                 DrawText( qwWindowID, 80, 130, RGB( 255, 255, 255 ), RGB( 0, 0, 0 ),
                         "Game Over~!!!", 13 );
                 DrawText( qwWindowID, 5, 150, RGB( 255, 255, 255 ), RGB( 0, 0, 0 ),
                         pcStartMessage, strlen( pcStartMessage ) );
             }
 
-            // º¯°æµÈ À©µµ¿ìÀÇ ³»ºÎ¸¦ È­¸é¿¡ ¾÷µ¥ÀÌÆ®
+            // ë³€ê²½ëœ ìœˆë„ìš°ì˜ ë‚´ë¶€ë¥¼ í™”ë©´ì— ì—…ë°ì´íŠ¸
             ShowWindow( qwWindowID, TRUE );
         }
         else
@@ -171,11 +171,11 @@ int Main( char* pcArgument )
 }
 
 /**
- *  °ÔÀÓ¿¡ °ü·ÃµÈ Á¤º¸¸¦ ÃÊ±âÈ­
+ *  ê²Œìž„ì— ê´€ë ¨ëœ ì •ë³´ë¥¼ ì´ˆê¸°í™”
  */
 BOOL Initialize( void )
 {
-    // ¹°¹æ¿ïÀÇ ÃÖ´ë °³¼ö¸¸Å­ ¸Þ¸ð¸®¸¦ ÇÒ´ç
+    // ë¬¼ë°©ìš¸ì˜ ìµœëŒ€ ê°œìˆ˜ë§Œí¼ ë©”ëª¨ë¦¬ë¥¼ í• ë‹¹
     if( g_stGameInfo.pstBubbleBuffer == NULL )
     {
         g_stGameInfo.pstBubbleBuffer = malloc( sizeof( BUBBLE ) * MAXBUBBLECOUNT );
@@ -186,12 +186,12 @@ BOOL Initialize( void )
         }
     }
 
-    // ¹°¹æ¿ïÀÇ Á¤º¸¸¦ ÃÊ±âÈ­
+    // ë¬¼ë°©ìš¸ì˜ ì •ë³´ë¥¼ ì´ˆê¸°í™”
     memset( g_stGameInfo.pstBubbleBuffer, 0, sizeof( BUBBLE ) *
             MAXBUBBLECOUNT );
     g_stGameInfo.iAliveBubbleCount = 0;
 
-    // °ÔÀÓÀÌ ½ÃÀÛµÇ¾ú´Ù´Â Á¤º¸¿Í Á¡¼ö, ±×¸®°í »ý¸í ¼³Á¤
+    // ê²Œìž„ì´ ì‹œìž‘ë˜ì—ˆë‹¤ëŠ” ì •ë³´ì™€ ì ìˆ˜, ê·¸ë¦¬ê³  ìƒëª… ì„¤ì •
     g_stGameInfo.bGameStart = FALSE;
     g_stGameInfo.qwScore = 0;
     g_stGameInfo.iLife = MAXLIFE;
@@ -200,40 +200,40 @@ BOOL Initialize( void )
 }
 
 /**
- *  ¹°¹æ¿ïÀ» »ý¼º
+ *  ë¬¼ë°©ìš¸ì„ ìƒì„±
  */
 BOOL CreateBubble( void )
 {
     BUBBLE* pstTarget;
     int i;
 
-    // ¹°¹æ¿ïÀÇ ÃÖ´ë °³¼ö¿Í »ì¾ÆÀÖ´Â ¹°¹æ¿ïÀÇ °³¼ö¸¦ ºñ±³ÇÏ¿© »ý¼ºÇÒÁö ¿©ºÎ¸¦ °áÁ¤
+    // ë¬¼ë°©ìš¸ì˜ ìµœëŒ€ ê°œìˆ˜ì™€ ì‚´ì•„ìžˆëŠ” ë¬¼ë°©ìš¸ì˜ ê°œìˆ˜ë¥¼ ë¹„êµí•˜ì—¬ ìƒì„±í• ì§€ ì—¬ë¶€ë¥¼ ê²°ì •
     if( g_stGameInfo.iAliveBubbleCount >= MAXBUBBLECOUNT )
     {
         return FALSE;
     }
 
-    // ºó ¹°¹æ¿ï ÀÚ·á±¸Á¶¸¦ °Ë»ö
+    // ë¹ˆ ë¬¼ë°©ìš¸ ìžë£Œêµ¬ì¡°ë¥¼ ê²€ìƒ‰
     for( i = 0 ; i < MAXBUBBLECOUNT ; i++ )
     {
-        // ¹°¹æ¿ïÀÌ »ì¾ÆÀÖÁö ¾ÊÀ¸¸é ´Ù½Ã ÇÒ´çÇØ¼­ »ç¿ë
+        // ë¬¼ë°©ìš¸ì´ ì‚´ì•„ìžˆì§€ ì•Šìœ¼ë©´ ë‹¤ì‹œ í• ë‹¹í•´ì„œ ì‚¬ìš©
         if( g_stGameInfo.pstBubbleBuffer[ i ].bAlive == FALSE )
         {
-            // ¼±ÅÃµÈ ¹°¹æ¿ï ÀÚ·á±¸Á¶
+            // ì„ íƒëœ ë¬¼ë°©ìš¸ ìžë£Œêµ¬ì¡°
             pstTarget = &( g_stGameInfo.pstBubbleBuffer[ i ] );
 
-            // ¹°¹æ¿ïÀÌ »ì¾Æ ÀÖ´Ù°í ¼³Á¤ÇÏ°í ¹°¹æ¿ïÀÇ ÀÌµ¿ ¼Óµµ¸¦ ÃÊ±âÈ­
+            // ë¬¼ë°©ìš¸ì´ ì‚´ì•„ ìžˆë‹¤ê³  ì„¤ì •í•˜ê³  ë¬¼ë°©ìš¸ì˜ ì´ë™ ì†ë„ë¥¼ ì´ˆê¸°í™”
             pstTarget->bAlive = TRUE;
             pstTarget->qwSpeed = ( rand() % 8 ) + DEFAULTSPEED;
 
-            // XÁÂÇ¥¿Í YÁÂÇ¥´Â ¹°¹æ¿ïÀÌ °ÔÀÓ ¿µ¿ª ³»ºÎ¿¡ À§Ä¡ÇÏµµ·Ï ¼³Á¤
+            // Xì¢Œí‘œì™€ Yì¢Œí‘œëŠ” ë¬¼ë°©ìš¸ì´ ê²Œìž„ ì˜ì—­ ë‚´ë¶€ì— ìœ„ì¹˜í•˜ë„ë¡ ì„¤ì •
             pstTarget->qwX = rand() % ( WINDOW_WIDTH - 2 * RADIUS ) + RADIUS;
             pstTarget->qwY = INFORMATION_HEIGHT + WINDOW_TITLEBAR_HEIGHT + RADIUS + 1;
 
-            // ¹°¹æ¿ïÀÇ »ö±ò ¼³Á¤
+            // ë¬¼ë°©ìš¸ì˜ ìƒ‰ê¹” ì„¤ì •
             pstTarget->stColor = RGB( rand() % 256, rand() % 256, rand() % 256 );
 
-            // »ì¾ÆÀÖ´Â ¹°¹æ¿ïÀÇ ¼ö¸¦ Áõ°¡
+            // ì‚´ì•„ìžˆëŠ” ë¬¼ë°©ìš¸ì˜ ìˆ˜ë¥¼ ì¦ê°€
             g_stGameInfo.iAliveBubbleCount++;
             return TRUE;
         }
@@ -243,32 +243,32 @@ BOOL CreateBubble( void )
 }
 
 /**
- *  ¹°¹æ¿ïÀ» ÀÌµ¿
+ *  ë¬¼ë°©ìš¸ì„ ì´ë™
  */
 void MoveBubble( void )
 {
     BUBBLE* pstTarget;
     int i;
 
-    // »ì¾ÆÀÖ´Â ¸ðµç ¹°¹æ¿ïÀ» ÀÌµ¿
+    // ì‚´ì•„ìžˆëŠ” ëª¨ë“  ë¬¼ë°©ìš¸ì„ ì´ë™
     for( i = 0 ; i < MAXBUBBLECOUNT ; i++ )
     {
-        // ¹°¹æ¿ïÀÌ »ì¾ÆÀÖÀ¸¸é ÀÌµ¿
+        // ë¬¼ë°©ìš¸ì´ ì‚´ì•„ìžˆìœ¼ë©´ ì´ë™
         if( g_stGameInfo.pstBubbleBuffer[ i ].bAlive == TRUE )
         {
-            // ÇöÀç ¹°¹æ¿ï ÀÚ·á±¸Á¶
+            // í˜„ìž¬ ë¬¼ë°©ìš¸ ìžë£Œêµ¬ì¡°
             pstTarget = &( g_stGameInfo.pstBubbleBuffer[ i ] );
 
-            // ¹°¹æ¿ïÀÇ YÁÂÇ¥¿¡ ÀÌµ¿ ¼Óµµ¸¦ ´õÇÔ
+            // ë¬¼ë°©ìš¸ì˜ Yì¢Œí‘œì— ì´ë™ ì†ë„ë¥¼ ë”í•¨
             pstTarget->qwY += pstTarget->qwSpeed;
 
-            // °ÔÀÓ ¿µ¿ª ³¡¿¡ ´êÀ¸¸é ¹°¹æ¿ïÀ» Á¦°ÅÇÏ°í ÇÃ·¹ÀÌ¾î°¡ ¹°¹æ¿ïÀ» ¸·Áö
-            // ¸øÇßÀ¸¹Ç·Î »ý¸íÀ» ÇÏ³ª ÁÙÀÓ
+            // ê²Œìž„ ì˜ì—­ ëì— ë‹¿ìœ¼ë©´ ë¬¼ë°©ìš¸ì„ ì œê±°í•˜ê³  í”Œë ˆì´ì–´ê°€ ë¬¼ë°©ìš¸ì„ ë§‰ì§€
+            // ëª»í–ˆìœ¼ë¯€ë¡œ ìƒëª…ì„ í•˜ë‚˜ ì¤„ìž„
             if( ( pstTarget->qwY + RADIUS ) >= WINDOW_HEIGHT )
             {
                 pstTarget->bAlive = FALSE;
 
-                // »ì¾Æ ÀÖ´Â ¹°¹æ¿ïÀÇ ¼ö¸¦ ÁÙÀÌ°í »ý¸íµµ ÇÏ³ª ÁÙÀÓ
+                // ì‚´ì•„ ìžˆëŠ” ë¬¼ë°©ìš¸ì˜ ìˆ˜ë¥¼ ì¤„ì´ê³  ìƒëª…ë„ í•˜ë‚˜ ì¤„ìž„
                 g_stGameInfo.iAliveBubbleCount--;
                 if( g_stGameInfo.iLife > 0 )
                 {
@@ -280,7 +280,7 @@ void MoveBubble( void )
 }
 
 /**
- *  ¸¶¿ì½º ¾Æ·¡¿¡ ÀÖ´Â ¹°¹æ¿ïÀ» »èÁ¦ÇÏ°í Á¡¼ö¸¦ Áõ°¡
+ *  ë§ˆìš°ìŠ¤ ì•„ëž˜ì— ìžˆëŠ” ë¬¼ë°©ìš¸ì„ ì‚­ì œí•˜ê³  ì ìˆ˜ë¥¼ ì¦ê°€
  */
 void DeleteBubbleUnderMouse( POINT* pstMouseXY )
 {
@@ -288,27 +288,27 @@ void DeleteBubbleUnderMouse( POINT* pstMouseXY )
     int i;
     QWORD qwDistance;
 
-    // »ì¾ÆÀÖ´Â ¸ðµç ¹°¹æ¿ïÀ» °Ë»öÇÏ¿© ¸¶¿ì½º ¾Æ·¡¿¡ ÀÖ´Â ¹°¹æ¿ïÀ» Á¦°Å
+    // ì‚´ì•„ìžˆëŠ” ëª¨ë“  ë¬¼ë°©ìš¸ì„ ê²€ìƒ‰í•˜ì—¬ ë§ˆìš°ìŠ¤ ì•„ëž˜ì— ìžˆëŠ” ë¬¼ë°©ìš¸ì„ ì œê±°
     for( i = MAXBUBBLECOUNT - 1 ; i >= 0 ; i-- )
     {
-        // ¹°¹æ¿ïÀÌ »ì¾ÆÀÖÀ¸¸é °Å¸®¸¦ °è»êÇØ¼­ »èÁ¦ ¿©ºÎ¸¦ °áÁ¤
+        // ë¬¼ë°©ìš¸ì´ ì‚´ì•„ìžˆìœ¼ë©´ ê±°ë¦¬ë¥¼ ê³„ì‚°í•´ì„œ ì‚­ì œ ì—¬ë¶€ë¥¼ ê²°ì •
         if( g_stGameInfo.pstBubbleBuffer[ i ].bAlive == TRUE )
         {
-            // ÇöÀç ¹°¹æ¿ï ÀÚ·á±¸Á¶
+            // í˜„ìž¬ ë¬¼ë°©ìš¸ ìžë£Œêµ¬ì¡°
             pstTarget = &( g_stGameInfo.pstBubbleBuffer[ i ] );
 
-            // ¸¶¿ì½º°¡ Å¬¸¯µÈ À§Ä¡¿Í ¿øÀÇ Áß½ÉÀÌ ¹ÝÁö¸§ °Å¸® ¾ÈÂÊÀÌ¸é »èÁ¦
+            // ë§ˆìš°ìŠ¤ê°€ í´ë¦­ëœ ìœ„ì¹˜ì™€ ì›ì˜ ì¤‘ì‹¬ì´ ë°˜ì§€ë¦„ ê±°ë¦¬ ì•ˆìª½ì´ë©´ ì‚­ì œ
             qwDistance = ( ( pstMouseXY->iX - pstTarget->qwX ) *
                            ( pstMouseXY->iX - pstTarget->qwX ) ) +
                          ( ( pstMouseXY->iY - pstTarget->qwY ) *
                            ( pstMouseXY->iY - pstTarget->qwY ) );
-            // ¹°¹æ¿ïÀÇ Áß½É°ú ¸¶¿ì½º Å¬¸¯ À§Ä¡ »çÀÌÀÇ °Å¸®¸¦ ¹°¹æ¿ï ¹ÝÁö¸§°ú
-            // ºñ±³ÇÏ¿© ÀÛ´Ù¸é ¹°¹æ¿ï ³»ºÎ¿¡ Å¬¸¯µÈ °ÍÀÌ¹Ç·Î »èÁ¦
+            // ë¬¼ë°©ìš¸ì˜ ì¤‘ì‹¬ê³¼ ë§ˆìš°ìŠ¤ í´ë¦­ ìœ„ì¹˜ ì‚¬ì´ì˜ ê±°ë¦¬ë¥¼ ë¬¼ë°©ìš¸ ë°˜ì§€ë¦„ê³¼
+            // ë¹„êµí•˜ì—¬ ìž‘ë‹¤ë©´ ë¬¼ë°©ìš¸ ë‚´ë¶€ì— í´ë¦­ëœ ê²ƒì´ë¯€ë¡œ ì‚­ì œ
             if( qwDistance < ( RADIUS * RADIUS ) )
             {
                 pstTarget->bAlive = FALSE;
 
-                // »ì¾ÆÀÖ´Â ¹°¹æ¿ïÀÇ ¼ö¸¦ ÁÙÀÌ°í Á¡¼ö¸¦ Áõ°¡
+                // ì‚´ì•„ìžˆëŠ” ë¬¼ë°©ìš¸ì˜ ìˆ˜ë¥¼ ì¤„ì´ê³  ì ìˆ˜ë¥¼ ì¦ê°€
                 g_stGameInfo.iAliveBubbleCount--;
                 g_stGameInfo.qwScore++;
                 break;
@@ -318,50 +318,50 @@ void DeleteBubbleUnderMouse( POINT* pstMouseXY )
 }
 
 /**
- *  °ÔÀÓ Á¤º¸¸¦ È­¸é¿¡ Ãâ·Â
+ *  ê²Œìž„ ì •ë³´ë¥¼ í™”ë©´ì— ì¶œë ¥
  */
 void DrawInformation( QWORD qwWindowID )
 {
     char vcBuffer[ 200 ];
     int iLength;
 
-    // °ÔÀÓ Á¤º¸ ¿µ¿ªÀ» Ç¥½Ã
+    // ê²Œìž„ ì •ë³´ ì˜ì—­ì„ í‘œì‹œ
     DrawRect( qwWindowID, 1, WINDOW_TITLEBAR_HEIGHT - 1, WINDOW_WIDTH - 2,
               WINDOW_TITLEBAR_HEIGHT + INFORMATION_HEIGHT, RGB( 55, 215, 47 ), TRUE );
 
-    // ÀÓ½Ã ¹öÆÛ¿¡ Ãâ·ÂÇÒ Á¤º¸¸¦ ÀúÀå
+    // ìž„ì‹œ ë²„í¼ì— ì¶œë ¥í•  ì •ë³´ë¥¼ ì €ìž¥
     sprintf( vcBuffer, "Life: %d, Score: %d\n", g_stGameInfo.iLife,
             g_stGameInfo.qwScore );
     iLength = strlen( vcBuffer );
 
-    // ÀúÀåµÈ Á¤º¸¸¦ °ÔÀÓ Á¤º¸ Ç¥½Ã ¿µ¿ªÀÇ °¡¿îµ¥¿¡ Ãâ·Â
+    // ì €ìž¥ëœ ì •ë³´ë¥¼ ê²Œìž„ ì •ë³´ í‘œì‹œ ì˜ì—­ì˜ ê°€ìš´ë°ì— ì¶œë ¥
     DrawText( qwWindowID, ( WINDOW_WIDTH - iLength * FONT_ENGLISHWIDTH ) / 2,
             WINDOW_TITLEBAR_HEIGHT + 2, RGB( 255, 255, 255 ), RGB( 55, 215, 47 ),
             vcBuffer, strlen( vcBuffer ) );
 }
 
 /**
- *  °ÔÀÓ ¿µ¿ª¿¡ ¹°¹æ¿ïÀ» Ç¥½Ã
+ *  ê²Œìž„ ì˜ì—­ì— ë¬¼ë°©ìš¸ì„ í‘œì‹œ
  */
 void DrawGameArea( QWORD qwWindowID, POINT* pstMouseXY )
 {
     BUBBLE* pstTarget;
     int i;
 
-    // °ÔÀÓ ¿µ¿ªÀÇ ¹è°æÀ» ÃÊ±âÈ­
+    // ê²Œìž„ ì˜ì—­ì˜ ë°°ê²½ì„ ì´ˆê¸°í™”
     DrawRect( qwWindowID, 0, WINDOW_TITLEBAR_HEIGHT + INFORMATION_HEIGHT,
             WINDOW_WIDTH - 1, WINDOW_HEIGHT - 1, RGB( 0, 0, 0 ), TRUE );
 
-    // »ì¾ÆÀÖ´Â ¸ðµç ¹°¹æ¿ïÀ» Ç¥½Ã
+    // ì‚´ì•„ìžˆëŠ” ëª¨ë“  ë¬¼ë°©ìš¸ì„ í‘œì‹œ
     for( i = 0 ; i < MAXBUBBLECOUNT ; i++ )
     {
-        // ¹°¹æ¿ïÀÌ »ì¾ÆÀÖÀ¸¸é È­¸é¿¡ Ç¥½Ã
+        // ë¬¼ë°©ìš¸ì´ ì‚´ì•„ìžˆìœ¼ë©´ í™”ë©´ì— í‘œì‹œ
         if( g_stGameInfo.pstBubbleBuffer[ i ].bAlive == TRUE )
         {
-            // ÇöÀç ¹°¹æ¿ï ÀÚ·á±¸Á¶
+            // í˜„ìž¬ ë¬¼ë°©ìš¸ ìžë£Œêµ¬ì¡°
             pstTarget = &( g_stGameInfo.pstBubbleBuffer[ i ] );
 
-            // ¹°¹æ¿ïÀÇ ³»ºÎ¿Í ¿ÜºÎ¸¦ ±×¸²
+            // ë¬¼ë°©ìš¸ì˜ ë‚´ë¶€ì™€ ì™¸ë¶€ë¥¼ ê·¸ë¦¼
             DrawCircle( qwWindowID, pstTarget->qwX, pstTarget->qwY, RADIUS,
                     pstTarget->stColor, TRUE );
             DrawCircle( qwWindowID, pstTarget->qwX, pstTarget->qwY, RADIUS,
@@ -369,20 +369,20 @@ void DrawGameArea( QWORD qwWindowID, POINT* pstMouseXY )
         }
     }
 
-    // ¸¶¿ì½º°¡ ÀÖ´Â À§Ä¡¸¦ °Ë»çÇÏ¿© Á¶ÁØ¼± Ç¥½Ã
+    // ë§ˆìš°ìŠ¤ê°€ ìžˆëŠ” ìœ„ì¹˜ë¥¼ ê²€ì‚¬í•˜ì—¬ ì¡°ì¤€ì„  í‘œì‹œ
     if( pstMouseXY->iY < ( WINDOW_TITLEBAR_HEIGHT + RADIUS ) )
     {
         pstMouseXY->iY = WINDOW_TITLEBAR_HEIGHT + RADIUS;
     }
 
-    // Á¶ÁØ¼±À» +·Î Ç¥½Ã
+    // ì¡°ì¤€ì„ ì„ +ë¡œ í‘œì‹œ
     DrawLine( qwWindowID, pstMouseXY->iX, pstMouseXY->iY - RADIUS,
               pstMouseXY->iX, pstMouseXY->iY + RADIUS, RGB( 255, 0, 0 ) );
     DrawLine( qwWindowID, pstMouseXY->iX - RADIUS, pstMouseXY->iY,
               pstMouseXY->iX + RADIUS, pstMouseXY->iY, RGB( 255, 0, 0 ) );
 
 
-    // °ÔÀÓ ¿µ¿ªÀÇ Å×µÎ¸®¸¦ Ç¥½Ã
+    // ê²Œìž„ ì˜ì—­ì˜ í…Œë‘ë¦¬ë¥¼ í‘œì‹œ
     DrawRect( qwWindowID, 0, WINDOW_TITLEBAR_HEIGHT  + INFORMATION_HEIGHT,
             WINDOW_WIDTH - 1, WINDOW_HEIGHT - 1, RGB( 0, 255, 0 ), FALSE );
 }

@@ -3,74 +3,74 @@
  *  date    2009/02/08
  *  author  kkamagui 
  *          Copyright(c)2008 All rights reserved by kkamagui
- *  brief   PIT ÄÁÆ®·Ñ·¯¿¡ °ü·ÃµÈ Çì´õ ÆÄÀÏ
+ *  brief   PIT ì»¨íŠ¸ë¡¤ëŸ¬ì— ê´€ë ¨ëœ í—¤ë” íŒŒì¼
  */
 
 #include "PIT.h"
 
 /*
- *  PIT¸¦ ÃÊ±âÈ­
+ *  PITë¥¼ ì´ˆê¸°í™”
  */
 void kInitializePIT( WORD wCount, BOOL bPeriodic )
 {
-    // PIT ÄÁÆ®·Ñ ·¹Áö½ºÅÍ(Æ÷Æ® 0x43)¿¡ °ªÀ» ÃÊ±âÈ­ÇÏ¿© Ä«¿îÆ®¸¦ ¸ØÃá µÚ¿¡
-    // ¸ðµå 0¿¡ ¹ÙÀÌ³Ê¸® Ä«¿îÅÍ·Î ¼³Á¤
+    // PIT ì»¨íŠ¸ë¡¤ ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x43)ì— ê°’ì„ ì´ˆê¸°í™”í•˜ì—¬ ì¹´ìš´íŠ¸ë¥¼ ë©ˆì¶˜ ë’¤ì—
+    // ëª¨ë“œ 0ì— ë°”ì´ë„ˆë¦¬ ì¹´ìš´í„°ë¡œ ì„¤ì •
     kOutPortByte( PIT_PORT_CONTROL, PIT_COUNTER0_ONCE );
     
-    // ¸¸¾à ÀÏÁ¤ÇÑ ÁÖ±â·Î ¹Ýº¹ÇÏ´Â Å¸ÀÌ¸Ó¶ó¸é ¸ðµå 2·Î ¼³Á¤
+    // ë§Œì•½ ì¼ì •í•œ ì£¼ê¸°ë¡œ ë°˜ë³µí•˜ëŠ” íƒ€ì´ë¨¸ë¼ë©´ ëª¨ë“œ 2ë¡œ ì„¤ì •
     if( bPeriodic == TRUE )
     {
-        // PIT ÄÁÆ®·Ñ ·¹Áö½ºÅÍ(Æ÷Æ® 0x43)¿¡ ¸ðµå 2¿¡ ¹ÙÀÌ³Ê¸® Ä«¿îÅÍ·Î ¼³Á¤
+        // PIT ì»¨íŠ¸ë¡¤ ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x43)ì— ëª¨ë“œ 2ì— ë°”ì´ë„ˆë¦¬ ì¹´ìš´í„°ë¡œ ì„¤ì •
         kOutPortByte( PIT_PORT_CONTROL, PIT_COUNTER0_PERIODIC );
     }    
     
-    // Ä«¿îÅÍ 0(Æ÷Æ® 0x40)¿¡ LSB -> MSB ¼øÀ¸·Î Ä«¿îÅÍ ÃÊ±â °ªÀ» ¼³Á¤
+    // ì¹´ìš´í„° 0(í¬íŠ¸ 0x40)ì— LSB -> MSB ìˆœìœ¼ë¡œ ì¹´ìš´í„° ì´ˆê¸° ê°’ì„ ì„¤ì •
     kOutPortByte( PIT_PORT_COUNTER0, wCount );
     kOutPortByte( PIT_PORT_COUNTER0, wCount >> 8 );    
 }
 
 /**
- *  Ä«¿îÅÍ 0ÀÇ ÇöÀç °ªÀ» ¹ÝÈ¯
+ *  ì¹´ìš´í„° 0ì˜ í˜„ìž¬ ê°’ì„ ë°˜í™˜
  */
 WORD kReadCounter0( void )
 {
     BYTE bHighByte, bLowByte;
     WORD wTemp = 0;
     
-    // PIT ÄÁÆ®·Ñ ·¹Áö½ºÅÍ(Æ÷Æ® 0x43)¿¡ ·¡Ä¡ Ä¿¸Çµå¸¦ Àü¼ÛÇÏ¿© Ä«¿îÅÍ 0¿¡ ÀÖ´Â
-    // ÇöÀç °ªÀ» ÀÐÀ½
+    // PIT ì»¨íŠ¸ë¡¤ ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x43)ì— ëž˜ì¹˜ ì»¤ë§¨ë“œë¥¼ ì „ì†¡í•˜ì—¬ ì¹´ìš´í„° 0ì— ìžˆëŠ”
+    // í˜„ìž¬ ê°’ì„ ì½ìŒ
     kOutPortByte( PIT_PORT_CONTROL, PIT_COUNTER0_LATCH );
     
-    // Ä«¿îÅÍ 0(Æ÷Æ® 0x40)¿¡¼­ LSB -> MSB ¼øÀ¸·Î Ä«¿îÅÍ °ªÀ» ÀÐÀ½
+    // ì¹´ìš´í„° 0(í¬íŠ¸ 0x40)ì—ì„œ LSB -> MSB ìˆœìœ¼ë¡œ ì¹´ìš´í„° ê°’ì„ ì½ìŒ
     bLowByte = kInPortByte( PIT_PORT_COUNTER0 );
     bHighByte = kInPortByte( PIT_PORT_COUNTER0 );
 
-    // ÀÐÀº °ªÀ» 16ºñÆ®·Î ÇÕÇÏ¿© ¹ÝÈ¯
+    // ì½ì€ ê°’ì„ 16ë¹„íŠ¸ë¡œ í•©í•˜ì—¬ ë°˜í™˜
     wTemp = bHighByte;
     wTemp = ( wTemp << 8 ) | bLowByte;
     return wTemp;
 }
 
 /**
- *  Ä«¿îÅÍ 0¸¦ Á÷Á¢ ¼³Á¤ÇÏ¿© ÀÏÁ¤ ½Ã°£ ÀÌ»ó ´ë±â
- *      ÇÔ¼ö¸¦ È£ÃâÇÏ¸é PIT ÄÁÆ®·Ñ·¯ÀÇ ¼³Á¤ÀÌ ¹Ù²î¹Ç·Î, ÀÌÈÄ¿¡ PIT ÄÁÆ®·Ñ·¯¸¦ Àç¼³Á¤
- *      ÇØ¾ß ÇÔ
- *      Á¤È®ÇÏ°Ô ÃøÁ¤ÇÏ·Á¸é ÇÔ¼ö »ç¿ë Àü¿¡ ÀÎÅÍ·´Æ®¸¦ ºñÈ°¼ºÈ­ ÇÏ´Â °ÍÀÌ ÁÁÀ½
- *      ¾à 50ms±îÁö ÃøÁ¤ °¡´É
+ *  ì¹´ìš´í„° 0ë¥¼ ì§ì ‘ ì„¤ì •í•˜ì—¬ ì¼ì • ì‹œê°„ ì´ìƒ ëŒ€ê¸°
+ *      í•¨ìˆ˜ë¥¼ í˜¸ì¶œí•˜ë©´ PIT ì»¨íŠ¸ë¡¤ëŸ¬ì˜ ì„¤ì •ì´ ë°”ë€Œë¯€ë¡œ, ì´í›„ì— PIT ì»¨íŠ¸ë¡¤ëŸ¬ë¥¼ ìž¬ì„¤ì •
+ *      í•´ì•¼ í•¨
+ *      ì •í™•í•˜ê²Œ ì¸¡ì •í•˜ë ¤ë©´ í•¨ìˆ˜ ì‚¬ìš© ì „ì— ì¸í„°ëŸ½íŠ¸ë¥¼ ë¹„í™œì„±í™” í•˜ëŠ” ê²ƒì´ ì¢‹ìŒ
+ *      ì•½ 50msê¹Œì§€ ì¸¡ì • ê°€ëŠ¥
  */
 void kWaitUsingDirectPIT( WORD wCount )
 {
     WORD wLastCounter0;
     WORD wCurrentCounter0;
     
-    // PIT ÄÁÆ®·Ñ·¯¸¦ 0~0xFFFF±îÁö ¹Ýº¹ÇØ¼­ Ä«¿îÆÃÇÏµµ·Ï ¼³Á¤
+    // PIT ì»¨íŠ¸ë¡¤ëŸ¬ë¥¼ 0~0xFFFFê¹Œì§€ ë°˜ë³µí•´ì„œ ì¹´ìš´íŒ…í•˜ë„ë¡ ì„¤ì •
     kInitializePIT( 0, TRUE );
     
-    // Áö±ÝºÎÅÍ wCount ÀÌ»ó Áõ°¡ÇÒ ¶§±îÁö ´ë±â
+    // ì§€ê¸ˆë¶€í„° wCount ì´ìƒ ì¦ê°€í•  ë•Œê¹Œì§€ ëŒ€ê¸°
     wLastCounter0 = kReadCounter0();
     while( 1 )
     {
-        // ÇöÀç Ä«¿îÅÍ 0ÀÇ °ªÀ» ¹ÝÈ¯
+        // í˜„ìž¬ ì¹´ìš´í„° 0ì˜ ê°’ì„ ë°˜í™˜
         wCurrentCounter0 = kReadCounter0();
         if( ( ( wLastCounter0 - wCurrentCounter0 ) & 0xFFFF ) >= wCount )
         {

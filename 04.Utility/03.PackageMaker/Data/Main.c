@@ -3,14 +3,14 @@
  *  date    2010/03/23
  *  author  kkamagui 
  *          Copyright(c)2008 All rights reserved by kkamagui
- *  brief   C ¾ð¾î·Î ÀÛ¼ºµÈ ÀÀ¿ëÇÁ·Î±×·¥ÀÇ ¿£Æ®¸® Æ÷ÀÎÆ® ÆÄÀÏ
+ *  brief   C ì–¸ì–´ë¡œ ìž‘ì„±ëœ ì‘ìš©í”„ë¡œê·¸ëž¨ì˜ ì—”íŠ¸ë¦¬ í¬ì¸íŠ¸ íŒŒì¼
  */
 
 #include "MINTOSLibrary.h"
 #include "Main.h"
 
 /**
- *  ÀÀ¿ëÇÁ·Î±×·¥ÀÇ C ¾ð¾î ¿£Æ®¸® Æ÷ÀÎÆ®
+ *  ì‘ìš©í”„ë¡œê·¸ëž¨ì˜ C ì–¸ì–´ ì—”íŠ¸ë¦¬ í¬ì¸íŠ¸
  */
 int Main( char* pcArgument )
 {
@@ -28,28 +28,28 @@ int Main( char* pcArgument )
     RECT stScreenArea;
     
     //--------------------------------------------------------------------------
-    // ±×·¡ÇÈ ¸ðµå ÆÇ´Ü
+    // ê·¸ëž˜í”½ ëª¨ë“œ íŒë‹¨
     //--------------------------------------------------------------------------
-    // MINT64 OS°¡ ±×·¡ÇÈ ¸ðµå·Î ½ÃÀÛÇß´ÂÁö È®ÀÎ
+    // MINT64 OSê°€ ê·¸ëž˜í”½ ëª¨ë“œë¡œ ì‹œìž‘í–ˆëŠ”ì§€ í™•ì¸
     if( IsGraphicMode() == FALSE )
     {        
-        // MINT64 OS°¡ ±×·¡ÇÈ ¸ðµå·Î ½ÃÀÛÇÏÁö ¾Ê¾Ò´Ù¸é ½ÇÆÐ
+        // MINT64 OSê°€ ê·¸ëž˜í”½ ëª¨ë“œë¡œ ì‹œìž‘í•˜ì§€ ì•Šì•˜ë‹¤ë©´ ì‹¤íŒ¨
         printf( "This task can run only GUI mode~!!!\n" );
         return -1;
     }
     
     //--------------------------------------------------------------------------
-    // ÆÄÀÏÀÇ ³»¿ëÀ» ÆÄÀÏ ¹öÆÛ¿¡ ÀúÀåÇÏ°í ¶óÀÎ º° ÆÄÀÏ ¿ÀÇÁ¼Â ÀúÀå¿ë ¹öÆÛ¸¦ »ý¼º
+    // íŒŒì¼ì˜ ë‚´ìš©ì„ íŒŒì¼ ë²„í¼ì— ì €ìž¥í•˜ê³  ë¼ì¸ ë³„ íŒŒì¼ ì˜¤í”„ì…‹ ì €ìž¥ìš© ë²„í¼ë¥¼ ìƒì„±
     //--------------------------------------------------------------------------
-    // ÀÎÀÚ¿¡ ¾Æ¹«°Íµµ Àü´ÞµÇÁö ¾ÊÀ¸¸é ½ÇÆÐ
+    // ì¸ìžì— ì•„ë¬´ê²ƒë„ ì „ë‹¬ë˜ì§€ ì•Šìœ¼ë©´ ì‹¤íŒ¨
     if( strlen( pcArgument ) == 0 )
     {
         printf( "ex) exec hanviwer.elf abc.txt\n" );
         return 0;
     }
         
-    // ÆÄÀÏÀ» µð·ºÅÍ¸®¿¡¼­ Ã£Àº µÚ¿¡ ÆÄÀÏÀÇ Å©±â¸¸Å­ ¸Þ¸ð¸®¸¦ ÇÒ´çÇÏ¿© ÆÄÀÏÀ» ÀúÀå
-    // ¶óÀÎ º° ÆÄÀÏ ¿ÀÇÁ¼ÂÀ» ÀúÀåÇÒ ¹öÆÛµµ °°ÀÌ »ý¼º
+    // íŒŒì¼ì„ ë””ë ‰í„°ë¦¬ì—ì„œ ì°¾ì€ ë’¤ì— íŒŒì¼ì˜ í¬ê¸°ë§Œí¼ ë©”ëª¨ë¦¬ë¥¼ í• ë‹¹í•˜ì—¬ íŒŒì¼ì„ ì €ìž¥
+    // ë¼ì¸ ë³„ íŒŒì¼ ì˜¤í”„ì…‹ì„ ì €ìž¥í•  ë²„í¼ë„ ê°™ì´ ìƒì„±
     if( ReadFileToBuffer( pcArgument, &stInfo ) == FALSE )
     {
         printf( "%s file is not found\n", pcArgument );
@@ -57,55 +57,55 @@ int Main( char* pcArgument )
     }
 
     //--------------------------------------------------------------------------
-    // À©µµ¿ì¿Í ¶óÀÎ ÀÎµ¦½º¸¦ »ý¼ºÇÑ µÚ Ã¹ ¹øÂ° ¶óÀÎºÎÅÍ È­¸é¿¡ Ãâ·Â
+    // ìœˆë„ìš°ì™€ ë¼ì¸ ì¸ë±ìŠ¤ë¥¼ ìƒì„±í•œ ë’¤ ì²« ë²ˆì§¸ ë¼ì¸ë¶€í„° í™”ë©´ì— ì¶œë ¥
     //--------------------------------------------------------------------------
-    // À©µµ¿ì¸¦ È­¸é °¡¿îµ¥¿¡ °¡·Î 500 ÇÈ¼¿ X ¼¼·Î 500 ÇÈ¼¿·Î »ý¼º
+    // ìœˆë„ìš°ë¥¼ í™”ë©´ ê°€ìš´ë°ì— ê°€ë¡œ 500 í”½ì…€ X ì„¸ë¡œ 500 í”½ì…€ë¡œ ìƒì„±
     GetScreenArea( &stScreenArea );
     iWidth = 500;
     iHeight = 500;
     iX = ( GetRectangleWidth( &stScreenArea ) - iWidth ) / 2;
     iY = ( GetRectangleHeight( &stScreenArea ) - iHeight ) / 2;
     qwWindowID = CreateWindow(iX, iY, iWidth, iHeight, WINDOW_FLAGS_DEFAULT | 
-                              WINDOW_FLAGS_RESIZABLE, "ÇÑ±Û ºä¾î(Hangul Viewer)" );
+                              WINDOW_FLAGS_RESIZABLE, "í•œê¸€ ë·°ì–´(Hangul Viewer)" );
     
-    // ¶óÀÎ º° ÆÄÀÏ ¿ÀÇÁ¼ÂÀ» °è»êÇÏ°í ÇöÀç È­¸é¿¡ Ãâ·ÂÇÏ´Â ¶óÀÎ ÀÎµ¦½º¸¦ 0À¸·Î ¼³Á¤
+    // ë¼ì¸ ë³„ íŒŒì¼ ì˜¤í”„ì…‹ì„ ê³„ì‚°í•˜ê³  í˜„ìž¬ í™”ë©´ì— ì¶œë ¥í•˜ëŠ” ë¼ì¸ ì¸ë±ìŠ¤ë¥¼ 0ìœ¼ë¡œ ì„¤ì •
     CalculateFileOffsetOfLine( iWidth, iHeight, &stInfo );
     stInfo.iCurrentLineIndex = 0;
     
-    // ÇöÀç ¶óÀÎºÎÅÍ È­¸é ÀüÃ¼ Å©±â¸¸Å­À» Ç¥½Ã
+    // í˜„ìž¬ ë¼ì¸ë¶€í„° í™”ë©´ ì „ì²´ í¬ê¸°ë§Œí¼ì„ í‘œì‹œ
     DrawTextBuffer( qwWindowID, &stInfo );
         
     //--------------------------------------------------------------------------
-    // GUI ÅÂ½ºÅ©ÀÇ ÀÌº¥Æ® Ã³¸® ·çÇÁ
+    // GUI íƒœìŠ¤í¬ì˜ ì´ë²¤íŠ¸ ì²˜ë¦¬ ë£¨í”„
     //--------------------------------------------------------------------------
     while( 1 )
     {
-        // ÀÌº¥Æ® Å¥¿¡¼­ ÀÌº¥Æ®¸¦ ¼ö½Å
+        // ì´ë²¤íŠ¸ íì—ì„œ ì´ë²¤íŠ¸ë¥¼ ìˆ˜ì‹ 
         if( ReceiveEventFromWindowQueue( qwWindowID, &stReceivedEvent ) == FALSE )
         {
             Sleep( 10 );
             continue;
         }
         
-        // ¼ö½ÅµÈ ÀÌº¥Æ®¸¦ Å¸ÀÔ¿¡ µû¶ó ³ª´©¾î Ã³¸®
+        // ìˆ˜ì‹ ëœ ì´ë²¤íŠ¸ë¥¼ íƒ€ìž…ì— ë”°ë¼ ë‚˜ëˆ„ì–´ ì²˜ë¦¬
         switch( stReceivedEvent.qwType )
         {
-            // Å° ´­¸² Ã³¸®
+            // í‚¤ ëˆŒë¦¼ ì²˜ë¦¬
         case EVENT_KEY_DOWN:
             pstKeyEvent = &( stReceivedEvent.stKeyEvent );
             if( pstKeyEvent->bFlags & KEY_FLAGS_DOWN )
             {
-                // Å° °ª¿¡ µû¸¥ ÇöÀç ¶óÀÎ º¯°æ °ª ¼³Á¤
+                // í‚¤ ê°’ì— ë”°ë¥¸ í˜„ìž¬ ë¼ì¸ ë³€ê²½ ê°’ ì„¤ì •
                 switch( pstKeyEvent->bASCIICode )
                 {
-                    // Page Up Å°¿Í Page Down Å°´Â È­¸é¿¡ Ãâ·Â °¡´ÉÇÑ ¶óÀÎ ´ÜÀ§·Î ÀÌµ¿
+                    // Page Up í‚¤ì™€ Page Down í‚¤ëŠ” í™”ë©´ì— ì¶œë ¥ ê°€ëŠ¥í•œ ë¼ì¸ ë‹¨ìœ„ë¡œ ì´ë™
                 case KEY_PAGEUP:
                     iMoveLine = -stInfo.iRowCount;
                     break;
                 case KEY_PAGEDOWN:
                     iMoveLine = stInfo.iRowCount;
                     break;
-                    // Up Å°¿Í Down Å°´Â ÇÑ ¶óÀÎ ´ÜÀ§·Î ÀÌµ¿
+                    // Up í‚¤ì™€ Down í‚¤ëŠ” í•œ ë¼ì¸ ë‹¨ìœ„ë¡œ ì´ë™
                 case KEY_UP:
                     iMoveLine = -1;
                     break;
@@ -113,13 +113,13 @@ int Main( char* pcArgument )
                     iMoveLine = 1;
                     break;
                     
-                    // ±âÅ¸ Å°ÀÌ°Å³ª ÇöÀç À§Ä¡¿¡¼­ ¿òÁ÷ÀÏ ÇÊ¿ä°¡ ¾øÀ¸¸é Á¾·á
+                    // ê¸°íƒ€ í‚¤ì´ê±°ë‚˜ í˜„ìž¬ ìœ„ì¹˜ì—ì„œ ì›€ì§ì¼ í•„ìš”ê°€ ì—†ìœ¼ë©´ ì¢…ë£Œ
                 default:
                     iMoveLine = 0;
                     break;
                 }
                 
-                // ÃÖ´ë ÃÖ¼Ò ¶óÀÎ ¹üÀ§¸¦ ¹þ¾î³ª¸é ÇöÀç ¶óÀÎ ÀÎµ¦½º¸¦ Á¶Á¤
+                // ìµœëŒ€ ìµœì†Œ ë¼ì¸ ë²”ìœ„ë¥¼ ë²—ì–´ë‚˜ë©´ í˜„ìž¬ ë¼ì¸ ì¸ë±ìŠ¤ë¥¼ ì¡°ì •
                 if( stInfo.iCurrentLineIndex + iMoveLine < 0 )
                 {
                     iMoveLine = -stInfo.iCurrentLineIndex;
@@ -129,46 +129,46 @@ int Main( char* pcArgument )
                     iMoveLine = stInfo.iMaxLineCount - stInfo.iCurrentLineIndex - 1;
                 }
                                 
-                // ±âÅ¸ Å°ÀÌ°Å³ª ¿òÁ÷ÀÏ ÇÊ¿ä°¡ ¾øÀ¸¸é Á¾·á
+                // ê¸°íƒ€ í‚¤ì´ê±°ë‚˜ ì›€ì§ì¼ í•„ìš”ê°€ ì—†ìœ¼ë©´ ì¢…ë£Œ
                 if( iMoveLine == 0 )
                 {
                     break;
                 }
                         
-                // ÇöÀç ¶óÀÎÀÇ ÀÎµ¦½º¸¦ º¯°æÇÏ°í È­¸é¿¡ Ãâ·Â
+                // í˜„ìž¬ ë¼ì¸ì˜ ì¸ë±ìŠ¤ë¥¼ ë³€ê²½í•˜ê³  í™”ë©´ì— ì¶œë ¥
                 stInfo.iCurrentLineIndex += iMoveLine;
                 DrawTextBuffer( qwWindowID, &stInfo );
             }
             break;
             
-            // À©µµ¿ì Å©±â º¯°æ Ã³¸®
+            // ìœˆë„ìš° í¬ê¸° ë³€ê²½ ì²˜ë¦¬
         case EVENT_WINDOW_RESIZE:
             pstWindowEvent = &( stReceivedEvent.stWindowEvent );
             iWidth = GetRectangleWidth( &( pstWindowEvent->stArea ) );
             iHeight = GetRectangleHeight( &( pstWindowEvent->stArea ) );
             
-            // ÇöÀç ¶óÀÎÀÌ ÀÖ´Â ÆÄÀÏ ¿ÀÇÁ¼ÂÀ» ÀúÀå
+            // í˜„ìž¬ ë¼ì¸ì´ ìžˆëŠ” íŒŒì¼ ì˜¤í”„ì…‹ì„ ì €ìž¥
             dwFileOffset = stInfo.pdwFileOffsetOfLine[ stInfo.iCurrentLineIndex ];
             
-            // º¯°æµÈ È­¸é Å©±â·Î ´Ù½Ã ¶óÀÎ ¼ö¿Í ¶óÀÎ ´ç ¹®ÀÚ ¼ö, ±×¸®°í ÆÄÀÏ ¿ÀÇÁ¼ÂÀ» 
-            // °è»êÇÏ°í ÀÌ °ª°ú ÀÌÀü¿¡ ÀúÀåÇÑ ÆÄÀÏ ¿ÀÇÁ¼ÂÀ» ÀÌ¿ëÇÏ¿© ÇöÀç ¶óÀÎÀ» ´Ù½Ã °è»ê
+            // ë³€ê²½ëœ í™”ë©´ í¬ê¸°ë¡œ ë‹¤ì‹œ ë¼ì¸ ìˆ˜ì™€ ë¼ì¸ ë‹¹ ë¬¸ìž ìˆ˜, ê·¸ë¦¬ê³  íŒŒì¼ ì˜¤í”„ì…‹ì„ 
+            // ê³„ì‚°í•˜ê³  ì´ ê°’ê³¼ ì´ì „ì— ì €ìž¥í•œ íŒŒì¼ ì˜¤í”„ì…‹ì„ ì´ìš©í•˜ì—¬ í˜„ìž¬ ë¼ì¸ì„ ë‹¤ì‹œ ê³„ì‚°
             CalculateFileOffsetOfLine( iWidth, iHeight, &stInfo );
             stInfo.iCurrentLineIndex = dwFileOffset / stInfo.iColumnCount;
             
-            // ÇöÀç ¶óÀÎºÎÅÍ È­¸é¿¡ Ãâ·Â
+            // í˜„ìž¬ ë¼ì¸ë¶€í„° í™”ë©´ì— ì¶œë ¥
             DrawTextBuffer( qwWindowID, &stInfo );
             break;
             
-            // À©µµ¿ì ´Ý±â ¹öÆ° Ã³¸®
+            // ìœˆë„ìš° ë‹«ê¸° ë²„íŠ¼ ì²˜ë¦¬
         case EVENT_WINDOW_CLOSE:
-            // À©µµ¿ì¸¦ »èÁ¦ÇÏ°í ¸Þ¸ð¸®¸¦ ÇØÁ¦
+            // ìœˆë„ìš°ë¥¼ ì‚­ì œí•˜ê³  ë©”ëª¨ë¦¬ë¥¼ í•´ì œ
             DeleteWindow( qwWindowID );
             free( stInfo.pbFileBuffer );
             free( stInfo.pdwFileOffsetOfLine );
             return 0;
             break;
             
-            // ±× ¿Ü Á¤º¸
+            // ê·¸ ì™¸ ì •ë³´
         default:
             break;
         }

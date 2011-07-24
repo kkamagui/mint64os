@@ -3,102 +3,102 @@
  *  date    2009/06/28
  *  author  kkamagui 
  *          Copyright(c)2008 All rights reserved by kkamagui
- *  brief   ·ÎÄÃ APIC(Local APIC)¿¡ °ü·ÃµÈ ¼Ò½º ÆÄÀÏ
+ *  brief   ë¡œì»¬ APIC(Local APIC)ì— ê´€ë ¨ëœ ì†ŒìŠ¤ íŒŒì¼
  */
 #include "LocalAPIC.h"
 #include "MPConfigurationTable.h"
 
 /**
- *  ·ÎÄÃ APICÀÇ ¸Þ¸ð¸® ¸Ê I/O ¾îµå·¹½º¸¦ ¹ÝÈ¯
+ *  ë¡œì»¬ APICì˜ ë©”ëª¨ë¦¬ ë§µ I/O ì–´ë“œë ˆìŠ¤ë¥¼ ë°˜í™˜
  */
 QWORD kGetLocalAPICBaseAddress( void )
 {
     MPCONFIGURATIONTABLEHEADER* pstMPHeader;
     
-    // MP ¼³Á¤ Å×ÀÌºí Çì´õ¿¡ ÀúÀåµÈ ·ÎÄÃ APICÀÇ ¸Þ¸ð¸® ¸Ê I/O ¾îµå·¹½º¸¦ »ç¿ë
+    // MP ì„¤ì • í…Œì´ë¸” í—¤ë”ì— ì €ìž¥ëœ ë¡œì»¬ APICì˜ ë©”ëª¨ë¦¬ ë§µ I/O ì–´ë“œë ˆìŠ¤ë¥¼ ì‚¬ìš©
     pstMPHeader = kGetMPConfigurationManager()->pstMPConfigurationTableHeader;
     return pstMPHeader->dwMemoryMapIOAddressOfLocalAPIC;
 }
 
 /**
- *  ÀÇ»ç ÀÎÅÍ·´Æ® º¤ÅÍ ·¹Áö½ºÅÍ(Spurious Interrupt Vector Register)¿¡ ÀÖ´Â 
- *  APIC ¼ÒÇÁÆ®¿þ¾î È°¼º/ºñÈ°¼º ÇÊµå¸¦ 1·Î ¼³Á¤ÇÏ¿© ·ÎÄÃ APIC¸¦ È°¼ºÈ­ÇÔ
+ *  ì˜ì‚¬ ì¸í„°ëŸ½íŠ¸ ë²¡í„° ë ˆì§€ìŠ¤í„°(Spurious Interrupt Vector Register)ì— ìžˆëŠ” 
+ *  APIC ì†Œí”„íŠ¸ì›¨ì–´ í™œì„±/ë¹„í™œì„± í•„ë“œë¥¼ 1ë¡œ ì„¤ì •í•˜ì—¬ ë¡œì»¬ APICë¥¼ í™œì„±í™”í•¨
  */
 void kEnableSoftwareLocalAPIC( void )
 {
     QWORD qwLocalAPICBaseAddress;
     
-    // MP ¼³Á¤ Å×ÀÌºí Çì´õ¿¡ ÀúÀåµÈ ·ÎÄÃ APICÀÇ ¸Þ¸ð¸® ¸Ê I/O ¾îµå·¹½º¸¦ »ç¿ë
+    // MP ì„¤ì • í…Œì´ë¸” í—¤ë”ì— ì €ìž¥ëœ ë¡œì»¬ APICì˜ ë©”ëª¨ë¦¬ ë§µ I/O ì–´ë“œë ˆìŠ¤ë¥¼ ì‚¬ìš©
     qwLocalAPICBaseAddress = kGetLocalAPICBaseAddress();
     
-    // ÀÇ»ç ÀÎÅÍ·´Æ® º¤ÅÍ ·¹Áö½ºÅÍ(Spurious Interrupt Vector Register, 0xFEE000F0)ÀÇ 
-    // APIC ¼ÒÇÁÆ®¿þ¾î È°¼º/ºñÈ°¼º ÇÊµå(ºñÆ® 8)¸¦ 1·Î ¼³Á¤ÇØ¼­ ·ÎÄÃ APIC¸¦ È°¼ºÈ­
+    // ì˜ì‚¬ ì¸í„°ëŸ½íŠ¸ ë²¡í„° ë ˆì§€ìŠ¤í„°(Spurious Interrupt Vector Register, 0xFEE000F0)ì˜ 
+    // APIC ì†Œí”„íŠ¸ì›¨ì–´ í™œì„±/ë¹„í™œì„± í•„ë“œ(ë¹„íŠ¸ 8)ë¥¼ 1ë¡œ ì„¤ì •í•´ì„œ ë¡œì»¬ APICë¥¼ í™œì„±í™”
     *( DWORD* ) ( qwLocalAPICBaseAddress + APIC_REGISTER_SVR ) |= 0x100;
 }
 
 /**
- *  ·ÎÄÃ APIC¿¡ EOI(End of Interrupt)¸¦ Àü¼Û
+ *  ë¡œì»¬ APICì— EOI(End of Interrupt)ë¥¼ ì „ì†¡
  */
 void kSendEOIToLocalAPIC( void )
 {
     QWORD qwLocalAPICBaseAddress;
     
-    // MP ¼³Á¤ Å×ÀÌºí Çì´õ¿¡ ÀúÀåµÈ ·ÎÄÃ APICÀÇ ¸Þ¸ð¸® ¸Ê I/O ¾îµå·¹½º¸¦ »ç¿ë
+    // MP ì„¤ì • í…Œì´ë¸” í—¤ë”ì— ì €ìž¥ëœ ë¡œì»¬ APICì˜ ë©”ëª¨ë¦¬ ë§µ I/O ì–´ë“œë ˆìŠ¤ë¥¼ ì‚¬ìš©
     qwLocalAPICBaseAddress = kGetLocalAPICBaseAddress();
     
-    // EOI ·¹Áö½ºÅÍ(0xFEE000B0)¿¡ 0x00À» Ãâ·ÂÇÏ¿© EOI¸¦ Àü¼Û
+    // EOI ë ˆì§€ìŠ¤í„°(0xFEE000B0)ì— 0x00ì„ ì¶œë ¥í•˜ì—¬ EOIë¥¼ ì „ì†¡
     *( DWORD* ) ( qwLocalAPICBaseAddress + APIC_REGISTER_EOI ) = 0;
 }
 
 /*
- *  ÅÂ½ºÅ© ¿ì¼± ¼øÀ§ ·¹Áö½ºÅÍ(Task Priority Register) ¼³Á¤
+ *  íƒœìŠ¤í¬ ìš°ì„  ìˆœìœ„ ë ˆì§€ìŠ¤í„°(Task Priority Register) ì„¤ì •
  */
 void kSetTaskPriority( BYTE bPriority )
 {
     QWORD qwLocalAPICBaseAddress;
     
-    // MP ¼³Á¤ Å×ÀÌºí Çì´õ¿¡ ÀúÀåµÈ ·ÎÄÃ APICÀÇ ¸Þ¸ð¸® ¸Ê I/O ¾îµå·¹½º¸¦ »ç¿ë
+    // MP ì„¤ì • í…Œì´ë¸” í—¤ë”ì— ì €ìž¥ëœ ë¡œì»¬ APICì˜ ë©”ëª¨ë¦¬ ë§µ I/O ì–´ë“œë ˆìŠ¤ë¥¼ ì‚¬ìš©
     qwLocalAPICBaseAddress = kGetLocalAPICBaseAddress();
     
-    // ÅÂ½ºÅ© ¿ì¼± ¼øÀ§ ·¹Áö½ºÅÍ(0xFEE00080)¿¡ ¿ì¼± ¼øÀ§ °ªÀ» Àü¼Û
+    // íƒœìŠ¤í¬ ìš°ì„  ìˆœìœ„ ë ˆì§€ìŠ¤í„°(0xFEE00080)ì— ìš°ì„  ìˆœìœ„ ê°’ì„ ì „ì†¡
     *( DWORD* ) ( qwLocalAPICBaseAddress + APIC_REGISTER_TASKPRIORITY ) = bPriority;
 }
 
 /**
- *  ·ÎÄÃ º¤ÅÍ Å×ÀÌºí ÃÊ±âÈ­
+ *  ë¡œì»¬ ë²¡í„° í…Œì´ë¸” ì´ˆê¸°í™”
  */
 void kInitializeLocalVectorTable( void )
 {
     QWORD qwLocalAPICBaseAddress;
     DWORD dwTempValue;
     
-    // MP ¼³Á¤ Å×ÀÌºí Çì´õ¿¡ ÀúÀåµÈ ·ÎÄÃ APICÀÇ ¸Þ¸ð¸® ¸Ê I/O ¾îµå·¹½º¸¦ »ç¿ë
+    // MP ì„¤ì • í…Œì´ë¸” í—¤ë”ì— ì €ìž¥ëœ ë¡œì»¬ APICì˜ ë©”ëª¨ë¦¬ ë§µ I/O ì–´ë“œë ˆìŠ¤ë¥¼ ì‚¬ìš©
     qwLocalAPICBaseAddress = kGetLocalAPICBaseAddress();
 
-    // Å¸ÀÌ¸Ó ÀÎÅÍ·´Æ®°¡ ¹ß»ýÇÏÁö ¾Êµµ·Ï ±âÁ¸ °ª¿¡ ¸¶½ºÅ© °ªÀ» ´õÇØ¼­ 
-    // LVT Å¸ÀÌ¸Ó ·¹Áö½ºÅÍ(0xFEE00320)¿¡ ÀúÀå
+    // íƒ€ì´ë¨¸ ì¸í„°ëŸ½íŠ¸ê°€ ë°œìƒí•˜ì§€ ì•Šë„ë¡ ê¸°ì¡´ ê°’ì— ë§ˆìŠ¤í¬ ê°’ì„ ë”í•´ì„œ 
+    // LVT íƒ€ì´ë¨¸ ë ˆì§€ìŠ¤í„°(0xFEE00320)ì— ì €ìž¥
     *( DWORD* ) ( qwLocalAPICBaseAddress + APIC_REGISTER_TIMER ) |= APIC_INTERRUPT_MASK;
     
-    // LINT0 ÀÎÅÍ·´Æ®°¡ ¹ß»ýÇÏÁö ¾Êµµ·Ï ±âÁ¸ °ª¿¡ ¸¶½ºÅ© °ªÀ» ´õÇØ¼­
-    // LVT LINT0 ·¹Áö½ºÅÍ(0xFEE00350)¿¡ ÀúÀå
+    // LINT0 ì¸í„°ëŸ½íŠ¸ê°€ ë°œìƒí•˜ì§€ ì•Šë„ë¡ ê¸°ì¡´ ê°’ì— ë§ˆìŠ¤í¬ ê°’ì„ ë”í•´ì„œ
+    // LVT LINT0 ë ˆì§€ìŠ¤í„°(0xFEE00350)ì— ì €ìž¥
     *( DWORD* ) ( qwLocalAPICBaseAddress + APIC_REGISTER_LINT0 ) |= APIC_INTERRUPT_MASK;
 
-    // LINT1 ÀÎÅÍ·´Æ®´Â NMI°¡ ¹ß»ýÇÏµµ·Ï NMI·Î ¼³Á¤ÇÏ¿© LVT LINT1 
-    // ·¹Áö½ºÅÍ(0xFEE00360)¿¡ ÀúÀå
+    // LINT1 ì¸í„°ëŸ½íŠ¸ëŠ” NMIê°€ ë°œìƒí•˜ë„ë¡ NMIë¡œ ì„¤ì •í•˜ì—¬ LVT LINT1 
+    // ë ˆì§€ìŠ¤í„°(0xFEE00360)ì— ì €ìž¥
     *( DWORD* ) ( qwLocalAPICBaseAddress + APIC_REGISTER_LINT1 ) = APIC_TRIGGERMODE_EDGE | 
         APIC_POLARITY_ACTIVEHIGH | APIC_DELIVERYMODE_NMI;
 
-    // ¿¡·¯ ÀÎÅÍ·´Æ®°¡ ¹ß»ýÇÏÁö ¾Êµµ·Ï ±âÁ¸ °ª¿¡ ¸¶½ºÅ© °ªÀ» ´õÇØ¼­
-    // LVT ¿¡·¯ ·¹Áö½ºÅÍ(0xFEE00370)¿¡ ÀúÀå
+    // ì—ëŸ¬ ì¸í„°ëŸ½íŠ¸ê°€ ë°œìƒí•˜ì§€ ì•Šë„ë¡ ê¸°ì¡´ ê°’ì— ë§ˆìŠ¤í¬ ê°’ì„ ë”í•´ì„œ
+    // LVT ì—ëŸ¬ ë ˆì§€ìŠ¤í„°(0xFEE00370)ì— ì €ìž¥
     *( DWORD* ) ( qwLocalAPICBaseAddress + APIC_REGISTER_ERROR ) |= APIC_INTERRUPT_MASK;
 
-    // ¼º´É ¸ð´ÏÅÍ¸µ Ä«¿îÅÍ ÀÎÅÍ·´Æ®°¡ ¹ß»ýÇÏÁö ¾Êµµ·Ï ±âÁ¸ °ª¿¡ ¸¶½ºÅ© °ªÀ» ´õÇØ¼­
-    // LVT ¼º´É ¸ð´ÏÅÍ¸µ Ä«¿îÅÍ ·¹Áö½ºÅÍ(0xFEE00340)¿¡ ÀúÀå
+    // ì„±ëŠ¥ ëª¨ë‹ˆí„°ë§ ì¹´ìš´í„° ì¸í„°ëŸ½íŠ¸ê°€ ë°œìƒí•˜ì§€ ì•Šë„ë¡ ê¸°ì¡´ ê°’ì— ë§ˆìŠ¤í¬ ê°’ì„ ë”í•´ì„œ
+    // LVT ì„±ëŠ¥ ëª¨ë‹ˆí„°ë§ ì¹´ìš´í„° ë ˆì§€ìŠ¤í„°(0xFEE00340)ì— ì €ìž¥
     *( DWORD* ) ( qwLocalAPICBaseAddress + 
             APIC_REGISTER_PERFORMANCEMONITORINGCOUNTER ) |= APIC_INTERRUPT_MASK;
 
-    // ¿Âµµ ¼¾¼­ ÀÎÅÍ·´Æ®°¡ ¹ß»ýÇÏÁö ¾Êµµ·Ï ±âÁ¸ °ª¿¡ ¸¶½ºÅ© °ªÀ» ´õÇØ¼­
-    // LVT ¿Âµµ ¼¾¼­ ·¹Áö½ºÅÍ(0xFEE00330)¿¡ ÀúÀå
+    // ì˜¨ë„ ì„¼ì„œ ì¸í„°ëŸ½íŠ¸ê°€ ë°œìƒí•˜ì§€ ì•Šë„ë¡ ê¸°ì¡´ ê°’ì— ë§ˆìŠ¤í¬ ê°’ì„ ë”í•´ì„œ
+    // LVT ì˜¨ë„ ì„¼ì„œ ë ˆì§€ìŠ¤í„°(0xFEE00330)ì— ì €ìž¥
     *( DWORD* ) ( qwLocalAPICBaseAddress + APIC_REGISTER_THERMALSENSOR ) |= 
         APIC_INTERRUPT_MASK;
 }

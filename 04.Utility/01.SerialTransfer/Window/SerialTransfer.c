@@ -3,7 +3,7 @@
  *  date    2009/06/06
  *  author  kkamagui 
  *          Copyright(c)2008 All rights reserved by kkamagui 
- *  brief   ½Ã¸®¾ó Æ÷Æ®·Î µ¥ÀÌÅÍ¸¦ Àü¼ÛÇÏ´Âµ¥ ÇÁ·Î±×·¥ÀÇ ¼Ò½º ÆÄÀÏ
+ *  brief   ì‹œë¦¬ì–¼ í¬íŠ¸ë¡œ ë°ì´í„°ë¥¼ ì „ì†¡í•˜ëŠ”ë° í”„ë¡œê·¸ë¨ì˜ ì†ŒìŠ¤ íŒŒì¼
  */
 
 #include <stdio.h>
@@ -15,16 +15,16 @@
 #include <errno.h>
 #include <windows.h>
 
-// ±âÅ¸ ¸ÅÅ©·Î
+// ê¸°íƒ€ ë§¤í¬ë¡œ
 #define DWORD               unsigned long
 #define BYTE                unsigned char
 #define MIN( x, y )         ( ( ( x ) < ( y ) ) ? ( x ) : ( y ) )
 
-// ½Ã¸®¾ó Æ÷Æ® FIFOÀÇ ÃÖ´ë Å©±â
+// ì‹œë¦¬ì–¼ í¬íŠ¸ FIFOì˜ ìµœëŒ€ í¬ê¸°
 #define SERIAL_FIFOMAXSIZE  16
 
 /**
- *  main ÇÔ¼ö
+ *  main í•¨ìˆ˜
  */
 int main( int argc, char** argv )
 {
@@ -40,21 +40,21 @@ int main( int argc, char** argv )
     FILE* fp;
     
     //--------------------------------------------------------------------------
-    // ÆÄÀÏ ¿­±â
+    // íŒŒì¼ ì—´ê¸°
     //--------------------------------------------------------------------------
-    // ÆÄÀÏ ÀÌ¸§À» ÀÔ·ÂÇÏÁö ¾Ê¾ÒÀ¸¸é ÆÄÀÏ ÀÌ¸§À» ÀÔ·Â ¹ŞÀ½
+    // íŒŒì¼ ì´ë¦„ì„ ì…ë ¥í•˜ì§€ ì•Šì•˜ìœ¼ë©´ íŒŒì¼ ì´ë¦„ì„ ì…ë ¥ ë°›ìŒ
     if( argc < 2 )
     {
         fprintf( stderr, "Input File Name: " );
         gets( vcFileName );
     }
-    // ÆÄÀÏ ÀÌ¸§À» ½ÇÇà ½Ã¿¡ ÀÔ·ÂÇß´Ù¸é º¹»çÇÔ
+    // íŒŒì¼ ì´ë¦„ì„ ì‹¤í–‰ ì‹œì— ì…ë ¥í–ˆë‹¤ë©´ ë³µì‚¬í•¨
     else
     {
         strcpy( vcFileName, argv[ 1 ] );
     }
 
-    // ÆÄÀÏ ¿­±â ½Ãµµ
+    // íŒŒì¼ ì—´ê¸° ì‹œë„
     fp = fopen( vcFileName, "rb" );
     if( fp == NULL )
     {
@@ -62,7 +62,7 @@ int main( int argc, char** argv )
         return 0;
     }
     
-    // fseek·Î ÆÄÀÏ ³¡À¸·Î ÀÌµ¿ÇÏ¿© ÆÄÀÏÀÇ ±æÀÌ¸¦ ÃøÁ¤ÇÑ µÚ, ´Ù½Ã ÆÄÀÏÀÇ Ã³À½À¸·Î ÀÌµ¿
+    // fseekë¡œ íŒŒì¼ ëìœ¼ë¡œ ì´ë™í•˜ì—¬ íŒŒì¼ì˜ ê¸¸ì´ë¥¼ ì¸¡ì •í•œ ë’¤, ë‹¤ì‹œ íŒŒì¼ì˜ ì²˜ìŒìœ¼ë¡œ ì´ë™
     fseek( fp, 0, SEEK_END );
     dwDataLength = ftell( fp );
     fseek( fp, 0, SEEK_SET );
@@ -70,9 +70,9 @@ int main( int argc, char** argv )
             dwDataLength );
     
     //--------------------------------------------------------------------------
-    // ½Ã¸®¾ó Æ÷Æ® Á¢¼Ó
+    // ì‹œë¦¬ì–¼ í¬íŠ¸ ì ‘ì†
     //--------------------------------------------------------------------------
-    // ½Ã¸®¾ó Æ÷Æ® ¿­±â
+    // ì‹œë¦¬ì–¼ í¬íŠ¸ ì—´ê¸°
     hSerialPort = CreateFile( "COM1", GENERIC_READ|GENERIC_WRITE, 0, 0, 
                               OPEN_EXISTING, 0, 0 );
     if( hSerialPort == INVALID_HANDLE_VALUE )
@@ -85,7 +85,7 @@ int main( int argc, char** argv )
         fprintf( stderr, "COM1 Open Success\n" );
     }
     
-    // Åë½Å ¼Óµµ, ÆĞ¸®Æ¼, Á¤Áö ºñÆ® ¼³Á¤
+    // í†µì‹  ì†ë„, íŒ¨ë¦¬í‹°, ì •ì§€ ë¹„íŠ¸ ì„¤ì •
     memset( &stDCB, 0, sizeof( stDCB ) );
     stDCB.fBinary = TRUE;           // Binary Transfer
     stDCB.BaudRate = CBR_115200 ;   // 115200 bps
@@ -99,9 +99,9 @@ int main( int argc, char** argv )
     }
     
     //--------------------------------------------------------------------------
-    // µ¥ÀÌÅÍ Àü¼Û
+    // ë°ì´í„° ì „ì†¡
     //--------------------------------------------------------------------------
-    // µ¥ÀÌÅÍ ±æÀÌ¸¦ Àü¼Û
+    // ë°ì´í„° ê¸¸ì´ë¥¼ ì „ì†¡
     if( ( WriteFile( hSerialPort, &dwDataLength, 4, &dwProcessedSize, NULL ) == FALSE ) ||
 		( dwProcessedSize != 4 ) )
     {
@@ -112,7 +112,7 @@ int main( int argc, char** argv )
     {
         fprintf( stderr, "Data Length Send Success, [%d] Byte\n", dwDataLength );
     }
-    // Ack°¡ ¼ö½ÅµÉ ¶§±îÁö ´ë±â
+    // Ackê°€ ìˆ˜ì‹ ë  ë•Œê¹Œì§€ ëŒ€ê¸°
     if( ( ReadFile( hSerialPort, &bAck, 1, &dwProcessedSize, 0 ) == FALSE ) ||
         ( dwProcessedSize != 1 ) )
     {
@@ -120,12 +120,12 @@ int main( int argc, char** argv )
         return 0;
     }    
     
-    // µ¥ÀÌÅÍ Àü¼Û
+    // ë°ì´í„° ì „ì†¡
     fprintf( stderr, "Now Data Transfer..." );
     dwSentSize = 0;
     while( dwSentSize < dwDataLength )
     {
-        // ³²Àº Å©±â¿Í FIFOÀÇ ÃÖ´ë Å©±â Áß¿¡¼­ ÀÛÀº °ÍÀ» ¼±ÅÃ
+        // ë‚¨ì€ í¬ê¸°ì™€ FIFOì˜ ìµœëŒ€ í¬ê¸° ì¤‘ì—ì„œ ì‘ì€ ê²ƒì„ ì„ íƒ
         dwTemp = MIN( dwDataLength - dwSentSize, SERIAL_FIFOMAXSIZE );
         dwSentSize += dwTemp;
         
@@ -135,7 +135,7 @@ int main( int argc, char** argv )
             return 0;
         }
         
-        // µ¥ÀÌÅÍ¸¦ Àü¼Û
+        // ë°ì´í„°ë¥¼ ì „ì†¡
         if( ( WriteFile( hSerialPort, vcDataBuffer, dwTemp, &dwProcessedSize, 0 ) == FALSE ) ||
 			( dwProcessedSize != dwTemp ) )
         {
@@ -143,22 +143,22 @@ int main( int argc, char** argv )
             return 0;
         }
         
-        // Ack°¡ ¼ö½ÅµÉ ¶§±îÁö ´ë±â
+        // Ackê°€ ìˆ˜ì‹ ë  ë•Œê¹Œì§€ ëŒ€ê¸°
         if( ( ReadFile( hSerialPort, &bAck, 1, &dwProcessedSize, 0 ) == FALSE ) ||
 			( dwProcessedSize != 1 ) )
         {
             fprintf( stderr, "Ack Receive Error\n" );
             return 0;
         }
-        // ÁøÇà »óÈ² Ç¥½Ã
+        // ì§„í–‰ ìƒí™© í‘œì‹œ
         fprintf( stderr, "#" );
     }
     
-    // ÆÄÀÏ°ú ½Ã¸®¾óÀ» ´İÀ½
+    // íŒŒì¼ê³¼ ì‹œë¦¬ì–¼ì„ ë‹«ìŒ
     fclose( fp );
     CloseHandle( hSerialPort );
     
-    // Àü¼ÛÀÌ ¿Ï·áµÇ¾úÀ½À» Ç¥½ÃÇÏ°í ¿£ÅÍ Å°¸¦ ´ë±â
+    // ì „ì†¡ì´ ì™„ë£Œë˜ì—ˆìŒì„ í‘œì‹œí•˜ê³  ì—”í„° í‚¤ë¥¼ ëŒ€ê¸°
     fprintf( stderr, "\nSend Complete. Total Size [%d] Byte\n", dwSentSize );
     fprintf( stderr, "Press Enter Key To Exit\n" );
     getchar();

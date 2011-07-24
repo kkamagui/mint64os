@@ -3,36 +3,36 @@
  *  date    2009/01/25
  *  author  kkamagui 
  *          Copyright(c)2008 All rights reserved by kkamagui
- *  brief   Å¥¿¡ °ü·ÃµÈ ÇÔ¼ö¸¦ Á¤ÀÇÇÑ ¼Ò½º ÆÄÀÏ
+ *  brief   íì— ê´€ë ¨ëœ í•¨ìˆ˜ë¥¼ ì •ì˜í•œ ì†ŒìŠ¤ íŒŒì¼
  */
 
 #include "Queue.h"
 
 /**
- *  Å¥¸¦ ÃÊ±âÈ­
+ *  íë¥¼ ì´ˆê¸°í™”
  */
 void kInitializeQueue( QUEUE* pstQueue, void* pvQueueBuffer, int iMaxDataCount, 
 		int iDataSize )
 {
-    // Å¥ÀÇ ÃÖ´ë °³¼ö¿Í Å©±â, ±×¸®°í ¹öÆÛ ¾îµå·¹½º¸¦ ÀúÀå
+    // íì˜ ìµœëŒ€ ê°œìˆ˜ì™€ í¬ê¸°, ê·¸ë¦¬ê³  ë²„í¼ ì–´ë“œë ˆìŠ¤ë¥¼ ì €ìž¥
 	pstQueue->iMaxDataCount = iMaxDataCount;
 	pstQueue->iDataSize = iDataSize;
 	pstQueue->pvQueueArray = pvQueueBuffer;
 
-    // Å¥ÀÇ »ðÀÔ À§Ä¡¿Í Á¦°Å À§Ä¡¸¦ ÃÊ±âÈ­ÇÏ°í ¸¶Áö¸·À¸·Î ¼öÇàµÈ ¸í·ÉÀ» Á¦°Å·Î
-    // ¼³Á¤ÇÏ¿© Å¥¸¦ ºó »óÅÂ·Î ¸¸µê
+    // íì˜ ì‚½ìž… ìœ„ì¹˜ì™€ ì œê±° ìœ„ì¹˜ë¥¼ ì´ˆê¸°í™”í•˜ê³  ë§ˆì§€ë§‰ìœ¼ë¡œ ìˆ˜í–‰ëœ ëª…ë ¹ì„ ì œê±°ë¡œ
+    // ì„¤ì •í•˜ì—¬ íë¥¼ ë¹ˆ ìƒíƒœë¡œ ë§Œë“¦
 	pstQueue->iPutIndex = 0;
 	pstQueue->iGetIndex = 0;
 	pstQueue->bLastOperationPut = FALSE;
 }
 
 /**
- *  Å¥°¡ °¡µæ Ã¡´ÂÁö ¿©ºÎ¸¦ ¹ÝÈ¯
+ *  íê°€ ê°€ë“ ì°¼ëŠ”ì§€ ì—¬ë¶€ë¥¼ ë°˜í™˜
  */
 BOOL kIsQueueFull( const QUEUE* pstQueue )
 {
-    // Å¥ÀÇ »ðÀÔ ÀÎµ¦½º¿Í Á¦°Å ÀÎµ¦½º°¡ °°°í ¸¶Áö¸·À¸·Î ¼öÇàµÈ ¸í·ÉÀÌ »ðÀÔÀÌ¸é
-    // Å¥°¡ °¡µæ Ã¡À¸¹Ç·Î »ðÀÔÇÒ ¼ö ¾øÀ½
+    // íì˜ ì‚½ìž… ì¸ë±ìŠ¤ì™€ ì œê±° ì¸ë±ìŠ¤ê°€ ê°™ê³  ë§ˆì§€ë§‰ìœ¼ë¡œ ìˆ˜í–‰ëœ ëª…ë ¹ì´ ì‚½ìž…ì´ë©´
+    // íê°€ ê°€ë“ ì°¼ìœ¼ë¯€ë¡œ ì‚½ìž…í•  ìˆ˜ ì—†ìŒ
     if( ( pstQueue->iGetIndex == pstQueue->iPutIndex ) &&
         ( pstQueue->bLastOperationPut == TRUE ) )
     {
@@ -42,12 +42,12 @@ BOOL kIsQueueFull( const QUEUE* pstQueue )
 }
 
 /**
- *  Å¥°¡ ºñ¾ú´ÂÁö ¿©ºÎ¸¦ ¹ÝÈ¯
+ *  íê°€ ë¹„ì—ˆëŠ”ì§€ ì—¬ë¶€ë¥¼ ë°˜í™˜
  */
 BOOL kIsQueueEmpty( const QUEUE* pstQueue )
 {
-    // Å¥ÀÇ »ðÀÔ ÀÎµ¦½º¿Í Á¦°Å ÀÎµ¦½º°¡ °°°í ¸¶Áö¸·À¸·Î ¼öÇàµÈ ¸í·ÉÀÌ Á¦°ÅÀÌ¸é
-    // Å¥°¡ ºñ¾úÀ¸¹Ç·Î Á¦°ÅÇÒ ¼ö ¾øÀ½
+    // íì˜ ì‚½ìž… ì¸ë±ìŠ¤ì™€ ì œê±° ì¸ë±ìŠ¤ê°€ ê°™ê³  ë§ˆì§€ë§‰ìœ¼ë¡œ ìˆ˜í–‰ëœ ëª…ë ¹ì´ ì œê±°ì´ë©´
+    // íê°€ ë¹„ì—ˆìœ¼ë¯€ë¡œ ì œê±°í•  ìˆ˜ ì—†ìŒ
     if( ( pstQueue->iGetIndex == pstQueue->iPutIndex ) &&
         ( pstQueue->bLastOperationPut == FALSE ) )
     {
@@ -57,42 +57,42 @@ BOOL kIsQueueEmpty( const QUEUE* pstQueue )
 }   
 
 /**
- * 	Å¥¿¡ µ¥ÀÌÅÍ¸¦ »ðÀÔ
+ * 	íì— ë°ì´í„°ë¥¼ ì‚½ìž…
  */
 BOOL kPutQueue( QUEUE* pstQueue, const void* pvData )
 {
-    // Å¥°¡ °¡µæ Ã¡À¸¸é »ðÀÔÇÒ ¼ö ¾øÀ½
+    // íê°€ ê°€ë“ ì°¼ìœ¼ë©´ ì‚½ìž…í•  ìˆ˜ ì—†ìŒ
 	if( kIsQueueFull( pstQueue ) == TRUE )
 	{
 	    return FALSE;
 	}
 	
-	// »ðÀÔ ÀÎµ¦½º°¡ °¡¸®Å°´Â À§Ä¡¿¡¼­ µ¥ÀÌÅÍÀÇ Å©±â¸¸Å­À» º¹»ç
+	// ì‚½ìž… ì¸ë±ìŠ¤ê°€ ê°€ë¦¬í‚¤ëŠ” ìœ„ì¹˜ì—ì„œ ë°ì´í„°ì˜ í¬ê¸°ë§Œí¼ì„ ë³µì‚¬
 	kMemCpy( ( char* ) pstQueue->pvQueueArray + ( pstQueue->iDataSize * 
 			pstQueue->iPutIndex ), pvData, pstQueue->iDataSize );
 	
-    // »ðÀÔ ÀÎµ¦½º¸¦ º¯°æÇÏ°í »ðÀÔ µ¿ÀÛÀ» ¼öÇàÇßÀ½À» ±â·Ï
+    // ì‚½ìž… ì¸ë±ìŠ¤ë¥¼ ë³€ê²½í•˜ê³  ì‚½ìž… ë™ìž‘ì„ ìˆ˜í–‰í–ˆìŒì„ ê¸°ë¡
 	pstQueue->iPutIndex = ( pstQueue->iPutIndex + 1 ) % pstQueue->iMaxDataCount;
 	pstQueue->bLastOperationPut = TRUE;
 	return TRUE;
 }
 
 /**
- * 	Å¥¿¡¼­ µ¥ÀÌÅÍ¸¦ Á¦°Å
+ * 	íì—ì„œ ë°ì´í„°ë¥¼ ì œê±°
  */
 BOOL kGetQueue( QUEUE* pstQueue, void* pvData )
 {
-    // Å¥°¡ ºñ¾úÀ¸¸é Á¦°ÅÇÒ ¼ö ¾øÀ½
+    // íê°€ ë¹„ì—ˆìœ¼ë©´ ì œê±°í•  ìˆ˜ ì—†ìŒ
     if( kIsQueueEmpty( pstQueue ) == TRUE )
     {
         return FALSE;
     }
 	
-	// Á¦°Å ÀÎµ¦½º°¡ °¡¸®Å°´Â À§Ä¡¿¡¼­ µ¥ÀÌÅÍÀÇ Å©±â¸¸Å­À» º¹»ç
+	// ì œê±° ì¸ë±ìŠ¤ê°€ ê°€ë¦¬í‚¤ëŠ” ìœ„ì¹˜ì—ì„œ ë°ì´í„°ì˜ í¬ê¸°ë§Œí¼ì„ ë³µì‚¬
 	kMemCpy( pvData, ( char* ) pstQueue->pvQueueArray + ( pstQueue->iDataSize * 
 			 pstQueue->iGetIndex ), pstQueue->iDataSize );
 	
-    // Á¦°Å ÀÎµ¦½º¸¦ º¯°æÇÏ°í Á¦°Å µ¿ÀÛÀ» ¼öÇàÇßÀ½À» ±â·Ï
+    // ì œê±° ì¸ë±ìŠ¤ë¥¼ ë³€ê²½í•˜ê³  ì œê±° ë™ìž‘ì„ ìˆ˜í–‰í–ˆìŒì„ ê¸°ë¡
 	pstQueue->iGetIndex = ( pstQueue->iGetIndex + 1 ) % pstQueue->iMaxDataCount;
     pstQueue->bLastOperationPut = FALSE;
 	return TRUE;

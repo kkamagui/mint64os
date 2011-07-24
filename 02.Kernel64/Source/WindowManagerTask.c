@@ -3,7 +3,7 @@
  *  date    2009/10/04
  *  author  kkamagui 
  *          Copyright(c)2008 All rights reserved by kkamagui
- *  brief   À©µµ¿ì ¸Å´ÏÀú¿¡ °ü·ÃµÈ ÇÔ¼ö¸¦ Á¤ÀÇÇÑ ¼Ò½º ÆÄÀÏ
+ *  brief   ìœˆë„ìš° ë§¤ë‹ˆì €ì— ê´€ë ¨ëœ í•¨ìˆ˜ë¥¼ ì •ì˜í•œ ì†ŒìŠ¤ íŒŒì¼
  */
  
 #include "Types.h"
@@ -17,7 +17,7 @@
 #include "ApplicationPanelTask.h"
 
 /**
- *  À©µµ¿ì ¸Å´ÏÀú ÅÂ½ºÅ©
+ *  ìœˆë„ìš° ë§¤ë‹ˆì € íƒœìŠ¤í¬
  */
 void kStartWindowManager( void )
 {
@@ -27,45 +27,45 @@ void kStartWindowManager( void )
     BOOL bEventQueueResult;
     WINDOWMANAGER* pstWindowManager;
 
-    // GUI ½Ã½ºÅÛÀ» ÃÊ±âÈ­
+    // GUI ì‹œìŠ¤í…œì„ ì´ˆê¸°í™”
     kInitializeGUISystem();
     
-    // ÇöÀç ¸¶¿ì½º À§Ä¡¿¡ Ä¿¼­¸¦ Ãâ·Â
+    // í˜„ìž¬ ë§ˆìš°ìŠ¤ ìœ„ì¹˜ì— ì»¤ì„œë¥¼ ì¶œë ¥
     kGetCursorPosition( &iMouseX, &iMouseY );
     kMoveCursor( iMouseX, iMouseY );
     
-    // ¾ÖÇÃ¸®ÄÉÀÌ¼Ç ÆÐ³Î ÅÂ½ºÅ©¸¦ ½ÇÇà
+    // ì• í”Œë¦¬ì¼€ì´ì…˜ íŒ¨ë„ íƒœìŠ¤í¬ë¥¼ ì‹¤í–‰
     kCreateTask( TASK_FLAGS_SYSTEM | TASK_FLAGS_THREAD | TASK_FLAGS_LOW, 0, 0, 
             ( QWORD ) kApplicationPanelGUITask, TASK_LOADBALANCINGID );
     
-    // À©µµ¿ì ¸Å´ÏÀú¸¦ ¹ÝÈ¯
+    // ìœˆë„ìš° ë§¤ë‹ˆì €ë¥¼ ë°˜í™˜
     pstWindowManager = kGetWindowManager();
     
-    // À©µµ¿ì ¸Å´ÏÀú ÅÂ½ºÅ© ·çÇÁ
+    // ìœˆë„ìš° ë§¤ë‹ˆì € íƒœìŠ¤í¬ ë£¨í”„
     while( 1 )
     {
-        // ¸¶¿ì½º µ¥ÀÌÅÍ¸¦ Ã³¸®
+        // ë§ˆìš°ìŠ¤ ë°ì´í„°ë¥¼ ì²˜ë¦¬
         bMouseDataResult = kProcessMouseData();
         
-        // Å° µ¥ÀÌÅÍ¸¦ Ã³¸®
+        // í‚¤ ë°ì´í„°ë¥¼ ì²˜ë¦¬
         bKeyDataResult = kProcessKeyData();
 
-        // À©µµ¿ì ¸Å´ÏÀúÀÇ ÀÌº¥Æ® Å¥¿¡ ¼ö½ÅµÈ µ¥ÀÌÅÍ¸¦ Ã³¸®. ¼ö½ÅµÈ ¸ðµç ÀÌº¥Æ®¸¦ Ã³¸®ÇÔ
+        // ìœˆë„ìš° ë§¤ë‹ˆì €ì˜ ì´ë²¤íŠ¸ íì— ìˆ˜ì‹ ëœ ë°ì´í„°ë¥¼ ì²˜ë¦¬. ìˆ˜ì‹ ëœ ëª¨ë“  ì´ë²¤íŠ¸ë¥¼ ì²˜ë¦¬í•¨
         bEventQueueResult = FALSE;
         while( kProcessEventQueueData() == TRUE )
         {
             bEventQueueResult = TRUE;
         }
 
-        // ÀÌº¥Æ® Å¥¿¡ ÀÌº¥Æ®¸¦ Ã³¸®Çß´Ù¸é À©µµ¿ì Å©±â º¯°æ Ç¥½ÄÀÌ Áö¿öÁú ¼ö ÀÖÀ¸¹Ç·Î ´Ù½Ã Ãâ·Â
+        // ì´ë²¤íŠ¸ íì— ì´ë²¤íŠ¸ë¥¼ ì²˜ë¦¬í–ˆë‹¤ë©´ ìœˆë„ìš° í¬ê¸° ë³€ê²½ í‘œì‹ì´ ì§€ì›Œì§ˆ ìˆ˜ ìžˆìœ¼ë¯€ë¡œ ë‹¤ì‹œ ì¶œë ¥
         if( ( bEventQueueResult == TRUE ) &&
             ( pstWindowManager->bWindowResizeMode == TRUE ) )
         {
-            // »õ·Î¿î À§Ä¡¿¡ À©µµ¿ì Å©±â º¯°æ Ç¥½ÄÀ» Ç¥½Ã
+            // ìƒˆë¡œìš´ ìœ„ì¹˜ì— ìœˆë„ìš° í¬ê¸° ë³€ê²½ í‘œì‹ì„ í‘œì‹œ
             kDrawResizeMarker( &( pstWindowManager->stResizingWindowArea ), TRUE );
         }
         
-        // Ã³¸®ÇÑ µ¥ÀÌÅÍ°¡ ÇÏ³ªµµ ¾ø´Ù¸é Sleep()À» ¼öÇàÇÏ¿© ÇÁ·Î¼¼¼­¸¦ ¾çº¸ÇÔ
+        // ì²˜ë¦¬í•œ ë°ì´í„°ê°€ í•˜ë‚˜ë„ ì—†ë‹¤ë©´ Sleep()ì„ ìˆ˜í–‰í•˜ì—¬ í”„ë¡œì„¸ì„œë¥¼ ì–‘ë³´í•¨
         if( ( bMouseDataResult == FALSE ) &&
             ( bKeyDataResult == FALSE ) &&
             ( bEventQueueResult == FALSE ) )
@@ -76,7 +76,7 @@ void kStartWindowManager( void )
 }
 
 /**
- *  ¼ö½ÅµÈ ¸¶¿ì½º µ¥ÀÌÅÍ¸¦ Ã³¸®
+ *  ìˆ˜ì‹ ëœ ë§ˆìš°ìŠ¤ ë°ì´í„°ë¥¼ ì²˜ë¦¬
  */
 BOOL kProcessMouseData( void )
 {
@@ -93,56 +93,56 @@ BOOL kProcessMouseData( void )
     int i;
     int iWidth, iHeight;
     
-    // À©µµ¿ì ¸Å´ÏÀú¸¦ ¹ÝÈ¯
+    // ìœˆë„ìš° ë§¤ë‹ˆì €ë¥¼ ë°˜í™˜
     pstWindowManager = kGetWindowManager();
 
     //--------------------------------------------------------------------------
-    // ¸¶¿ì½º ÀÌº¥Æ®¸¦ ÅëÇÕÇÏ´Â ºÎºÐ
+    // ë§ˆìš°ìŠ¤ ì´ë²¤íŠ¸ë¥¼ í†µí•©í•˜ëŠ” ë¶€ë¶„
     //--------------------------------------------------------------------------
     for( i = 0 ; i < WINDOWMANAGER_DATAACCUMULATECOUNT ; i++ )
     {
-        // ¸¶¿ì½º µ¥ÀÌÅÍ°¡ ¼ö½ÅµÇ±â¸¦ ±â´Ù¸²
+        // ë§ˆìš°ìŠ¤ ë°ì´í„°ê°€ ìˆ˜ì‹ ë˜ê¸°ë¥¼ ê¸°ë‹¤ë¦¼
         if( kGetMouseDataFromMouseQueue( &bButtonStatus, &iRelativeX, &iRelativeY ) ==
             FALSE )
         {
-            // Ã³À½À¸·Î È®ÀÎÇß´Âµ¥ µ¥ÀÌÅÍ°¡ ¾ø´Ù¸é Á¾·á
+            // ì²˜ìŒìœ¼ë¡œ í™•ì¸í–ˆëŠ”ë° ë°ì´í„°ê°€ ì—†ë‹¤ë©´ ì¢…ë£Œ
             if( i == 0 )
             {
                 return FALSE;
             }
-            // Ã³À½ÀÌ ¾Æ´Ñ °æ¿ì´Â ÀÌÀü ·çÇÁ¿¡¼­ ¸¶¿ì½º ÀÌº¥Æ®¸¦ ¼ö½ÅÇßÀ¸¹Ç·Î 
-            // ÅëÇÕÇÑ ÀÌº¥Æ®¸¦ Ã³¸®
+            // ì²˜ìŒì´ ì•„ë‹Œ ê²½ìš°ëŠ” ì´ì „ ë£¨í”„ì—ì„œ ë§ˆìš°ìŠ¤ ì´ë²¤íŠ¸ë¥¼ ìˆ˜ì‹ í–ˆìœ¼ë¯€ë¡œ 
+            // í†µí•©í•œ ì´ë²¤íŠ¸ë¥¼ ì²˜ë¦¬
             else
             {
                 break;
             }
         }
         
-        // ÇöÀç ¸¶¿ì½º Ä¿¼­ À§Ä¡¸¦ ¹ÝÈ¯
+        // í˜„ìž¬ ë§ˆìš°ìŠ¤ ì»¤ì„œ ìœ„ì¹˜ë¥¼ ë°˜í™˜
         kGetCursorPosition( &iMouseX, &iMouseY );
         
-        // Ã³À½ ¸¶¿ì½º ÀÌº¥Æ®°¡ ¼ö½ÅµÈ °ÍÀÌ¸é ÇöÀç ÁÂÇ¥¸¦ ÀÌÀü ¸¶¿ì½ºÀÇ À§Ä¡·Î ÀúÀåÇØµÒ
+        // ì²˜ìŒ ë§ˆìš°ìŠ¤ ì´ë²¤íŠ¸ê°€ ìˆ˜ì‹ ëœ ê²ƒì´ë©´ í˜„ìž¬ ì¢Œí‘œë¥¼ ì´ì „ ë§ˆìš°ìŠ¤ì˜ ìœ„ì¹˜ë¡œ ì €ìž¥í•´ë‘ 
         if( i == 0 )
         {
-            // ¿òÁ÷ÀÌ±â ÀÌÀüÀÇ ÁÂÇ¥¸¦ ÀúÀå
+            // ì›€ì§ì´ê¸° ì´ì „ì˜ ì¢Œí‘œë¥¼ ì €ìž¥
             iPreviousMouseX = iMouseX;
             iPreviousMouseY = iMouseY;
         }
         
-        // ¸¶¿ì½º°¡ ¿òÁ÷ÀÎ °Å¸®¸¦ ÀÌÀü Ä¿¼­ À§Ä¡¿¡ ´õÇØ¼­ ÇöÀç ÁÂÇ¥¸¦ °è»ê
+        // ë§ˆìš°ìŠ¤ê°€ ì›€ì§ì¸ ê±°ë¦¬ë¥¼ ì´ì „ ì»¤ì„œ ìœ„ì¹˜ì— ë”í•´ì„œ í˜„ìž¬ ì¢Œí‘œë¥¼ ê³„ì‚°
         iMouseX += iRelativeX;
         iMouseY += iRelativeY;
         
-        // »õ·Î¿î À§Ä¡·Î ¸¶¿ì½º Ä¿¼­¸¦ ÀÌµ¿ÇÏ°í ´Ù½Ã ÇöÀç Ä¿¼­ÀÇ À§Ä¡¸¦ ¹ÝÈ¯
-        // ¸¶¿ì½º Ä¿¼­°¡ È­¸éÀ» ¹þ¾î³ªÁö ¾Êµµ·Ï Ã³¸®µÈ Ä¿¼­ ÁÂÇ¥¸¦ »ç¿ëÇÏ¿© È­¸éÀ» ¹þ¾î³­
-        // Ä¿¼­·Î ÀÎÇØ ¹ß»ýÇÏ´Â ¹®Á¦¸¦ ¹æÁö
+        // ìƒˆë¡œìš´ ìœ„ì¹˜ë¡œ ë§ˆìš°ìŠ¤ ì»¤ì„œë¥¼ ì´ë™í•˜ê³  ë‹¤ì‹œ í˜„ìž¬ ì»¤ì„œì˜ ìœ„ì¹˜ë¥¼ ë°˜í™˜
+        // ë§ˆìš°ìŠ¤ ì»¤ì„œê°€ í™”ë©´ì„ ë²—ì–´ë‚˜ì§€ ì•Šë„ë¡ ì²˜ë¦¬ëœ ì»¤ì„œ ì¢Œí‘œë¥¼ ì‚¬ìš©í•˜ì—¬ í™”ë©´ì„ ë²—ì–´ë‚œ
+        // ì»¤ì„œë¡œ ì¸í•´ ë°œìƒí•˜ëŠ” ë¬¸ì œë¥¼ ë°©ì§€
         kMoveCursor( iMouseX, iMouseY );
         kGetCursorPosition( &iMouseX, &iMouseY );
         
-        // ¹öÆ° »óÅÂ´Â ÀÌÀü ¹öÆ° »óÅÂ¿Í ÇöÀç ¹öÆ° »óÅÂ¸¦ XORÇÏ¿© 1·Î ¼³Á¤µÆ´ÂÁö¸¦ È®ÀÎ
+        // ë²„íŠ¼ ìƒíƒœëŠ” ì´ì „ ë²„íŠ¼ ìƒíƒœì™€ í˜„ìž¬ ë²„íŠ¼ ìƒíƒœë¥¼ XORí•˜ì—¬ 1ë¡œ ì„¤ì •ëëŠ”ì§€ë¥¼ í™•ì¸
         bChangedButton = pstWindowManager->bPreviousButtonStatus ^ bButtonStatus;
 
-        // ¸¶¿ì½º°¡ ¿òÁ÷¿´À¸³ª ¹öÆ°ÀÇ º¯È­°¡ ÀÖ´Ù¸é ¹Ù·Î ÀÌº¥Æ® Ã³¸®
+        // ë§ˆìš°ìŠ¤ê°€ ì›€ì§ì˜€ìœ¼ë‚˜ ë²„íŠ¼ì˜ ë³€í™”ê°€ ìžˆë‹¤ë©´ ë°”ë¡œ ì´ë²¤íŠ¸ ì²˜ë¦¬
         if( bChangedButton != 0 )
         {
             break;
@@ -150,97 +150,97 @@ BOOL kProcessMouseData( void )
     }
     
     //--------------------------------------------------------------------------
-    // ¸¶¿ì½º ÀÌº¥Æ®¸¦ Ã³¸®ÇÏ´Â ºÎºÐ
+    // ë§ˆìš°ìŠ¤ ì´ë²¤íŠ¸ë¥¼ ì²˜ë¦¬í•˜ëŠ” ë¶€ë¶„
     //--------------------------------------------------------------------------
-    // ÇöÀç ¸¶¿ì½º Ä¿¼­ ¾Æ·¡¿¡ ÀÖ´Â À©µµ¿ì¸¦ °Ë»ö
+    // í˜„ìž¬ ë§ˆìš°ìŠ¤ ì»¤ì„œ ì•„ëž˜ì— ìžˆëŠ” ìœˆë„ìš°ë¥¼ ê²€ìƒ‰
     qwWindowIDUnderMouse = kFindWindowByPoint( iMouseX, iMouseY );
     
     //--------------------------------------------------------------------------
-    // ¹öÆ° »óÅÂ°¡ º¯Çß´ÂÁö È®ÀÎÇÏ°í ¹öÆ° »óÅÂ¿¡ µû¶ó ¸¶¿ì½º ¸Þ½ÃÁö¿Í À©µµ¿ì ¸Þ½ÃÁö¸¦
-    // Àü¼Û
+    // ë²„íŠ¼ ìƒíƒœê°€ ë³€í–ˆëŠ”ì§€ í™•ì¸í•˜ê³  ë²„íŠ¼ ìƒíƒœì— ë”°ë¼ ë§ˆìš°ìŠ¤ ë©”ì‹œì§€ì™€ ìœˆë„ìš° ë©”ì‹œì§€ë¥¼
+    // ì „ì†¡
     //--------------------------------------------------------------------------
-    // ¸¶¿ì½º ¿ÞÂÊ ¹öÆ°¿¡ º¯È­°¡ »ý±ä °æ¿ì Ã³¸®
+    // ë§ˆìš°ìŠ¤ ì™¼ìª½ ë²„íŠ¼ì— ë³€í™”ê°€ ìƒê¸´ ê²½ìš° ì²˜ë¦¬
     if( bChangedButton & MOUSE_LBUTTONDOWN )
     {
-        // ¿ÞÂÊ ¹öÆ°ÀÌ ´­¸° °æ¿ì Ã³¸®
+        // ì™¼ìª½ ë²„íŠ¼ì´ ëˆŒë¦° ê²½ìš° ì²˜ë¦¬
         if( bButtonStatus & MOUSE_LBUTTONDOWN )
         {
-            // ¸¶¿ì½º·Î À©µµ¿ì¸¦ ¼±ÅÃÇÑ °ÍÀÌ¹Ç·Î, ¸¶¿ì½º ¾Æ·¡¿¡ ÀÖ´Â À©µµ¿ì°¡
-            // ¹è°æ À©µµ¿ì°¡ ¾Æ´Ñ °æ¿ì ÃÖ»óÀ§·Î ¿Ã·ÁÁÜ
+            // ë§ˆìš°ìŠ¤ë¡œ ìœˆë„ìš°ë¥¼ ì„ íƒí•œ ê²ƒì´ë¯€ë¡œ, ë§ˆìš°ìŠ¤ ì•„ëž˜ì— ìžˆëŠ” ìœˆë„ìš°ê°€
+            // ë°°ê²½ ìœˆë„ìš°ê°€ ì•„ë‹Œ ê²½ìš° ìµœìƒìœ„ë¡œ ì˜¬ë ¤ì¤Œ
             if( qwWindowIDUnderMouse != pstWindowManager->qwBackgoundWindowID )
             {
-                // ¼±ÅÃµÈ À©µµ¿ì¸¦ ÃÖ»óÀ§·Î ¸¸µê
-                // À©µµ¿ì¸¦ ÃÖ»óÀ§·Î ¸¸µé¸é¼­ µ¿½Ã¿¡ À©µµ¿ì ¼±ÅÃ°ú ¼±ÅÃ ÇØÁ¦ ÀÌº¥Æ®µµ
-                // °°ÀÌ Àü¼Û
+                // ì„ íƒëœ ìœˆë„ìš°ë¥¼ ìµœìƒìœ„ë¡œ ë§Œë“¦
+                // ìœˆë„ìš°ë¥¼ ìµœìƒìœ„ë¡œ ë§Œë“¤ë©´ì„œ ë™ì‹œì— ìœˆë„ìš° ì„ íƒê³¼ ì„ íƒ í•´ì œ ì´ë²¤íŠ¸ë„
+                // ê°™ì´ ì „ì†¡
                 kMoveWindowToTop( qwWindowIDUnderMouse );
             }
             
             //------------------------------------------------------------------
-            // ¿ÞÂÊ ¹öÆ°ÀÌ ´­¸° À§Ä¡°¡ Á¦¸ñ Ç¥½ÃÁÙÀÇ À§Ä¡ÀÌ¸é À©µµ¿ì ÀÌµ¿ÀÎÁö ¶Ç´Â
-            // ´Ý±â ¹öÆ° À§Ä¡¿¡¼­ ´­·È´ÂÁö È®ÀÎÇÏ¿© Ã³¸®
+            // ì™¼ìª½ ë²„íŠ¼ì´ ëˆŒë¦° ìœ„ì¹˜ê°€ ì œëª© í‘œì‹œì¤„ì˜ ìœ„ì¹˜ì´ë©´ ìœˆë„ìš° ì´ë™ì¸ì§€ ë˜ëŠ”
+            // ë‹«ê¸° ë²„íŠ¼ ìœ„ì¹˜ì—ì„œ ëˆŒë ¸ëŠ”ì§€ í™•ì¸í•˜ì—¬ ì²˜ë¦¬
             //------------------------------------------------------------------
             if( kIsInTitleBar( qwWindowIDUnderMouse, iMouseX, iMouseY ) == TRUE )
             {
-                // ´Ý±â ¹öÆ°¿¡¼­ ´­·ÈÀ¸¸é À©µµ¿ì¿¡ ´Ý±â Àü¼Û
+                // ë‹«ê¸° ë²„íŠ¼ì—ì„œ ëˆŒë ¸ìœ¼ë©´ ìœˆë„ìš°ì— ë‹«ê¸° ì „ì†¡
                 if( kIsInCloseButton( qwWindowIDUnderMouse, iMouseX, iMouseY ) 
                         == TRUE )
                 {
-                    // À©µµ¿ì ´Ý±â ÀÌº¥Æ®¸¦ Àü¼Û
+                    // ìœˆë„ìš° ë‹«ê¸° ì´ë²¤íŠ¸ë¥¼ ì „ì†¡
                     kSetWindowEvent( qwWindowIDUnderMouse, EVENT_WINDOW_CLOSE,
                             &stEvent );
                     kSendEventToWindow( qwWindowIDUnderMouse, &stEvent );
                 }
-                // À©µµ¿ì Å©±â º¯°æ ¹öÆ°¿¡¼­ ´­·ÈÀ¸¸é Å©±â º¯°æ ¸ðµå·Î º¯°æ
+                // ìœˆë„ìš° í¬ê¸° ë³€ê²½ ë²„íŠ¼ì—ì„œ ëˆŒë ¸ìœ¼ë©´ í¬ê¸° ë³€ê²½ ëª¨ë“œë¡œ ë³€ê²½
                 else if( kIsInResizeButton( qwWindowIDUnderMouse, iMouseX, iMouseY ) 
                            == TRUE )
                 {
-                    // À©µµ¿ì Å©±â º¯°æ ¸ðµå ¼³Á¤
+                    // ìœˆë„ìš° í¬ê¸° ë³€ê²½ ëª¨ë“œ ì„¤ì •
                     pstWindowManager->bWindowResizeMode = TRUE;
                     
-                    // ÇöÀç À©µµ¿ì¸¦ Å©±â º¯°æ À©µµ¿ì·Î ¼³Á¤
+                    // í˜„ìž¬ ìœˆë„ìš°ë¥¼ í¬ê¸° ë³€ê²½ ìœˆë„ìš°ë¡œ ì„¤ì •
                     pstWindowManager->qwResizingWindowID = qwWindowIDUnderMouse;
                     
-                    // ÇöÀç À©µµ¿ìÀÇ Å©±â¸¦ ÀúÀå
+                    // í˜„ìž¬ ìœˆë„ìš°ì˜ í¬ê¸°ë¥¼ ì €ìž¥
                     kGetWindowArea( qwWindowIDUnderMouse, 
                             &( pstWindowManager->stResizingWindowArea ) );
                     
-                    // À©µµ¿ì Å©±â º¯°æ Ç¥½ÄÀ» Ç¥½Ã
+                    // ìœˆë„ìš° í¬ê¸° ë³€ê²½ í‘œì‹ì„ í‘œì‹œ
                     kDrawResizeMarker( &( pstWindowManager->stResizingWindowArea ), 
                             TRUE );
                 }
-                // ´Ý±â ¹öÆ°ÀÌ ¾Æ´Ï¸é À©µµ¿ì ÀÌµ¿ ¸ðµå·Î º¯°æ
+                // ë‹«ê¸° ë²„íŠ¼ì´ ì•„ë‹ˆë©´ ìœˆë„ìš° ì´ë™ ëª¨ë“œë¡œ ë³€ê²½
                 else
                 {
-                    // À©µµ¿ì ÀÌµ¿ ¸ðµå ¼³Á¤
+                    // ìœˆë„ìš° ì´ë™ ëª¨ë“œ ì„¤ì •
                     pstWindowManager->bWindowMoveMode = TRUE;
                     
-                    // ÇöÀç À©µµ¿ì¸¦ ÀÌµ¿ÇÏ´Â À©µµ¿ì·Î ¼³Á¤
+                    // í˜„ìž¬ ìœˆë„ìš°ë¥¼ ì´ë™í•˜ëŠ” ìœˆë„ìš°ë¡œ ì„¤ì •
                     pstWindowManager->qwMovingWindowID = qwWindowIDUnderMouse;
                 }
             }
-            // À©µµ¿ì ³»ºÎ¿¡¼­ ´­¸° °ÍÀÌ¸é ¿ÞÂÊ ¹öÆ°ÀÌ ´­·¯Á³À½À» Àü¼Û
+            // ìœˆë„ìš° ë‚´ë¶€ì—ì„œ ëˆŒë¦° ê²ƒì´ë©´ ì™¼ìª½ ë²„íŠ¼ì´ ëˆŒëŸ¬ì¡ŒìŒì„ ì „ì†¡
             else
             {
-                // ¿ÞÂÊ ¹öÆ° ´­¸² ÀÌº¥Æ®¸¦ Àü¼Û
+                // ì™¼ìª½ ë²„íŠ¼ ëˆŒë¦¼ ì´ë²¤íŠ¸ë¥¼ ì „ì†¡
                 kSetMouseEvent( qwWindowIDUnderMouse, EVENT_MOUSE_LBUTTONDOWN,
                         iMouseX, iMouseY, bButtonStatus, &stEvent );
                 kSendEventToWindow( qwWindowIDUnderMouse, &stEvent );
             }
         }
-        // ¿ÞÂÊ ¹öÆ°ÀÌ ¶³¾îÁø °æ¿ì Ã³¸®
+        // ì™¼ìª½ ë²„íŠ¼ì´ ë–¨ì–´ì§„ ê²½ìš° ì²˜ë¦¬
         else
         {
-            // À©µµ¿ì°¡ ÀÌµ¿ ÁßÀÌ¾úÀ¸¸é ¸ðµå¸¸ ÇØÁ¦
+            // ìœˆë„ìš°ê°€ ì´ë™ ì¤‘ì´ì—ˆìœ¼ë©´ ëª¨ë“œë§Œ í•´ì œ
             if( pstWindowManager->bWindowMoveMode == TRUE )
             {
-                // ÀÌµ¿ ÁßÀÌ¶ó´Â ÇÃ·¡±×¸¦ ÇØÁ¦
+                // ì´ë™ ì¤‘ì´ë¼ëŠ” í”Œëž˜ê·¸ë¥¼ í•´ì œ
                 pstWindowManager->bWindowMoveMode = FALSE;
                 pstWindowManager->qwMovingWindowID = WINDOW_INVALIDID;
             }
-            // À©µµ¿ì°¡ Å©±â º¯°æ ÁßÀÌ¾úÀ¸¸é °áÁ¤µÈ Å©±â·Î À©µµ¿ì Å©±â º¯°æ
+            // ìœˆë„ìš°ê°€ í¬ê¸° ë³€ê²½ ì¤‘ì´ì—ˆìœ¼ë©´ ê²°ì •ëœ í¬ê¸°ë¡œ ìœˆë„ìš° í¬ê¸° ë³€ê²½
             else if( pstWindowManager->bWindowResizeMode == TRUE )
             {
-                // À©µµ¿ì ¸Å´ÏÀú ÀÚ·á±¸Á¶¿¡ ÀúÀåµÈ ¿µ¿ªÀ» ÀÌ¿ëÇÏ¿© À©µµ¿ìÀÇ Å©±â¸¦ º¯°æ
+                // ìœˆë„ìš° ë§¤ë‹ˆì € ìžë£Œêµ¬ì¡°ì— ì €ìž¥ëœ ì˜ì—­ì„ ì´ìš©í•˜ì—¬ ìœˆë„ìš°ì˜ í¬ê¸°ë¥¼ ë³€ê²½
                 iWidth = kGetRectangleWidth( &( pstWindowManager->stResizingWindowArea ) );
                 iHeight = kGetRectangleHeight( &( pstWindowManager->stResizingWindowArea ) );
                 kResizeWindow( pstWindowManager->qwResizingWindowID, 
@@ -248,111 +248,111 @@ BOOL kProcessMouseData( void )
                         pstWindowManager->stResizingWindowArea.iY1,
                         iWidth, iHeight );
                 
-                // À©µµ¿ì Å©±â º¯°æ Ç¥½Ä »èÁ¦
+                // ìœˆë„ìš° í¬ê¸° ë³€ê²½ í‘œì‹ ì‚­ì œ
                 kDrawResizeMarker( &( pstWindowManager->stResizingWindowArea ), FALSE );
 
-                // À©µµ¿ì·Î Å©±â º¯°æ ÀÌº¥Æ® Àü¼Û
+                // ìœˆë„ìš°ë¡œ í¬ê¸° ë³€ê²½ ì´ë²¤íŠ¸ ì „ì†¡
                 kSetWindowEvent( pstWindowManager->qwResizingWindowID, EVENT_WINDOW_RESIZE, 
                         &stEvent );
                 kSendEventToWindow( pstWindowManager->qwResizingWindowID, &stEvent );
                 
-                // Å©±â º¯°æ ÁßÀÌ¶ó´Â ÇÃ·¡±×¸¦ ÇØÁ¦
+                // í¬ê¸° ë³€ê²½ ì¤‘ì´ë¼ëŠ” í”Œëž˜ê·¸ë¥¼ í•´ì œ
                 pstWindowManager->bWindowResizeMode = FALSE;
                 pstWindowManager->qwResizingWindowID = WINDOW_INVALIDID;
             }
-            // À©µµ¿ì°¡ ÀÌµ¿ ÁßÀÌ ¾Æ´Ï¾úÀ¸¸é À©µµ¿ì·Î ¿ÞÂÊ ¹öÆ° ¶³¾îÁü ÀÌº¥Æ®¸¦ Àü¼Û
+            // ìœˆë„ìš°ê°€ ì´ë™ ì¤‘ì´ ì•„ë‹ˆì—ˆìœ¼ë©´ ìœˆë„ìš°ë¡œ ì™¼ìª½ ë²„íŠ¼ ë–¨ì–´ì§ ì´ë²¤íŠ¸ë¥¼ ì „ì†¡
             else
             {
-                // ¿ÞÂÊ ¹öÆ° ¶³¾îÁü ÀÌº¥Æ®¸¦ Àü¼Û
+                // ì™¼ìª½ ë²„íŠ¼ ë–¨ì–´ì§ ì´ë²¤íŠ¸ë¥¼ ì „ì†¡
                 kSetMouseEvent( qwWindowIDUnderMouse, EVENT_MOUSE_LBUTTONUP,
                         iMouseX, iMouseY, bButtonStatus, &stEvent );
                 kSendEventToWindow( qwWindowIDUnderMouse, &stEvent );
             }
         }
     }            
-    // ¸¶¿ì½º ¿À¸¥ÂÊ ¹öÆ°¿¡ º¯È­°¡ »ý±ä °æ¿ì Ã³¸®
+    // ë§ˆìš°ìŠ¤ ì˜¤ë¥¸ìª½ ë²„íŠ¼ì— ë³€í™”ê°€ ìƒê¸´ ê²½ìš° ì²˜ë¦¬
     else if( bChangedButton & MOUSE_RBUTTONDOWN )
     {
-        // ¿À¸¥ÂÊ ¹öÆ°ÀÌ ´­¸° °æ¿ì Ã³¸®
+        // ì˜¤ë¥¸ìª½ ë²„íŠ¼ì´ ëˆŒë¦° ê²½ìš° ì²˜ë¦¬
         if( bButtonStatus & MOUSE_RBUTTONDOWN )
         {
-            // ¿À¸¥ÂÊ ¹öÆ° ´­¸² ÀÌº¥Æ®¸¦ Àü¼Û
+            // ì˜¤ë¥¸ìª½ ë²„íŠ¼ ëˆŒë¦¼ ì´ë²¤íŠ¸ë¥¼ ì „ì†¡
             kSetMouseEvent( qwWindowIDUnderMouse, EVENT_MOUSE_RBUTTONDOWN,
                     iMouseX, iMouseY, bButtonStatus, &stEvent );
             kSendEventToWindow( qwWindowIDUnderMouse, &stEvent );
         }
         else
         {
-            // ¿À¸¥ÂÊ ¹öÆ° ¶³¾îÁü ÀÌº¥Æ®¸¦ Àü¼Û
+            // ì˜¤ë¥¸ìª½ ë²„íŠ¼ ë–¨ì–´ì§ ì´ë²¤íŠ¸ë¥¼ ì „ì†¡
             kSetMouseEvent( qwWindowIDUnderMouse, EVENT_MOUSE_RBUTTONUP,
                     iMouseX, iMouseY, bButtonStatus, &stEvent );
             kSendEventToWindow( qwWindowIDUnderMouse, &stEvent );
         }
     }
-    // ¸¶¿ì½º °¡¿îµ¥ ¹öÆ°¿¡ º¯È­°¡ »ý±ä °æ¿ì Ã³¸®
+    // ë§ˆìš°ìŠ¤ ê°€ìš´ë° ë²„íŠ¼ì— ë³€í™”ê°€ ìƒê¸´ ê²½ìš° ì²˜ë¦¬
     else if( bChangedButton & MOUSE_MBUTTONDOWN )
     {
-        // °¡¿îµ¥ ¹öÆ°ÀÌ ´­¸° °æ¿ì Ã³¸®
+        // ê°€ìš´ë° ë²„íŠ¼ì´ ëˆŒë¦° ê²½ìš° ì²˜ë¦¬
         if( bButtonStatus & MOUSE_MBUTTONDOWN )
         {
-            // °¡¿îµ¥ ¹öÆ° ´­¸² ÀÌº¥Æ®¸¦ Àü¼Û
+            // ê°€ìš´ë° ë²„íŠ¼ ëˆŒë¦¼ ì´ë²¤íŠ¸ë¥¼ ì „ì†¡
             kSetMouseEvent( qwWindowIDUnderMouse, EVENT_MOUSE_MBUTTONDOWN,
                     iMouseX, iMouseY, bButtonStatus, &stEvent );
             kSendEventToWindow( qwWindowIDUnderMouse, &stEvent );
         }
         else
         {
-            // °¡¿îµ¥ ¹öÆ° ¶³¾îÁü ÀÌº¥Æ®¸¦ Àü¼Û
+            // ê°€ìš´ë° ë²„íŠ¼ ë–¨ì–´ì§ ì´ë²¤íŠ¸ë¥¼ ì „ì†¡
             kSetMouseEvent( qwWindowIDUnderMouse, EVENT_MOUSE_MBUTTONUP,
                     iMouseX, iMouseY, bButtonStatus, &stEvent );
             kSendEventToWindow( qwWindowIDUnderMouse, &stEvent );
         }
     }        
-    // ¸¶¿ì½º ¹öÆ°ÀÌ º¯°æµÇÁö ¾Ê¾ÒÀ¸¸é ¸¶¿ì½º ÀÌµ¿ Ã³¸®¸¸ ¼öÇà
+    // ë§ˆìš°ìŠ¤ ë²„íŠ¼ì´ ë³€ê²½ë˜ì§€ ì•Šì•˜ìœ¼ë©´ ë§ˆìš°ìŠ¤ ì´ë™ ì²˜ë¦¬ë§Œ ìˆ˜í–‰
     else
     {
-        // ¸¶¿ì½º ÀÌµ¿ ÀÌº¥Æ®¸¦ Àü¼Û
+        // ë§ˆìš°ìŠ¤ ì´ë™ ì´ë²¤íŠ¸ë¥¼ ì „ì†¡
         kSetMouseEvent( qwWindowIDUnderMouse, EVENT_MOUSE_MOVE, iMouseX, iMouseY, 
                     bButtonStatus, &stEvent );
         kSendEventToWindow( qwWindowIDUnderMouse, &stEvent );
     }
 
     //--------------------------------------------------------------------------
-    //  À©µµ¿ì ÀÌµ¿°ú Å©±â º¯°æ Ã³¸®
+    //  ìœˆë„ìš° ì´ë™ê³¼ í¬ê¸° ë³€ê²½ ì²˜ë¦¬
     //--------------------------------------------------------------------------    
-    // À©µµ¿ì°¡ ÀÌµ¿ ÁßÀÌ¾úÀ¸¸é À©µµ¿ì ÀÌµ¿ Ã³¸®
+    // ìœˆë„ìš°ê°€ ì´ë™ ì¤‘ì´ì—ˆìœ¼ë©´ ìœˆë„ìš° ì´ë™ ì²˜ë¦¬
     if( pstWindowManager->bWindowMoveMode == TRUE )
     {
-        // À©µµ¿ìÀÇ À§Ä¡¸¦ ¾òÀ½
+        // ìœˆë„ìš°ì˜ ìœ„ì¹˜ë¥¼ ì–»ìŒ
         if( kGetWindowArea( pstWindowManager->qwMovingWindowID, &stWindowArea )
                 == TRUE )
         {
-            // À©µµ¿ìÀÇ ÇöÀç À§Ä¡¸¦ ¾ò¾î¼­ ¸¶¿ì½º°¡ ÀÌµ¿ÇÑ ¸¸Å­ ¿Å°ÜÁÜ
-            // À©µµ¿ì ÀÌµ¿ ÀÌº¥Æ®´Â ÇÔ¼ö ³»ºÎ¿¡¼­ Àü´Þ
+            // ìœˆë„ìš°ì˜ í˜„ìž¬ ìœ„ì¹˜ë¥¼ ì–»ì–´ì„œ ë§ˆìš°ìŠ¤ê°€ ì´ë™í•œ ë§Œí¼ ì˜®ê²¨ì¤Œ
+            // ìœˆë„ìš° ì´ë™ ì´ë²¤íŠ¸ëŠ” í•¨ìˆ˜ ë‚´ë¶€ì—ì„œ ì „ë‹¬
             kMoveWindow( pstWindowManager->qwMovingWindowID, 
                          stWindowArea.iX1 + iMouseX - iPreviousMouseX, 
                          stWindowArea.iY1 + iMouseY - iPreviousMouseY ); 
         }
-        // À©µµ¿ìÀÇ À§Ä¡¸¦ ¾òÀ» ¼ö ¾øÀ¸¸é À©µµ¿ì°¡ Á¸ÀçÇÏÁö ¾Ê´Â °ÍÀÌ¹Ç·Î
-        // À©µµ¿ì ÀÌµ¿ ¸ðµå ÇØÁ¦
+        // ìœˆë„ìš°ì˜ ìœ„ì¹˜ë¥¼ ì–»ì„ ìˆ˜ ì—†ìœ¼ë©´ ìœˆë„ìš°ê°€ ì¡´ìž¬í•˜ì§€ ì•ŠëŠ” ê²ƒì´ë¯€ë¡œ
+        // ìœˆë„ìš° ì´ë™ ëª¨ë“œ í•´ì œ
         else
         {
-            // ÀÌµ¿ ÁßÀÌ¶ó´Â ÇÃ·¡±×¸¦ ÇØÁ¦
+            // ì´ë™ ì¤‘ì´ë¼ëŠ” í”Œëž˜ê·¸ë¥¼ í•´ì œ
             pstWindowManager->bWindowMoveMode = FALSE;
             pstWindowManager->qwMovingWindowID = WINDOW_INVALIDID;
         }
     }
-    // À©µµ¿ì°¡ Å©±â º¯°æ ÁßÀÌ¾úÀ¸¸é À©µµ¿ì Å©±â º¯°æ Ã³¸®
+    // ìœˆë„ìš°ê°€ í¬ê¸° ë³€ê²½ ì¤‘ì´ì—ˆìœ¼ë©´ ìœˆë„ìš° í¬ê¸° ë³€ê²½ ì²˜ë¦¬
     else if( pstWindowManager->bWindowResizeMode == TRUE )
     {
-        // ÀÌÀü À§Ä¡ÀÇ À©µµ¿ì Å©±â º¯°æ Ç¥½ÄÀ» »èÁ¦
+        // ì´ì „ ìœ„ì¹˜ì˜ ìœˆë„ìš° í¬ê¸° ë³€ê²½ í‘œì‹ì„ ì‚­ì œ
         kDrawResizeMarker( &( pstWindowManager->stResizingWindowArea ), FALSE );
         
-        // ¸¶¿ì½º ÀÌµ¿ °Å¸®¸¦ ÀÌ¿ëÇÏ¿© »õ·Î¿î À©µµ¿ì Å©±â¸¦ °áÁ¤
+        // ë§ˆìš°ìŠ¤ ì´ë™ ê±°ë¦¬ë¥¼ ì´ìš©í•˜ì—¬ ìƒˆë¡œìš´ ìœˆë„ìš° í¬ê¸°ë¥¼ ê²°ì •
         pstWindowManager->stResizingWindowArea.iX2 += iMouseX - iPreviousMouseX;
         pstWindowManager->stResizingWindowArea.iY1 += iMouseY - iPreviousMouseY;
 
-        // À©µµ¿ìÀÇ Å©±â°¡ ÃÖ¼Ò °ª ÀÌÇÏÀÌ¸é ÃÖ¼Ú°ªÀ¸·Î ´Ù½Ã ¼³Á¤
+        // ìœˆë„ìš°ì˜ í¬ê¸°ê°€ ìµœì†Œ ê°’ ì´í•˜ì´ë©´ ìµœì†Ÿê°’ìœ¼ë¡œ ë‹¤ì‹œ ì„¤ì •
         if( ( pstWindowManager->stResizingWindowArea.iX2 < pstWindowManager->stResizingWindowArea.iX1 ) ||
             ( kGetRectangleWidth( &( pstWindowManager->stResizingWindowArea ) ) < WINDOW_WIDTH_MIN ) )
         {
@@ -366,18 +366,18 @@ BOOL kProcessMouseData( void )
                 pstWindowManager->stResizingWindowArea.iY2 - WINDOW_HEIGHT_MIN - 1;
         }
         
-        // »õ·Î¿î À§Ä¡¿¡ À©µµ¿ì Å©±â º¯°æ Ç¥½ÄÀ» Ãâ·Â
+        // ìƒˆë¡œìš´ ìœ„ì¹˜ì— ìœˆë„ìš° í¬ê¸° ë³€ê²½ í‘œì‹ì„ ì¶œë ¥
         kDrawResizeMarker( &( pstWindowManager->stResizingWindowArea ), TRUE );
     }
     
-    // ´ÙÀ½ Ã³¸®¿¡ »ç¿ëÇÏ·Á°í ÇöÀç ¹öÆ° »óÅÂ¸¦ ÀúÀåÇÔ
+    // ë‹¤ìŒ ì²˜ë¦¬ì— ì‚¬ìš©í•˜ë ¤ê³  í˜„ìž¬ ë²„íŠ¼ ìƒíƒœë¥¼ ì €ìž¥í•¨
     pstWindowManager->bPreviousButtonStatus = bButtonStatus;
     return TRUE;
 }
 
 
 /**
- *  ¼ö½ÅµÈ Å° µ¥ÀÌÅÍ¸¦ Ã³¸®
+ *  ìˆ˜ì‹ ëœ í‚¤ ë°ì´í„°ë¥¼ ì²˜ë¦¬
  */
 BOOL kProcessKeyData( void )
 {
@@ -385,20 +385,20 @@ BOOL kProcessKeyData( void )
     EVENT stEvent;
     QWORD qwAcitveWindowID;
     
-    // Å°º¸µå µ¥ÀÌÅÍ°¡ ¼ö½ÅµÇ±â¸¦ ±â´Ù¸²
+    // í‚¤ë³´ë“œ ë°ì´í„°ê°€ ìˆ˜ì‹ ë˜ê¸°ë¥¼ ê¸°ë‹¤ë¦¼
     if( kGetKeyFromKeyQueue( &stKeyData ) == FALSE )
     {
         return FALSE;
     }
 
-    // ÃÖ»óÀ§ À©µµ¿ì, Áï ¼±ÅÃµÈ À©µµ¿ì·Î ¸Þ½ÃÁö¸¦ Àü¼Û
+    // ìµœìƒìœ„ ìœˆë„ìš°, ì¦‰ ì„ íƒëœ ìœˆë„ìš°ë¡œ ë©”ì‹œì§€ë¥¼ ì „ì†¡
     qwAcitveWindowID = kGetTopWindowID();
     kSetKeyEvent( qwAcitveWindowID, &stKeyData, &stEvent );
     return kSendEventToWindow( qwAcitveWindowID, &stEvent );
 }    
 
 /**
- *  ÀÌº¥Æ® Å¥¿¡ ¼ö½ÅµÈ ÀÌº¥Æ® Ã³¸®
+ *  ì´ë²¤íŠ¸ íì— ìˆ˜ì‹ ëœ ì´ë²¤íŠ¸ ì²˜ë¦¬
  */
 BOOL kProcessEventQueueData( void )
 {
@@ -413,14 +413,14 @@ BOOL kProcessEventQueueData( void )
     int j;
     
     //--------------------------------------------------------------------------
-    // À©µµ¿ì ¸Å´ÏÀú ÅÂ½ºÅ©ÀÇ ÀÌº¥Æ® Å¥¿¡ ¼ö½ÅµÈ ÀÌº¥Æ®¸¦ ÅëÇÕÇÏ´Â ºÎºÐ
+    // ìœˆë„ìš° ë§¤ë‹ˆì € íƒœìŠ¤í¬ì˜ ì´ë²¤íŠ¸ íì— ìˆ˜ì‹ ëœ ì´ë²¤íŠ¸ë¥¼ í†µí•©í•˜ëŠ” ë¶€ë¶„
     //--------------------------------------------------------------------------
     for( i = 0 ; i < WINDOWMANAGER_DATAACCUMULATECOUNT ; i++ )
     {
-        // ÀÌº¥Æ®°¡ ¼ö½ÅµÇ±â¸¦ ±â´Ù¸²
+        // ì´ë²¤íŠ¸ê°€ ìˆ˜ì‹ ë˜ê¸°ë¥¼ ê¸°ë‹¤ë¦¼
         if( kReceiveEventFromWindowManagerQueue( &( vstEvent[ i ] ) ) == FALSE )
         {
-            // Ã³À½ºÎÅÍ ÀÌº¥Æ®°¡ ¼ö½ÅµÇÁö ¾Ê¾ÒÀ¸¸é Á¾·á
+            // ì²˜ìŒë¶€í„° ì´ë²¤íŠ¸ê°€ ìˆ˜ì‹ ë˜ì§€ ì•Šì•˜ìœ¼ë©´ ì¢…ë£Œ
             if( i == 0 )
             {
                 return FALSE;
@@ -432,10 +432,10 @@ BOOL kProcessEventQueueData( void )
         }
         
         pstWindowEvent = &( vstEvent[ i ].stWindowEvent );
-        // À©µµ¿ì ID·Î ¾÷µ¥ÀÌÆ®ÇÏ´Â ÀÌº¥Æ®°¡ ¼ö½ÅµÇ¸é À©µµ¿ì ¿µ¿ªÀ» ÀÌº¥Æ® µ¥ÀÌÅÍ¿¡ »ðÀÔ
+        // ìœˆë„ìš° IDë¡œ ì—…ë°ì´íŠ¸í•˜ëŠ” ì´ë²¤íŠ¸ê°€ ìˆ˜ì‹ ë˜ë©´ ìœˆë„ìš° ì˜ì—­ì„ ì´ë²¤íŠ¸ ë°ì´í„°ì— ì‚½ìž…
         if( vstEvent[ i ].qwType == EVENT_WINDOWMANAGER_UPDATESCREENBYID )
         {
-            // À©µµ¿ìÀÇ Å©±â¸¦ ÀÌº¥Æ® ÀÚ·á±¸Á¶¿¡ »ðÀÔ
+            // ìœˆë„ìš°ì˜ í¬ê¸°ë¥¼ ì´ë²¤íŠ¸ ìžë£Œêµ¬ì¡°ì— ì‚½ìž…
             if( kGetWindowArea( pstWindowEvent->qwWindowID, &stArea ) == FALSE )
             {
                 kSetRectangleData( 0, 0, 0, 0, &( pstWindowEvent->stArea ) );
@@ -448,13 +448,13 @@ BOOL kProcessEventQueueData( void )
         }
     }
     
-    // ÀúÀåµÈ ÀÌº¥Æ®¸¦ °Ë»çÇÏ¸é¼­ ÇÕÄ¥ ¼ö ÀÖ´Â ÀÌº¥Æ®´Â ÇÏ³ª·Î ¸¸µê
+    // ì €ìž¥ëœ ì´ë²¤íŠ¸ë¥¼ ê²€ì‚¬í•˜ë©´ì„œ í•©ì¹  ìˆ˜ ìžˆëŠ” ì´ë²¤íŠ¸ëŠ” í•˜ë‚˜ë¡œ ë§Œë“¦
     iEventCount = i;
     
     for( j = 0 ; j < iEventCount ; j++ )
     {
-        // ¼ö½ÅµÈ ÀÌº¥Æ® Áß¿¡ ÀÌº¥Æ® Áß¿¡¼­ ÀÌ¹ø¿¡ Ã³¸®ÇÒ °Í°ú °°Àº À©µµ¿ì¿¡¼­
-        // ¹ß»ýÇÏ´Â À©µµ¿ì ÀÌº¥Æ®¸¦ °Ë»ö
+        // ìˆ˜ì‹ ëœ ì´ë²¤íŠ¸ ì¤‘ì— ì´ë²¤íŠ¸ ì¤‘ì—ì„œ ì´ë²ˆì— ì²˜ë¦¬í•  ê²ƒê³¼ ê°™ì€ ìœˆë„ìš°ì—ì„œ
+        // ë°œìƒí•˜ëŠ” ìœˆë„ìš° ì´ë²¤íŠ¸ë¥¼ ê²€ìƒ‰
         pstWindowEvent = &( vstEvent[ j ].stWindowEvent );
         if( ( vstEvent[ j ].qwType != EVENT_WINDOWMANAGER_UPDATESCREENBYID ) &&
             ( vstEvent[ j ].qwType != EVENT_WINDOWMANAGER_UPDATESCREENBYWINDOWAREA ) &&
@@ -463,11 +463,11 @@ BOOL kProcessEventQueueData( void )
             continue;
         }
         
-        // ¼ö½ÅÇÑ ÀÌº¥Æ®ÀÇ ³¡±îÁö ·çÇÁ¸¦ ¼öÇàÇÏ¸é¼­ ¼ö½ÅµÈ ÀÌº¥Æ®¸¦ °Ë»ç
+        // ìˆ˜ì‹ í•œ ì´ë²¤íŠ¸ì˜ ëê¹Œì§€ ë£¨í”„ë¥¼ ìˆ˜í–‰í•˜ë©´ì„œ ìˆ˜ì‹ ëœ ì´ë²¤íŠ¸ë¥¼ ê²€ì‚¬
         for( i = j + 1 ; i < iEventCount ; i++ )
         {
             pstNextWindowEvent = &( vstEvent[ i ].stWindowEvent );
-            // È­¸é ¾÷µ¥ÀÌÆ®°¡ ¾Æ´Ï°Å³ª À©µµ¿ì ID°¡ ÀÏÄ¡ÇÏÁö ¾ÊÀ¸¸é Á¦¿Ü
+            // í™”ë©´ ì—…ë°ì´íŠ¸ê°€ ì•„ë‹ˆê±°ë‚˜ ìœˆë„ìš° IDê°€ ì¼ì¹˜í•˜ì§€ ì•Šìœ¼ë©´ ì œì™¸
             if( ( ( vstEvent[ i ].qwType != EVENT_WINDOWMANAGER_UPDATESCREENBYID ) &&
                   ( vstEvent[ i ].qwType != EVENT_WINDOWMANAGER_UPDATESCREENBYWINDOWAREA ) &&
                   ( vstEvent[ i ].qwType != EVENT_WINDOWMANAGER_UPDATESCREENBYSCREENAREA ) ) ||
@@ -476,21 +476,21 @@ BOOL kProcessEventQueueData( void )
                 continue;
             }
         
-            // °ãÄ¡´Â ¿µ¿ªÀ» °è»êÇÏ¿© °ãÄ¡Áö ¾ÊÀ¸¸é Á¦¿Ü
+            // ê²¹ì¹˜ëŠ” ì˜ì—­ì„ ê³„ì‚°í•˜ì—¬ ê²¹ì¹˜ì§€ ì•Šìœ¼ë©´ ì œì™¸
             if( kGetOverlappedRectangle( &( pstWindowEvent->stArea ), 
                 &( pstNextWindowEvent->stArea ), &stOverlappedArea ) == FALSE )
             {
                 continue;
             }
             
-            // µÎ ¿µ¿ªÀÌ ÀÏÄ¡ÇÏ°Å³ª ¾î´À ÇÑÂÊÀÌ Æ÷ÇÔµÇ¸é ÀÌº¥Æ®¸¦ ÅëÇÕ
+            // ë‘ ì˜ì—­ì´ ì¼ì¹˜í•˜ê±°ë‚˜ ì–´ëŠ í•œìª½ì´ í¬í•¨ë˜ë©´ ì´ë²¤íŠ¸ë¥¼ í†µí•©
             if( kMemCmp( &( pstWindowEvent->stArea ), &stOverlappedArea,
                     sizeof( RECT ) ) == 0 )
             {
-                // ÇöÀç ÀÌº¥Æ®ÀÇ À©µµ¿ìÀÇ ¿µ¿ªÀÌ °ãÄ¡´Â ¿µ¿ª°ú ÀÏÄ¡ÇÑ´Ù¸é 
-                // ´ÙÀ½ ÀÌº¥Æ®ÀÇ À©µµ¿ì ¿µ¿ªÀÌ ÇöÀç À©µµ¿ì ¿µ¿ª°ú °°°Å³ª Æ÷ÇÔÇÔ
-                // µû¶ó¼­ ÇöÀç ÀÌº¥Æ®¿¡ ´ÙÀ½ ÀÌº¥Æ®ÀÇ À©µµ¿ì ¿µ¿ªÀ» º¹»çÇÏ°í
-                // ´ÙÀ½ ÀÌº¥Æ®´Â »èÁ¦
+                // í˜„ìž¬ ì´ë²¤íŠ¸ì˜ ìœˆë„ìš°ì˜ ì˜ì—­ì´ ê²¹ì¹˜ëŠ” ì˜ì—­ê³¼ ì¼ì¹˜í•œë‹¤ë©´ 
+                // ë‹¤ìŒ ì´ë²¤íŠ¸ì˜ ìœˆë„ìš° ì˜ì—­ì´ í˜„ìž¬ ìœˆë„ìš° ì˜ì—­ê³¼ ê°™ê±°ë‚˜ í¬í•¨í•¨
+                // ë”°ë¼ì„œ í˜„ìž¬ ì´ë²¤íŠ¸ì— ë‹¤ìŒ ì´ë²¤íŠ¸ì˜ ìœˆë„ìš° ì˜ì—­ì„ ë³µì‚¬í•˜ê³ 
+                // ë‹¤ìŒ ì´ë²¤íŠ¸ëŠ” ì‚­ì œ
                 kMemCpy( &( pstWindowEvent->stArea ), &( pstNextWindowEvent->stArea ), 
                          sizeof( RECT ) );
                 vstEvent[ i ].qwType = EVENT_UNKNOWN;
@@ -498,36 +498,36 @@ BOOL kProcessEventQueueData( void )
             else if( kMemCmp( &( pstNextWindowEvent->stArea ), &stOverlappedArea,
                      sizeof( RECT ) ) == 0 )
             {
-                // ´ÙÀ½ ÀÌº¥Æ®ÀÇ À©µµ¿ìÀÇ ¿µ¿ªÀÌ °ãÄ¡´Â ¿µ¿ª°ú ÀÏÄ¡ÇÑ´Ù¸é 
-                // ÇöÀç ÀÌº¥Æ®ÀÇ À©µµ¿ì ¿µ¿ªÀÌ ´ÙÀ½ À©µµ¿ì ¿µ¿ª°ú °°°Å³ª Æ÷ÇÔÇÔ
-                // µû¶ó¼­ À©µµ¿ì ¿µ¿ªÀ» º¹»çÇÏÁö ¾Ê°í ´ÙÀ½ ÀÌº¥Æ®¸¦ »èÁ¦
+                // ë‹¤ìŒ ì´ë²¤íŠ¸ì˜ ìœˆë„ìš°ì˜ ì˜ì—­ì´ ê²¹ì¹˜ëŠ” ì˜ì—­ê³¼ ì¼ì¹˜í•œë‹¤ë©´ 
+                // í˜„ìž¬ ì´ë²¤íŠ¸ì˜ ìœˆë„ìš° ì˜ì—­ì´ ë‹¤ìŒ ìœˆë„ìš° ì˜ì—­ê³¼ ê°™ê±°ë‚˜ í¬í•¨í•¨
+                // ë”°ë¼ì„œ ìœˆë„ìš° ì˜ì—­ì„ ë³µì‚¬í•˜ì§€ ì•Šê³  ë‹¤ìŒ ì´ë²¤íŠ¸ë¥¼ ì‚­ì œ
                 vstEvent[ i ].qwType = EVENT_UNKNOWN;
             }
         }
     }
     
-    // ÅëÇÕµÈ ÀÌº¥Æ®¸¦ ¸ðµÎ Ã³¸®
+    // í†µí•©ëœ ì´ë²¤íŠ¸ë¥¼ ëª¨ë‘ ì²˜ë¦¬
     for( i = 0 ; i < iEventCount ; i++ )
     {
         pstWindowEvent = &( vstEvent[ i ].stWindowEvent );
         
-        // Å¸ÀÔ º°·Î Ã³¸®
+        // íƒ€ìž… ë³„ë¡œ ì²˜ë¦¬
         switch( vstEvent[ i ].qwType )
         {
-            // ÇöÀç À©µµ¿ì°¡ ÀÖ´Â ¿µ¿ªÀ» È­¸é¿¡ ¾÷µ¥ÀÌÆ®
+            // í˜„ìž¬ ìœˆë„ìš°ê°€ ìžˆëŠ” ì˜ì—­ì„ í™”ë©´ì— ì—…ë°ì´íŠ¸
         case EVENT_WINDOWMANAGER_UPDATESCREENBYID:
-            // À©µµ¿ìÀÇ ³»ºÎ ¿µ¿ªÀ» È­¸é¿¡ ¾÷µ¥ÀÌÆ®
+            // ìœˆë„ìš°ì˜ ë‚´ë¶€ ì˜ì—­ì„ í™”ë©´ì— ì—…ë°ì´íŠ¸
         case EVENT_WINDOWMANAGER_UPDATESCREENBYWINDOWAREA:
-            // À©µµ¿ì¸¦ ±âÁØÀ¸·Î ÇÑ ÁÂÇ¥¸¦ È­¸é ÁÂÇ¥·Î º¯È¯ÇÏ¿© ¾÷µ¥ÀÌÆ® Ã³¸®
+            // ìœˆë„ìš°ë¥¼ ê¸°ì¤€ìœ¼ë¡œ í•œ ì¢Œí‘œë¥¼ í™”ë©´ ì¢Œí‘œë¡œ ë³€í™˜í•˜ì—¬ ì—…ë°ì´íŠ¸ ì²˜ë¦¬
             if( kConvertRectClientToScreen( pstWindowEvent->qwWindowID, 
                     &( pstWindowEvent->stArea ), &stArea ) == TRUE )
             {
-                // À©µµ¿ì ¿µ¿ªÀº À§¿¡¼­ ÇßÀ¸¹Ç·Î ±×´ë·Î È­¸é ¾÷µ¥ÀÌÆ® ÇÔ¼ö¸¦ È£Ãâ
+                // ìœˆë„ìš° ì˜ì—­ì€ ìœ„ì—ì„œ í–ˆìœ¼ë¯€ë¡œ ê·¸ëŒ€ë¡œ í™”ë©´ ì—…ë°ì´íŠ¸ í•¨ìˆ˜ë¥¼ í˜¸ì¶œ
                 kRedrawWindowByArea( &stArea, pstWindowEvent->qwWindowID );        
             }
             break;
     
-            // È­¸é ÁÂÇ¥·Î Àü´ÞµÈ ¿µ¿ªÀ» È­¸é¿¡ ¾÷µ¥ÀÌÆ®
+            // í™”ë©´ ì¢Œí‘œë¡œ ì „ë‹¬ëœ ì˜ì—­ì„ í™”ë©´ì— ì—…ë°ì´íŠ¸
         case EVENT_WINDOWMANAGER_UPDATESCREENBYSCREENAREA:
             kRedrawWindowByArea( &( pstWindowEvent->stArea ), WINDOW_INVALIDID );
             break;
@@ -541,20 +541,20 @@ BOOL kProcessEventQueueData( void )
 }
 
 /**
- *  ºñµð¿À ¸Þ¸ð¸®¿¡ À©µµ¿ì Å©±â º¯°æ Ç¥½ÄÀ» Ãâ·ÂÇÏ°Å³ª Ãâ·ÂµÈ Ç¥½ÄÀ» »èÁ¦
+ *  ë¹„ë””ì˜¤ ë©”ëª¨ë¦¬ì— ìœˆë„ìš° í¬ê¸° ë³€ê²½ í‘œì‹ì„ ì¶œë ¥í•˜ê±°ë‚˜ ì¶œë ¥ëœ í‘œì‹ì„ ì‚­ì œ
  */
 void kDrawResizeMarker( const RECT* pstArea, BOOL bShowMarker )
 {
     RECT stMarkerArea;
     WINDOWMANAGER* pstWindowManager;
     
-    // À©µµ¿ì ¸Å´ÏÀú¸¦ ¹ÝÈ¯
+    // ìœˆë„ìš° ë§¤ë‹ˆì €ë¥¼ ë°˜í™˜
     pstWindowManager = kGetWindowManager();
     
-    // À©µµ¿ì Å©±â º¯°æ Ç¥½ÄÀ» Ãâ·ÂÇÏ´Â °æ¿ì
+    // ìœˆë„ìš° í¬ê¸° ë³€ê²½ í‘œì‹ì„ ì¶œë ¥í•˜ëŠ” ê²½ìš°
     if( bShowMarker == TRUE )
     {
-        // ¿ÞÂÊ À§ Ç¥½Ä
+        // ì™¼ìª½ ìœ„ í‘œì‹
         kSetRectangleData( pstArea->iX1, pstArea->iY1, 
             pstArea->iX1 + WINDOWMANAGER_RESIZEMARKERSIZE, 
             pstArea->iY1 + WINDOWMANAGER_RESIZEMARKERSIZE, &stMarkerArea );
@@ -567,7 +567,7 @@ void kDrawResizeMarker( const RECT* pstArea, BOOL bShowMarker )
                 stMarkerArea.iX1 + WINDOWMANAGER_THICK_RESIZEMARKER, stMarkerArea.iY2, 
                 WINDOWMANAGER_COLOR_RESIZEMARKER, TRUE );
         
-        // ¿À¸¥ÂÊ À§ Ç¥½Ä
+        // ì˜¤ë¥¸ìª½ ìœ„ í‘œì‹
         kSetRectangleData( pstArea->iX2 - WINDOWMANAGER_RESIZEMARKERSIZE, 
             pstArea->iY1, pstArea->iX2, pstArea->iY1 + WINDOWMANAGER_RESIZEMARKERSIZE,
             &stMarkerArea );
@@ -581,7 +581,7 @@ void kDrawResizeMarker( const RECT* pstArea, BOOL bShowMarker )
                 stMarkerArea.iX2, stMarkerArea.iY2, WINDOWMANAGER_COLOR_RESIZEMARKER,
                 TRUE );
 
-        // ¿ÞÂÊ ¾Æ·¡ Ç¥½Ä
+        // ì™¼ìª½ ì•„ëž˜ í‘œì‹
         kSetRectangleData( pstArea->iX1, pstArea->iY2 - WINDOWMANAGER_RESIZEMARKERSIZE, 
             pstArea->iX1 + WINDOWMANAGER_RESIZEMARKERSIZE, pstArea->iY2, &stMarkerArea );
         kInternalDrawRect( &( pstWindowManager->stScreenArea ), 
@@ -593,7 +593,7 @@ void kDrawResizeMarker( const RECT* pstArea, BOOL bShowMarker )
                 stMarkerArea.iX1 + WINDOWMANAGER_THICK_RESIZEMARKER, stMarkerArea.iY2, 
                 WINDOWMANAGER_COLOR_RESIZEMARKER, TRUE );
 
-        // ¿À¸¥ÂÊ ¾Æ·¡ Ç¥½Ä
+        // ì˜¤ë¥¸ìª½ ì•„ëž˜ í‘œì‹
         kSetRectangleData( pstArea->iX2 - WINDOWMANAGER_RESIZEMARKERSIZE, 
             pstArea->iY2 - WINDOWMANAGER_RESIZEMARKERSIZE, pstArea->iX2, pstArea->iY2,
             &stMarkerArea );
@@ -606,28 +606,28 @@ void kDrawResizeMarker( const RECT* pstArea, BOOL bShowMarker )
                 WINDOWMANAGER_THICK_RESIZEMARKER, stMarkerArea.iY1, stMarkerArea.iX2, 
                 stMarkerArea.iY2, WINDOWMANAGER_COLOR_RESIZEMARKER, TRUE );
     }
-    // À©µµ¿ì Å©±â º¯°æ Ç¥½ÄÀ» »èÁ¦ÇÏ´Â °æ¿ì
+    // ìœˆë„ìš° í¬ê¸° ë³€ê²½ í‘œì‹ì„ ì‚­ì œí•˜ëŠ” ê²½ìš°
     else
     {
-        // Å©±â º¯°æ Ç¥½ÄÀº ¿µ¿ªÀÇ ³× ¸ð¼­¸®¿¡ ÀÖÀ¸¹Ç·Î ¸ð¼­¸®¸¸ È­¸é ¾÷µ¥ÀÌÆ®
-        // ¿ÞÂÊ À§ Ç¥½Ä
+        // í¬ê¸° ë³€ê²½ í‘œì‹ì€ ì˜ì—­ì˜ ë„¤ ëª¨ì„œë¦¬ì— ìžˆìœ¼ë¯€ë¡œ ëª¨ì„œë¦¬ë§Œ í™”ë©´ ì—…ë°ì´íŠ¸
+        // ì™¼ìª½ ìœ„ í‘œì‹
         kSetRectangleData( pstArea->iX1, pstArea->iY1, 
             pstArea->iX1 + WINDOWMANAGER_RESIZEMARKERSIZE, 
             pstArea->iY1 + WINDOWMANAGER_RESIZEMARKERSIZE, &stMarkerArea );
         kRedrawWindowByArea( &stMarkerArea, WINDOW_INVALIDID );
         
-        // ¿À¸¥ÂÊ À§ Ç¥½Ä
+        // ì˜¤ë¥¸ìª½ ìœ„ í‘œì‹
         kSetRectangleData( pstArea->iX2 - WINDOWMANAGER_RESIZEMARKERSIZE, 
             pstArea->iY1, pstArea->iX2, pstArea->iY1 + WINDOWMANAGER_RESIZEMARKERSIZE,
             &stMarkerArea );
         kRedrawWindowByArea( &stMarkerArea, WINDOW_INVALIDID );
 
-        // ¿ÞÂÊ ¾Æ·¡ Ç¥½Ä
+        // ì™¼ìª½ ì•„ëž˜ í‘œì‹
         kSetRectangleData( pstArea->iX1, pstArea->iY2 - WINDOWMANAGER_RESIZEMARKERSIZE, 
             pstArea->iX1 + WINDOWMANAGER_RESIZEMARKERSIZE, pstArea->iY2, &stMarkerArea );
         kRedrawWindowByArea( &stMarkerArea, WINDOW_INVALIDID );
 
-        // ¿À¸¥ÂÊ ¾Æ·¡ Ç¥½Ä
+        // ì˜¤ë¥¸ìª½ ì•„ëž˜ í‘œì‹
         kSetRectangleData( pstArea->iX2 - WINDOWMANAGER_RESIZEMARKERSIZE, 
             pstArea->iY2 - WINDOWMANAGER_RESIZEMARKERSIZE, pstArea->iX2, pstArea->iY2,
             &stMarkerArea );

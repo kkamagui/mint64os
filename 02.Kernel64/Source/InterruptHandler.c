@@ -3,7 +3,7 @@
  *  date    2009/01/24
  *  author  kkamagui 
  *          Copyright(c)2008 All rights reserved by kkamagui
- *  brief   ÀÎÅÍ·´Æ® ¹× ¿¹¿Ü ÇÚµé·¯¿¡ °ü·ÃµÈ ¼Ò½º ÆÄÀÏ
+ *  brief   ì¸í„°ëŸ½íŠ¸ ë° ì˜ˆì™¸ í•¸ë“¤ëŸ¬ì— ê´€ë ¨ëœ ì†ŒìŠ¤ íŒŒì¼
  */
 
 #include "InterruptHandler.h"
@@ -17,11 +17,11 @@
 #include "HardDisk.h"
 #include "Mouse.h"
 
-// ÀÎÅÍ·´Æ® ÇÚµé·¯ ÀÚ·á±¸Á¶
+// ì¸í„°ëŸ½íŠ¸ í•¸ë“¤ëŸ¬ ìžë£Œêµ¬ì¡°
 static INTERRUPTMANAGER gs_stInterruptManager;
 
 /**
- *  ÀÎÅÍ·´Æ® ÀÚ·á±¸Á¶ ÃÊ±âÈ­
+ *  ì¸í„°ëŸ½íŠ¸ ìžë£Œêµ¬ì¡° ì´ˆê¸°í™”
  */
 void kInitializeHandler( void )
 {
@@ -29,7 +29,7 @@ void kInitializeHandler( void )
 }
 
 /**
- *  ÀÎÅÍ·´Æ® Ã³¸® ¸ðµå¸¦ ¼³Á¤
+ *  ì¸í„°ëŸ½íŠ¸ ì²˜ë¦¬ ëª¨ë“œë¥¼ ì„¤ì •
  */
 void kSetSymmetricIOMode( BOOL bSymmetricIOMode )
 {
@@ -37,7 +37,7 @@ void kSetSymmetricIOMode( BOOL bSymmetricIOMode )
 }
 
 /**
- *  ÀÎÅÍ·´Æ® ºÎÇÏ ºÐ»ê ±â´ÉÀ» »ç¿ëÇÒÁö ¿©ºÎ¸¦ ¼³Á¤
+ *  ì¸í„°ëŸ½íŠ¸ ë¶€í•˜ ë¶„ì‚° ê¸°ëŠ¥ì„ ì‚¬ìš©í• ì§€ ì—¬ë¶€ë¥¼ ì„¤ì •
  */
 void kSetInterruptLoadBalancing( BOOL bUseLoadBalancing )
 {
@@ -45,25 +45,25 @@ void kSetInterruptLoadBalancing( BOOL bUseLoadBalancing )
 }
 
 /**
- *  ÄÚ¾î º° ÀÎÅÍ·´Æ® Ã³¸® È½¼ö¸¦ Áõ°¡
+ *  ì½”ì–´ ë³„ ì¸í„°ëŸ½íŠ¸ ì²˜ë¦¬ íšŸìˆ˜ë¥¼ ì¦ê°€
  */
 void kIncreaseInterruptCount( int iIRQ )
 {
-    // ÄÚ¾îÀÇ ÀÎÅÍ·´Æ® Ä«¿îÆ®¸¦ Áõ°¡
+    // ì½”ì–´ì˜ ì¸í„°ëŸ½íŠ¸ ì¹´ìš´íŠ¸ë¥¼ ì¦ê°€
     gs_stInterruptManager.vvqwCoreInterruptCount[ kGetAPICID() ][ iIRQ ]++;
 }
 
 /**
- *  ÇöÀç ÀÎÅÍ·´Æ® ¸ðµå¿¡ ¸ÂÃß¾î EOI¸¦ Àü¼Û
+ *  í˜„ìž¬ ì¸í„°ëŸ½íŠ¸ ëª¨ë“œì— ë§žì¶”ì–´ EOIë¥¼ ì „ì†¡
  */
 void kSendEOI( int iIRQ )
 {
-    // ´ëÄª I/O ¸ðµå°¡ ¾Æ´Ï¸é PIC ¸ðµåÀÌ¹Ç·Î, PIC ÄÁÆ®·Ñ·¯·Î EOI¸¦ Àü¼ÛÇØ¾ß ÇÔ
+    // ëŒ€ì¹­ I/O ëª¨ë“œê°€ ì•„ë‹ˆë©´ PIC ëª¨ë“œì´ë¯€ë¡œ, PIC ì»¨íŠ¸ë¡¤ëŸ¬ë¡œ EOIë¥¼ ì „ì†¡í•´ì•¼ í•¨
     if( gs_stInterruptManager.bSymmetricIOMode == FALSE )
     {
         kSendEOIToPIC( iIRQ );
     }
-    // ´ëÄª I/O ¸ðµåÀÌ¸é ·ÎÄÃ APIC·Î EOI¸¦ Àü¼ÛÇØ¾ß ÇÔ
+    // ëŒ€ì¹­ I/O ëª¨ë“œì´ë©´ ë¡œì»¬ APICë¡œ EOIë¥¼ ì „ì†¡í•´ì•¼ í•¨
     else
     {
         kSendEOIToLocalAPIC();
@@ -71,7 +71,7 @@ void kSendEOI( int iIRQ )
 }
 
 /**
- *  ÀÎÅÍ·´Æ® ÇÚµé·¯ ÀÚ·á±¸Á¶¸¦ ¹ÝÈ¯
+ *  ì¸í„°ëŸ½íŠ¸ í•¸ë“¤ëŸ¬ ìžë£Œêµ¬ì¡°ë¥¼ ë°˜í™˜
  */
 INTERRUPTMANAGER* kGetInterruptManager( void )
 {
@@ -79,7 +79,7 @@ INTERRUPTMANAGER* kGetInterruptManager( void )
 }
 
 /**
- *  ÀÎÅÍ·´Æ® ºÎÇÏ ºÐ»ê(Interrupt Load Balancing) Ã³¸®
+ *  ì¸í„°ëŸ½íŠ¸ ë¶€í•˜ ë¶„ì‚°(Interrupt Load Balancing) ì²˜ë¦¬
  */
 void kProcessLoadBalancing( int iIRQ )
 {
@@ -92,7 +92,7 @@ void kProcessLoadBalancing( int iIRQ )
     
     bAPICID = kGetAPICID();
 
-    // ºÎÇÏ ºÐ»ê ±â´ÉÀÌ ²¨Á® ÀÖ°Å³ª, ºÎÇÏ ºÐ»êÀ» Ã³¸®ÇÒ ½ÃÁ¡ÀÌ ¾Æ´Ï¸é ÇÒ ÇÊ¿ä°¡ ¾øÀ½
+    // ë¶€í•˜ ë¶„ì‚° ê¸°ëŠ¥ì´ êº¼ì ¸ ìžˆê±°ë‚˜, ë¶€í•˜ ë¶„ì‚°ì„ ì²˜ë¦¬í•  ì‹œì ì´ ì•„ë‹ˆë©´ í•  í•„ìš”ê°€ ì—†ìŒ
     if( ( gs_stInterruptManager.vvqwCoreInterruptCount[ bAPICID ][ iIRQ ] == 0 ) ||
         ( ( gs_stInterruptManager.vvqwCoreInterruptCount[ bAPICID ][ iIRQ ] % 
             INTERRUPT_LOADBALANCINGDIVIDOR ) != 0 ) ||
@@ -101,8 +101,8 @@ void kProcessLoadBalancing( int iIRQ )
         return ;
     }
     
-    // ÄÚ¾îÀÇ °³¼ö¸¦ ±¸ÇØ¼­ ·çÇÁ¸¦ ¼öÇàÇÏ¸ç ÀÎÅÍ·´Æ® Ã³¸® È½¼ö°¡ °¡Àå ÀÛÀº ÄÚ¾î¸¦ 
-    // ¼±ÅÃ
+    // ì½”ì–´ì˜ ê°œìˆ˜ë¥¼ êµ¬í•´ì„œ ë£¨í”„ë¥¼ ìˆ˜í–‰í•˜ë©° ì¸í„°ëŸ½íŠ¸ ì²˜ë¦¬ íšŸìˆ˜ê°€ ê°€ìž¥ ìž‘ì€ ì½”ì–´ë¥¼ 
+    // ì„ íƒ
     iMinCountCoreIndex = 0;
     iCoreCount = kGetProcessorCount();
     for( i = 0 ; i < iCoreCount ; i++ )
@@ -113,7 +113,7 @@ void kProcessLoadBalancing( int iIRQ )
             qwMinCount = gs_stInterruptManager.vvqwCoreInterruptCount[ i ][ iIRQ ];
             iMinCountCoreIndex = i;
         }
-        // ÀüÃ¼ Ä«¿îÆ®°¡ °ÅÀÇ ÃÖ´ë °ª¿¡ ±ÙÁ¢Çß´Ù¸é ³ªÁß¿¡ Ä«¿îÆ®¸¦ ¸ðµÎ 0À¸·Î ¼³Á¤
+        // ì „ì²´ ì¹´ìš´íŠ¸ê°€ ê±°ì˜ ìµœëŒ€ ê°’ì— ê·¼ì ‘í–ˆë‹¤ë©´ ë‚˜ì¤‘ì— ì¹´ìš´íŠ¸ë¥¼ ëª¨ë‘ 0ìœ¼ë¡œ ì„¤ì •
         else if( gs_stInterruptManager.vvqwCoreInterruptCount[ i ][ iIRQ ] >=
             0xFFFFFFFFFFFFFFFE )
         {
@@ -121,11 +121,11 @@ void kProcessLoadBalancing( int iIRQ )
         }
     }
     
-    // I/O ¸®´ÙÀÌ·º¼Ç Å×ÀÌºíÀ» º¯°æÇÏ¿© °¡Àå ÀÎÅÍ·´Æ®¸¦ Ã³¸®ÇÑ È½¼ö°¡ ÀÛÀº ·ÎÄÃ APIC·Î Àü´Þ
+    // I/O ë¦¬ë‹¤ì´ë ‰ì…˜ í…Œì´ë¸”ì„ ë³€ê²½í•˜ì—¬ ê°€ìž¥ ì¸í„°ëŸ½íŠ¸ë¥¼ ì²˜ë¦¬í•œ íšŸìˆ˜ê°€ ìž‘ì€ ë¡œì»¬ APICë¡œ ì „ë‹¬
     kRoutingIRQToAPICID( iIRQ, iMinCountCoreIndex );
     
-    // Ã³¸®ÇÑ ÄÚ¾îÀÇ Ä«¿îÆ®°¡ ÃÖ´ñ°ª¿¡ ±ÙÁ¢Çß´Ù¸é ÀüÃ¼ Ä«¿îÆ®¸¦ ´Ù½Ã 0¿¡¼­ ½ÃÀÛÇÏµµ·Ï
-    // º¯°æ
+    // ì²˜ë¦¬í•œ ì½”ì–´ì˜ ì¹´ìš´íŠ¸ê°€ ìµœëŒ“ê°’ì— ê·¼ì ‘í–ˆë‹¤ë©´ ì „ì²´ ì¹´ìš´íŠ¸ë¥¼ ë‹¤ì‹œ 0ì—ì„œ ì‹œìž‘í•˜ë„ë¡
+    // ë³€ê²½
     if( bResetCount == TRUE )
     {
         for( i = 0 ; i < iCoreCount ; i++ )
@@ -136,7 +136,7 @@ void kProcessLoadBalancing( int iIRQ )
 }
 
 /**
- *  °øÅëÀ¸·Î »ç¿ëÇÏ´Â ¿¹¿Ü ÇÚµé·¯
+ *  ê³µí†µìœ¼ë¡œ ì‚¬ìš©í•˜ëŠ” ì˜ˆì™¸ í•¸ë“¤ëŸ¬
  */
 void kCommonExceptionHandler( int iVectorNumber, QWORD qwErrorCode )
 {
@@ -144,41 +144,41 @@ void kCommonExceptionHandler( int iVectorNumber, QWORD qwErrorCode )
     BYTE bAPICID;
     TCB* pstTask;
     
-    // ÇöÀç ¿¹¿Ü°¡ ¹ß»ýÇÑ ÄÚ¾î¸¦ ¹ÝÈ¯
+    // í˜„ìž¬ ì˜ˆì™¸ê°€ ë°œìƒí•œ ì½”ì–´ë¥¼ ë°˜í™˜
     bAPICID = kGetAPICID();
-    // ÇöÀç ÄÚ¾î¿¡¼­ ½ÇÇà ÁßÀÎ ÅÂ½ºÅ©¸¦ ¹ÝÈ¯
+    // í˜„ìž¬ ì½”ì–´ì—ì„œ ì‹¤í–‰ ì¤‘ì¸ íƒœìŠ¤í¬ë¥¼ ë°˜í™˜
     pstTask = kGetRunningTask( bAPICID );
     
-    // ¸Þ½ÃÁö Ãâ·Â
+    // ë©”ì‹œì§€ ì¶œë ¥
     kPrintStringXY( 0, 0, "====================================================" );
     kPrintStringXY( 0, 1, "                 Exception Occur~!!!!               " );
-    // ¿¹¿Ü º¤ÅÍ¿Í ÄÚ¾î ID, ¿¡·¯ÄÚµå¸¦ Ãâ·Â
+    // ì˜ˆì™¸ ë²¡í„°ì™€ ì½”ì–´ ID, ì—ëŸ¬ì½”ë“œë¥¼ ì¶œë ¥
     kSPrintf( vcBuffer,   "     Vector:%d     Core ID:0x%X     ErrorCode:0x%X  ", 
             iVectorNumber, bAPICID, qwErrorCode );            
     kPrintStringXY( 0, 2, vcBuffer );    
-    // ÅÂ½ºÅ© ID¸¦ Ãâ·Â
+    // íƒœìŠ¤í¬ IDë¥¼ ì¶œë ¥
     kSPrintf( vcBuffer,   "                Task ID:0x%Q", pstTask->stLink.qwID );
     kPrintStringXY( 0, 3, vcBuffer );
     kPrintStringXY( 0, 4, "====================================================" );
 
-    // À¯Àú ·¹º§ ÅÂ½ºÅ©ÀÇ °æ¿ì´Â ¹«ÇÑ ·çÇÁ¸¦ ¼öÇàÇÏÁö ¾Ê°í ÅÂ½ºÅ©¸¦ Á¾·á½ÃÅ°°í ´Ù¸¥
-    // ÅÂ½ºÅ©·Î ÀüÈ¯
+    // ìœ ì € ë ˆë²¨ íƒœìŠ¤í¬ì˜ ê²½ìš°ëŠ” ë¬´í•œ ë£¨í”„ë¥¼ ìˆ˜í–‰í•˜ì§€ ì•Šê³  íƒœìŠ¤í¬ë¥¼ ì¢…ë£Œì‹œí‚¤ê³  ë‹¤ë¥¸
+    // íƒœìŠ¤í¬ë¡œ ì „í™˜
     if( pstTask->qwFlags & TASK_FLAGS_USERLEVEL )
     {
-        // ÅÂ½ºÅ© Á¾·á
+        // íƒœìŠ¤í¬ ì¢…ë£Œ
         kEndTask( pstTask->stLink.qwID );
         
-        // ¹«ÇÑ ·çÇÁ ¼öÇà 
-        // kEndTask() ÇÔ¼ö¿¡¼­ ´Ù¸¥ ÅÂ½ºÅ©·Î ÀüÈ¯ÇÏ¹Ç·Î ½ÇÁ¦·Î ¿©±â´Â ¼öÇàµÇÁö ¾ÊÀ½
+        // ë¬´í•œ ë£¨í”„ ìˆ˜í–‰ 
+        // kEndTask() í•¨ìˆ˜ì—ì„œ ë‹¤ë¥¸ íƒœìŠ¤í¬ë¡œ ì „í™˜í•˜ë¯€ë¡œ ì‹¤ì œë¡œ ì—¬ê¸°ëŠ” ìˆ˜í–‰ë˜ì§€ ì•ŠìŒ
         while( 1 )
         {
             ;
         }
     }
-    // Ä¿³Î ·¹º§ÀÎ °æ¿ì´Â ¹«ÇÑ ·çÇÁ ¼öÇà
+    // ì»¤ë„ ë ˆë²¨ì¸ ê²½ìš°ëŠ” ë¬´í•œ ë£¨í”„ ìˆ˜í–‰
     else
     {
-        // ¹«ÇÑ ·çÇÁ ¼öÇà
+        // ë¬´í•œ ë£¨í”„ ìˆ˜í–‰
         while( 1 )
         {
             ;
@@ -188,7 +188,7 @@ void kCommonExceptionHandler( int iVectorNumber, QWORD qwErrorCode )
 
 
 /**
- *  °øÅëÀ¸·Î »ç¿ëÇÏ´Â ÀÎÅÍ·´Æ® ÇÚµé·¯ 
+ *  ê³µí†µìœ¼ë¡œ ì‚¬ìš©í•˜ëŠ” ì¸í„°ëŸ½íŠ¸ í•¸ë“¤ëŸ¬ 
  */
 void kCommonInterruptHandler( int iVectorNumber )
 {
@@ -197,31 +197,31 @@ void kCommonInterruptHandler( int iVectorNumber )
     int iIRQ;
 
     //=========================================================================
-    // ÀÎÅÍ·´Æ®°¡ ¹ß»ýÇßÀ½À» ¾Ë¸®·Á°í ¸Þ½ÃÁö¸¦ Ãâ·ÂÇÏ´Â ºÎºÐ
-    // ÀÎÅÍ·´Æ® º¤ÅÍ¸¦ È­¸é ¿À¸¥ÂÊ À§¿¡ 2ÀÚ¸® Á¤¼ö·Î Ãâ·Â
+    // ì¸í„°ëŸ½íŠ¸ê°€ ë°œìƒí–ˆìŒì„ ì•Œë¦¬ë ¤ê³  ë©”ì‹œì§€ë¥¼ ì¶œë ¥í•˜ëŠ” ë¶€ë¶„
+    // ì¸í„°ëŸ½íŠ¸ ë²¡í„°ë¥¼ í™”ë©´ ì˜¤ë¥¸ìª½ ìœ„ì— 2ìžë¦¬ ì •ìˆ˜ë¡œ ì¶œë ¥
     vcBuffer[ 5 ] = '0' + iVectorNumber / 10;
     vcBuffer[ 6 ] = '0' + iVectorNumber % 10;
-    // ¹ß»ýÇÑ È½¼ö Ãâ·Â
+    // ë°œìƒí•œ íšŸìˆ˜ ì¶œë ¥
     vcBuffer[ 8 ] = '0' + g_iCommonInterruptCount;
     g_iCommonInterruptCount = ( g_iCommonInterruptCount + 1 ) % 10;
     kPrintStringXY( 70, 0, vcBuffer );
     //=========================================================================
     
-    // ÀÎÅÍ·´Æ® º¤ÅÍ¿¡¼­ IRQ ¹øÈ£ ÃßÃâ
+    // ì¸í„°ëŸ½íŠ¸ ë²¡í„°ì—ì„œ IRQ ë²ˆí˜¸ ì¶”ì¶œ
     iIRQ = iVectorNumber - PIC_IRQSTARTVECTOR;
 
-    // EOI Àü¼Û
+    // EOI ì „ì†¡
     kSendEOI( iIRQ );
     
-    // ÀÎÅÍ·´Æ® ¹ß»ý È½¼ö¸¦ ¾÷µ¥ÀÌÆ®
+    // ì¸í„°ëŸ½íŠ¸ ë°œìƒ íšŸìˆ˜ë¥¼ ì—…ë°ì´íŠ¸
     kIncreaseInterruptCount( iIRQ );
     
-    // ºÎÇÏ ºÐ»ê(Load Balancing) Ã³¸®
+    // ë¶€í•˜ ë¶„ì‚°(Load Balancing) ì²˜ë¦¬
     kProcessLoadBalancing( iIRQ );
 }
 
 /**
- *  Å°º¸µå ÀÎÅÍ·´Æ®ÀÇ ÇÚµé·¯
+ *  í‚¤ë³´ë“œ ì¸í„°ëŸ½íŠ¸ì˜ í•¸ë“¤ëŸ¬
  */
 void kKeyboardHandler( int iVectorNumber )
 {
@@ -231,55 +231,55 @@ void kKeyboardHandler( int iVectorNumber )
     int iIRQ;
     
     //=========================================================================
-    // ÀÎÅÍ·´Æ®°¡ ¹ß»ýÇßÀ½À» ¾Ë¸®·Á°í ¸Þ½ÃÁö¸¦ Ãâ·ÂÇÏ´Â ºÎºÐ
-    // ÀÎÅÍ·´Æ® º¤ÅÍ¸¦ È­¸é ¿ÞÂÊ À§¿¡ 2ÀÚ¸® Á¤¼ö·Î Ãâ·Â
+    // ì¸í„°ëŸ½íŠ¸ê°€ ë°œìƒí–ˆìŒì„ ì•Œë¦¬ë ¤ê³  ë©”ì‹œì§€ë¥¼ ì¶œë ¥í•˜ëŠ” ë¶€ë¶„
+    // ì¸í„°ëŸ½íŠ¸ ë²¡í„°ë¥¼ í™”ë©´ ì™¼ìª½ ìœ„ì— 2ìžë¦¬ ì •ìˆ˜ë¡œ ì¶œë ¥
     vcBuffer[ 5 ] = '0' + iVectorNumber / 10;
     vcBuffer[ 6 ] = '0' + iVectorNumber % 10;
-    // ¹ß»ýÇÑ È½¼ö Ãâ·Â
+    // ë°œìƒí•œ íšŸìˆ˜ ì¶œë ¥
     vcBuffer[ 8 ] = '0' + g_iCommonInterruptCount;
     g_iCommonInterruptCount = ( g_iCommonInterruptCount + 1 ) % 10;
     kPrintStringXY( 0, 0, vcBuffer );
     //=========================================================================
 
-    // Ãâ·Â ¹öÆÛ(Æ÷Æ® 0x60)¿¡ ¼ö½ÅµÈ µ¥ÀÌÅÍ°¡ ÀÖ´ÂÁö ¿©ºÎ¸¦ È®ÀÎÇÏ¿© ÀÐÀº µ¥ÀÌÅÍ¸¦ 
-    // Å° Å¥ ¶Ç´Â ¸¶¿ì½º Å¥¿¡ »ðÀÔ
+    // ì¶œë ¥ ë²„í¼(í¬íŠ¸ 0x60)ì— ìˆ˜ì‹ ëœ ë°ì´í„°ê°€ ìžˆëŠ”ì§€ ì—¬ë¶€ë¥¼ í™•ì¸í•˜ì—¬ ì½ì€ ë°ì´í„°ë¥¼ 
+    // í‚¤ í ë˜ëŠ” ë§ˆìš°ìŠ¤ íì— ì‚½ìž…
     if( kIsOutputBufferFull() == TRUE )
     {
-        // ¸¶¿ì½º µ¥ÀÌÅÍ°¡ ¾Æ´Ï¸é Å° Å¥¿¡ »ðÀÔ
+        // ë§ˆìš°ìŠ¤ ë°ì´í„°ê°€ ì•„ë‹ˆë©´ í‚¤ íì— ì‚½ìž…
         if( kIsMouseDataInOutputBuffer() == FALSE )
         {
-            // Ãâ·Â ¹öÆÛ(Æ÷Æ® 0x60)¿¡¼­ Å° ½ºÄµ ÄÚµå¸¦ ÀÐ´Â ¿ëµµÀÇ ÇÔ¼öÁö¸¸ Å°º¸µå¿Í ¸¶¿ì½º
-            // µ¥ÀÌÅÍ´Â Ãâ·Â ¹öÆÛ¸¦ °øÅëÀ¸·Î »ç¿ëÇÏ¹Ç·Î ¸¶¿ì½º µ¥ÀÌÅÍ¸¦ ÀÐ´Âµ¥µµ »ç¿ë °¡´É
+            // ì¶œë ¥ ë²„í¼(í¬íŠ¸ 0x60)ì—ì„œ í‚¤ ìŠ¤ìº” ì½”ë“œë¥¼ ì½ëŠ” ìš©ë„ì˜ í•¨ìˆ˜ì§€ë§Œ í‚¤ë³´ë“œì™€ ë§ˆìš°ìŠ¤
+            // ë°ì´í„°ëŠ” ì¶œë ¥ ë²„í¼ë¥¼ ê³µí†µìœ¼ë¡œ ì‚¬ìš©í•˜ë¯€ë¡œ ë§ˆìš°ìŠ¤ ë°ì´í„°ë¥¼ ì½ëŠ”ë°ë„ ì‚¬ìš© ê°€ëŠ¥
             bTemp = kGetKeyboardScanCode();
-            // Å° Å¥¿¡ »ðÀÔ
+            // í‚¤ íì— ì‚½ìž…
             kConvertScanCodeAndPutQueue( bTemp );
         }
-        // ¸¶¿ì½º µ¥ÀÌÅÍÀÌ¸é ¸¶¿ì½º Å¥¿¡ »ðÀÔ
+        // ë§ˆìš°ìŠ¤ ë°ì´í„°ì´ë©´ ë§ˆìš°ìŠ¤ íì— ì‚½ìž…
         else
         {
-            // Ãâ·Â ¹öÆÛ(Æ÷Æ® 0x60)¿¡¼­ Å° ½ºÄµ ÄÚµå¸¦ ÀÐ´Â ¿ëµµÀÇ ÇÔ¼öÁö¸¸ Å°º¸µå¿Í ¸¶¿ì½º
-            // µ¥ÀÌÅÍ´Â Ãâ·Â ¹öÆÛ¸¦ °øÅëÀ¸·Î »ç¿ëÇÏ¹Ç·Î ¸¶¿ì½º µ¥ÀÌÅÍ¸¦ ÀÐ´Âµ¥µµ »ç¿ë °¡´É
+            // ì¶œë ¥ ë²„í¼(í¬íŠ¸ 0x60)ì—ì„œ í‚¤ ìŠ¤ìº” ì½”ë“œë¥¼ ì½ëŠ” ìš©ë„ì˜ í•¨ìˆ˜ì§€ë§Œ í‚¤ë³´ë“œì™€ ë§ˆìš°ìŠ¤
+            // ë°ì´í„°ëŠ” ì¶œë ¥ ë²„í¼ë¥¼ ê³µí†µìœ¼ë¡œ ì‚¬ìš©í•˜ë¯€ë¡œ ë§ˆìš°ìŠ¤ ë°ì´í„°ë¥¼ ì½ëŠ”ë°ë„ ì‚¬ìš© ê°€ëŠ¥
             bTemp = kGetKeyboardScanCode();
-            // ¸¶¿ì½º Å¥¿¡ »ðÀÔ
+            // ë§ˆìš°ìŠ¤ íì— ì‚½ìž…
             kAccumulateMouseDataAndPutQueue( bTemp );
         } 
     }
     
-    // ÀÎÅÍ·´Æ® º¤ÅÍ¿¡¼­ IRQ ¹øÈ£ ÃßÃâ
+    // ì¸í„°ëŸ½íŠ¸ ë²¡í„°ì—ì„œ IRQ ë²ˆí˜¸ ì¶”ì¶œ
     iIRQ = iVectorNumber - PIC_IRQSTARTVECTOR;
 
-    // EOI Àü¼Û
+    // EOI ì „ì†¡
     kSendEOI( iIRQ );
     
-    // ÀÎÅÍ·´Æ® ¹ß»ý È½¼ö¸¦ ¾÷µ¥ÀÌÆ®
+    // ì¸í„°ëŸ½íŠ¸ ë°œìƒ íšŸìˆ˜ë¥¼ ì—…ë°ì´íŠ¸
     kIncreaseInterruptCount( iIRQ );
     
-    // ºÎÇÏ ºÐ»ê(Load Balancing) Ã³¸®
+    // ë¶€í•˜ ë¶„ì‚°(Load Balancing) ì²˜ë¦¬
     kProcessLoadBalancing( iIRQ );
 }
 
 /**
- *  Å¸ÀÌ¸Ó ÀÎÅÍ·´Æ®ÀÇ ÇÚµé·¯
+ *  íƒ€ì´ë¨¸ ì¸í„°ëŸ½íŠ¸ì˜ í•¸ë“¤ëŸ¬
  */
 void kTimerHandler( int iVectorNumber )
 {
@@ -289,36 +289,36 @@ void kTimerHandler( int iVectorNumber )
     BYTE bCurrentAPICID;
 
     //=========================================================================
-    // ÀÎÅÍ·´Æ®°¡ ¹ß»ýÇßÀ½À» ¾Ë¸®·Á°í ¸Þ½ÃÁö¸¦ Ãâ·ÂÇÏ´Â ºÎºÐ
-    // ÀÎÅÍ·´Æ® º¤ÅÍ¸¦ È­¸é ¿À¸¥ÂÊ À§¿¡ 2ÀÚ¸® Á¤¼ö·Î Ãâ·Â
+    // ì¸í„°ëŸ½íŠ¸ê°€ ë°œìƒí–ˆìŒì„ ì•Œë¦¬ë ¤ê³  ë©”ì‹œì§€ë¥¼ ì¶œë ¥í•˜ëŠ” ë¶€ë¶„
+    // ì¸í„°ëŸ½íŠ¸ ë²¡í„°ë¥¼ í™”ë©´ ì˜¤ë¥¸ìª½ ìœ„ì— 2ìžë¦¬ ì •ìˆ˜ë¡œ ì¶œë ¥
     vcBuffer[ 5 ] = '0' + iVectorNumber / 10;
     vcBuffer[ 6 ] = '0' + iVectorNumber % 10;
-    // ¹ß»ýÇÑ È½¼ö Ãâ·Â
+    // ë°œìƒí•œ íšŸìˆ˜ ì¶œë ¥
     vcBuffer[ 8 ] = '0' + g_iTimerInterruptCount;
     g_iTimerInterruptCount = ( g_iTimerInterruptCount + 1 ) % 10;
     kPrintStringXY( 70, 0, vcBuffer );
     //=========================================================================
     
-    // ÀÎÅÍ·´Æ® º¤ÅÍ¿¡¼­ IRQ ¹øÈ£ ÃßÃâ
+    // ì¸í„°ëŸ½íŠ¸ ë²¡í„°ì—ì„œ IRQ ë²ˆí˜¸ ì¶”ì¶œ
     iIRQ = iVectorNumber - PIC_IRQSTARTVECTOR;
 
-    // EOI Àü¼Û
+    // EOI ì „ì†¡
     kSendEOI( iIRQ );
     
-    // ÀÎÅÍ·´Æ® ¹ß»ý È½¼ö¸¦ ¾÷µ¥ÀÌÆ®
+    // ì¸í„°ëŸ½íŠ¸ ë°œìƒ íšŸìˆ˜ë¥¼ ì—…ë°ì´íŠ¸
     kIncreaseInterruptCount( iIRQ );
 
-    // IRQ 0 ÀÎÅÍ·´Æ® Ã³¸®´Â Bootstrap Processor¸¸ Ã³¸®
+    // IRQ 0 ì¸í„°ëŸ½íŠ¸ ì²˜ë¦¬ëŠ” Bootstrap Processorë§Œ ì²˜ë¦¬
     bCurrentAPICID = kGetAPICID();
     if( bCurrentAPICID == 0 )
     {
-        // Å¸ÀÌ¸Ó ¹ß»ý È½¼ö¸¦ Áõ°¡
+        // íƒ€ì´ë¨¸ ë°œìƒ íšŸìˆ˜ë¥¼ ì¦ê°€
         g_qwTickCount++;
     }
 
-    // ÅÂ½ºÅ©°¡ »ç¿ëÇÑ ÇÁ·Î¼¼¼­ÀÇ ½Ã°£À» ÁÙÀÓ
+    // íƒœìŠ¤í¬ê°€ ì‚¬ìš©í•œ í”„ë¡œì„¸ì„œì˜ ì‹œê°„ì„ ì¤„ìž„
     kDecreaseProcessorTime( bCurrentAPICID );
-    // ÇÁ·Î¼¼¼­°¡ »ç¿ëÇÒ ¼ö ÀÖ´Â ½Ã°£À» ´Ù ½è´Ù¸é ÅÂ½ºÅ© ÀüÈ¯ ¼öÇà
+    // í”„ë¡œì„¸ì„œê°€ ì‚¬ìš©í•  ìˆ˜ ìžˆëŠ” ì‹œê°„ì„ ë‹¤ ì¼ë‹¤ë©´ íƒœìŠ¤í¬ ì „í™˜ ìˆ˜í–‰
     if( kIsProcessorTimeExpired( bCurrentAPICID ) == TRUE )
     {
         kScheduleInInterrupt();
@@ -326,7 +326,7 @@ void kTimerHandler( int iVectorNumber )
 }
 
 /**
- *  Device Not Available ¿¹¿ÜÀÇ ÇÚµé·¯
+ *  Device Not Available ì˜ˆì™¸ì˜ í•¸ë“¤ëŸ¬
  */
 void kDeviceNotAvailableHandler( int iVectorNumber )
 {
@@ -335,35 +335,35 @@ void kDeviceNotAvailableHandler( int iVectorNumber )
     BYTE bCurrentAPICID;
 
     //=========================================================================
-    // FPU ¿¹¿Ü°¡ ¹ß»ýÇßÀ½À» ¾Ë¸®·Á°í ¸Þ½ÃÁö¸¦ Ãâ·ÂÇÏ´Â ºÎºÐ
+    // FPU ì˜ˆì™¸ê°€ ë°œìƒí–ˆìŒì„ ì•Œë¦¬ë ¤ê³  ë©”ì‹œì§€ë¥¼ ì¶œë ¥í•˜ëŠ” ë¶€ë¶„
     char vcBuffer[] = "[EXC:  , ]";
     static int g_iFPUInterruptCount = 0;
 
-    // ¿¹¿Ü º¤ÅÍ¸¦ È­¸é ¿À¸¥ÂÊ À§¿¡ 2ÀÚ¸® Á¤¼ö·Î Ãâ·Â
+    // ì˜ˆì™¸ ë²¡í„°ë¥¼ í™”ë©´ ì˜¤ë¥¸ìª½ ìœ„ì— 2ìžë¦¬ ì •ìˆ˜ë¡œ ì¶œë ¥
     vcBuffer[ 5 ] = '0' + iVectorNumber / 10;
     vcBuffer[ 6 ] = '0' + iVectorNumber % 10;
-    // ¹ß»ýÇÑ È½¼ö Ãâ·Â
+    // ë°œìƒí•œ íšŸìˆ˜ ì¶œë ¥
     vcBuffer[ 8 ] = '0' + g_iFPUInterruptCount;
     g_iFPUInterruptCount = ( g_iFPUInterruptCount + 1 ) % 10;
     kPrintStringXY( 0, 0, vcBuffer );    
     //=========================================================================
     
-    // ÇöÀç ÄÚ¾îÀÇ ·ÎÄÃ APIC ID¸¦ È®ÀÎ
+    // í˜„ìž¬ ì½”ì–´ì˜ ë¡œì»¬ APIC IDë¥¼ í™•ì¸
     bCurrentAPICID = kGetAPICID();
     
-    // CR0 ÄÁÆ®·Ñ ·¹Áö½ºÅÍÀÇ TS ºñÆ®¸¦ 0À¸·Î ¼³Á¤
+    // CR0 ì»¨íŠ¸ë¡¤ ë ˆì§€ìŠ¤í„°ì˜ TS ë¹„íŠ¸ë¥¼ 0ìœ¼ë¡œ ì„¤ì •
     kClearTS();
 
-    // ÀÌÀü¿¡ FPU¸¦ »ç¿ëÇÑ ÅÂ½ºÅ©°¡ ÀÖ´ÂÁö È®ÀÎÇÏ¿©, ÀÖ´Ù¸é FPUÀÇ »óÅÂ¸¦ ÅÂ½ºÅ©¿¡ ÀúÀå
+    // ì´ì „ì— FPUë¥¼ ì‚¬ìš©í•œ íƒœìŠ¤í¬ê°€ ìžˆëŠ”ì§€ í™•ì¸í•˜ì—¬, ìžˆë‹¤ë©´ FPUì˜ ìƒíƒœë¥¼ íƒœìŠ¤í¬ì— ì €ìž¥
     qwLastFPUTaskID = kGetLastFPUUsedTaskID( bCurrentAPICID );
     pstCurrentTask = kGetRunningTask( bCurrentAPICID );
     
-    // ÀÌÀü¿¡ FPU¸¦ »ç¿ëÇÑ °ÍÀÌ ÀÚ½ÅÀÌ¸é ¾Æ¹«°Íµµ ¾È ÇÔ
+    // ì´ì „ì— FPUë¥¼ ì‚¬ìš©í•œ ê²ƒì´ ìžì‹ ì´ë©´ ì•„ë¬´ê²ƒë„ ì•ˆ í•¨
     if( qwLastFPUTaskID == pstCurrentTask->stLink.qwID )
     {
         return ;
     }
-    // FPU¸¦ »ç¿ëÇÑ ÅÂ½ºÅ©°¡ ÀÖÀ¸¸é FPU »óÅÂ¸¦ ÀúÀå
+    // FPUë¥¼ ì‚¬ìš©í•œ íƒœìŠ¤í¬ê°€ ìžˆìœ¼ë©´ FPU ìƒíƒœë¥¼ ì €ìž¥
     else if( qwLastFPUTaskID != TASK_INVALIDID )
     {
         pstFPUTask = kGetTCBInTCBPool( GETTCBOFFSET( qwLastFPUTaskID ) );
@@ -373,8 +373,8 @@ void kDeviceNotAvailableHandler( int iVectorNumber )
         }
     }
     
-    // ÇöÀç ÅÂ½ºÅ©°¡ FPU¸¦ »ç¿ëÇÑ ÀûÀÌ ÀÖ´Â Áö È®ÀÎÇÏ¿© FPU¸¦ »ç¿ëÇÑ ÀûÀÌ ¾ø´Ù¸é 
-    // ÃÊ±âÈ­ÇÏ°í, »ç¿ëÇÑÀûÀÌ ÀÖ´Ù¸é ÀúÀåµÈ FPU ÄÜÅØ½ºÆ®¸¦ º¹¿ø
+    // í˜„ìž¬ íƒœìŠ¤í¬ê°€ FPUë¥¼ ì‚¬ìš©í•œ ì ì´ ìžˆëŠ” ì§€ í™•ì¸í•˜ì—¬ FPUë¥¼ ì‚¬ìš©í•œ ì ì´ ì—†ë‹¤ë©´ 
+    // ì´ˆê¸°í™”í•˜ê³ , ì‚¬ìš©í•œì ì´ ìžˆë‹¤ë©´ ì €ìž¥ëœ FPU ì½˜í…ìŠ¤íŠ¸ë¥¼ ë³µì›
     if( pstCurrentTask->bFPUUsed == FALSE )
     {
         kInitializeFPU();
@@ -385,12 +385,12 @@ void kDeviceNotAvailableHandler( int iVectorNumber )
         kLoadFPUContext( pstCurrentTask->vqwFPUContext );
     }
     
-    // FPU¸¦ »ç¿ëÇÑ ÅÂ½ºÅ© ID¸¦ ÇöÀç ÅÂ½ºÅ©·Î º¯°æ
+    // FPUë¥¼ ì‚¬ìš©í•œ íƒœìŠ¤í¬ IDë¥¼ í˜„ìž¬ íƒœìŠ¤í¬ë¡œ ë³€ê²½
     kSetLastFPUUsedTaskID( bCurrentAPICID, pstCurrentTask->stLink.qwID );
 }
 
 /**
- *  ÇÏµå µð½ºÅ©¿¡¼­ ¹ß»ýÇÏ´Â ÀÎÅÍ·´Æ®ÀÇ ÇÚµé·¯
+ *  í•˜ë“œ ë””ìŠ¤í¬ì—ì„œ ë°œìƒí•˜ëŠ” ì¸í„°ëŸ½íŠ¸ì˜ í•¸ë“¤ëŸ¬
  */
 void kHDDHandler( int iVectorNumber )
 {
@@ -400,35 +400,35 @@ void kHDDHandler( int iVectorNumber )
     int iIRQ;
 
     //=========================================================================
-    // ÀÎÅÍ·´Æ®°¡ ¹ß»ýÇßÀ½À» ¾Ë¸®·Á°í ¸Þ½ÃÁö¸¦ Ãâ·ÂÇÏ´Â ºÎºÐ
-    // ÀÎÅÍ·´Æ® º¤ÅÍ¸¦ È­¸é ¿ÞÂÊ À§¿¡ 2ÀÚ¸® Á¤¼ö·Î Ãâ·Â
+    // ì¸í„°ëŸ½íŠ¸ê°€ ë°œìƒí–ˆìŒì„ ì•Œë¦¬ë ¤ê³  ë©”ì‹œì§€ë¥¼ ì¶œë ¥í•˜ëŠ” ë¶€ë¶„
+    // ì¸í„°ëŸ½íŠ¸ ë²¡í„°ë¥¼ í™”ë©´ ì™¼ìª½ ìœ„ì— 2ìžë¦¬ ì •ìˆ˜ë¡œ ì¶œë ¥
     vcBuffer[ 5 ] = '0' + iVectorNumber / 10;
     vcBuffer[ 6 ] = '0' + iVectorNumber % 10;
-    // ¹ß»ýÇÑ È½¼ö Ãâ·Â
+    // ë°œìƒí•œ íšŸìˆ˜ ì¶œë ¥
     vcBuffer[ 8 ] = '0' + g_iHDDInterruptCount;
     g_iHDDInterruptCount = ( g_iHDDInterruptCount + 1 ) % 10;
-    // ¿ÞÂÊ À§¿¡ ÀÖ´Â ¸Þ½ÃÁö¿Í °ãÄ¡Áö ¾Êµµ·Ï (10, 0)¿¡ Ãâ·Â
+    // ì™¼ìª½ ìœ„ì— ìžˆëŠ” ë©”ì‹œì§€ì™€ ê²¹ì¹˜ì§€ ì•Šë„ë¡ (10, 0)ì— ì¶œë ¥
     kPrintStringXY( 10, 0, vcBuffer );
     //=========================================================================
 
-    // Ã¹ ¹øÂ° PATA Æ÷Æ®ÀÇ ÀÎÅÍ·´Æ® ¹ß»ý ¿©ºÎ¸¦ TRUE·Î ¼³Á¤
+    // ì²« ë²ˆì§¸ PATA í¬íŠ¸ì˜ ì¸í„°ëŸ½íŠ¸ ë°œìƒ ì—¬ë¶€ë¥¼ TRUEë¡œ ì„¤ì •
     kSetHDDInterruptFlag( TRUE, TRUE );
     
-    // ÀÎÅÍ·´Æ® º¤ÅÍ¿¡¼­ IRQ ¹øÈ£ ÃßÃâ
+    // ì¸í„°ëŸ½íŠ¸ ë²¡í„°ì—ì„œ IRQ ë²ˆí˜¸ ì¶”ì¶œ
     iIRQ = iVectorNumber - PIC_IRQSTARTVECTOR;
 
-    // EOI Àü¼Û
+    // EOI ì „ì†¡
     kSendEOI( iIRQ );
     
-    // ÀÎÅÍ·´Æ® ¹ß»ý È½¼ö¸¦ ¾÷µ¥ÀÌÆ®
+    // ì¸í„°ëŸ½íŠ¸ ë°œìƒ íšŸìˆ˜ë¥¼ ì—…ë°ì´íŠ¸
     kIncreaseInterruptCount( iIRQ );
     
-    // ºÎÇÏ ºÐ»ê(Load Balancing) Ã³¸®
+    // ë¶€í•˜ ë¶„ì‚°(Load Balancing) ì²˜ë¦¬
     kProcessLoadBalancing( iIRQ );
 }
 
 /**
- *  ¸¶¿ì½º ÀÎÅÍ·´Æ®ÀÇ ÇÚµé·¯
+ *  ë§ˆìš°ìŠ¤ ì¸í„°ëŸ½íŠ¸ì˜ í•¸ë“¤ëŸ¬
  */
 void kMouseHandler( int iVectorNumber )
 {
@@ -438,50 +438,50 @@ void kMouseHandler( int iVectorNumber )
     int iIRQ;
     
     //=========================================================================
-    // ÀÎÅÍ·´Æ®°¡ ¹ß»ýÇßÀ½À» ¾Ë¸®·Á°í ¸Þ½ÃÁö¸¦ Ãâ·ÂÇÏ´Â ºÎºÐ
-    // ÀÎÅÍ·´Æ® º¤ÅÍ¸¦ È­¸é ¿ÞÂÊ À§¿¡ 2ÀÚ¸® Á¤¼ö·Î Ãâ·Â
+    // ì¸í„°ëŸ½íŠ¸ê°€ ë°œìƒí–ˆìŒì„ ì•Œë¦¬ë ¤ê³  ë©”ì‹œì§€ë¥¼ ì¶œë ¥í•˜ëŠ” ë¶€ë¶„
+    // ì¸í„°ëŸ½íŠ¸ ë²¡í„°ë¥¼ í™”ë©´ ì™¼ìª½ ìœ„ì— 2ìžë¦¬ ì •ìˆ˜ë¡œ ì¶œë ¥
     vcBuffer[ 5 ] = '0' + iVectorNumber / 10;
     vcBuffer[ 6 ] = '0' + iVectorNumber % 10;
-    // ¹ß»ýÇÑ È½¼ö Ãâ·Â
+    // ë°œìƒí•œ íšŸìˆ˜ ì¶œë ¥
     vcBuffer[ 8 ] = '0' + g_iMouseInterruptCount;
     g_iMouseInterruptCount = ( g_iMouseInterruptCount + 1 ) % 10;
     kPrintStringXY( 0, 0, vcBuffer );
     //=========================================================================
 
-    // Ãâ·Â ¹öÆÛ(Æ÷Æ® 0x60)¿¡ ¼ö½ÅµÈ µ¥ÀÌÅÍ°¡ ÀÖ´ÂÁö ¿©ºÎ¸¦ È®ÀÎÇÏ¿© ÀÐÀº µ¥ÀÌÅÍ¸¦ 
-    // Å° Å¥ ¶Ç´Â ¸¶¿ì½º Å¥¿¡ »ðÀÔ
+    // ì¶œë ¥ ë²„í¼(í¬íŠ¸ 0x60)ì— ìˆ˜ì‹ ëœ ë°ì´í„°ê°€ ìžˆëŠ”ì§€ ì—¬ë¶€ë¥¼ í™•ì¸í•˜ì—¬ ì½ì€ ë°ì´í„°ë¥¼ 
+    // í‚¤ í ë˜ëŠ” ë§ˆìš°ìŠ¤ íì— ì‚½ìž…
     if( kIsOutputBufferFull() == TRUE )
     {
-        // ¸¶¿ì½º µ¥ÀÌÅÍ°¡ ¾Æ´Ï¸é Å° Å¥¿¡ »ðÀÔ
+        // ë§ˆìš°ìŠ¤ ë°ì´í„°ê°€ ì•„ë‹ˆë©´ í‚¤ íì— ì‚½ìž…
         if( kIsMouseDataInOutputBuffer() == FALSE )
         {
-            // Ãâ·Â ¹öÆÛ(Æ÷Æ® 0x60)¿¡¼­ Å° ½ºÄµ ÄÚµå¸¦ ÀÐ´Â ¿ëµµÀÇ ÇÔ¼öÁö¸¸ Å°º¸µå¿Í ¸¶¿ì½º
-            // µ¥ÀÌÅÍ´Â Ãâ·Â ¹öÆÛ¸¦ °øÅëÀ¸·Î »ç¿ëÇÏ¹Ç·Î ¸¶¿ì½º µ¥ÀÌÅÍ¸¦ ÀÐ´Âµ¥µµ »ç¿ë °¡´É
+            // ì¶œë ¥ ë²„í¼(í¬íŠ¸ 0x60)ì—ì„œ í‚¤ ìŠ¤ìº” ì½”ë“œë¥¼ ì½ëŠ” ìš©ë„ì˜ í•¨ìˆ˜ì§€ë§Œ í‚¤ë³´ë“œì™€ ë§ˆìš°ìŠ¤
+            // ë°ì´í„°ëŠ” ì¶œë ¥ ë²„í¼ë¥¼ ê³µí†µìœ¼ë¡œ ì‚¬ìš©í•˜ë¯€ë¡œ ë§ˆìš°ìŠ¤ ë°ì´í„°ë¥¼ ì½ëŠ”ë°ë„ ì‚¬ìš© ê°€ëŠ¥
             bTemp = kGetKeyboardScanCode();
-            // Å° Å¥¿¡ »ðÀÔ
+            // í‚¤ íì— ì‚½ìž…
             kConvertScanCodeAndPutQueue( bTemp );
         }
-        // ¸¶¿ì½º µ¥ÀÌÅÍÀÌ¸é ¸¶¿ì½º Å¥¿¡ »ðÀÔ
+        // ë§ˆìš°ìŠ¤ ë°ì´í„°ì´ë©´ ë§ˆìš°ìŠ¤ íì— ì‚½ìž…
         else
         {
-            // Ãâ·Â ¹öÆÛ(Æ÷Æ® 0x60)¿¡¼­ Å° ½ºÄµ ÄÚµå¸¦ ÀÐ´Â ¿ëµµÀÇ ÇÔ¼öÁö¸¸ Å°º¸µå¿Í ¸¶¿ì½º
-            // µ¥ÀÌÅÍ´Â Ãâ·Â ¹öÆÛ¸¦ °øÅëÀ¸·Î »ç¿ëÇÏ¹Ç·Î ¸¶¿ì½º µ¥ÀÌÅÍ¸¦ ÀÐ´Âµ¥µµ »ç¿ë °¡´É
+            // ì¶œë ¥ ë²„í¼(í¬íŠ¸ 0x60)ì—ì„œ í‚¤ ìŠ¤ìº” ì½”ë“œë¥¼ ì½ëŠ” ìš©ë„ì˜ í•¨ìˆ˜ì§€ë§Œ í‚¤ë³´ë“œì™€ ë§ˆìš°ìŠ¤
+            // ë°ì´í„°ëŠ” ì¶œë ¥ ë²„í¼ë¥¼ ê³µí†µìœ¼ë¡œ ì‚¬ìš©í•˜ë¯€ë¡œ ë§ˆìš°ìŠ¤ ë°ì´í„°ë¥¼ ì½ëŠ”ë°ë„ ì‚¬ìš© ê°€ëŠ¥
             bTemp = kGetKeyboardScanCode();
-            // ¸¶¿ì½º Å¥¿¡ »ðÀÔ
+            // ë§ˆìš°ìŠ¤ íì— ì‚½ìž…
             kAccumulateMouseDataAndPutQueue( bTemp );
         } 
     }
     
-    // ÀÎÅÍ·´Æ® º¤ÅÍ¿¡¼­ IRQ ¹øÈ£ ÃßÃâ
+    // ì¸í„°ëŸ½íŠ¸ ë²¡í„°ì—ì„œ IRQ ë²ˆí˜¸ ì¶”ì¶œ
     iIRQ = iVectorNumber - PIC_IRQSTARTVECTOR;
 
-    // EOI Àü¼Û
+    // EOI ì „ì†¡
     kSendEOI( iIRQ );
     
-    // ÀÎÅÍ·´Æ® ¹ß»ý È½¼ö¸¦ ¾÷µ¥ÀÌÆ®
+    // ì¸í„°ëŸ½íŠ¸ ë°œìƒ íšŸìˆ˜ë¥¼ ì—…ë°ì´íŠ¸
     kIncreaseInterruptCount( iIRQ );
     
-    // ºÎÇÏ ºÐ»ê(Load Balancing) Ã³¸®
+    // ë¶€í•˜ ë¶„ì‚°(Load Balancing) ì²˜ë¦¬
     kProcessLoadBalancing( iIRQ );
 }
 

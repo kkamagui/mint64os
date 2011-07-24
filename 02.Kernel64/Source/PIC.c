@@ -3,68 +3,68 @@
  *  date    2009/01/17
  *  author  kkamagui 
  *          Copyright(c)2008 All rights reserved by kkamagui
- *  brief   PIC ÄÁÆ®·Ñ·¯¿¡ °ü·ÃµÈ ¼Ò½º ÆÄÀÏ
+ *  brief   PIC ì»¨íŠ¸ë¡¤ëŸ¬ì— ê´€ë ¨ëœ ì†ŒìŠ¤ íŒŒì¼
  */
 
 #include "PIC.h"
 
 /**
- *  PIC¸¦ ÃÊ±âÈ­
+ *  PICë¥¼ ì´ˆê¸°í™”
  */
 void kInitializePIC( void )
 {
-    // ¸¶½ºÅÍ PIC ÄÁÆ®·Ñ·¯¸¦ ÃÊ±âÈ­
-    // ICW1(Æ÷Æ® 0x20), IC4 ºñÆ®(ºñÆ® 0) = 1
+    // ë§ˆìŠ¤í„° PIC ì»¨íŠ¸ë¡¤ëŸ¬ë¥¼ ì´ˆê¸°í™”
+    // ICW1(í¬íŠ¸ 0x20), IC4 ë¹„íŠ¸(ë¹„íŠ¸ 0) = 1
     kOutPortByte( PIC_MASTER_PORT1, 0x11 );
-    // ICW2(Æ÷Æ® 0x21), ÀÎÅÍ·´Æ® º¤ÅÍ(0x20)
+    // ICW2(í¬íŠ¸ 0x21), ì¸í„°ëŸ½íŠ¸ ë²¡í„°(0x20)
     kOutPortByte( PIC_MASTER_PORT2, PIC_IRQSTARTVECTOR );
-    // ICW3(Æ÷Æ® 0x21), ½½·¹ÀÌºê PIC ÄÁÆ®·Ñ·¯°¡ ¿¬°á À§Ä¡(ºñÆ®·Î Ç¥Çö)
-    // ¸¶½ºÅÍ PIC ÄÁÆ®·Ñ·¯ÀÇ 2¹ø ÇÉ¿¡ ¿¬°áµÇ¾î ÀÖÀ¸¹Ç·Î, 0x04(ºñÆ® 2)·Î ¼³Á¤
+    // ICW3(í¬íŠ¸ 0x21), ìŠ¬ë ˆì´ë¸Œ PIC ì»¨íŠ¸ë¡¤ëŸ¬ê°€ ì—°ê²° ìœ„ì¹˜(ë¹„íŠ¸ë¡œ í‘œí˜„)
+    // ë§ˆìŠ¤í„° PIC ì»¨íŠ¸ë¡¤ëŸ¬ì˜ 2ë²ˆ í•€ì— ì—°ê²°ë˜ì–´ ìžˆìœ¼ë¯€ë¡œ, 0x04(ë¹„íŠ¸ 2)ë¡œ ì„¤ì •
     kOutPortByte( PIC_MASTER_PORT2, 0x04 );
-    // ICW4(Æ÷Æ® 0x21), uPM ºñÆ®(ºñÆ® 0) = 1
+    // ICW4(í¬íŠ¸ 0x21), uPM ë¹„íŠ¸(ë¹„íŠ¸ 0) = 1
     kOutPortByte( PIC_MASTER_PORT2, 0x01 );
 
-    // ½½·¹ÀÌºê PIC ÄÁÆ®·Ñ·¯¸¦ ÃÊ±âÈ­
-    // ICW1(Æ÷Æ® 0xA0), IC4 ºñÆ®(ºñÆ® 0) = 1
+    // ìŠ¬ë ˆì´ë¸Œ PIC ì»¨íŠ¸ë¡¤ëŸ¬ë¥¼ ì´ˆê¸°í™”
+    // ICW1(í¬íŠ¸ 0xA0), IC4 ë¹„íŠ¸(ë¹„íŠ¸ 0) = 1
     kOutPortByte( PIC_SLAVE_PORT1, 0x11 );
-    // ICW2(Æ÷Æ® 0xA1), ÀÎÅÍ·´Æ® º¤ÅÍ(0x20 + 8)
+    // ICW2(í¬íŠ¸ 0xA1), ì¸í„°ëŸ½íŠ¸ ë²¡í„°(0x20 + 8)
     kOutPortByte( PIC_SLAVE_PORT2, PIC_IRQSTARTVECTOR + 8 );
-    // ICW3(Æ÷Æ® 0xA1), ¸¶½ºÅÍ PIC ÄÁÆ®·Ñ·¯¿¡ ¿¬°áµÈ À§Ä¡(Á¤¼ö·Î Ç¥Çö)
-    // ¸¶½ºÅÍ PIC ÄÁÆ®·Ñ·¯ÀÇ 2¹ø ÇÉ¿¡ ¿¬°áµÇ¾î ÀÖÀ¸¹Ç·Î 0x02·Î ¼³Á¤
+    // ICW3(í¬íŠ¸ 0xA1), ë§ˆìŠ¤í„° PIC ì»¨íŠ¸ë¡¤ëŸ¬ì— ì—°ê²°ëœ ìœ„ì¹˜(ì •ìˆ˜ë¡œ í‘œí˜„)
+    // ë§ˆìŠ¤í„° PIC ì»¨íŠ¸ë¡¤ëŸ¬ì˜ 2ë²ˆ í•€ì— ì—°ê²°ë˜ì–´ ìžˆìœ¼ë¯€ë¡œ 0x02ë¡œ ì„¤ì •
     kOutPortByte( PIC_SLAVE_PORT2, 0x02 );
-    // ICW4(Æ÷Æ® 0xA1), uPM ºñÆ®(ºñÆ® 0) = 1
+    // ICW4(í¬íŠ¸ 0xA1), uPM ë¹„íŠ¸(ë¹„íŠ¸ 0) = 1
     kOutPortByte( PIC_SLAVE_PORT2, 0x01 );
 }
 
 /**
- *  ÀÎÅÍ·´Æ®¸¦ ¸¶½ºÅ©ÇÏ¿© ÇØ´ç ÀÎÅÍ·´Æ®°¡ ¹ß»ýÇÏÁö ¾Êµµ·Ï Ã³¸®
+ *  ì¸í„°ëŸ½íŠ¸ë¥¼ ë§ˆìŠ¤í¬í•˜ì—¬ í•´ë‹¹ ì¸í„°ëŸ½íŠ¸ê°€ ë°œìƒí•˜ì§€ ì•Šë„ë¡ ì²˜ë¦¬
  */
 void kMaskPICInterrupt( WORD wIRQBitmask )
 {
-    // ¸¶½ºÅÍ PIC ÄÁÆ®·Ñ·¯¿¡ IMR ¼³Á¤
-    // OCW1(Æ÷Æ® 0x21), IRQ 0~IRQ 7
+    // ë§ˆìŠ¤í„° PIC ì»¨íŠ¸ë¡¤ëŸ¬ì— IMR ì„¤ì •
+    // OCW1(í¬íŠ¸ 0x21), IRQ 0~IRQ 7
     kOutPortByte( PIC_MASTER_PORT2, ( BYTE ) wIRQBitmask );
     
-    // ½½·¹ÀÌºê PIC ÄÁÆ®·Ñ·¯¿¡ IMR ¼³Á¤
-    // OCW1(Æ÷Æ® 0xA1), IRQ 8~IRQ 15
+    // ìŠ¬ë ˆì´ë¸Œ PIC ì»¨íŠ¸ë¡¤ëŸ¬ì— IMR ì„¤ì •
+    // OCW1(í¬íŠ¸ 0xA1), IRQ 8~IRQ 15
     kOutPortByte( PIC_SLAVE_PORT2, ( BYTE ) ( wIRQBitmask >> 8 ) );
 }
 
 /**
- *  ÀÎÅÍ·´Æ® Ã³¸®°¡ ¿Ï·áµÇ¾úÀ½À» Àü¼Û(EOI)
- *      ¸¶½ºÅÍ PIC ÄÁÆ®·Ñ·¯ÀÇ °æ¿ì, ¸¶½ºÅÍ PIC ÄÁÆ®·Ñ·¯¿¡¸¸ EOI Àü¼Û
- *      ½½·¹ÀÌºê PIC ÄÁÆ®·Ñ·¯ÀÇ °æ¿ì, ¸¶½ºÅÍ ¹× ½½·¹ÀÌºê PIC ÄÁÆ®·Ñ·¯¿¡ ¸ðµÎ Àü¼Û
+ *  ì¸í„°ëŸ½íŠ¸ ì²˜ë¦¬ê°€ ì™„ë£Œë˜ì—ˆìŒì„ ì „ì†¡(EOI)
+ *      ë§ˆìŠ¤í„° PIC ì»¨íŠ¸ë¡¤ëŸ¬ì˜ ê²½ìš°, ë§ˆìŠ¤í„° PIC ì»¨íŠ¸ë¡¤ëŸ¬ì—ë§Œ EOI ì „ì†¡
+ *      ìŠ¬ë ˆì´ë¸Œ PIC ì»¨íŠ¸ë¡¤ëŸ¬ì˜ ê²½ìš°, ë§ˆìŠ¤í„° ë° ìŠ¬ë ˆì´ë¸Œ PIC ì»¨íŠ¸ë¡¤ëŸ¬ì— ëª¨ë‘ ì „ì†¡
  */
 void kSendEOIToPIC( int iIRQNumber )
 {
-    // ¸¶½ºÅÍ PIC ÄÁÆ®·Ñ·¯¿¡ EOI Àü¼Û
-    // OCW2(Æ÷Æ® 0x20), EOI ºñÆ®(ºñÆ® 5) = 1
+    // ë§ˆìŠ¤í„° PIC ì»¨íŠ¸ë¡¤ëŸ¬ì— EOI ì „ì†¡
+    // OCW2(í¬íŠ¸ 0x20), EOI ë¹„íŠ¸(ë¹„íŠ¸ 5) = 1
     kOutPortByte( PIC_MASTER_PORT1, 0x20 );
 
-    // ½½·¹ÀÌºê PIC ÄÁÆ®·Ñ·¯ÀÇ ÀÎÅÍ·´Æ®ÀÎ °æ¿ì ½½·¹ÀÌºê PIC ÄÁÆ®·Ñ·¯¿¡°Ôµµ EOI Àü¼Û
+    // ìŠ¬ë ˆì´ë¸Œ PIC ì»¨íŠ¸ë¡¤ëŸ¬ì˜ ì¸í„°ëŸ½íŠ¸ì¸ ê²½ìš° ìŠ¬ë ˆì´ë¸Œ PIC ì»¨íŠ¸ë¡¤ëŸ¬ì—ê²Œë„ EOI ì „ì†¡
     if( iIRQNumber >= 8 )
     {
-        // OCW2(Æ÷Æ® 0xA0), EOI ºñÆ®(ºñÆ® 5) = 1
+        // OCW2(í¬íŠ¸ 0xA0), EOI ë¹„íŠ¸(ë¹„íŠ¸ 5) = 1
         kOutPortByte( PIC_SLAVE_PORT1, 0x20 );
     }
 }

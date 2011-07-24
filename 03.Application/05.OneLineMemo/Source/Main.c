@@ -3,7 +3,7 @@
  *  date    2010/03/30
  *  author  kkamagui 
  *          Copyright(c)2008 All rights reserved by kkamagui
- *  brief   C ¾ğ¾î·Î ÀÛ¼ºµÈ ÀÀ¿ëÇÁ·Î±×·¥ÀÇ ¿£Æ®¸® Æ÷ÀÎÆ® ÆÄÀÏ
+ *  brief   C ì–¸ì–´ë¡œ ì‘ì„±ëœ ì‘ìš©í”„ë¡œê·¸ë¨ì˜ ì—”íŠ¸ë¦¬ í¬ì¸íŠ¸ íŒŒì¼
  */
 
 #include "MINTOSLibrary.h"
@@ -11,7 +11,7 @@
 #include "HangulInput.h"
 
 /**
- *  ÀÀ¿ëÇÁ·Î±×·¥ÀÇ C ¾ğ¾î ¿£Æ®¸® Æ÷ÀÎÆ®
+ *  ì‘ìš©í”„ë¡œê·¸ë¨ì˜ C ì–¸ì–´ ì—”íŠ¸ë¦¬ í¬ì¸íŠ¸
  */
 int Main( char* pcArgument )
 {
@@ -28,84 +28,84 @@ int Main( char* pcArgument )
     BOOL bHangulMode;
     
     //--------------------------------------------------------------------------
-    // ±×·¡ÇÈ ¸ğµå ÆÇ´Ü
+    // ê·¸ë˜í”½ ëª¨ë“œ íŒë‹¨
     //--------------------------------------------------------------------------
-    // MINT64 OS°¡ ±×·¡ÇÈ ¸ğµå·Î ½ÃÀÛÇß´ÂÁö È®ÀÎ
+    // MINT64 OSê°€ ê·¸ë˜í”½ ëª¨ë“œë¡œ ì‹œì‘í–ˆëŠ”ì§€ í™•ì¸
     if( IsGraphicMode() == FALSE )
     {        
-        // MINT64 OS°¡ ±×·¡ÇÈ ¸ğµå·Î ½ÃÀÛÇÏÁö ¾Ê¾Ò´Ù¸é ½ÇÆĞ
+        // MINT64 OSê°€ ê·¸ë˜í”½ ëª¨ë“œë¡œ ì‹œì‘í•˜ì§€ ì•Šì•˜ë‹¤ë©´ ì‹¤íŒ¨
         printf( "This task can run only GUI mode~!!!\n" );
         return -1;
     }
     
     //--------------------------------------------------------------------------
-    // À©µµ¿ì¿Í ÀÔ·Â À§Ä¡¸¦ ³ªÅ¸³»´Â Ä¿¼­¸¦ »ı¼º
+    // ìœˆë„ìš°ì™€ ì…ë ¥ ìœ„ì¹˜ë¥¼ ë‚˜íƒ€ë‚´ëŠ” ì»¤ì„œë¥¼ ìƒì„±
     //--------------------------------------------------------------------------
-    // À©µµ¿ì¸¦ È­¸é °¡¿îµ¥¿¡ °¡·Î X ¼¼·Î Å©±â¸¦ 60¹®ÀÚ X 40 ÇÈ¼¿·Î »ı¼º
+    // ìœˆë„ìš°ë¥¼ í™”ë©´ ê°€ìš´ë°ì— ê°€ë¡œ X ì„¸ë¡œ í¬ê¸°ë¥¼ 60ë¬¸ì X 40 í”½ì…€ë¡œ ìƒì„±
     GetScreenArea( &stScreenArea );
     iWidth = MAXOUTPUTLENGTH * FONT_ENGLISHWIDTH + 5;
     iHeight = 40;
     iX = ( GetRectangleWidth( &stScreenArea ) - iWidth ) / 2;
     iY = ( GetRectangleHeight( &stScreenArea ) - iHeight ) / 2;
     qwWindowID = CreateWindow(iX, iY, iWidth, iHeight, WINDOW_FLAGS_DEFAULT,
-                              "ÇÑ ÁÙ ¸Ş¸ğÀå(ÇÑ/¿µ ÀüÈ¯Àº Alt Å°)" );
+                              "í•œ ì¤„ ë©”ëª¨ì¥(í•œ/ì˜ ì „í™˜ì€ Alt í‚¤)" );
     
-    // ¹öÆÛÀÇ Á¤º¸¸¦ ÃÊ±âÈ­ÇÏ°í ¿µ¹® ÀÔ·Â ¸ğµå·Î ¼³Á¤
+    // ë²„í¼ì˜ ì •ë³´ë¥¼ ì´ˆê¸°í™”í•˜ê³  ì˜ë¬¸ ì…ë ¥ ëª¨ë“œë¡œ ì„¤ì •
     memset( &stBufferManager, 0, sizeof( stBufferManager ) );
     bHangulMode = FALSE;
 
-    // Ä¿¼­¸¦ ¸Ş¸ğ ÀÔ·Â ¿µ¿ª ¾ÕÂÊ¿¡ ¼¼·Î·Î ±æ°Ô Ãâ·ÂÇÏ°í À©µµ¿ì¸¦ ´Ù½Ã Ç¥½Ã
+    // ì»¤ì„œë¥¼ ë©”ëª¨ ì…ë ¥ ì˜ì—­ ì•ìª½ì— ì„¸ë¡œë¡œ ê¸¸ê²Œ ì¶œë ¥í•˜ê³  ìœˆë„ìš°ë¥¼ ë‹¤ì‹œ í‘œì‹œ
     DrawRect( qwWindowID, 3, 4 + WINDOW_TITLEBAR_HEIGHT, 5,
         3 + WINDOW_TITLEBAR_HEIGHT + FONT_ENGLISHHEIGHT, RGB( 0, 250, 0 ), TRUE );
     ShowWindow( qwWindowID, TRUE );
 
     //--------------------------------------------------------------------------
-    // GUI ÅÂ½ºÅ©ÀÇ ÀÌº¥Æ® Ã³¸® ·çÇÁ
+    // GUI íƒœìŠ¤í¬ì˜ ì´ë²¤íŠ¸ ì²˜ë¦¬ ë£¨í”„
     //--------------------------------------------------------------------------
     while( 1 )
     {
-        // ÀÌº¥Æ® Å¥¿¡¼­ ÀÌº¥Æ®¸¦ ¼ö½Å
+        // ì´ë²¤íŠ¸ íì—ì„œ ì´ë²¤íŠ¸ë¥¼ ìˆ˜ì‹ 
         if( ReceiveEventFromWindowQueue( qwWindowID, &stReceivedEvent ) == FALSE )
         {
             Sleep( 10 );
             continue;
         }
         
-        // ¼ö½ÅµÈ ÀÌº¥Æ®¸¦ Å¸ÀÔ¿¡ µû¶ó ³ª´©¾î Ã³¸®
+        // ìˆ˜ì‹ ëœ ì´ë²¤íŠ¸ë¥¼ íƒ€ì…ì— ë”°ë¼ ë‚˜ëˆ„ì–´ ì²˜ë¦¬
         switch( stReceivedEvent.qwType )
         {
-            // Å° ´­¸² Ã³¸®
+            // í‚¤ ëˆŒë¦¼ ì²˜ë¦¬
         case EVENT_KEY_DOWN:
-            // Å° ÀÌº¥Æ®¸¦ ÃßÃâ
+            // í‚¤ ì´ë²¤íŠ¸ë¥¼ ì¶”ì¶œ
             pstKeyEvent = &( stReceivedEvent.stKeyEvent );
 
-            // ÀÔ·ÂµÈ Å°·Î ÇÑ±ÛÀ» Á¶ÇÕÇÏ°Å³ª ¿µ¹®À» Ãâ·Â
+            // ì…ë ¥ëœ í‚¤ë¡œ í•œê¸€ì„ ì¡°í•©í•˜ê±°ë‚˜ ì˜ë¬¸ì„ ì¶œë ¥
             switch( pstKeyEvent->bASCIICode )
             {
             //------------------------------------------------------------------
-            // ÇÑ/¿µ ¸ğµå ÀüÈ¯ Ã³¸®
+            // í•œ/ì˜ ëª¨ë“œ ì „í™˜ ì²˜ë¦¬
             //------------------------------------------------------------------
             case KEY_LALT:
-                // ÇÑ±Û ÀÔ·Â ¸ğµå Áß¿¡ Alt Å°°¡ ´­·¯Áö¸é ÇÑ±Û Á¶ÇÕÀ» Á¾·á
+                // í•œê¸€ ì…ë ¥ ëª¨ë“œ ì¤‘ì— Alt í‚¤ê°€ ëˆŒëŸ¬ì§€ë©´ í•œê¸€ ì¡°í•©ì„ ì¢…ë£Œ
                 if( bHangulMode == TRUE )
                 {
-                    // Å° ÀÔ·Â ¹öÆÛ¸¦ ÃÊ±âÈ­
+                    // í‚¤ ì…ë ¥ ë²„í¼ë¥¼ ì´ˆê¸°í™”
                     stBufferManager.iInputBufferLength = 0;
 
                     if( ( stBufferManager.vcOutputBufferForProcessing[ 0 ] != '\0' ) &&
                         ( stBufferManager.iOutputBufferLength + 2 < MAXOUTPUTLENGTH ) )
                     {
-                        // Á¶ÇÕ ÁßÀÎ ÇÑ±ÛÀ» À©µµ¿ì È­¸é¿¡ Ãâ·ÂÇÏ´Â ¹öÆÛ·Î º¹»ç
+                        // ì¡°í•© ì¤‘ì¸ í•œê¸€ì„ ìœˆë„ìš° í™”ë©´ì— ì¶œë ¥í•˜ëŠ” ë²„í¼ë¡œ ë³µì‚¬
                         memcpy( stBufferManager.vcOutputBuffer +
                                 stBufferManager.iOutputBufferLength,
                                 stBufferManager.vcOutputBufferForProcessing, 2 );
                         stBufferManager.iOutputBufferLength += 2;
 
-                        // Á¶ÇÕ ÁßÀÎ ÇÑ±ÛÀ» ÀúÀåÇÏ´Â ¹öÆÛ¸¦ ÃÊ±âÈ­
+                        // ì¡°í•© ì¤‘ì¸ í•œê¸€ì„ ì €ì¥í•˜ëŠ” ë²„í¼ë¥¼ ì´ˆê¸°í™”
                         stBufferManager.vcOutputBufferForProcessing[ 0 ] = '\0';
                     }
                 }
-                // ¿µ¹® ÀÔ·Â ¸ğµå Áß¿¡ Alt Å°°¡ ´­·¯Áö¸é ÇÑ±Û Á¶ÇÕ¿ë ¹öÆÛ¸¦ ÃÊ±âÈ­
+                // ì˜ë¬¸ ì…ë ¥ ëª¨ë“œ ì¤‘ì— Alt í‚¤ê°€ ëˆŒëŸ¬ì§€ë©´ í•œê¸€ ì¡°í•©ìš© ë²„í¼ë¥¼ ì´ˆê¸°í™”
                 else
                 {
                     stBufferManager.iInputBufferLength = 0;
@@ -116,29 +116,29 @@ int Main( char* pcArgument )
                 break;
 
             //------------------------------------------------------------------
-            // ¹é½ºÆäÀÌ½º Å° Ã³¸®
+            // ë°±ìŠ¤í˜ì´ìŠ¤ í‚¤ ì²˜ë¦¬
             //------------------------------------------------------------------
             case KEY_BACKSPACE:
-                // ÇÑ±ÛÀ» Á¶ÇÕÇÏ´Â ÁßÀÌ¸é ÀÔ·Â ¹öÆÛÀÇ ³»¿ëÀ» »èÁ¦ÇÏ°í ³²Àº
-                // Å° ÀÔ·Â ¹öÆÛÀÇ ³»¿ëÀ¸·Î ÇÑ±ÛÀ» Á¶ÇÕ
+                // í•œê¸€ì„ ì¡°í•©í•˜ëŠ” ì¤‘ì´ë©´ ì…ë ¥ ë²„í¼ì˜ ë‚´ìš©ì„ ì‚­ì œí•˜ê³  ë‚¨ì€
+                // í‚¤ ì…ë ¥ ë²„í¼ì˜ ë‚´ìš©ìœ¼ë¡œ í•œê¸€ì„ ì¡°í•©
                 if( ( bHangulMode == TRUE ) &&
                     ( stBufferManager.iInputBufferLength > 0 ) )
                 {
-                    // Å° ÀÔ·Â ¹öÆÛÀÇ ³»¿ëÀ» ÇÏ³ª Á¦°ÅÇÏ°í ÇÑ±ÛÀ» ´Ù½Ã Á¶ÇÕ
+                    // í‚¤ ì…ë ¥ ë²„í¼ì˜ ë‚´ìš©ì„ í•˜ë‚˜ ì œê±°í•˜ê³  í•œê¸€ì„ ë‹¤ì‹œ ì¡°í•©
                     stBufferManager.iInputBufferLength--;
                     ComposeHangul( stBufferManager.vcInputBuffer,
                             &stBufferManager.iInputBufferLength,
                             stBufferManager.vcOutputBufferForProcessing,
                             stBufferManager.vcOutputBufferForComplete );
                 }
-                // ÇÑ±Û Á¶ÇÕ ÁßÀÌ ¾Æ´Ï¸é À©µµ¿ì È­¸é¿¡ Ãâ·ÂÇÏ´Â ¹öÆÛÀÇ ³»¿ëÀ» »èÁ¦
+                // í•œê¸€ ì¡°í•© ì¤‘ì´ ì•„ë‹ˆë©´ ìœˆë„ìš° í™”ë©´ì— ì¶œë ¥í•˜ëŠ” ë²„í¼ì˜ ë‚´ìš©ì„ ì‚­ì œ
                 else
                 {
                     if( stBufferManager.iOutputBufferLength > 0 )
                     {
-                        // È­¸é Ãâ·Â ¹öÆÛ¿¡ µé¾îÀÖ´Â ³»¿ëÀÌ 2¹ÙÀÌÆ® ÀÌ»óÀÌ°í ¹öÆÛ¿¡
-                        // ÀúÀåµÈ °ª¿¡ ÃÖ»óÀ§ ºñÆ®°¡ ÄÑÁ® ÀÖÀ¸¸é ÇÑ±Û·Î °£ÁÖÇÏ°í
-                        // ¸¶Áö¸· 2¹ÙÀÌÆ®¸¦ ¸ğµÎ »èÁ¦
+                        // í™”ë©´ ì¶œë ¥ ë²„í¼ì— ë“¤ì–´ìˆëŠ” ë‚´ìš©ì´ 2ë°”ì´íŠ¸ ì´ìƒì´ê³  ë²„í¼ì—
+                        // ì €ì¥ëœ ê°’ì— ìµœìƒìœ„ ë¹„íŠ¸ê°€ ì¼œì ¸ ìˆìœ¼ë©´ í•œê¸€ë¡œ ê°„ì£¼í•˜ê³ 
+                        // ë§ˆì§€ë§‰ 2ë°”ì´íŠ¸ë¥¼ ëª¨ë‘ ì‚­ì œ
                         if( ( stBufferManager.iOutputBufferLength >= 2 ) &&
                             ( stBufferManager.vcOutputBuffer[
                                   stBufferManager.iOutputBufferLength - 1 ] & 0x80 ) )
@@ -147,7 +147,7 @@ int Main( char* pcArgument )
                             memset( stBufferManager.vcOutputBuffer +
                                     stBufferManager.iOutputBufferLength, 0, 2 );
                         }
-                        // ÇÑ±ÛÀÌ ¾Æ´Ï¸é ¸¶Áö¸· 1¹ÙÀÌÆ®¸¸ »èÁ¦
+                        // í•œê¸€ì´ ì•„ë‹ˆë©´ ë§ˆì§€ë§‰ 1ë°”ì´íŠ¸ë§Œ ì‚­ì œ
                         else
                         {
                             stBufferManager.iOutputBufferLength--;
@@ -159,38 +159,38 @@ int Main( char* pcArgument )
                 break;
 
             //------------------------------------------------------------------
-            // ³ª¸ÓÁö Å°µéÀº ÇöÀç ÀÔ·Â ¸ğµå¿¡ µû¶ó ÇÑ±ÛÀ» Á¶ÇÕÇÏ°Å³ª
-            // À©µµ¿ì È­¸é¿¡ Ãâ·ÂÇÏ´Â ¹öÆÛ·Î Á÷Á¢ »ğÀÔ
+            // ë‚˜ë¨¸ì§€ í‚¤ë“¤ì€ í˜„ì¬ ì…ë ¥ ëª¨ë“œì— ë”°ë¼ í•œê¸€ì„ ì¡°í•©í•˜ê±°ë‚˜
+            // ìœˆë„ìš° í™”ë©´ì— ì¶œë ¥í•˜ëŠ” ë²„í¼ë¡œ ì§ì ‘ ì‚½ì…
             //------------------------------------------------------------------
             default:
-                // Æ¯¼ö Å°µéÀº ¸ğµÎ ¹«½Ã
+                // íŠ¹ìˆ˜ í‚¤ë“¤ì€ ëª¨ë‘ ë¬´ì‹œ
                 if( pstKeyEvent->bASCIICode & 0x80 )
                 {
                     break;
                 }
 
-                // ÇÑ±Û Á¶ÇÕ ÁßÀÌ¸é ÇÑ±Û Á¶ÇÕ Ã³¸®(ÇÑ±ÛÀ» È­¸é Ãâ·Â ¹öÆÛ¿¡ ÀúÀåÇÒ
-                // °ø°£ÀÌ ÃæºĞÇÑÁöµµ È®ÀÎ)
+                // í•œê¸€ ì¡°í•© ì¤‘ì´ë©´ í•œê¸€ ì¡°í•© ì²˜ë¦¬(í•œê¸€ì„ í™”ë©´ ì¶œë ¥ ë²„í¼ì— ì €ì¥í• 
+                // ê³µê°„ì´ ì¶©ë¶„í•œì§€ë„ í™•ì¸)
                 if( ( bHangulMode == TRUE ) &&
                     ( stBufferManager.iOutputBufferLength + 2 <= MAXOUTPUTLENGTH ) )
                 {
-                    // ÀÚ/¸ğÀ½ÀÌ ½ÃÇÁÆ®¿Í Á¶ÇÕµÇ´Â °æ¿ì¸¦ ´ëºñÇÏ¿© ½ÖÀÚÀ½ÀÌ³ª
-                    // ½Ö¸ğÀ½À» Á¦¿ÜÇÑ ³ª¸ÓÁö´Â ¼Ò¹®ÀÚ·Î º¯È¯
+                    // ì/ëª¨ìŒì´ ì‹œí”„íŠ¸ì™€ ì¡°í•©ë˜ëŠ” ê²½ìš°ë¥¼ ëŒ€ë¹„í•˜ì—¬ ìŒììŒì´ë‚˜
+                    // ìŒëª¨ìŒì„ ì œì™¸í•œ ë‚˜ë¨¸ì§€ëŠ” ì†Œë¬¸ìë¡œ ë³€í™˜
                     ConvertJaumMoumToLowerCharactor( &pstKeyEvent->bASCIICode );
 
-                    // ÀÔ·Â ¹öÆÛ¿¡ Å° ÀÔ·Â °ªÀ» Ã¤¿ì°í µ¥ÀÌÅÍÀÇ ±æÀÌ¸¦ Áõ°¡
+                    // ì…ë ¥ ë²„í¼ì— í‚¤ ì…ë ¥ ê°’ì„ ì±„ìš°ê³  ë°ì´í„°ì˜ ê¸¸ì´ë¥¼ ì¦ê°€
                     stBufferManager.vcInputBuffer[
                         stBufferManager.iInputBufferLength ] = pstKeyEvent->bASCIICode;
                     stBufferManager.iInputBufferLength++;
 
-                    // ÇÑ±Û Á¶ÇÕ¿¡ ÇÊ¿äÇÑ ¹öÆÛ¸¦ ³Ñ°ÜÁà¼­ ÇÑ±ÛÀ» Á¶ÇÕ
+                    // í•œê¸€ ì¡°í•©ì— í•„ìš”í•œ ë²„í¼ë¥¼ ë„˜ê²¨ì¤˜ì„œ í•œê¸€ì„ ì¡°í•©
                     if( ComposeHangul( stBufferManager.vcInputBuffer,
                         &stBufferManager.iInputBufferLength,
                         stBufferManager.vcOutputBufferForProcessing,
                         stBufferManager.vcOutputBufferForComplete) == TRUE )
                     {
-                        // Á¶ÇÕÀÌ ¿Ï·áµÈ ¹öÆÛ¿¡ °ªÀÌ ÀÖ´Â°¡ È®ÀÎÇÏ¿© À©µµ¿ì È­¸é¿¡
-                        // Ãâ·ÂÇÒ ¹öÆÛ·Î º¹»ç
+                        // ì¡°í•©ì´ ì™„ë£Œëœ ë²„í¼ì— ê°’ì´ ìˆëŠ”ê°€ í™•ì¸í•˜ì—¬ ìœˆë„ìš° í™”ë©´ì—
+                        // ì¶œë ¥í•  ë²„í¼ë¡œ ë³µì‚¬
                         if( stBufferManager.vcOutputBufferForComplete[ 0 ] != '\0' )
                         {
                            memcpy( stBufferManager.vcOutputBuffer +
@@ -198,8 +198,8 @@ int Main( char* pcArgument )
                                    stBufferManager.vcOutputBufferForComplete, 2 );
                            stBufferManager.iOutputBufferLength += 2;
 
-                           // Á¶ÇÕµÈ ÇÑ±ÛÀ» º¹»çÇÑ µÚ¿¡ ÇöÀç Á¶ÇÕ ÁßÀÎ ÇÑ±ÛÀ» Ãâ·ÂÇÒ
-                           // °ø°£ÀÌ ¾ø´Ù¸é Å° ÀÔ·Â ¹öÆÛ¿Í Á¶ÇÕ ÁßÀÎ ÇÑ±Û ¹öÆÛ¸¦ ¸ğµÎ ÃÊ±âÈ­
+                           // ì¡°í•©ëœ í•œê¸€ì„ ë³µì‚¬í•œ ë’¤ì— í˜„ì¬ ì¡°í•© ì¤‘ì¸ í•œê¸€ì„ ì¶œë ¥í• 
+                           // ê³µê°„ì´ ì—†ë‹¤ë©´ í‚¤ ì…ë ¥ ë²„í¼ì™€ ì¡°í•© ì¤‘ì¸ í•œê¸€ ë²„í¼ë¥¼ ëª¨ë‘ ì´ˆê¸°í™”
                            if( stBufferManager.iOutputBufferLength + 2 > MAXOUTPUTLENGTH )
                            {
                                stBufferManager.iInputBufferLength = 0;
@@ -207,24 +207,24 @@ int Main( char* pcArgument )
                            }
                         }
                     }
-                    // Á¶ÇÕ¿¡ ½ÇÆĞÇÏ¸é ÀÔ·Â ¹öÆÛ¿¡ ¸¶Áö¸·À¸·Î ÀÔ·ÂµÈ °ªÀÌ ÇÑ±Û ÀÚ/¸ğÀ½ÀÌ
-                    // ¾Æ´Ï¹Ç·Î ÇÑ±Û Á¶ÇÕÀÌ ¿Ï·áµÈ ¹öÆÛÀÇ °ª°ú ÀÔ·Â ¹öÆÛ¿¡ ÀÖ´Â °ªÀ» ¸ğµÎ
-                    // Ãâ·Â ¹öÆÛ·Î º¹»ç
+                    // ì¡°í•©ì— ì‹¤íŒ¨í•˜ë©´ ì…ë ¥ ë²„í¼ì— ë§ˆì§€ë§‰ìœ¼ë¡œ ì…ë ¥ëœ ê°’ì´ í•œê¸€ ì/ëª¨ìŒì´
+                    // ì•„ë‹ˆë¯€ë¡œ í•œê¸€ ì¡°í•©ì´ ì™„ë£Œëœ ë²„í¼ì˜ ê°’ê³¼ ì…ë ¥ ë²„í¼ì— ìˆëŠ” ê°’ì„ ëª¨ë‘
+                    // ì¶œë ¥ ë²„í¼ë¡œ ë³µì‚¬
                     else
                     {
-                        // Á¶ÇÕÀÌ ¿Ï·áµÈ ¹öÆÛ¿¡ °ªÀÌ ÀÖ´Â°¡ È®ÀÎÇÏ¿© À©µµ¿ì È­¸é¿¡
-                        // Ãâ·ÂÇÒ ¹öÆÛ·Î º¹»ç
+                        // ì¡°í•©ì´ ì™„ë£Œëœ ë²„í¼ì— ê°’ì´ ìˆëŠ”ê°€ í™•ì¸í•˜ì—¬ ìœˆë„ìš° í™”ë©´ì—
+                        // ì¶œë ¥í•  ë²„í¼ë¡œ ë³µì‚¬
                         if( stBufferManager.vcOutputBufferForComplete[ 0 ] != '\0' )
                         {
-                            // ¿Ï¼ºµÈ ÇÑ±ÛÀ» Ãâ·Â ¹öÆÛ·Î º¹»ç
+                            // ì™„ì„±ëœ í•œê¸€ì„ ì¶œë ¥ ë²„í¼ë¡œ ë³µì‚¬
                             memcpy( stBufferManager.vcOutputBuffer +
                                     stBufferManager.iOutputBufferLength,
                                     stBufferManager.vcOutputBufferForComplete, 2 );
                             stBufferManager.iOutputBufferLength += 2;
                         }
 
-                        // À©µµ¿ì È­¸é¿¡ Ãâ·ÂÇÏ´Â ¹öÆÛÀÇ °ø°£ÀÌ ÃæºĞÇÏ¸é Å° ÀÔ·Â ¹öÆÛ¿¡
-                        // ¸¶Áö¸·À¸·Î ÀÔ·ÂµÈ ÇÑ±Û ÀÚ/¸ğ°¡ ¾Æ´Ñ °ªÀ» º¹»ç
+                        // ìœˆë„ìš° í™”ë©´ì— ì¶œë ¥í•˜ëŠ” ë²„í¼ì˜ ê³µê°„ì´ ì¶©ë¶„í•˜ë©´ í‚¤ ì…ë ¥ ë²„í¼ì—
+                        // ë§ˆì§€ë§‰ìœ¼ë¡œ ì…ë ¥ëœ í•œê¸€ ì/ëª¨ê°€ ì•„ë‹Œ ê°’ì„ ë³µì‚¬
                         if( stBufferManager.iOutputBufferLength < MAXOUTPUTLENGTH )
                         {
                             stBufferManager.vcOutputBuffer[
@@ -233,15 +233,15 @@ int Main( char* pcArgument )
                             stBufferManager.iOutputBufferLength++;
                         }
 
-                        // Å° ÀÔ·Â ¹öÆÛ¸¦ ºñ¿ò
+                        // í‚¤ ì…ë ¥ ë²„í¼ë¥¼ ë¹„ì›€
                         stBufferManager.iInputBufferLength = 0;
                     }
                 }
-                // ÇÑ±Û ÀÔ·Â ¸ğµå°¡ ¾Æ´Ñ °æ¿ì
+                // í•œê¸€ ì…ë ¥ ëª¨ë“œê°€ ì•„ë‹Œ ê²½ìš°
                 else if( ( bHangulMode == FALSE ) &&
                          ( stBufferManager.iOutputBufferLength + 1 <= MAXOUTPUTLENGTH ) )
                 {
-                    // Å° ÀÔ·ÂÀ» ±×´ë·Î À©µµ¿ì È­¸é¿¡ Ãâ·ÂÇÏ´Â ¹öÆÛ·Î ÀúÀå
+                    // í‚¤ ì…ë ¥ì„ ê·¸ëŒ€ë¡œ ìœˆë„ìš° í™”ë©´ì— ì¶œë ¥í•˜ëŠ” ë²„í¼ë¡œ ì €ì¥
                     stBufferManager.vcOutputBuffer[
                         stBufferManager.iOutputBufferLength ] = pstKeyEvent->bASCIICode;
                     stBufferManager.iOutputBufferLength++;
@@ -250,15 +250,15 @@ int Main( char* pcArgument )
             }
 
             //------------------------------------------------------------------
-            // È­¸é Ãâ·Â ¹öÆÛ¿¡ ÀÖ´Â ¹®ÀÚ¿­°ú Á¶ÇÕ ÁßÀÎ ÇÑ±ÛÀ» Ãâ·ÂÇÏ°í Ä¿¼­ÀÇ
-            // À§Ä¡¸¦ °»½Å
+            // í™”ë©´ ì¶œë ¥ ë²„í¼ì— ìˆëŠ” ë¬¸ìì—´ê³¼ ì¡°í•© ì¤‘ì¸ í•œê¸€ì„ ì¶œë ¥í•˜ê³  ì»¤ì„œì˜
+            // ìœ„ì¹˜ë¥¼ ê°±ì‹ 
             //------------------------------------------------------------------
-            // È­¸é Ãâ·Â ¹öÆÛ¿¡ ÀÖ´Â ¹®ÀÚ¿­À» ÀüºÎ Ãâ·Â
+            // í™”ë©´ ì¶œë ¥ ë²„í¼ì— ìˆëŠ” ë¬¸ìì—´ì„ ì „ë¶€ ì¶œë ¥
             DrawText( qwWindowID, 2, WINDOW_TITLEBAR_HEIGHT + 4, RGB( 0, 0, 0 ),
                       RGB( 255, 255, 255 ), stBufferManager.vcOutputBuffer,
                       MAXOUTPUTLENGTH );
-            // ÇöÀç Á¶ÇÕ ÁßÀÎ ÇÑ±ÛÀÌ ÀÖ´Ù¸é È­¸é Ãâ·Â ¹öÆÛÀÇ ³»¿ëÀÌ Ãâ·ÂµÈ
-            // ´ÙÀ½ À§Ä¡¿¡ Á¶ÇÕÁßÀÎ ÇÑ±ÛÀ» Ãâ·Â
+            // í˜„ì¬ ì¡°í•© ì¤‘ì¸ í•œê¸€ì´ ìˆë‹¤ë©´ í™”ë©´ ì¶œë ¥ ë²„í¼ì˜ ë‚´ìš©ì´ ì¶œë ¥ëœ
+            // ë‹¤ìŒ ìœ„ì¹˜ì— ì¡°í•©ì¤‘ì¸ í•œê¸€ì„ ì¶œë ¥
             if( stBufferManager.vcOutputBufferForProcessing[ 0 ] != '\0' )
             {
                 DrawText( qwWindowID, 2 + stBufferManager.iOutputBufferLength *
@@ -267,7 +267,7 @@ int Main( char* pcArgument )
                           stBufferManager.vcOutputBufferForProcessing, 2 );
             }
 
-            // Ä¿¼­¸¦ ¼¼·Î·Î ±æ°Ô Ãâ·Â
+            // ì»¤ì„œë¥¼ ì„¸ë¡œë¡œ ê¸¸ê²Œ ì¶œë ¥
             DrawRect( qwWindowID, 3 + stBufferManager.iOutputBufferLength *
                       FONT_ENGLISHWIDTH, 4 + WINDOW_TITLEBAR_HEIGHT,
                       5 + stBufferManager.iOutputBufferLength * FONT_ENGLISHWIDTH,
@@ -277,14 +277,14 @@ int Main( char* pcArgument )
             ShowWindow( qwWindowID, TRUE );
             break;
 
-            // À©µµ¿ì ´İ±â ¹öÆ° Ã³¸®
+            // ìœˆë„ìš° ë‹«ê¸° ë²„íŠ¼ ì²˜ë¦¬
         case EVENT_WINDOW_CLOSE:
-            // À©µµ¿ì¸¦ »èÁ¦ÇÏ°í ¸Ş¸ğ¸®¸¦ ÇØÁ¦
+            // ìœˆë„ìš°ë¥¼ ì‚­ì œí•˜ê³  ë©”ëª¨ë¦¬ë¥¼ í•´ì œ
             DeleteWindow( qwWindowID );
             return 0;
             break;
             
-            // ±× ¿Ü Á¤º¸
+            // ê·¸ ì™¸ ì •ë³´
         default:
             break;
         }
@@ -294,7 +294,7 @@ int Main( char* pcArgument )
 }
 
 /**
- *  ÇÑ±Û ÀÚÀ½°ú ¸ğÀ½ ¹üÀ§¿¡¼­ ½ÖÀÚÀ½°ú ½Ö¸ğÀ½À» Á¦¿ÜÇÑ ³ª¸ÓÁö´Â ¸ğµÎ ¼Ò¹®ÀÚ·Î º¯È¯
+ *  í•œê¸€ ììŒê³¼ ëª¨ìŒ ë²”ìœ„ì—ì„œ ìŒììŒê³¼ ìŒëª¨ìŒì„ ì œì™¸í•œ ë‚˜ë¨¸ì§€ëŠ” ëª¨ë‘ ì†Œë¬¸ìë¡œ ë³€í™˜
  */
 void ConvertJaumMoumToLowerCharactor( BYTE* pbInput )
 {
@@ -303,21 +303,21 @@ void ConvertJaumMoumToLowerCharactor( BYTE* pbInput )
         return ;
     }
 
-    // ½ÖÀÚÀ½ ¶Ç´Â ½Ö¸ğÀ½ ¿©ºÎ ÆÇº°
+    // ìŒììŒ ë˜ëŠ” ìŒëª¨ìŒ ì—¬ë¶€ íŒë³„
     switch( *pbInput )
     {
-    case 'Q':   // '¤³'
-    case 'W':   // '¤¹'
-    case 'E':   // '¤¨'
-    case 'R':   // '¤¢'
-    case 'T':   // '¤¶'
-    case 'O':   // '¤Â'
-    case 'P':   // '¤Æ'
+    case 'Q':   // 'ã…ƒ'
+    case 'W':   // 'ã…‰'
+    case 'E':   // 'ã„¸'
+    case 'R':   // 'ã„²'
+    case 'T':   // 'ã…†'
+    case 'O':   // 'ã…’'
+    case 'P':   // 'ã…–'
         return ;
         break;
     }
 
-    // ¼Ò¹®ÀÚ·Î º¯È¯
+    // ì†Œë¬¸ìë¡œ ë³€í™˜
     *pbInput = TOLOWER( *pbInput );
 }
 

@@ -3,7 +3,7 @@
  *  date    2009/10/20
  *  author  kkamagui 
  *          Copyright(c)2008 All rights reserved by kkamagui
- *  brief   GUI ÅÂ½ºÅ©¿¡ °ü·ÃµÈ ÇÔ¼ö¸¦ Á¤ÀÇÇÑ ¼Ò½º ÆÄÀÏ
+ *  brief   GUI íƒœìŠ¤í¬ì— ê´€ë ¨ëœ í•¨ìˆ˜ë¥¼ ì •ì˜í•œ ì†ŒìŠ¤ íŒŒì¼
  */
 #include "GUITask.h"
 #include "Window.h"
@@ -17,11 +17,11 @@
 #include "DynamicMemory.h"
 
 //------------------------------------------------------------------------------
-//  ±âº» GUI ÅÂ½ºÅ©
+//  ê¸°ë³¸ GUI íƒœìŠ¤í¬
 //------------------------------------------------------------------------------
 /**
- *  ±âº» GUI ÅÂ½ºÅ©ÀÇ ÄÚµå
- *      GUI ÅÂ½ºÅ©¸¦ ¸¸µé ¶§ º¹»çÇÏ¿© ±âº» ÄÚµå·Î »ç¿ë
+ *  ê¸°ë³¸ GUI íƒœìŠ¤í¬ì˜ ì½”ë“œ
+ *      GUI íƒœìŠ¤í¬ë¥¼ ë§Œë“¤ ë•Œ ë³µì‚¬í•˜ì—¬ ê¸°ë³¸ ì½”ë“œë¡œ ì‚¬ìš©
  */
 void kBaseGUITask( void )
 {
@@ -34,52 +34,52 @@ void kBaseGUITask( void )
     WINDOWEVENT* pstWindowEvent;
 
     //--------------------------------------------------------------------------
-    // ±×·¡ÇÈ ¸ðµå ÆÇ´Ü
+    // ê·¸ëž˜í”½ ëª¨ë“œ íŒë‹¨
     //--------------------------------------------------------------------------
-    // MINT64 OS°¡ ±×·¡ÇÈ ¸ðµå·Î ½ÃÀÛÇß´ÂÁö È®ÀÎ
+    // MINT64 OSê°€ ê·¸ëž˜í”½ ëª¨ë“œë¡œ ì‹œìž‘í–ˆëŠ”ì§€ í™•ì¸
     if( kIsGraphicMode() == FALSE )
     {        
-        // MINT64 OS°¡ ±×·¡ÇÈ ¸ðµå·Î ½ÃÀÛÇÏÁö ¾Ê¾Ò´Ù¸é ½ÇÆÐ
+        // MINT64 OSê°€ ê·¸ëž˜í”½ ëª¨ë“œë¡œ ì‹œìž‘í•˜ì§€ ì•Šì•˜ë‹¤ë©´ ì‹¤íŒ¨
         kPrintf( "This task can run only GUI mode~!!!\n" );
         return ;
     }
     
     //--------------------------------------------------------------------------
-    // À©µµ¿ì¸¦ »ý¼º
+    // ìœˆë„ìš°ë¥¼ ìƒì„±
     //--------------------------------------------------------------------------
-    // ¸¶¿ì½ºÀÇ ÇöÀç À§Ä¡¸¦ ¹ÝÈ¯
+    // ë§ˆìš°ìŠ¤ì˜ í˜„ìž¬ ìœ„ì¹˜ë¥¼ ë°˜í™˜
     kGetCursorPosition( &iMouseX, &iMouseY );
 
-    // À©µµ¿ìÀÇ Å©±â¿Í Á¦¸ñ ¼³Á¤
+    // ìœˆë„ìš°ì˜ í¬ê¸°ì™€ ì œëª© ì„¤ì •
     iWindowWidth = 500;
     iWindowHeight = 200;
     
-    // À©µµ¿ì »ý¼º ÇÔ¼ö È£Ãâ, ¸¶¿ì½º°¡ ÀÖ´ø À§Ä¡¸¦ ±âÁØÀ¸·Î »ý¼º
+    // ìœˆë„ìš° ìƒì„± í•¨ìˆ˜ í˜¸ì¶œ, ë§ˆìš°ìŠ¤ê°€ ìžˆë˜ ìœ„ì¹˜ë¥¼ ê¸°ì¤€ìœ¼ë¡œ ìƒì„±
     qwWindowID = kCreateWindow( iMouseX - 10, iMouseY - WINDOW_TITLEBAR_HEIGHT / 2,
         iWindowWidth, iWindowHeight, WINDOW_FLAGS_DEFAULT | WINDOW_FLAGS_RESIZABLE,
          "Hello World Window" );
-    // À©µµ¿ì¸¦ »ý¼ºÇÏÁö ¸øÇßÀ¸¸é ½ÇÆÐ
+    // ìœˆë„ìš°ë¥¼ ìƒì„±í•˜ì§€ ëª»í–ˆìœ¼ë©´ ì‹¤íŒ¨
     if( qwWindowID == WINDOW_INVALIDID )
     {
         return ;
     }
     
     //--------------------------------------------------------------------------
-    // GUI ÅÂ½ºÅ©ÀÇ ÀÌº¥Æ® Ã³¸® ·çÇÁ
+    // GUI íƒœìŠ¤í¬ì˜ ì´ë²¤íŠ¸ ì²˜ë¦¬ ë£¨í”„
     //--------------------------------------------------------------------------
     while( 1 )
     {
-        // ÀÌº¥Æ® Å¥¿¡¼­ ÀÌº¥Æ®¸¦ ¼ö½Å
+        // ì´ë²¤íŠ¸ íì—ì„œ ì´ë²¤íŠ¸ë¥¼ ìˆ˜ì‹ 
         if( kReceiveEventFromWindowQueue( qwWindowID, &stReceivedEvent ) == FALSE )
         {
             kSleep( 0 );
             continue;
         }
         
-        // ¼ö½ÅµÈ ÀÌº¥Æ®¸¦ Å¸ÀÔ¿¡ µû¶ó ³ª´©¾î Ã³¸®
+        // ìˆ˜ì‹ ëœ ì´ë²¤íŠ¸ë¥¼ íƒ€ìž…ì— ë”°ë¼ ë‚˜ëˆ„ì–´ ì²˜ë¦¬
         switch( stReceivedEvent.qwType )
         {
-            // ¸¶¿ì½º ÀÌº¥Æ® Ã³¸®
+            // ë§ˆìš°ìŠ¤ ì´ë²¤íŠ¸ ì²˜ë¦¬
         case EVENT_MOUSE_MOVE:
         case EVENT_MOUSE_LBUTTONDOWN:
         case EVENT_MOUSE_LBUTTONUP:            
@@ -87,50 +87,50 @@ void kBaseGUITask( void )
         case EVENT_MOUSE_RBUTTONUP:
         case EVENT_MOUSE_MBUTTONDOWN:
         case EVENT_MOUSE_MBUTTONUP:
-            // ¿©±â¿¡ ¸¶¿ì½º ÀÌº¥Æ® Ã³¸® ÄÚµå ³Ö±â
+            // ì—¬ê¸°ì— ë§ˆìš°ìŠ¤ ì´ë²¤íŠ¸ ì²˜ë¦¬ ì½”ë“œ ë„£ê¸°
             pstMouseEvent = &( stReceivedEvent.stMouseEvent );
             break;
 
-            // Å° ÀÌº¥Æ® Ã³¸®
+            // í‚¤ ì´ë²¤íŠ¸ ì²˜ë¦¬
         case EVENT_KEY_DOWN:
         case EVENT_KEY_UP:
-            // ¿©±â¿¡ Å°º¸µå ÀÌº¥Æ® Ã³¸® ÄÚµå ³Ö±â
+            // ì—¬ê¸°ì— í‚¤ë³´ë“œ ì´ë²¤íŠ¸ ì²˜ë¦¬ ì½”ë“œ ë„£ê¸°
             pstKeyEvent = &( stReceivedEvent.stKeyEvent );
             break;
 
-            // À©µµ¿ì ÀÌº¥Æ® Ã³¸®
+            // ìœˆë„ìš° ì´ë²¤íŠ¸ ì²˜ë¦¬
         case EVENT_WINDOW_SELECT:
         case EVENT_WINDOW_DESELECT:
         case EVENT_WINDOW_MOVE:
         case EVENT_WINDOW_RESIZE:
         case EVENT_WINDOW_CLOSE:
-            // ¿©±â¿¡ À©µµ¿ì ÀÌº¥Æ® Ã³¸® ÄÚµå ³Ö±â
+            // ì—¬ê¸°ì— ìœˆë„ìš° ì´ë²¤íŠ¸ ì²˜ë¦¬ ì½”ë“œ ë„£ê¸°
             pstWindowEvent = &( stReceivedEvent.stWindowEvent );
 
             //------------------------------------------------------------------
-            // À©µµ¿ì ´Ý±â ÀÌº¥Æ®ÀÌ¸é À©µµ¿ì¸¦ »èÁ¦ÇÏ°í ·çÇÁ¸¦ ºüÁ®³ª°¡ ÅÂ½ºÅ©¸¦ Á¾·á
+            // ìœˆë„ìš° ë‹«ê¸° ì´ë²¤íŠ¸ì´ë©´ ìœˆë„ìš°ë¥¼ ì‚­ì œí•˜ê³  ë£¨í”„ë¥¼ ë¹ ì ¸ë‚˜ê°€ íƒœìŠ¤í¬ë¥¼ ì¢…ë£Œ
             //------------------------------------------------------------------
             if( stReceivedEvent.qwType == EVENT_WINDOW_CLOSE )
             {
-                // À©µµ¿ì »èÁ¦
+                // ìœˆë„ìš° ì‚­ì œ
                 kDeleteWindow( qwWindowID );
                 return ;
             }
             break;
             
-            // ±× ¿Ü Á¤º¸
+            // ê·¸ ì™¸ ì •ë³´
         default:
-            // ¿©±â¿¡ ¾Ë ¼ö ¾ø´Â ÀÌº¥Æ® Ã³¸® ÄÚµå ³Ö±â
+            // ì—¬ê¸°ì— ì•Œ ìˆ˜ ì—†ëŠ” ì´ë²¤íŠ¸ ì²˜ë¦¬ ì½”ë“œ ë„£ê¸°
             break;
         }
     }
 }
 
 //------------------------------------------------------------------------------
-//  Hello World GUI ÅÂ½ºÅ©
+//  Hello World GUI íƒœìŠ¤í¬
 //------------------------------------------------------------------------------
 /**
- *  Hello World GUI ÅÂ½ºÅ©
+ *  Hello World GUI íƒœìŠ¤í¬
  */
 void kHelloWorldGUITask( void )
 {
@@ -144,7 +144,7 @@ void kHelloWorldGUITask( void )
     int iY;
     char vcTempBuffer[ 50 ];
     static int s_iWindowCount = 0;
-    // ÀÌº¥Æ® Å¸ÀÔ ¹®ÀÚ¿­
+    // ì´ë²¤íŠ¸ íƒ€ìž… ë¬¸ìžì—´
     char* vpcEventString[] = { 
             "Unknown",
             "MOUSE_MOVE       ",
@@ -167,44 +167,44 @@ void kHelloWorldGUITask( void )
     int i;
 
     //--------------------------------------------------------------------------
-    // ±×·¡ÇÈ ¸ðµå ÆÇ´Ü
+    // ê·¸ëž˜í”½ ëª¨ë“œ íŒë‹¨
     //--------------------------------------------------------------------------
-    // MINT64 OS°¡ ±×·¡ÇÈ ¸ðµå·Î ½ÃÀÛÇß´ÂÁö È®ÀÎ
+    // MINT64 OSê°€ ê·¸ëž˜í”½ ëª¨ë“œë¡œ ì‹œìž‘í–ˆëŠ”ì§€ í™•ì¸
     if( kIsGraphicMode() == FALSE )
     {        
-        // MINT64 OS°¡ ±×·¡ÇÈ ¸ðµå·Î ½ÃÀÛÇÏÁö ¾Ê¾Ò´Ù¸é ½ÇÆÐ
+        // MINT64 OSê°€ ê·¸ëž˜í”½ ëª¨ë“œë¡œ ì‹œìž‘í•˜ì§€ ì•Šì•˜ë‹¤ë©´ ì‹¤íŒ¨
         kPrintf( "This task can run only GUI mode~!!!\n" );
         return ;
     }
     
     //--------------------------------------------------------------------------
-    // À©µµ¿ì¸¦ »ý¼º
+    // ìœˆë„ìš°ë¥¼ ìƒì„±
     //--------------------------------------------------------------------------
-    // ¸¶¿ì½ºÀÇ ÇöÀç À§Ä¡¸¦ ¹ÝÈ¯
+    // ë§ˆìš°ìŠ¤ì˜ í˜„ìž¬ ìœ„ì¹˜ë¥¼ ë°˜í™˜
     kGetCursorPosition( &iMouseX, &iMouseY );
 
-    // À©µµ¿ìÀÇ Å©±â¿Í Á¦¸ñ ¼³Á¤
+    // ìœˆë„ìš°ì˜ í¬ê¸°ì™€ ì œëª© ì„¤ì •
     iWindowWidth = 500;
     iWindowHeight = 200;
     
-    // À©µµ¿ì »ý¼º ÇÔ¼ö È£Ãâ, ¸¶¿ì½º°¡ ÀÖ´ø À§Ä¡¸¦ ±âÁØÀ¸·Î »ý¼ºÇÏ°í ¹øÈ£¸¦ Ãß°¡ÇÏ¿©
-    // À©µµ¿ì¸¶´Ù °³º°ÀûÀÎ ÀÌ¸§À» ÇÒ´ç
+    // ìœˆë„ìš° ìƒì„± í•¨ìˆ˜ í˜¸ì¶œ, ë§ˆìš°ìŠ¤ê°€ ìžˆë˜ ìœ„ì¹˜ë¥¼ ê¸°ì¤€ìœ¼ë¡œ ìƒì„±í•˜ê³  ë²ˆí˜¸ë¥¼ ì¶”ê°€í•˜ì—¬
+    // ìœˆë„ìš°ë§ˆë‹¤ ê°œë³„ì ì¸ ì´ë¦„ì„ í• ë‹¹
     kSPrintf( vcTempBuffer, "Hello World Window %d", s_iWindowCount++ );
     qwWindowID = kCreateWindow( iMouseX - 10, iMouseY - WINDOW_TITLEBAR_HEIGHT / 2,
         iWindowWidth, iWindowHeight, WINDOW_FLAGS_DEFAULT, vcTempBuffer );
-    // À©µµ¿ì¸¦ »ý¼ºÇÏÁö ¸øÇßÀ¸¸é ½ÇÆÐ
+    // ìœˆë„ìš°ë¥¼ ìƒì„±í•˜ì§€ ëª»í–ˆìœ¼ë©´ ì‹¤íŒ¨
     if( qwWindowID == WINDOW_INVALIDID )
     {
         return ;
     }
     
     //--------------------------------------------------------------------------
-    // À©µµ¿ì ¸Å´ÏÀú°¡ À©µµ¿ì·Î Àü¼ÛÇÏ´Â ÀÌº¥Æ®¸¦ Ç¥½ÃÇÏ´Â ¿µ¿ªÀ» ±×¸²
+    // ìœˆë„ìš° ë§¤ë‹ˆì €ê°€ ìœˆë„ìš°ë¡œ ì „ì†¡í•˜ëŠ” ì´ë²¤íŠ¸ë¥¼ í‘œì‹œí•˜ëŠ” ì˜ì—­ì„ ê·¸ë¦¼
     //--------------------------------------------------------------------------
-    // ÀÌº¥Æ® Á¤º¸¸¦ Ãâ·ÂÇÒ À§Ä¡ ÀúÀå
+    // ì´ë²¤íŠ¸ ì •ë³´ë¥¼ ì¶œë ¥í•  ìœ„ì¹˜ ì €ìž¥
     iY = WINDOW_TITLEBAR_HEIGHT + 10;
     
-    // ÀÌº¥Æ® Á¤º¸¸¦ Ç¥½ÃÇÏ´Â ¿µ¿ªÀÇ Å×µÎ¸®¿Í À©µµ¿ì ID¸¦ Ç¥½Ã
+    // ì´ë²¤íŠ¸ ì •ë³´ë¥¼ í‘œì‹œí•˜ëŠ” ì˜ì—­ì˜ í…Œë‘ë¦¬ì™€ ìœˆë„ìš° IDë¥¼ í‘œì‹œ
     kDrawRect( qwWindowID, 10, iY + 8, iWindowWidth - 10, iY + 70, RGB( 0, 0, 0 ),
             FALSE );
     kSPrintf( vcTempBuffer, "GUI Event Information[Window ID: 0x%Q]", qwWindowID );
@@ -212,38 +212,38 @@ void kHelloWorldGUITask( void )
                vcTempBuffer, kStrLen( vcTempBuffer ) );    
     
     //--------------------------------------------------------------------------
-    // È­¸é ¾Æ·¡¿¡ ÀÌº¥Æ® Àü¼Û ¹öÆ°À» ±×¸²
+    // í™”ë©´ ì•„ëž˜ì— ì´ë²¤íŠ¸ ì „ì†¡ ë²„íŠ¼ì„ ê·¸ë¦¼
     //--------------------------------------------------------------------------
-    // ¹öÆ° ¿µ¿ªÀ» ¼³Á¤
+    // ë²„íŠ¼ ì˜ì—­ì„ ì„¤ì •
     kSetRectangleData( 10, iY + 80, iWindowWidth - 10, iWindowHeight - 10, 
             &stButtonArea );
-    // ¹è°æÀº À©µµ¿ìÀÇ ¹è°æ»öÀ¸·Î ¼³Á¤ÇÏ°í ¹®ÀÚ´Â °ËÀº»öÀ¸·Î ¼³Á¤ÇÏ¿© ¹öÆ°À» ±×¸²
+    // ë°°ê²½ì€ ìœˆë„ìš°ì˜ ë°°ê²½ìƒ‰ìœ¼ë¡œ ì„¤ì •í•˜ê³  ë¬¸ìžëŠ” ê²€ì€ìƒ‰ìœ¼ë¡œ ì„¤ì •í•˜ì—¬ ë²„íŠ¼ì„ ê·¸ë¦¼
     kDrawButton( qwWindowID, &stButtonArea, WINDOW_COLOR_BACKGROUND, 
             "User Message Send Button(Up)", RGB( 0, 0, 0 ) );
-    // À©µµ¿ì¸¦ È­¸é¿¡ Ç¥½Ã
+    // ìœˆë„ìš°ë¥¼ í™”ë©´ì— í‘œì‹œ
     kShowWindow( qwWindowID, TRUE );
     
     //--------------------------------------------------------------------------
-    // GUI ÅÂ½ºÅ©ÀÇ ÀÌº¥Æ® Ã³¸® ·çÇÁ
+    // GUI íƒœìŠ¤í¬ì˜ ì´ë²¤íŠ¸ ì²˜ë¦¬ ë£¨í”„
     //--------------------------------------------------------------------------
     while( 1 )
     {
-        // ÀÌº¥Æ® Å¥¿¡¼­ ÀÌº¥Æ®¸¦ ¼ö½Å
+        // ì´ë²¤íŠ¸ íì—ì„œ ì´ë²¤íŠ¸ë¥¼ ìˆ˜ì‹ 
         if( kReceiveEventFromWindowQueue( qwWindowID, &stReceivedEvent ) == FALSE )
         {
             kSleep( 0 );
             continue;
         }
         
-        // À©µµ¿ì ÀÌº¥Æ® Á¤º¸°¡ Ç¥½ÃµÉ ¿µ¿ªÀ» ¹è°æ»öÀ¸·Î Ä¥ÇÏ¿© ÀÌÀü¿¡ Ç¥½ÃÇÑ µ¥ÀÌÅÍ¸¦
-        // ¸ðµÎ Áö¿ò
+        // ìœˆë„ìš° ì´ë²¤íŠ¸ ì •ë³´ê°€ í‘œì‹œë  ì˜ì—­ì„ ë°°ê²½ìƒ‰ìœ¼ë¡œ ì¹ í•˜ì—¬ ì´ì „ì— í‘œì‹œí•œ ë°ì´í„°ë¥¼
+        // ëª¨ë‘ ì§€ì›€
         kDrawRect( qwWindowID, 11, iY + 20, iWindowWidth - 11, iY + 69, 
                    WINDOW_COLOR_BACKGROUND, TRUE );        
         
-        // ¼ö½ÅµÈ ÀÌº¥Æ®¸¦ Å¸ÀÔ¿¡ µû¶ó ³ª´©¾î Ã³¸®
+        // ìˆ˜ì‹ ëœ ì´ë²¤íŠ¸ë¥¼ íƒ€ìž…ì— ë”°ë¼ ë‚˜ëˆ„ì–´ ì²˜ë¦¬
         switch( stReceivedEvent.qwType )
         {
-            // ¸¶¿ì½º ÀÌº¥Æ® Ã³¸®
+            // ë§ˆìš°ìŠ¤ ì´ë²¤íŠ¸ ì²˜ë¦¬
         case EVENT_MOUSE_MOVE:
         case EVENT_MOUSE_LBUTTONDOWN:
         case EVENT_MOUSE_LBUTTONUP:            
@@ -251,16 +251,16 @@ void kHelloWorldGUITask( void )
         case EVENT_MOUSE_RBUTTONUP:
         case EVENT_MOUSE_MBUTTONDOWN:
         case EVENT_MOUSE_MBUTTONUP:
-            // ¿©±â¿¡ ¸¶¿ì½º ÀÌº¥Æ® Ã³¸® ÄÚµå ³Ö±â
+            // ì—¬ê¸°ì— ë§ˆìš°ìŠ¤ ì´ë²¤íŠ¸ ì²˜ë¦¬ ì½”ë“œ ë„£ê¸°
             pstMouseEvent = &( stReceivedEvent.stMouseEvent );
 
-            // ¸¶¿ì½º ÀÌº¥Æ®ÀÇ Å¸ÀÔÀ» Ãâ·Â
+            // ë§ˆìš°ìŠ¤ ì´ë²¤íŠ¸ì˜ íƒ€ìž…ì„ ì¶œë ¥
             kSPrintf( vcTempBuffer, "Mouse Event: %s", 
                       vpcEventString[ stReceivedEvent.qwType ] );
             kDrawText( qwWindowID, 20, iY + 20, RGB( 0, 0, 0 ), 
                     WINDOW_COLOR_BACKGROUND, vcTempBuffer, kStrLen( vcTempBuffer ) );
             
-            // ¸¶¿ì½º µ¥ÀÌÅÍ¸¦ Ãâ·Â
+            // ë§ˆìš°ìŠ¤ ë°ì´í„°ë¥¼ ì¶œë ¥
             kSPrintf( vcTempBuffer, "Data: X = %d, Y = %d, Button = %X", 
                      pstMouseEvent->stPoint.iX, pstMouseEvent->stPoint.iY,
                      pstMouseEvent->bButtonStatus );
@@ -268,91 +268,91 @@ void kHelloWorldGUITask( void )
                     WINDOW_COLOR_BACKGROUND, vcTempBuffer, kStrLen( vcTempBuffer ) );
 
             //------------------------------------------------------------------
-            // ¸¶¿ì½º ´­¸² ¶Ç´Â ¶³¾îÁü ÀÌº¥Æ®ÀÌ¸é ¹öÆ°ÀÇ »ö±òÀ» ´Ù½Ã ±×¸²
+            // ë§ˆìš°ìŠ¤ ëˆŒë¦¼ ë˜ëŠ” ë–¨ì–´ì§ ì´ë²¤íŠ¸ì´ë©´ ë²„íŠ¼ì˜ ìƒ‰ê¹”ì„ ë‹¤ì‹œ ê·¸ë¦¼
             //------------------------------------------------------------------
-            // ¸¶¿ì½º ¿ÞÂÊ ¹öÆ°ÀÌ ´­·ÈÀ» ¶§ ¹öÆ° Ã³¸®
+            // ë§ˆìš°ìŠ¤ ì™¼ìª½ ë²„íŠ¼ì´ ëˆŒë ¸ì„ ë•Œ ë²„íŠ¼ ì²˜ë¦¬
             if( stReceivedEvent.qwType == EVENT_MOUSE_LBUTTONDOWN )
             {
-                // ¹öÆ° ¿µ¿ª¿¡ ¸¶¿ì½º ¿ÞÂÊ ¹öÆ°ÀÌ ´­·È´ÂÁö¸¦ ÆÇ´Ü
+                // ë²„íŠ¼ ì˜ì—­ì— ë§ˆìš°ìŠ¤ ì™¼ìª½ ë²„íŠ¼ì´ ëˆŒë ¸ëŠ”ì§€ë¥¼ íŒë‹¨
                 if( kIsInRectangle( &stButtonArea, pstMouseEvent->stPoint.iX, 
                                     pstMouseEvent->stPoint.iY ) == TRUE )
                 {
-                    // ¹öÆ°ÀÇ ¹è°æÀ» ¹àÀº ³ì»öÀ¸·Î º¯°æÇÏ¿© ´­·ÈÀ½À» Ç¥½Ã
+                    // ë²„íŠ¼ì˜ ë°°ê²½ì„ ë°ì€ ë…¹ìƒ‰ìœ¼ë¡œ ë³€ê²½í•˜ì—¬ ëˆŒë ¸ìŒì„ í‘œì‹œ
                     kDrawButton( qwWindowID, &stButtonArea, 
                                  RGB( 79, 204, 11 ), "User Message Send Button(Down)",
                                  RGB( 255, 255, 255 ) );
                     kUpdateScreenByID( qwWindowID );
                     
                     //----------------------------------------------------------
-                    // ´Ù¸¥ À©µµ¿ì·Î À¯Àú ÀÌº¥Æ®¸¦ Àü¼Û
+                    // ë‹¤ë¥¸ ìœˆë„ìš°ë¡œ ìœ ì € ì´ë²¤íŠ¸ë¥¼ ì „ì†¡
                     //----------------------------------------------------------
-                    // »ý¼ºµÈ ¸ðµç À©µµ¿ì¸¦ Ã£¾Æ¼­ ÀÌº¥Æ®¸¦ Àü¼Û
+                    // ìƒì„±ëœ ëª¨ë“  ìœˆë„ìš°ë¥¼ ì°¾ì•„ì„œ ì´ë²¤íŠ¸ë¥¼ ì „ì†¡
                     stSendEvent.qwType = EVENT_USER_TESTMESSAGE;
                     stSendEvent.vqwData[ 0 ] = qwWindowID;
                     stSendEvent.vqwData[ 1 ] = 0x1234;
                     stSendEvent.vqwData[ 2 ] = 0x5678;
                     
-                    // »ý¼ºµÈ À©µµ¿ìÀÇ ¼ö ¸¸Å­ ·çÇÁ¸¦ ¼öÇàÇÏ¸é¼­ ÀÌº¥Æ®¸¦ Àü¼Û
+                    // ìƒì„±ëœ ìœˆë„ìš°ì˜ ìˆ˜ ë§Œí¼ ë£¨í”„ë¥¼ ìˆ˜í–‰í•˜ë©´ì„œ ì´ë²¤íŠ¸ë¥¼ ì „ì†¡
                     for( i = 0 ; i < s_iWindowCount ; i++ )
                     {
-                        // À©µµ¿ì Á¦¸ñÀ¸·Î À©µµ¿ì¸¦ °Ë»ö
+                        // ìœˆë„ìš° ì œëª©ìœ¼ë¡œ ìœˆë„ìš°ë¥¼ ê²€ìƒ‰
                         kSPrintf( vcTempBuffer, "Hello World Window %d", i );
                         qwFindWindowID = kFindWindowByTitle( vcTempBuffer );
-                        // À©µµ¿ì°¡ Á¸ÀçÇÏ¸ç À©µµ¿ì ÀÚ½ÅÀÌ ¾Æ´Ñ °æ¿ì´Â ÀÌº¥Æ®¸¦ Àü¼Û
+                        // ìœˆë„ìš°ê°€ ì¡´ìž¬í•˜ë©° ìœˆë„ìš° ìžì‹ ì´ ì•„ë‹Œ ê²½ìš°ëŠ” ì´ë²¤íŠ¸ë¥¼ ì „ì†¡
                         if( ( qwFindWindowID != WINDOW_INVALIDID ) &&
                             ( qwFindWindowID != qwWindowID ) )
                         {
-                            // À©µµ¿ì·Î ÀÌº¥Æ® Àü¼Û
+                            // ìœˆë„ìš°ë¡œ ì´ë²¤íŠ¸ ì „ì†¡
                             kSendEventToWindow( qwFindWindowID, &stSendEvent );
                         }
                     }
                 }
             }
-            // ¸¶¿ì½º ¿ÞÂÊ ¹öÆ°ÀÌ ¶³¾îÁ³À» ¶§ ¹öÆ° Ã³¸®
+            // ë§ˆìš°ìŠ¤ ì™¼ìª½ ë²„íŠ¼ì´ ë–¨ì–´ì¡Œì„ ë•Œ ë²„íŠ¼ ì²˜ë¦¬
             else if( stReceivedEvent.qwType == EVENT_MOUSE_LBUTTONUP )
             {
-                // ¹öÆ°ÀÇ ¹è°æÀ» Èò»öÀ¸·Î º¯°æÇÏ¿© ´­¸®Áö ¾Ê¾ÒÀ½À» Ç¥½Ã
+                // ë²„íŠ¼ì˜ ë°°ê²½ì„ í°ìƒ‰ìœ¼ë¡œ ë³€ê²½í•˜ì—¬ ëˆŒë¦¬ì§€ ì•Šì•˜ìŒì„ í‘œì‹œ
                 kDrawButton( qwWindowID, &stButtonArea, 
                     WINDOW_COLOR_BACKGROUND, "User Message Send Button(Up)", 
                     RGB( 0, 0, 0 ) );
             }            
             break;
 
-            // Å° ÀÌº¥Æ® Ã³¸®
+            // í‚¤ ì´ë²¤íŠ¸ ì²˜ë¦¬
         case EVENT_KEY_DOWN:
         case EVENT_KEY_UP:
-            // ¿©±â¿¡ Å°º¸µå ÀÌº¥Æ® Ã³¸® ÄÚµå ³Ö±â
+            // ì—¬ê¸°ì— í‚¤ë³´ë“œ ì´ë²¤íŠ¸ ì²˜ë¦¬ ì½”ë“œ ë„£ê¸°
             pstKeyEvent = &( stReceivedEvent.stKeyEvent );
 
-            // Å° ÀÌº¥Æ®ÀÇ Å¸ÀÔÀ» Ãâ·Â
+            // í‚¤ ì´ë²¤íŠ¸ì˜ íƒ€ìž…ì„ ì¶œë ¥
             kSPrintf( vcTempBuffer, "Key Event: %s", 
                       vpcEventString[ stReceivedEvent.qwType ] );
             kDrawText( qwWindowID, 20, iY + 20, RGB( 0, 0, 0 ), 
                     WINDOW_COLOR_BACKGROUND, vcTempBuffer, kStrLen( vcTempBuffer ) );
             
-            // Å° µ¥ÀÌÅÍ¸¦ Ãâ·Â
+            // í‚¤ ë°ì´í„°ë¥¼ ì¶œë ¥
             kSPrintf( vcTempBuffer, "Data: Key = %c, Flag = %X", 
                     pstKeyEvent->bASCIICode, pstKeyEvent->bFlags );
             kDrawText( qwWindowID, 20, iY + 40, RGB( 0, 0, 0 ), 
                     WINDOW_COLOR_BACKGROUND, vcTempBuffer, kStrLen( vcTempBuffer ) );
             break;
 
-            // À©µµ¿ì ÀÌº¥Æ® Ã³¸®
+            // ìœˆë„ìš° ì´ë²¤íŠ¸ ì²˜ë¦¬
         case EVENT_WINDOW_SELECT:
         case EVENT_WINDOW_DESELECT:
         case EVENT_WINDOW_MOVE:
         case EVENT_WINDOW_RESIZE:
         case EVENT_WINDOW_CLOSE:
-            // ¿©±â¿¡ À©µµ¿ì ÀÌº¥Æ® Ã³¸® ÄÚµå ³Ö±â
+            // ì—¬ê¸°ì— ìœˆë„ìš° ì´ë²¤íŠ¸ ì²˜ë¦¬ ì½”ë“œ ë„£ê¸°
             pstWindowEvent = &( stReceivedEvent.stWindowEvent );
 
-            // À©µµ¿ì ÀÌº¥Æ®ÀÇ Å¸ÀÔÀ» Ãâ·Â
+            // ìœˆë„ìš° ì´ë²¤íŠ¸ì˜ íƒ€ìž…ì„ ì¶œë ¥
             kSPrintf( vcTempBuffer, "Window Event: %s", 
                       vpcEventString[ stReceivedEvent.qwType ] );
             kDrawText( qwWindowID, 20, iY + 20, RGB( 0, 0, 0 ), 
                     WINDOW_COLOR_BACKGROUND, vcTempBuffer, kStrLen( vcTempBuffer ) );
             
-            // À©µµ¿ì µ¥ÀÌÅÍ¸¦ Ãâ·Â
+            // ìœˆë„ìš° ë°ì´í„°ë¥¼ ì¶œë ¥
             kSPrintf( vcTempBuffer, "Data: X1 = %d, Y1 = %d, X2 = %d, Y2 = %d", 
                     pstWindowEvent->stArea.iX1, pstWindowEvent->stArea.iY1, 
                     pstWindowEvent->stArea.iX2, pstWindowEvent->stArea.iY2 );
@@ -360,25 +360,25 @@ void kHelloWorldGUITask( void )
                     WINDOW_COLOR_BACKGROUND, vcTempBuffer, kStrLen( vcTempBuffer ) );
             
             //------------------------------------------------------------------
-            // À©µµ¿ì ´Ý±â ÀÌº¥Æ®ÀÌ¸é À©µµ¿ì¸¦ »èÁ¦ÇÏ°í ·çÇÁ¸¦ ºüÁ®³ª°¡ ÅÂ½ºÅ©¸¦ Á¾·á
+            // ìœˆë„ìš° ë‹«ê¸° ì´ë²¤íŠ¸ì´ë©´ ìœˆë„ìš°ë¥¼ ì‚­ì œí•˜ê³  ë£¨í”„ë¥¼ ë¹ ì ¸ë‚˜ê°€ íƒœìŠ¤í¬ë¥¼ ì¢…ë£Œ
             //------------------------------------------------------------------
             if( stReceivedEvent.qwType == EVENT_WINDOW_CLOSE )
             {
-                // À©µµ¿ì »èÁ¦
+                // ìœˆë„ìš° ì‚­ì œ
                 kDeleteWindow( qwWindowID );
                 return ;
             }
             break;
             
-            // ±× ¿Ü Á¤º¸
+            // ê·¸ ì™¸ ì •ë³´
         default:
-            // ¿©±â¿¡ ¾Ë ¼ö ¾ø´Â ÀÌº¥Æ® Ã³¸® ÄÚµå ³Ö±â
-            // ¾Ë ¼ö ¾ø´Â ÀÌº¥Æ®¸¦ Ãâ·Â
+            // ì—¬ê¸°ì— ì•Œ ìˆ˜ ì—†ëŠ” ì´ë²¤íŠ¸ ì²˜ë¦¬ ì½”ë“œ ë„£ê¸°
+            // ì•Œ ìˆ˜ ì—†ëŠ” ì´ë²¤íŠ¸ë¥¼ ì¶œë ¥
             kSPrintf( vcTempBuffer, "Unknown Event: 0x%X", stReceivedEvent.qwType );
             kDrawText( qwWindowID, 20, iY + 20, RGB( 0, 0, 0 ), WINDOW_COLOR_BACKGROUND,
                        vcTempBuffer, kStrLen( vcTempBuffer ) );
             
-            // µ¥ÀÌÅÍ¸¦ Ãâ·Â
+            // ë°ì´í„°ë¥¼ ì¶œë ¥
             kSPrintf( vcTempBuffer, "Data0 = 0x%Q, Data1 = 0x%Q, Data2 = 0x%Q",
                       stReceivedEvent.vqwData[ 0 ], stReceivedEvent.vqwData[ 1 ], 
                       stReceivedEvent.vqwData[ 2 ] );
@@ -387,16 +387,16 @@ void kHelloWorldGUITask( void )
             break;
         }
 
-        // À©µµ¿ì¸¦ È­¸é¿¡ ¾÷µ¥ÀÌÆ®
+        // ìœˆë„ìš°ë¥¼ í™”ë©´ì— ì—…ë°ì´íŠ¸
         kShowWindow( qwWindowID, TRUE );
     }
 }
 
 //------------------------------------------------------------------------------
-//  ½Ã½ºÅÛ ¸ð´ÏÅÍ ÅÂ½ºÅ©
+//  ì‹œìŠ¤í…œ ëª¨ë‹ˆí„° íƒœìŠ¤í¬
 //------------------------------------------------------------------------------
 /**
- *  ½Ã½ºÅÛÀÇ »óÅÂ¸¦ °¨½ÃÇÏ¿© È­¸é¿¡ Ç¥½ÃÇÏ´Â ÅÂ½ºÅ©
+ *  ì‹œìŠ¤í…œì˜ ìƒíƒœë¥¼ ê°ì‹œí•˜ì—¬ í™”ë©´ì— í‘œì‹œí•˜ëŠ” íƒœìŠ¤í¬
  */
 void kSystemMonitorTask( void )
 {
@@ -416,40 +416,40 @@ void kSystemMonitorTask( void )
     QWORD qwTemp;
     
     //--------------------------------------------------------------------------
-    // ±×·¡ÇÈ ¸ðµå ÆÇ´Ü
+    // ê·¸ëž˜í”½ ëª¨ë“œ íŒë‹¨
     //--------------------------------------------------------------------------
-    // MINT64 OS°¡ ±×·¡ÇÈ ¸ðµå·Î ½ÃÀÛÇß´ÂÁö È®ÀÎ
+    // MINT64 OSê°€ ê·¸ëž˜í”½ ëª¨ë“œë¡œ ì‹œìž‘í–ˆëŠ”ì§€ í™•ì¸
     if( kIsGraphicMode() == FALSE )
     {        
-        // MINT64 OS°¡ ±×·¡ÇÈ ¸ðµå·Î ½ÃÀÛÇÏÁö ¾Ê¾Ò´Ù¸é ½ÇÆÐ
+        // MINT64 OSê°€ ê·¸ëž˜í”½ ëª¨ë“œë¡œ ì‹œìž‘í•˜ì§€ ì•Šì•˜ë‹¤ë©´ ì‹¤íŒ¨
         kPrintf( "This task can run only GUI mode~!!!\n" );
         return ;
     }
 
     //--------------------------------------------------------------------------
-    // À©µµ¿ì¸¦ »ý¼º
+    // ìœˆë„ìš°ë¥¼ ìƒì„±
     //--------------------------------------------------------------------------
-    // È­¸é ¿µ¿ªÀÇ Å©±â¸¦ ¹ÝÈ¯
+    // í™”ë©´ ì˜ì—­ì˜ í¬ê¸°ë¥¼ ë°˜í™˜
     kGetScreenArea( &stScreenArea );
     
-    // ÇöÀç ÇÁ·Î¼¼¼­ÀÇ °³¼ö·Î À©µµ¿ìÀÇ ³Êºñ¸¦ °è»ê
+    // í˜„ìž¬ í”„ë¡œì„¸ì„œì˜ ê°œìˆ˜ë¡œ ìœˆë„ìš°ì˜ ë„ˆë¹„ë¥¼ ê³„ì‚°
     iProcessorCount = kGetProcessorCount();
     iWindowWidth = iProcessorCount * ( SYSTEMMONITOR_PROCESSOR_WIDTH + 
             SYSTEMMONITOR_PROCESSOR_MARGIN ) + SYSTEMMONITOR_PROCESSOR_MARGIN;
     
-    // À©µµ¿ì¸¦ È­¸é °¡¿îµ¥¿¡ »ý¼ºÇÑ µÚ È­¸é¿¡ Ç¥½ÃÇÏÁö ¾ÊÀ½. ÇÁ·Î¼¼¼­ Á¤º¸¿Í ¸Þ¸ð¸® Á¤º¸¸¦ 
-    // Ç¥½ÃÇÏ´Â ¿µ¿ªÀ» ±×¸° µÚ È­¸é¿¡ Ç¥½Ã
+    // ìœˆë„ìš°ë¥¼ í™”ë©´ ê°€ìš´ë°ì— ìƒì„±í•œ ë’¤ í™”ë©´ì— í‘œì‹œí•˜ì§€ ì•ŠìŒ. í”„ë¡œì„¸ì„œ ì •ë³´ì™€ ë©”ëª¨ë¦¬ ì •ë³´ë¥¼ 
+    // í‘œì‹œí•˜ëŠ” ì˜ì—­ì„ ê·¸ë¦° ë’¤ í™”ë©´ì— í‘œì‹œ
     qwWindowID = kCreateWindow( ( stScreenArea.iX2 - iWindowWidth ) / 2, 
         ( stScreenArea.iY2 - SYSTEMMONITOR_WINDOW_HEIGHT ) / 2, 
         iWindowWidth, SYSTEMMONITOR_WINDOW_HEIGHT, WINDOW_FLAGS_DEFAULT & 
         ~WINDOW_FLAGS_SHOW, "System Monitor" );
-    // À©µµ¿ì¸¦ »ý¼ºÇÏÁö ¸øÇßÀ¸¸é ½ÇÆÐ
+    // ìœˆë„ìš°ë¥¼ ìƒì„±í•˜ì§€ ëª»í–ˆìœ¼ë©´ ì‹¤íŒ¨
     if( qwWindowID == WINDOW_INVALIDID )
     {
         return ;
     }
 
-    // ÇÁ·Î¼¼¼­ Á¤º¸¸¦ Ç¥½ÃÇÏ´Â ¿µ¿ªÀ» 3ÇÈ¼¿ µÎ²²·Î Ç¥½ÃÇÏ°í ¹®ÀÚ¿­À» Ãâ·Â
+    // í”„ë¡œì„¸ì„œ ì •ë³´ë¥¼ í‘œì‹œí•˜ëŠ” ì˜ì—­ì„ 3í”½ì…€ ë‘ê»˜ë¡œ í‘œì‹œí•˜ê³  ë¬¸ìžì—´ì„ ì¶œë ¥
     kDrawLine( qwWindowID, 5, WINDOW_TITLEBAR_HEIGHT + 15, iWindowWidth - 5, 
             WINDOW_TITLEBAR_HEIGHT + 15, RGB( 0, 0, 0 ) );
     kDrawLine( qwWindowID, 5, WINDOW_TITLEBAR_HEIGHT + 16, iWindowWidth - 5, 
@@ -460,7 +460,7 @@ void kSystemMonitorTask( void )
             WINDOW_COLOR_BACKGROUND, "Processor Information", 21 );
 
 
-    // ¸Þ¸ð¸® Á¤º¸¸¦ Ç¥½ÃÇÏ´Â ¿µ¿ªÀ» 3ÇÈ¼¿ µÎ²²·Î Ç¥½ÃÇÏ°í ¹®ÀÚ¿­À» Ãâ·Â
+    // ë©”ëª¨ë¦¬ ì •ë³´ë¥¼ í‘œì‹œí•˜ëŠ” ì˜ì—­ì„ 3í”½ì…€ ë‘ê»˜ë¡œ í‘œì‹œí•˜ê³  ë¬¸ìžì—´ì„ ì¶œë ¥
     kDrawLine( qwWindowID, 5, WINDOW_TITLEBAR_HEIGHT + SYSTEMMONITOR_PROCESSOR_HEIGHT + 50, 
             iWindowWidth - 5, WINDOW_TITLEBAR_HEIGHT + SYSTEMMONITOR_PROCESSOR_HEIGHT + 50, 
             RGB( 0, 0, 0 ) );
@@ -472,82 +472,82 @@ void kSystemMonitorTask( void )
                 RGB( 0, 0, 0 ) );
     kDrawText( qwWindowID, 9, WINDOW_TITLEBAR_HEIGHT + SYSTEMMONITOR_PROCESSOR_HEIGHT + 43, 
             RGB( 0, 0, 0 ), WINDOW_COLOR_BACKGROUND, "Memory Information", 18 );
-    // À©µµ¿ì¸¦ È­¸é¿¡ Ç¥½Ã
+    // ìœˆë„ìš°ë¥¼ í™”ë©´ì— í‘œì‹œ
     kShowWindow( qwWindowID, TRUE );
     
-    // ·çÇÁ¸¦ µ¹¸é¼­ ½Ã½ºÅÛ Á¤º¸¸¦ °¨½ÃÇÏ¿© È­¸é¿¡ Ç¥½Ã
+    // ë£¨í”„ë¥¼ ëŒë©´ì„œ ì‹œìŠ¤í…œ ì •ë³´ë¥¼ ê°ì‹œí•˜ì—¬ í™”ë©´ì— í‘œì‹œ
     qwLastTickCount = 0;
     
-    // ¸¶Áö¸·À¸·Î ÃøÁ¤ÇÑ ÇÁ·Î¼¼¼­ÀÇ ºÎÇÏ¿Í ÅÂ½ºÅ© ¼ö, ±×¸®°í ¸Þ¸ð¸® »ç¿ë·®Àº ¸ðµÎ 0À¸·Î ¼³Á¤
+    // ë§ˆì§€ë§‰ìœ¼ë¡œ ì¸¡ì •í•œ í”„ë¡œì„¸ì„œì˜ ë¶€í•˜ì™€ íƒœìŠ¤í¬ ìˆ˜, ê·¸ë¦¬ê³  ë©”ëª¨ë¦¬ ì‚¬ìš©ëŸ‰ì€ ëª¨ë‘ 0ìœ¼ë¡œ ì„¤ì •
     kMemSet( vdwLastCPULoad, 0, sizeof( vdwLastCPULoad ) );
     kMemSet( viLastTaskCount, 0, sizeof( viLastTaskCount ) );
     qwLastDynamicMemoryUsedSize = 0;
     
     //--------------------------------------------------------------------------
-    // GUI ÅÂ½ºÅ©ÀÇ ÀÌº¥Æ® Ã³¸® ·çÇÁ
+    // GUI íƒœìŠ¤í¬ì˜ ì´ë²¤íŠ¸ ì²˜ë¦¬ ë£¨í”„
     //--------------------------------------------------------------------------
     while( 1 )
     {
         //----------------------------------------------------------------------
-        // ÀÌº¥Æ® Å¥ÀÇ ÀÌº¥Æ® Ã³¸®
+        // ì´ë²¤íŠ¸ íì˜ ì´ë²¤íŠ¸ ì²˜ë¦¬
         //----------------------------------------------------------------------
-        // ÀÌº¥Æ® Å¥¿¡¼­ ÀÌº¥Æ®¸¦ ¼ö½Å
+        // ì´ë²¤íŠ¸ íì—ì„œ ì´ë²¤íŠ¸ë¥¼ ìˆ˜ì‹ 
         if( kReceiveEventFromWindowQueue( qwWindowID, &stReceivedEvent ) == TRUE )
         {
-            // ¼ö½ÅµÈ ÀÌº¥Æ®¸¦ Å¸ÀÔ¿¡ µû¶ó ³ª´©¾î Ã³¸®
+            // ìˆ˜ì‹ ëœ ì´ë²¤íŠ¸ë¥¼ íƒ€ìž…ì— ë”°ë¼ ë‚˜ëˆ„ì–´ ì²˜ë¦¬
             switch( stReceivedEvent.qwType )
             {
-                // À©µµ¿ì ÀÌº¥Æ® Ã³¸®
+                // ìœˆë„ìš° ì´ë²¤íŠ¸ ì²˜ë¦¬
             case EVENT_WINDOW_CLOSE:
                 //--------------------------------------------------------------
-                // À©µµ¿ì ´Ý±â ÀÌº¥Æ®ÀÌ¸é À©µµ¿ì¸¦ »èÁ¦ÇÏ°í ·çÇÁ¸¦ ºüÁ®³ª°¡ ÅÂ½ºÅ©¸¦ Á¾·á
+                // ìœˆë„ìš° ë‹«ê¸° ì´ë²¤íŠ¸ì´ë©´ ìœˆë„ìš°ë¥¼ ì‚­ì œí•˜ê³  ë£¨í”„ë¥¼ ë¹ ì ¸ë‚˜ê°€ íƒœìŠ¤í¬ë¥¼ ì¢…ë£Œ
                 //--------------------------------------------------------------
-                // À©µµ¿ì »èÁ¦
+                // ìœˆë„ìš° ì‚­ì œ
                 kDeleteWindow( qwWindowID );
                 return ;
                 break;
                 
-                // ±× ¿Ü Á¤º¸
+                // ê·¸ ì™¸ ì •ë³´
             default:
                 break;
             }
         }
         
-        // 0.5ÃÊ¸¶´Ù ÇÑ¹ø¾¿ ½Ã½ºÅÛ »óÅÂ¸¦ È®ÀÎ
+        // 0.5ì´ˆë§ˆë‹¤ í•œë²ˆì”© ì‹œìŠ¤í…œ ìƒíƒœë¥¼ í™•ì¸
         if( ( kGetTickCount() - qwLastTickCount ) < 500 )
         {
             kSleep( 1 );
             continue;
         }
 
-        // ¸¶Áö¸·À¸·Î ÃøÁ¤ÇÑ ½Ã°£À» ÃÖ½ÅÀ¸·Î ¾÷µ¥ÀÌÆ®
+        // ë§ˆì§€ë§‰ìœ¼ë¡œ ì¸¡ì •í•œ ì‹œê°„ì„ ìµœì‹ ìœ¼ë¡œ ì—…ë°ì´íŠ¸
         qwLastTickCount = kGetTickCount();
 
         //----------------------------------------------------------------------
-        // ÇÁ·Î¼¼¼­ Á¤º¸ Ãâ·Â
+        // í”„ë¡œì„¸ì„œ ì •ë³´ ì¶œë ¥
         //----------------------------------------------------------------------
-        // ÇÁ·Î¼¼¼­ ¼ö¸¸Å­ ºÎÇÏ¿Í ÅÂ½ºÅ© ¼ö¸¦ È®ÀÎÇÏ¿© ´Þ¶óÁø Á¡ÀÌ ÀÖÀ¸¸é È­¸é¿¡ ¾÷µ¥ÀÌÆ®
+        // í”„ë¡œì„¸ì„œ ìˆ˜ë§Œí¼ ë¶€í•˜ì™€ íƒœìŠ¤í¬ ìˆ˜ë¥¼ í™•ì¸í•˜ì—¬ ë‹¬ë¼ì§„ ì ì´ ìžˆìœ¼ë©´ í™”ë©´ì— ì—…ë°ì´íŠ¸
         for( i = 0 ; i < iProcessorCount ; i++ )
         {
             bChanged = FALSE;
             
-            // ÇÁ·Î¼¼¼­ ºÎÇÏ °Ë»ç
+            // í”„ë¡œì„¸ì„œ ë¶€í•˜ ê²€ì‚¬
             if( vdwLastCPULoad[ i ] != kGetProcessorLoad( i ) )
             {
                 vdwLastCPULoad [ i ] = kGetProcessorLoad( i );
                 bChanged = TRUE;
             }
-            // ÅÂ½ºÅ© ¼ö °Ë»ç
+            // íƒœìŠ¤í¬ ìˆ˜ ê²€ì‚¬
             else if( viLastTaskCount[ i ] != kGetTaskCount( i ) )
             {
                 viLastTaskCount[ i ] = kGetTaskCount( i );
                 bChanged = TRUE;
             }
             
-            // ÀÌÀü°ú ºñ±³ÇØ¼­ º¯°æ »çÇ×ÀÌ ÀÖÀ¸¸é È­¸é¿¡ ¾÷µ¥ÀÌÆ®
+            // ì´ì „ê³¼ ë¹„êµí•´ì„œ ë³€ê²½ ì‚¬í•­ì´ ìžˆìœ¼ë©´ í™”ë©´ì— ì—…ë°ì´íŠ¸
             if( bChanged == TRUE )
             {
-                // È­¸é¿¡ ÇöÀç ÇÁ·Î¼¼¼­ÀÇ ºÎÇÏ¸¦ Ç¥½Ã 
+                // í™”ë©´ì— í˜„ìž¬ í”„ë¡œì„¸ì„œì˜ ë¶€í•˜ë¥¼ í‘œì‹œ 
                 kDrawProcessorInformation( qwWindowID, i * SYSTEMMONITOR_PROCESSOR_WIDTH + 
                     ( i + 1 ) * SYSTEMMONITOR_PROCESSOR_MARGIN, WINDOW_TITLEBAR_HEIGHT + 28,
                     i );
@@ -555,18 +555,18 @@ void kSystemMonitorTask( void )
         }
         
         //----------------------------------------------------------------------
-        // µ¿Àû ¸Þ¸ð¸® Á¤º¸ Ãâ·Â
+        // ë™ì  ë©”ëª¨ë¦¬ ì •ë³´ ì¶œë ¥
         //----------------------------------------------------------------------
-        // µ¿Àû ¸Þ¸ð¸®ÀÇ Á¤º¸¸¦ ¹ÝÈ¯
+        // ë™ì  ë©”ëª¨ë¦¬ì˜ ì •ë³´ë¥¼ ë°˜í™˜
         kGetDynamicMemoryInformation( &qwTemp, &qwTemp, &qwTemp, 
                 &qwDynamicMemoryUsedSize );
         
-        // ÇöÀç µ¿Àû ÇÒ´ç ¸Þ¸ð¸® »ç¿ë·®ÀÌ ÀÌÀü°ú ´Ù¸£´Ù¸é ¸Þ¸ð¸® Á¤º¸¸¦ Ãâ·Â
+        // í˜„ìž¬ ë™ì  í• ë‹¹ ë©”ëª¨ë¦¬ ì‚¬ìš©ëŸ‰ì´ ì´ì „ê³¼ ë‹¤ë¥´ë‹¤ë©´ ë©”ëª¨ë¦¬ ì •ë³´ë¥¼ ì¶œë ¥
         if( qwDynamicMemoryUsedSize != qwLastDynamicMemoryUsedSize )
         {
             qwLastDynamicMemoryUsedSize = qwDynamicMemoryUsedSize;
             
-            // ¸Þ¸ð¸® Á¤º¸¸¦ Ãâ·Â
+            // ë©”ëª¨ë¦¬ ì •ë³´ë¥¼ ì¶œë ¥
             kDrawMemoryInformation( qwWindowID, WINDOW_TITLEBAR_HEIGHT + 
                     SYSTEMMONITOR_PROCESSOR_HEIGHT + 60, iWindowWidth );
         }
@@ -574,7 +574,7 @@ void kSystemMonitorTask( void )
 }
 
 /**
- *  °³º° ÇÁ·Î¼¼¼­ÀÇ Á¤º¸¸¦ È­¸é¿¡ Ç¥½Ã
+ *  ê°œë³„ í”„ë¡œì„¸ì„œì˜ ì •ë³´ë¥¼ í™”ë©´ì— í‘œì‹œ
  */
 static void kDrawProcessorInformation( QWORD qwWindowID, int iX, int iY, 
         BYTE bAPICID )
@@ -585,59 +585,59 @@ static void kDrawProcessorInformation( QWORD qwWindowID, int iX, int iY,
     QWORD iUsageBarHeight;
     int iMiddleX;
     
-    // ÇÁ·Î¼¼¼­ ID¸¦ Ç¥½Ã
+    // í”„ë¡œì„¸ì„œ IDë¥¼ í‘œì‹œ
     kSPrintf( vcBuffer, "Processor ID: %d", bAPICID );
     kDrawText( qwWindowID, iX + 10, iY, RGB( 0, 0, 0 ), WINDOW_COLOR_BACKGROUND, 
             vcBuffer, kStrLen( vcBuffer ) );
     
-    // ÇÁ·Î¼¼¼­ÀÇ ÅÂ½ºÅ© °³¼ö¸¦ Ç¥½Ã
+    // í”„ë¡œì„¸ì„œì˜ íƒœìŠ¤í¬ ê°œìˆ˜ë¥¼ í‘œì‹œ
     kSPrintf( vcBuffer, "Task Count: %d   ", kGetTaskCount( bAPICID ) );
     kDrawText( qwWindowID, iX + 10, iY + 18, RGB( 0, 0, 0 ), WINDOW_COLOR_BACKGROUND,
             vcBuffer, kStrLen( vcBuffer ) );
 
     //--------------------------------------------------------------------------
-    // ÇÁ·Î¼¼¼­ ºÎÇÏ¸¦ ³ªÅ¸³»´Â ¸·´ë¸¦ Ç¥½Ã
+    // í”„ë¡œì„¸ì„œ ë¶€í•˜ë¥¼ ë‚˜íƒ€ë‚´ëŠ” ë§‰ëŒ€ë¥¼ í‘œì‹œ
     //--------------------------------------------------------------------------
-    // ÇÁ·Î¼¼¼­ ºÎÇÏ¸¦ Ç¥½Ã
+    // í”„ë¡œì„¸ì„œ ë¶€í•˜ë¥¼ í‘œì‹œ
     qwProcessorLoad = kGetProcessorLoad( bAPICID );
     if( qwProcessorLoad > 100 )
     {
         qwProcessorLoad = 100;
     }
     
-    // ºÎÇÏ¸¦ Ç¥½ÃÇÏ´Â ¸·´ëÀÇ ÀüÃ¼¿¡ Å×µÎ¸®¸¦ Ç¥½Ã
+    // ë¶€í•˜ë¥¼ í‘œì‹œí•˜ëŠ” ë§‰ëŒ€ì˜ ì „ì²´ì— í…Œë‘ë¦¬ë¥¼ í‘œì‹œ
     kDrawRect( qwWindowID, iX, iY + 36, iX + SYSTEMMONITOR_PROCESSOR_WIDTH, 
             iY + SYSTEMMONITOR_PROCESSOR_HEIGHT, RGB( 0, 0, 0 ), FALSE );
 
-    // ÇÁ·Î¼¼¼­ »ç¿ë·®À» ³ªÅ¸³»´Â ¸·´ëÀÇ ±æÀÌ, ( ¸·´ë ÀüÃ¼ÀÇ ±æÀÌ * ÇÁ·Î¼¼¼­ ºÎÇÏ / 100 ) 
+    // í”„ë¡œì„¸ì„œ ì‚¬ìš©ëŸ‰ì„ ë‚˜íƒ€ë‚´ëŠ” ë§‰ëŒ€ì˜ ê¸¸ì´, ( ë§‰ëŒ€ ì „ì²´ì˜ ê¸¸ì´ * í”„ë¡œì„¸ì„œ ë¶€í•˜ / 100 ) 
     iUsageBarHeight = ( SYSTEMMONITOR_PROCESSOR_HEIGHT - 40 ) * qwProcessorLoad / 100;
 
-    // ºÎÇÏ¸¦ Ç¥½ÃÇÏ´Â ¿µ¿ªÀÇ ¸·´ë ³»ºÎ¸¦ Ç¥½Ã
-    // Ã¤¿öÁø ¸·´ë¸¦ Ç¥½Ã, Å×µÎ¸®¿Í 2ÇÈ¼¿ Á¤µµ ¿©À¯ °ø°£À» µÒ 
+    // ë¶€í•˜ë¥¼ í‘œì‹œí•˜ëŠ” ì˜ì—­ì˜ ë§‰ëŒ€ ë‚´ë¶€ë¥¼ í‘œì‹œ
+    // ì±„ì›Œì§„ ë§‰ëŒ€ë¥¼ í‘œì‹œ, í…Œë‘ë¦¬ì™€ 2í”½ì…€ ì •ë„ ì—¬ìœ  ê³µê°„ì„ ë‘  
     kDrawRect( qwWindowID, iX + 2,
         iY + ( SYSTEMMONITOR_PROCESSOR_HEIGHT - iUsageBarHeight ) - 2, 
         iX + SYSTEMMONITOR_PROCESSOR_WIDTH - 2, 
         iY + SYSTEMMONITOR_PROCESSOR_HEIGHT - 2, SYSTEMMONITOR_BAR_COLOR, TRUE );
-    // ºó ¸·´ë¸¦ Ç¥½Ã, Å×µÎ¸®¿Í 2ÇÈ¼¿ Á¤µµ ¿©À¯ °ø°£À» µÒ
+    // ë¹ˆ ë§‰ëŒ€ë¥¼ í‘œì‹œ, í…Œë‘ë¦¬ì™€ 2í”½ì…€ ì •ë„ ì—¬ìœ  ê³µê°„ì„ ë‘ 
     kDrawRect( qwWindowID, iX + 2, iY + 38, iX + SYSTEMMONITOR_PROCESSOR_WIDTH - 2,
             iY + ( SYSTEMMONITOR_PROCESSOR_HEIGHT - iUsageBarHeight ) - 1, 
             WINDOW_COLOR_BACKGROUND, TRUE );
     
-    // ÇÁ·Î¼¼¼­ÀÇ ºÎÇÏ¸¦ Ç¥½Ã, ¸·´ëÀÇ °¡¿îµ¥¿¡ ºÎÇÏ°¡ Ç¥½ÃµÇµµ·Ï ÇÔ
+    // í”„ë¡œì„¸ì„œì˜ ë¶€í•˜ë¥¼ í‘œì‹œ, ë§‰ëŒ€ì˜ ê°€ìš´ë°ì— ë¶€í•˜ê°€ í‘œì‹œë˜ë„ë¡ í•¨
     kSPrintf( vcBuffer, "Usage: %d%%", qwProcessorLoad );
     iMiddleX = ( SYSTEMMONITOR_PROCESSOR_WIDTH - 
             ( kStrLen( vcBuffer ) * FONT_ENGLISHWIDTH ) ) / 2;
     kDrawText( qwWindowID, iX + iMiddleX, iY + 80, RGB( 0, 0, 0 ), 
             WINDOW_COLOR_BACKGROUND, vcBuffer, kStrLen( vcBuffer ) );
     
-    // ÇÁ·Î¼¼¼­ Á¤º¸°¡ Ç¥½ÃµÈ ¿µ¿ª¸¸ ´Ù½Ã È­¸é¿¡ ¾÷µ¥ÀÌÆ®
+    // í”„ë¡œì„¸ì„œ ì •ë³´ê°€ í‘œì‹œëœ ì˜ì—­ë§Œ ë‹¤ì‹œ í™”ë©´ì— ì—…ë°ì´íŠ¸
     kSetRectangleData( iX, iY, iX + SYSTEMMONITOR_PROCESSOR_WIDTH, 
             iY + SYSTEMMONITOR_PROCESSOR_HEIGHT, &stArea );    
     kUpdateScreenByWindowArea( qwWindowID, &stArea );
 }
 
 /**
- *  ¸Þ¸ð¸® Á¤º¸¸¦ Ãâ·Â
+ *  ë©”ëª¨ë¦¬ ì •ë³´ë¥¼ ì¶œë ¥
  */
 static void kDrawMemoryInformation( QWORD qwWindowID, int iY, int iWindowWidth )
 {
@@ -651,15 +651,15 @@ static void kDrawMemoryInformation( QWORD qwWindowID, int iY, int iWindowWidth )
     RECT stArea;
     int iMiddleX;
     
-    // Mbyte ´ÜÀ§ÀÇ ¸Þ¸ð¸®¸¦ Kbyte ´ÜÀ§·Î º¯È¯
+    // Mbyte ë‹¨ìœ„ì˜ ë©”ëª¨ë¦¬ë¥¼ Kbyte ë‹¨ìœ„ë¡œ ë³€í™˜
     qwTotalRAMKbyteSize = kGetTotalRAMSize() * 1024;
     
-    // ¸Þ¸ð¸® Á¤º¸¸¦ Ç¥½Ã
+    // ë©”ëª¨ë¦¬ ì •ë³´ë¥¼ í‘œì‹œ
     kSPrintf( vcBuffer, "Total Size: %d KB        ", qwTotalRAMKbyteSize );
     kDrawText( qwWindowID, SYSTEMMONITOR_PROCESSOR_MARGIN + 10, iY + 3, RGB( 0, 0, 0 ), 
             WINDOW_COLOR_BACKGROUND, vcBuffer, kStrLen( vcBuffer ) );
     
-    // µ¿Àû ¸Þ¸ð¸®ÀÇ Á¤º¸¸¦ ¹ÝÈ¯
+    // ë™ì  ë©”ëª¨ë¦¬ì˜ ì •ë³´ë¥¼ ë°˜í™˜
     kGetDynamicMemoryInformation( &qwDynamicMemoryStartAddress, &qwTemp, 
             &qwTemp, &qwDynamicMemoryUsedSize );
     
@@ -669,13 +669,13 @@ static void kDrawMemoryInformation( QWORD qwWindowID, int iY, int iWindowWidth )
             WINDOW_COLOR_BACKGROUND, vcBuffer, kStrLen( vcBuffer ) );
     
     //--------------------------------------------------------------------------
-    // ¸Þ¸ð¸® »ç¿ë·®À» ³ªÅ¸³»´Â ¸·´ë¸¦ Ç¥½Ã
+    // ë©”ëª¨ë¦¬ ì‚¬ìš©ëŸ‰ì„ ë‚˜íƒ€ë‚´ëŠ” ë§‰ëŒ€ë¥¼ í‘œì‹œ
     //--------------------------------------------------------------------------
-    // ¸Þ¸ð¸® »ç¿ë·®À» Ç¥½ÃÇÏ´Â ¸·´ëÀÇ ÀüÃ¼¿¡ Å×µÎ¸®¸¦ Ç¥½Ã
+    // ë©”ëª¨ë¦¬ ì‚¬ìš©ëŸ‰ì„ í‘œì‹œí•˜ëŠ” ë§‰ëŒ€ì˜ ì „ì²´ì— í…Œë‘ë¦¬ë¥¼ í‘œì‹œ
     kDrawRect( qwWindowID, SYSTEMMONITOR_PROCESSOR_MARGIN, iY + 40,
             iWindowWidth - SYSTEMMONITOR_PROCESSOR_MARGIN, 
             iY + SYSTEMMONITOR_MEMORY_HEIGHT - 32, RGB( 0, 0, 0 ), FALSE );
-    // ¸Þ¸ð¸® »ç¿ë·®(%)À» °è»ê
+    // ë©”ëª¨ë¦¬ ì‚¬ìš©ëŸ‰(%)ì„ ê³„ì‚°
     qwUsedPercent = ( qwDynamicMemoryStartAddress + qwDynamicMemoryUsedSize ) * 
         100 / 1024 / qwTotalRAMKbyteSize;
     if( qwUsedPercent > 100 )
@@ -683,39 +683,39 @@ static void kDrawMemoryInformation( QWORD qwWindowID, int iY, int iWindowWidth )
         qwUsedPercent = 100;
     }
     
-    // ¸Þ¸ð¸® »ç¿ë·®À» ³ªÅ¸³»´Â ¸·´ëÀÇ ±æÀÌ, ( ¸·´ë ÀüÃ¼ÀÇ ±æÀÌ * ¸Þ¸ð¸® »ç¿ë·® / 100 )     
+    // ë©”ëª¨ë¦¬ ì‚¬ìš©ëŸ‰ì„ ë‚˜íƒ€ë‚´ëŠ” ë§‰ëŒ€ì˜ ê¸¸ì´, ( ë§‰ëŒ€ ì „ì²´ì˜ ê¸¸ì´ * ë©”ëª¨ë¦¬ ì‚¬ìš©ëŸ‰ / 100 )     
     iUsageBarWidth = ( iWindowWidth - 2 * SYSTEMMONITOR_PROCESSOR_MARGIN ) * 
         qwUsedPercent / 100;
     
-    // ¸Þ¸ð¸® »ç¿ë·®À» Ç¥½ÃÇÏ´Â ¿µ¿ªÀÇ ¸·´ë ³»ºÎ¸¦ Ç¥½Ã
-    // »öÄ¥µÈ ¸·´ë¸¦ Ç¥½Ã, Å×µÎ¸®¿Í 2ÇÈ¼¿ Á¤µµ ¿©À¯ °ø°£À» µÒ 
+    // ë©”ëª¨ë¦¬ ì‚¬ìš©ëŸ‰ì„ í‘œì‹œí•˜ëŠ” ì˜ì—­ì˜ ë§‰ëŒ€ ë‚´ë¶€ë¥¼ í‘œì‹œ
+    // ìƒ‰ì¹ ëœ ë§‰ëŒ€ë¥¼ í‘œì‹œ, í…Œë‘ë¦¬ì™€ 2í”½ì…€ ì •ë„ ì—¬ìœ  ê³µê°„ì„ ë‘  
     kDrawRect( qwWindowID, SYSTEMMONITOR_PROCESSOR_MARGIN + 2, iY + 42, 
             SYSTEMMONITOR_PROCESSOR_MARGIN + 2 + iUsageBarWidth, 
             iY + SYSTEMMONITOR_MEMORY_HEIGHT - 34, SYSTEMMONITOR_BAR_COLOR, TRUE );  
-    // ºó ¸·´ë¸¦ Ç¥½Ã, Å×µÎ¸®¿Í 2ÇÈ¼¿ Á¤µµ ¿©À¯ °ø°£À» µÒ
+    // ë¹ˆ ë§‰ëŒ€ë¥¼ í‘œì‹œ, í…Œë‘ë¦¬ì™€ 2í”½ì…€ ì •ë„ ì—¬ìœ  ê³µê°„ì„ ë‘ 
     kDrawRect( qwWindowID, SYSTEMMONITOR_PROCESSOR_MARGIN + 2 + iUsageBarWidth, 
         iY + 42, iWindowWidth - SYSTEMMONITOR_PROCESSOR_MARGIN - 2,
         iY + SYSTEMMONITOR_MEMORY_HEIGHT - 34, WINDOW_COLOR_BACKGROUND, TRUE );    
     
-    // »ç¿ë·®À» ³ªÅ¸³»´Â ÅØ½ºÆ® Ç¥½Ã, ¸·´ëÀÇ °¡¿îµ¥¿¡ »ç¿ë·®ÀÌ Ç¥½ÃµÇµµ·Ï ÇÔ
+    // ì‚¬ìš©ëŸ‰ì„ ë‚˜íƒ€ë‚´ëŠ” í…ìŠ¤íŠ¸ í‘œì‹œ, ë§‰ëŒ€ì˜ ê°€ìš´ë°ì— ì‚¬ìš©ëŸ‰ì´ í‘œì‹œë˜ë„ë¡ í•¨
     kSPrintf( vcBuffer, "Usage: %d%%", qwUsedPercent );
     iMiddleX = ( iWindowWidth - ( kStrLen( vcBuffer ) * FONT_ENGLISHWIDTH ) ) / 2;
     kDrawText( qwWindowID, iMiddleX, iY + 45, RGB( 0, 0, 0 ), WINDOW_COLOR_BACKGROUND, 
             vcBuffer, kStrLen( vcBuffer ) );
     
-    // ¸Þ¸ð¸® Á¤º¸°¡ Ç¥½ÃµÈ ¿µ¿ª¸¸ È­¸é¿¡ ´Ù½Ã ¾÷µ¥ÀÌÆ®
+    // ë©”ëª¨ë¦¬ ì •ë³´ê°€ í‘œì‹œëœ ì˜ì—­ë§Œ í™”ë©´ì— ë‹¤ì‹œ ì—…ë°ì´íŠ¸
     kSetRectangleData(0, iY, iWindowWidth, iY + SYSTEMMONITOR_MEMORY_HEIGHT, &stArea );
     kUpdateScreenByWindowArea( qwWindowID, &stArea );
 }
 
 //------------------------------------------------------------------------------
-//  GUI ¹öÀüÀÇ ÄÜ¼Ö ¼Ð ÅÂ½ºÅ©
+//  GUI ë²„ì „ì˜ ì½˜ì†” ì…¸ íƒœìŠ¤í¬
 //------------------------------------------------------------------------------
-// ÀÌÀü È­¸é ¹öÆÛÀÇ °ªÀ» º¸°üÇÏ´Â ¿µ¿ª
+// ì´ì „ í™”ë©´ ë²„í¼ì˜ ê°’ì„ ë³´ê´€í•˜ëŠ” ì˜ì—­
 static CHARACTER gs_vstPreviousScreenBuffer[ CONSOLE_WIDTH * CONSOLE_HEIGHT ];
 
 /**
- *  GUI ¹öÀüÀÇ ÄÜ¼Ö ¼Ð ÅÂ½ºÅ©
+ *  GUI ë²„ì „ì˜ ì½˜ì†” ì…¸ íƒœìŠ¤í¬
  */
 void kGUIConsoleShellTask( void )
 {
@@ -729,17 +729,17 @@ void kGUIConsoleShellTask( void )
     QWORD qwConsoleShellTaskID;
 
     //--------------------------------------------------------------------------
-    // ±×·¡ÇÈ ¸ðµå ÆÇ´Ü
+    // ê·¸ëž˜í”½ ëª¨ë“œ íŒë‹¨
     //--------------------------------------------------------------------------
-    // MINT64 OS°¡ ±×·¡ÇÈ ¸ðµå·Î ½ÃÀÛÇß´ÂÁö È®ÀÎ
+    // MINT64 OSê°€ ê·¸ëž˜í”½ ëª¨ë“œë¡œ ì‹œìž‘í–ˆëŠ”ì§€ í™•ì¸
     if( kIsGraphicMode() == FALSE )
     {        
-        // MINT64 OS°¡ ±×·¡ÇÈ ¸ðµå·Î ½ÃÀÛÇÏÁö ¾Ê¾Ò´Ù¸é ½ÇÆÐ
+        // MINT64 OSê°€ ê·¸ëž˜í”½ ëª¨ë“œë¡œ ì‹œìž‘í•˜ì§€ ì•Šì•˜ë‹¤ë©´ ì‹¤íŒ¨
         kPrintf( "This task can run only GUI mode~!!!\n" );
         return ;
     }
     
-    // GUI ÄÜ¼Ö ¼Ð À©µµ¿ì°¡ Á¸ÀçÇÏ¸é »ý¼ºµÈ À©µµ¿ì¸¦ ÃÖ»óÀ§·Î ¸¸µé°í ÅÂ½ºÅ© Á¾·á
+    // GUI ì½˜ì†” ì…¸ ìœˆë„ìš°ê°€ ì¡´ìž¬í•˜ë©´ ìƒì„±ëœ ìœˆë„ìš°ë¥¼ ìµœìƒìœ„ë¡œ ë§Œë“¤ê³  íƒœìŠ¤í¬ ì¢…ë£Œ
     if( s_qwWindowID != WINDOW_INVALIDID )
     {
         kMoveWindowToTop( s_qwWindowID );
@@ -747,98 +747,98 @@ void kGUIConsoleShellTask( void )
     }
     
     //--------------------------------------------------------------------------
-    // À©µµ¿ì¸¦ »ý¼º
+    // ìœˆë„ìš°ë¥¼ ìƒì„±
     //--------------------------------------------------------------------------
-    // ÀüÃ¼ È­¸é ¿µ¿ªÀÇ Å©±â¸¦ ¹ÝÈ¯
+    // ì „ì²´ í™”ë©´ ì˜ì—­ì˜ í¬ê¸°ë¥¼ ë°˜í™˜
     kGetScreenArea( &stScreenArea );
     
-    // À©µµ¿ìÀÇ Å©±â ¼³Á¤, È­¸é ¹öÆÛ¿¡ µé¾î°¡´Â ¹®ÀÚÀÇ ÃÖ´ë ³Êºñ¿Í ³ôÀÌ¸¦ °í·ÁÇØ¼­ °è»ê
+    // ìœˆë„ìš°ì˜ í¬ê¸° ì„¤ì •, í™”ë©´ ë²„í¼ì— ë“¤ì–´ê°€ëŠ” ë¬¸ìžì˜ ìµœëŒ€ ë„ˆë¹„ì™€ ë†’ì´ë¥¼ ê³ ë ¤í•´ì„œ ê³„ì‚°
     iWindowWidth = CONSOLE_WIDTH * FONT_ENGLISHWIDTH + 4;
     iWindowHeight = CONSOLE_HEIGHT * FONT_ENGLISHHEIGHT + WINDOW_TITLEBAR_HEIGHT + 2;
     
-    // À©µµ¿ì »ý¼º ÇÔ¼ö È£Ãâ, È­¸é °¡¿îµ¥¿¡ »ý¼º
+    // ìœˆë„ìš° ìƒì„± í•¨ìˆ˜ í˜¸ì¶œ, í™”ë©´ ê°€ìš´ë°ì— ìƒì„±
     s_qwWindowID = kCreateWindow( ( stScreenArea.iX2 - iWindowWidth ) / 2, 
         ( stScreenArea.iY2 - iWindowHeight ) / 2, iWindowWidth, iWindowHeight, 
         WINDOW_FLAGS_DEFAULT, "Console Shell for GUI" );
-    // À©µµ¿ì¸¦ »ý¼ºÇÏÁö ¸øÇßÀ¸¸é ½ÇÆÐ
+    // ìœˆë„ìš°ë¥¼ ìƒì„±í•˜ì§€ ëª»í–ˆìœ¼ë©´ ì‹¤íŒ¨
     if( s_qwWindowID == WINDOW_INVALIDID )
     {
         return ;
     }
 
-    // ¼Ð Ä¿¸Çµå¸¦ Ã³¸®ÇÏ´Â ÄÜ¼Ö ¼Ð ÅÂ½ºÅ©¸¦ »ý¼º
+    // ì…¸ ì»¤ë§¨ë“œë¥¼ ì²˜ë¦¬í•˜ëŠ” ì½˜ì†” ì…¸ íƒœìŠ¤í¬ë¥¼ ìƒì„±
     kSetConsoleShellExitFlag( FALSE );
     pstConsoleShellTask = kCreateTask( TASK_FLAGS_LOW | TASK_FLAGS_THREAD, 0, 0, 
         ( QWORD ) kStartConsoleShell, TASK_LOADBALANCINGID );
     if( pstConsoleShellTask == NULL )
     {
-        // ÄÜ¼Ö ¼Ð ÅÂ½ºÅ© »ý¼º¿¡ ½ÇÆÐÇÏ¸é À©µµ¿ì¸¦ »èÁ¦ÇÏ°í Á¾·á
+        // ì½˜ì†” ì…¸ íƒœìŠ¤í¬ ìƒì„±ì— ì‹¤íŒ¨í•˜ë©´ ìœˆë„ìš°ë¥¼ ì‚­ì œí•˜ê³  ì¢…ë£Œ
         kDeleteWindow( s_qwWindowID );
         return ;
     }
-    // ÄÜ¼Ö ¼Ð ÅÂ½ºÅ©ÀÇ ID¸¦ ÀúÀå
+    // ì½˜ì†” ì…¸ íƒœìŠ¤í¬ì˜ IDë¥¼ ì €ìž¥
     qwConsoleShellTaskID = pstConsoleShellTask->stLink.qwID;
 
-    // ÀÌÀü È­¸é ¹öÆÛ¸¦ ÃÊ±âÈ­
+    // ì´ì „ í™”ë©´ ë²„í¼ë¥¼ ì´ˆê¸°í™”
     kMemSet( gs_vstPreviousScreenBuffer, 0xFF, sizeof( gs_vstPreviousScreenBuffer ) );
     
     //--------------------------------------------------------------------------
-    // GUI ÅÂ½ºÅ©ÀÇ ÀÌº¥Æ® Ã³¸® ·çÇÁ
+    // GUI íƒœìŠ¤í¬ì˜ ì´ë²¤íŠ¸ ì²˜ë¦¬ ë£¨í”„
     //--------------------------------------------------------------------------
     while( 1 )
     {
-        // È­¸é ¹öÆÛÀÇ º¯°æµÈ ³»¿ëÀ» À©µµ¿ì¿¡ ¾÷µ¥ÀÌÆ®
+        // í™”ë©´ ë²„í¼ì˜ ë³€ê²½ëœ ë‚´ìš©ì„ ìœˆë„ìš°ì— ì—…ë°ì´íŠ¸
         kProcessConsoleBuffer( s_qwWindowID );
         
-        // ÀÌº¥Æ® Å¥¿¡¼­ ÀÌº¥Æ®¸¦ ¼ö½Å
+        // ì´ë²¤íŠ¸ íì—ì„œ ì´ë²¤íŠ¸ë¥¼ ìˆ˜ì‹ 
         if( kReceiveEventFromWindowQueue( s_qwWindowID, &stReceivedEvent ) == FALSE )
         {
             kSleep( 0 );
             continue;
         }
         
-        // ¼ö½ÅµÈ ÀÌº¥Æ®¸¦ Å¸ÀÔ¿¡ µû¶ó ³ª´©¾î Ã³¸®
+        // ìˆ˜ì‹ ëœ ì´ë²¤íŠ¸ë¥¼ íƒ€ìž…ì— ë”°ë¼ ë‚˜ëˆ„ì–´ ì²˜ë¦¬
         switch( stReceivedEvent.qwType )
         {
-            // Å° ÀÌº¥Æ® Ã³¸®
+            // í‚¤ ì´ë²¤íŠ¸ ì²˜ë¦¬
         case EVENT_KEY_DOWN:
         case EVENT_KEY_UP:
-            // ¿©±â¿¡ Å°º¸µå ÀÌº¥Æ® Ã³¸® ÄÚµå ³Ö±â
+            // ì—¬ê¸°ì— í‚¤ë³´ë“œ ì´ë²¤íŠ¸ ì²˜ë¦¬ ì½”ë“œ ë„£ê¸°
             pstKeyEvent = &( stReceivedEvent.stKeyEvent );
             stKeyData.bASCIICode = pstKeyEvent->bASCIICode;
             stKeyData.bFlags = pstKeyEvent->bFlags;
             stKeyData.bScanCode = pstKeyEvent->bScanCode;
 
-            // Å°¸¦ ±×·¡ÇÈ ¸ðµå¿ë Å° Å¥·Î »ðÀÔÇÏ¿© ¼Ð ÅÂ½ºÅ©ÀÇ ÀÔ·ÂÀ¸·Î Àü´Þ
+            // í‚¤ë¥¼ ê·¸ëž˜í”½ ëª¨ë“œìš© í‚¤ íë¡œ ì‚½ìž…í•˜ì—¬ ì…¸ íƒœìŠ¤í¬ì˜ ìž…ë ¥ìœ¼ë¡œ ì „ë‹¬
             kPutKeyToGUIKeyQueue( &stKeyData );
             break;
 
-            // À©µµ¿ì ÀÌº¥Æ® Ã³¸®
+            // ìœˆë„ìš° ì´ë²¤íŠ¸ ì²˜ë¦¬
         case EVENT_WINDOW_CLOSE:
-            // »ý¼ºÇÑ ¼Ð ÅÂ½ºÅ©°¡ Á¾·áµÇµµ·Ï Á¾·á ÇÃ·¡±×¸¦ ¼³Á¤ÇÏ°í Á¾·áµÉ ¶§±îÁö ´ë±â
+            // ìƒì„±í•œ ì…¸ íƒœìŠ¤í¬ê°€ ì¢…ë£Œë˜ë„ë¡ ì¢…ë£Œ í”Œëž˜ê·¸ë¥¼ ì„¤ì •í•˜ê³  ì¢…ë£Œë  ë•Œê¹Œì§€ ëŒ€ê¸°
             kSetConsoleShellExitFlag( TRUE );
             while( kIsTaskExist( qwConsoleShellTaskID ) == TRUE )
             {
                 kSleep( 1 );
             }
             
-            // À©µµ¿ì¸¦ »èÁ¦ÇÏ°í À©µµ¿ì ID¸¦ ÃÊ±âÈ­
+            // ìœˆë„ìš°ë¥¼ ì‚­ì œí•˜ê³  ìœˆë„ìš° IDë¥¼ ì´ˆê¸°í™”
             kDeleteWindow( s_qwWindowID );
             s_qwWindowID = WINDOW_INVALIDID;            
             return ;
             
             break;
             
-            // ±× ¿Ü Á¤º¸
+            // ê·¸ ì™¸ ì •ë³´
         default:
-            // ¿©±â¿¡ ¾Ë ¼ö ¾ø´Â ÀÌº¥Æ® Ã³¸® ÄÚµå ³Ö±â
+            // ì—¬ê¸°ì— ì•Œ ìˆ˜ ì—†ëŠ” ì´ë²¤íŠ¸ ì²˜ë¦¬ ì½”ë“œ ë„£ê¸°
             break;
         }
     }
 }
 
 /**
- *  È­¸é ¹öÆÛÀÇ º¯°æµÈ ³»¿ëÀ» GUI ÄÜ¼Ö ¼Ð À©µµ¿ì È­¸é¿¡ ¾÷µ¥ÀÌÆ®
+ *  í™”ë©´ ë²„í¼ì˜ ë³€ê²½ëœ ë‚´ìš©ì„ GUI ì½˜ì†” ì…¸ ìœˆë„ìš° í™”ë©´ì— ì—…ë°ì´íŠ¸
  */
 static void kProcessConsoleBuffer( QWORD qwWindowID )
 {
@@ -852,13 +852,13 @@ static void kProcessConsoleBuffer( QWORD qwWindowID )
     static QWORD s_qwLastTickCount = 0;
     BOOL bFullRedraw;
     
-    // ÄÜ¼ÖÀ» °ü¸®ÇÏ´Â ÀÚ·á±¸Á¶¸¦ ¹ÝÈ¯ ¹Þ¾Æ È­¸é ¹öÆÛÀÇ ¾îµå·¹½º¸¦ ÀúÀåÇÏ°í 
-    // ÀÌÀü È­¸é ¹öÆÛÀÇ ¾îµå·¹½ºµµ ÀúÀå
+    // ì½˜ì†”ì„ ê´€ë¦¬í•˜ëŠ” ìžë£Œêµ¬ì¡°ë¥¼ ë°˜í™˜ ë°›ì•„ í™”ë©´ ë²„í¼ì˜ ì–´ë“œë ˆìŠ¤ë¥¼ ì €ìž¥í•˜ê³  
+    // ì´ì „ í™”ë©´ ë²„í¼ì˜ ì–´ë“œë ˆìŠ¤ë„ ì €ìž¥
     pstManager = kGetConsoleManager();
     pstScreenBuffer = pstManager->pstScreenBuffer;
     pstPreviousScreenBuffer = gs_vstPreviousScreenBuffer;
     
-    // È­¸éÀ» ÀüÃ¼¸¦ ¾÷µ¥ÀÌÆ® ÇÑ Áö 5ÃÊ°¡ Áö³µÀ¸¸é ¹«Á¶°Ç È­¸é ÀüÃ¼¸¦ ´Ù½Ã ±×¸²
+    // í™”ë©´ì„ ì „ì²´ë¥¼ ì—…ë°ì´íŠ¸ í•œ ì§€ 5ì´ˆê°€ ì§€ë‚¬ìœ¼ë©´ ë¬´ì¡°ê±´ í™”ë©´ ì „ì²´ë¥¼ ë‹¤ì‹œ ê·¸ë¦¼
     if( kGetTickCount() - s_qwLastTickCount > 5000 )
     {
         s_qwLastTickCount = kGetTickCount();
@@ -869,28 +869,28 @@ static void kProcessConsoleBuffer( QWORD qwWindowID )
         bFullRedraw = FALSE;
     }
 
-    // È­¸é ¹öÆÛÀÇ ³ôÀÌ¸¸Å­ ¹Ýº¹
+    // í™”ë©´ ë²„í¼ì˜ ë†’ì´ë§Œí¼ ë°˜ë³µ
     for( j = 0 ; j < CONSOLE_HEIGHT ; j++ )
     {
-        // Ã³À½¿¡´Â º¯°æµÇÁö ¾ÊÀº °ÍÀ¸·Î ÇÃ·¡±× ¼³Á¤
+        // ì²˜ìŒì—ëŠ” ë³€ê²½ë˜ì§€ ì•Šì€ ê²ƒìœ¼ë¡œ í”Œëž˜ê·¸ ì„¤ì •
         bChanged = FALSE;
         
-        // ÇöÀç ¶óÀÎ¿¡ º¯È­°¡ ÀÖ´ÂÁö ºñ±³ÇÏ¿© º¯°æ ¿©ºÎ ÇÃ·¡±×¸¦ Ã³¸®
+        // í˜„ìž¬ ë¼ì¸ì— ë³€í™”ê°€ ìžˆëŠ”ì§€ ë¹„êµí•˜ì—¬ ë³€ê²½ ì—¬ë¶€ í”Œëž˜ê·¸ë¥¼ ì²˜ë¦¬
         for( i = 0 ; i < CONSOLE_WIDTH ; i++ )
         {
-            // ¹®ÀÚ¸¦ ºñ±³ÇÏ¿© ´Ù¸£°Å³ª ÀüÃ¼¸¦ »õ·Î ±×·Á¾ß ÇÏ¸é ÀÌÀü È­¸é ¹öÆÛ¿¡
-            // ¾÷µ¥ÀÌÆ®ÇÏ°í º¯°æ ¿©ºÎ ÇÃ·¡±×¸¦ ¼³Á¤
+            // ë¬¸ìžë¥¼ ë¹„êµí•˜ì—¬ ë‹¤ë¥´ê±°ë‚˜ ì „ì²´ë¥¼ ìƒˆë¡œ ê·¸ë ¤ì•¼ í•˜ë©´ ì´ì „ í™”ë©´ ë²„í¼ì—
+            // ì—…ë°ì´íŠ¸í•˜ê³  ë³€ê²½ ì—¬ë¶€ í”Œëž˜ê·¸ë¥¼ ì„¤ì •
             if( ( pstScreenBuffer->bCharactor != pstPreviousScreenBuffer->bCharactor ) ||
                 ( bFullRedraw == TRUE ) )
             {
-                // ¹®ÀÚ¸¦ È­¸é¿¡ Ãâ·Â
+                // ë¬¸ìžë¥¼ í™”ë©´ì— ì¶œë ¥
                 kDrawText( qwWindowID, i * FONT_ENGLISHWIDTH + 2, 
                            j * FONT_ENGLISHHEIGHT + WINDOW_TITLEBAR_HEIGHT, 
                            RGB( 0, 255, 0 ), RGB( 0, 0, 0 ), 
                            &( pstScreenBuffer->bCharactor ), 1);
                 
-                // ÀÌÀü È­¸é ¹öÆÛ·Î °ªÀ» ¿Å°Ü ³õ°í ÇöÀç ¶óÀÎ¿¡ ÀÌÀü°ú
-                // ´Ù¸¥ µ¥ÀÌÅÍ°¡ ÀÖÀ½À» Ç¥½Ã
+                // ì´ì „ í™”ë©´ ë²„í¼ë¡œ ê°’ì„ ì˜®ê²¨ ë†“ê³  í˜„ìž¬ ë¼ì¸ì— ì´ì „ê³¼
+                // ë‹¤ë¥¸ ë°ì´í„°ê°€ ìžˆìŒì„ í‘œì‹œ
                 kMemCpy( pstPreviousScreenBuffer, pstScreenBuffer, sizeof( CHARACTER ) );
                 bChanged = TRUE;
             }
@@ -899,24 +899,24 @@ static void kProcessConsoleBuffer( QWORD qwWindowID )
             pstPreviousScreenBuffer++;
         }
         
-        // ÇöÀç ¶óÀÎ¿¡¼­ º¯°æµÈ µ¥ÀÌÅÍ°¡ ÀÖ´Ù¸é ÇöÀç ¶óÀÎ¸¸ È­¸é¿¡ ¾÷µ¥ÀÌÆ®
+        // í˜„ìž¬ ë¼ì¸ì—ì„œ ë³€ê²½ëœ ë°ì´í„°ê°€ ìžˆë‹¤ë©´ í˜„ìž¬ ë¼ì¸ë§Œ í™”ë©´ì— ì—…ë°ì´íŠ¸
         if( bChanged == TRUE )
         {
-            // ÇöÀç ¶óÀÎÀÇ ¿µ¿ªÀ» °è»ê
+            // í˜„ìž¬ ë¼ì¸ì˜ ì˜ì—­ì„ ê³„ì‚°
             kSetRectangleData( 2, j * FONT_ENGLISHHEIGHT + WINDOW_TITLEBAR_HEIGHT,
                 5 + FONT_ENGLISHWIDTH * CONSOLE_WIDTH, ( j + 1 ) * FONT_ENGLISHHEIGHT + 
                 WINDOW_TITLEBAR_HEIGHT - 1, &stLineArea );
-            // À©µµ¿ìÀÇ ÀÏºÎ¸¸ È­¸é ¾÷µ¥ÀÌÆ®
+            // ìœˆë„ìš°ì˜ ì¼ë¶€ë§Œ í™”ë©´ ì—…ë°ì´íŠ¸
             kUpdateScreenByWindowArea( qwWindowID, &stLineArea );
         }
     }
 }
 
 //------------------------------------------------------------------------------
-//  ÀÌ¹ÌÁö ºä¾î(Image Viewer)
+//  ì´ë¯¸ì§€ ë·°ì–´(Image Viewer)
 //------------------------------------------------------------------------------
 /**
- *  ÀÌ¹ÌÁö ºä¾î ÅÂ½ºÅ©
+ *  ì´ë¯¸ì§€ ë·°ì–´ íƒœìŠ¤í¬
  */
 void kImageViewerTask( void )
 {
@@ -937,37 +937,37 @@ void kImageViewerTask( void )
     POINT stClientXY;
 
     //--------------------------------------------------------------------------
-    // ±×·¡ÇÈ ¸ðµå ÆÇ´Ü
+    // ê·¸ëž˜í”½ ëª¨ë“œ íŒë‹¨
     //--------------------------------------------------------------------------
-    // MINT64 OS°¡ ±×·¡ÇÈ ¸ðµå·Î ½ÃÀÛÇß´ÂÁö È®ÀÎ
+    // MINT64 OSê°€ ê·¸ëž˜í”½ ëª¨ë“œë¡œ ì‹œìž‘í–ˆëŠ”ì§€ í™•ì¸
     if( kIsGraphicMode() == FALSE )
     {        
-        // MINT64 OS°¡ ±×·¡ÇÈ ¸ðµå·Î ½ÃÀÛÇÏÁö ¾Ê¾Ò´Ù¸é ½ÇÆÐ
+        // MINT64 OSê°€ ê·¸ëž˜í”½ ëª¨ë“œë¡œ ì‹œìž‘í•˜ì§€ ì•Šì•˜ë‹¤ë©´ ì‹¤íŒ¨
         kPrintf( "This task can run only GUI mode~!!!\n" );
         return ;
     }
     
     //--------------------------------------------------------------------------
-    // À©µµ¿ì¸¦ »ý¼º
+    // ìœˆë„ìš°ë¥¼ ìƒì„±
     //--------------------------------------------------------------------------
-    // ÀüÃ¼ È­¸é ¿µ¿ªÀÇ Å©±â¸¦ ¹ÝÈ¯
+    // ì „ì²´ í™”ë©´ ì˜ì—­ì˜ í¬ê¸°ë¥¼ ë°˜í™˜
     kGetScreenArea( &stScreenArea );
     
-    // À©µµ¿ìÀÇ Å©±â ¼³Á¤, È­¸é ¹öÆÛ¿¡ µé¾î°¡´Â ¹®ÀÚÀÇ ÃÖ´ë ³Êºñ¿Í ³ôÀÌ¸¦ °í·ÁÇØ¼­ °è»ê
+    // ìœˆë„ìš°ì˜ í¬ê¸° ì„¤ì •, í™”ë©´ ë²„í¼ì— ë“¤ì–´ê°€ëŠ” ë¬¸ìžì˜ ìµœëŒ€ ë„ˆë¹„ì™€ ë†’ì´ë¥¼ ê³ ë ¤í•´ì„œ ê³„ì‚°
     iWindowWidth = FONT_ENGLISHWIDTH * FILESYSTEM_MAXFILENAMELENGTH + 165;
     iWindowHeight = 35 + WINDOW_TITLEBAR_HEIGHT + 5;
     
-    // À©µµ¿ì »ý¼º ÇÔ¼ö È£Ãâ, È­¸é °¡¿îµ¥¿¡ »ý¼º
+    // ìœˆë„ìš° ìƒì„± í•¨ìˆ˜ í˜¸ì¶œ, í™”ë©´ ê°€ìš´ë°ì— ìƒì„±
     qwWindowID = kCreateWindow( ( stScreenArea.iX2 - iWindowWidth ) / 2, 
         ( stScreenArea.iY2 - iWindowHeight ) / 2, iWindowWidth, iWindowHeight, 
         WINDOW_FLAGS_DEFAULT & ~WINDOW_FLAGS_SHOW, "Image Viewer" );
-    // À©µµ¿ì¸¦ »ý¼ºÇÏÁö ¸øÇßÀ¸¸é ½ÇÆÐ
+    // ìœˆë„ìš°ë¥¼ ìƒì„±í•˜ì§€ ëª»í–ˆìœ¼ë©´ ì‹¤íŒ¨
     if( qwWindowID == WINDOW_INVALIDID )
     {
         return ;
     }
     
-    // ÆÄÀÏ ÀÌ¸§À» ÀÔ·ÂÇÏ´Â ¿¡µðÆ® ¹Ú½º ¿µ¿ªÀ» Ç¥½Ã
+    // íŒŒì¼ ì´ë¦„ì„ ìž…ë ¥í•˜ëŠ” ì—ë””íŠ¸ ë°•ìŠ¤ ì˜ì—­ì„ í‘œì‹œ
     kDrawText( qwWindowID, 5, WINDOW_TITLEBAR_HEIGHT + 6, RGB( 0, 0, 0 ), 
             WINDOW_COLOR_BACKGROUND, "FILE NAME", 9 );
     iEditBoxWidth = FONT_ENGLISHWIDTH * FILESYSTEM_MAXFILENAMELENGTH + 4;
@@ -976,164 +976,164 @@ void kImageViewerTask( void )
     kDrawRect( qwWindowID, stEditBoxArea.iX1, stEditBoxArea.iY1, 
             stEditBoxArea.iX2, stEditBoxArea.iY2, RGB( 0, 0, 0 ), FALSE );
 
-    // ÆÄÀÏ ÀÌ¸§ ¹öÆÛ¸¦ ºñ¿ì°í ¿¡µðÆ® ¹Ú½º¿¡ ºó ÆÄÀÏ ÀÌ¸§À» Ç¥½Ã
+    // íŒŒì¼ ì´ë¦„ ë²„í¼ë¥¼ ë¹„ìš°ê³  ì—ë””íŠ¸ ë°•ìŠ¤ì— ë¹ˆ íŒŒì¼ ì´ë¦„ì„ í‘œì‹œ
     iFileNameLength = 0;
     kMemSet( vcFileName, 0, sizeof( vcFileName ) );
     kDrawFileName( qwWindowID, &stEditBoxArea, vcFileName, iFileNameLength );
     
-    // ÀÌ¹ÌÁö Ãâ·Â ¹öÆ° ¿µ¿ªÀ» ÁöÁ¤
+    // ì´ë¯¸ì§€ ì¶œë ¥ ë²„íŠ¼ ì˜ì—­ì„ ì§€ì •
     kSetRectangleData( stEditBoxArea.iX2 + 10, stEditBoxArea.iY1, 
                        stEditBoxArea.iX2 + 70, stEditBoxArea.iY2, &stButtonArea );
     kDrawButton( qwWindowID, &stButtonArea, WINDOW_COLOR_BACKGROUND, "Show", 
             RGB( 0, 0, 0 ) );
     
-    // À©µµ¿ì¸¦ Ç¥½Ã
+    // ìœˆë„ìš°ë¥¼ í‘œì‹œ
     kShowWindow( qwWindowID, TRUE );
     
     //--------------------------------------------------------------------------
-    // GUI ÅÂ½ºÅ©ÀÇ ÀÌº¥Æ® Ã³¸® ·çÇÁ
+    // GUI íƒœìŠ¤í¬ì˜ ì´ë²¤íŠ¸ ì²˜ë¦¬ ë£¨í”„
     //--------------------------------------------------------------------------
     while( 1 )
     {
-        // ÀÌº¥Æ® Å¥¿¡¼­ ÀÌº¥Æ®¸¦ ¼ö½Å
+        // ì´ë²¤íŠ¸ íì—ì„œ ì´ë²¤íŠ¸ë¥¼ ìˆ˜ì‹ 
         if( kReceiveEventFromWindowQueue( qwWindowID, &stReceivedEvent ) == FALSE )
         {
             kSleep( 0 );
             continue;
         }
         
-        // ¼ö½ÅµÈ ÀÌº¥Æ®¸¦ Å¸ÀÔ¿¡ µû¶ó ³ª´©¾î Ã³¸®
+        // ìˆ˜ì‹ ëœ ì´ë²¤íŠ¸ë¥¼ íƒ€ìž…ì— ë”°ë¼ ë‚˜ëˆ„ì–´ ì²˜ë¦¬
         switch( stReceivedEvent.qwType )
         {
-            // ¸¶¿ì½º ÀÌº¥Æ® Ã³¸®
+            // ë§ˆìš°ìŠ¤ ì´ë²¤íŠ¸ ì²˜ë¦¬
         case EVENT_MOUSE_LBUTTONDOWN:
             pstMouseEvent = &( stReceivedEvent.stMouseEvent );
 
-            // ¸¶¿ì½º ¿ÞÂÊ ¹öÆ°ÀÌ ÀÌ¹ÌÁö Ãâ·Â ¹öÆ° À§¿¡¼­ ´­·¯Á³À¸¸é ÀúÀåµÈ ÆÄÀÏ ÀÌ¸§À» 
-            // ÀÌ¿ëÇÏ¿© ÀÌ¹ÌÁö¸¦ È­¸é¿¡ Ç¥½Ã
+            // ë§ˆìš°ìŠ¤ ì™¼ìª½ ë²„íŠ¼ì´ ì´ë¯¸ì§€ ì¶œë ¥ ë²„íŠ¼ ìœ„ì—ì„œ ëˆŒëŸ¬ì¡Œìœ¼ë©´ ì €ìž¥ëœ íŒŒì¼ ì´ë¦„ì„ 
+            // ì´ìš©í•˜ì—¬ ì´ë¯¸ì§€ë¥¼ í™”ë©´ì— í‘œì‹œ
             if( kIsInRectangle( &stButtonArea, pstMouseEvent->stPoint.iX, 
                                 pstMouseEvent->stPoint.iY ) == TRUE )
             {
-                // ¹öÆ°À» ´­¸° °ÍÀ¸·Î Ç¥½Ã
+                // ë²„íŠ¼ì„ ëˆŒë¦° ê²ƒìœ¼ë¡œ í‘œì‹œ
                 kDrawButton( qwWindowID, &stButtonArea, RGB( 79, 204, 11 ), "Show", 
                             RGB( 255, 255, 255 ) );
-                // ¹öÆ°ÀÌ ÀÖ´Â ¿µ¿ª¸¸ È­¸é ¾÷µ¥ÀÌÆ®
+                // ë²„íŠ¼ì´ ìžˆëŠ” ì˜ì—­ë§Œ í™”ë©´ ì—…ë°ì´íŠ¸
                 kUpdateScreenByWindowArea( qwWindowID, &( stButtonArea ) );
 
-                // ÀÌ¹ÌÁö Ãâ·Â À©µµ¿ì¸¦ »ý¼ºÇÏ°í ÀÌº¥Æ®¸¦ Ã³¸®
+                // ì´ë¯¸ì§€ ì¶œë ¥ ìœˆë„ìš°ë¥¼ ìƒì„±í•˜ê³  ì´ë²¤íŠ¸ë¥¼ ì²˜ë¦¬
                 if( kCreateImageViewerWindowAndExecute( qwWindowID, vcFileName ) 
                         == FALSE )
                 {
-                    // À©µµ¿ì »ý¼º¿¡ ½ÇÆÐÇÏ¸é ¹öÆ°ÀÌ ´­·ÁÁ³´Ù°¡ ¶³¾îÁö´Â È¿°ú¸¦ ÁÖ·Á°í
-                    // 200ms ´ë±â
+                    // ìœˆë„ìš° ìƒì„±ì— ì‹¤íŒ¨í•˜ë©´ ë²„íŠ¼ì´ ëˆŒë ¤ì¡Œë‹¤ê°€ ë–¨ì–´ì§€ëŠ” íš¨ê³¼ë¥¼ ì£¼ë ¤ê³ 
+                    // 200ms ëŒ€ê¸°
                     kSleep( 200 );
                 }
                 
-                // ¹öÆ°À» ¶³¾îÁø °ÍÀ¸·Î Ç¥½Ã
+                // ë²„íŠ¼ì„ ë–¨ì–´ì§„ ê²ƒìœ¼ë¡œ í‘œì‹œ
                 kDrawButton( qwWindowID, &stButtonArea, WINDOW_COLOR_BACKGROUND,
                         "Show", RGB( 0, 0, 0 ) );
-                // ¹öÆ°ÀÌ ÀÖ´Â ¿µ¿ª¸¸ È­¸é ¾÷µ¥ÀÌÆ®
+                // ë²„íŠ¼ì´ ìžˆëŠ” ì˜ì—­ë§Œ í™”ë©´ ì—…ë°ì´íŠ¸
                 kUpdateScreenByWindowArea( qwWindowID, &( stButtonArea ) );
             }
             break;
 
-            // Å° ÀÌº¥Æ® Ã³¸®
+            // í‚¤ ì´ë²¤íŠ¸ ì²˜ë¦¬
         case EVENT_KEY_DOWN:
             pstKeyEvent = &( stReceivedEvent.stKeyEvent );
             
-            // ¹é½ºÆäÀÌ½º(Backspace) Å°´Â »ðÀÔµÈ ¹®ÀÚ¸¦ »èÁ¦
+            // ë°±ìŠ¤íŽ˜ì´ìŠ¤(Backspace) í‚¤ëŠ” ì‚½ìž…ëœ ë¬¸ìžë¥¼ ì‚­ì œ
             if( ( pstKeyEvent->bASCIICode == KEY_BACKSPACE ) &&
                 ( iFileNameLength > 0 ) )
             {
-                // ¹öÆÛ¿¡ »ðÀÔµÈ ¸¶Áö¸· ¹®ÀÚ¸¦ »èÁ¦
+                // ë²„í¼ì— ì‚½ìž…ëœ ë§ˆì§€ë§‰ ë¬¸ìžë¥¼ ì‚­ì œ
                 vcFileName[ iFileNameLength ] = '\0';
                 iFileNameLength--;
                 
-                // ÀÔ·ÂµÈ ³»¿ëÀ» ¿¡µðÆ® ¹Ú½º¿¡ Ç¥½Ã
+                // ìž…ë ¥ëœ ë‚´ìš©ì„ ì—ë””íŠ¸ ë°•ìŠ¤ì— í‘œì‹œ
                 kDrawFileName( qwWindowID, &stEditBoxArea, vcFileName, 
                         iFileNameLength );
             }
-            // ¿£ÅÍ(Enter) Å°´Â ÀÌ¹ÌÁö Ãâ·Â ¹öÆ°ÀÌ ´­¸° °ÍÀ¸·Î Ã³¸®
+            // ì—”í„°(Enter) í‚¤ëŠ” ì´ë¯¸ì§€ ì¶œë ¥ ë²„íŠ¼ì´ ëˆŒë¦° ê²ƒìœ¼ë¡œ ì²˜ë¦¬
             else if( ( pstKeyEvent->bASCIICode == KEY_ENTER ) &&
                      ( iFileNameLength > 0 ) )
             {
-                // ¹öÆ°ÀÇ XY ÁÂÇ¥¸¦ È­¸é ÁÂÇ¥·Î º¯È¯ÇÏ¿© ¸¶¿ì½º ÀÌº¥Æ®ÀÇ ÁÂÇ¥·Î »ç¿ë
+                // ë²„íŠ¼ì˜ XY ì¢Œí‘œë¥¼ í™”ë©´ ì¢Œí‘œë¡œ ë³€í™˜í•˜ì—¬ ë§ˆìš°ìŠ¤ ì´ë²¤íŠ¸ì˜ ì¢Œí‘œë¡œ ì‚¬ìš©
                 stClientXY.iX = stButtonArea.iX1 + 1;
                 stClientXY.iY = stButtonArea.iY1 + 1;                
                 kConvertPointClientToScreen( qwWindowID, &stClientXY, &stScreenXY );
                 
-                // ÀÌ¹ÌÁö Ãâ·Â ¹öÆ°¿¡ ¸¶¿ì½º ¿ÞÂÊ ¹öÆ°ÀÌ ´­¸° °ÍÃ³·³ ¸¶¿ì½º ÀÌº¥Æ®¸¦ Àü¼Û
+                // ì´ë¯¸ì§€ ì¶œë ¥ ë²„íŠ¼ì— ë§ˆìš°ìŠ¤ ì™¼ìª½ ë²„íŠ¼ì´ ëˆŒë¦° ê²ƒì²˜ëŸ¼ ë§ˆìš°ìŠ¤ ì´ë²¤íŠ¸ë¥¼ ì „ì†¡
                 kSetMouseEvent( qwWindowID, EVENT_MOUSE_LBUTTONDOWN, 
                                 stScreenXY.iX + 1, stScreenXY.iY + 1, 0, &stSendEvent );
                 kSendEventToWindow( qwWindowID, &stSendEvent );
             }
-            // ESC Å°´Â À©µµ¿ì ´ÝÈû ¹öÆ°ÀÌ ´­¸° °ÍÀ¸·Î Ã³¸®
+            // ESC í‚¤ëŠ” ìœˆë„ìš° ë‹«íž˜ ë²„íŠ¼ì´ ëˆŒë¦° ê²ƒìœ¼ë¡œ ì²˜ë¦¬
             else if( pstKeyEvent->bASCIICode == KEY_ESC )
             {
-                // À©µµ¿ì ´Ý±â ÀÌº¥Æ®¸¦ À©µµ¿ì·Î Àü¼Û
+                // ìœˆë„ìš° ë‹«ê¸° ì´ë²¤íŠ¸ë¥¼ ìœˆë„ìš°ë¡œ ì „ì†¡
                 kSetWindowEvent( qwWindowID, EVENT_WINDOW_CLOSE, &stSendEvent );
                 kSendEventToWindow( qwWindowID, &stSendEvent );
             }
-            // ±× ¿Ü Å°´Â ÆÄÀÏ ÀÌ¸§ ¹öÆÛ¿¡ °ø°£ÀÌ ÀÖ´Â °æ¿ì¸¸ ¹öÆÛ¿¡ »ðÀÔ
+            // ê·¸ ì™¸ í‚¤ëŠ” íŒŒì¼ ì´ë¦„ ë²„í¼ì— ê³µê°„ì´ ìžˆëŠ” ê²½ìš°ë§Œ ë²„í¼ì— ì‚½ìž…
             else if( ( pstKeyEvent->bASCIICode <= 128 ) && 
                      ( pstKeyEvent->bASCIICode != KEY_BACKSPACE ) &&
                      ( iFileNameLength < FILESYSTEM_MAXFILENAMELENGTH ) )
             {
-                // ÀÔ·ÂµÈ Å°¸¦ ÆÄÀÏ ÀÌ¸§ ¹öÆÛÀÇ ¸¶Áö¸·¿¡ »ðÀÔ
+                // ìž…ë ¥ëœ í‚¤ë¥¼ íŒŒì¼ ì´ë¦„ ë²„í¼ì˜ ë§ˆì§€ë§‰ì— ì‚½ìž…
                 vcFileName[ iFileNameLength ] = pstKeyEvent->bASCIICode;
                 iFileNameLength++;
                 
-                // ÀÔ·ÂµÈ ³»¿ëÀ» ¿¡µðÆ® ¹Ú½º¿¡ Ç¥½Ã
+                // ìž…ë ¥ëœ ë‚´ìš©ì„ ì—ë””íŠ¸ ë°•ìŠ¤ì— í‘œì‹œ
                 kDrawFileName( qwWindowID, &stEditBoxArea, vcFileName, 
                         iFileNameLength );
             }            
             break;
 
-            // À©µµ¿ì ÀÌº¥Æ® Ã³¸®
+            // ìœˆë„ìš° ì´ë²¤íŠ¸ ì²˜ë¦¬
         case EVENT_WINDOW_CLOSE:
             if( stReceivedEvent.qwType == EVENT_WINDOW_CLOSE )
             {
-                // À©µµ¿ì »èÁ¦
+                // ìœˆë„ìš° ì‚­ì œ
                 kDeleteWindow( qwWindowID );
                 return ;
             }
             break;
             
-            // ±× ¿Ü Á¤º¸
+            // ê·¸ ì™¸ ì •ë³´
         default:
-            // ¿©±â¿¡ ¾Ë ¼ö ¾ø´Â ÀÌº¥Æ® Ã³¸® ÄÚµå ³Ö±â
+            // ì—¬ê¸°ì— ì•Œ ìˆ˜ ì—†ëŠ” ì´ë²¤íŠ¸ ì²˜ë¦¬ ì½”ë“œ ë„£ê¸°
             break;
         }
     }
 }
 
 /**
- *  ¿¡µðÆ® ¹Ú½º ¿µ¿ª¿¡ ¹®ÀÚ¸¦ Ãâ·Â
+ *  ì—ë””íŠ¸ ë°•ìŠ¤ ì˜ì—­ì— ë¬¸ìžë¥¼ ì¶œë ¥
  */
 static void kDrawFileName( QWORD qwWindowID, RECT* pstArea, char *pcFileName, 
         int iNameLength )
 {
-    // ¿¡µðÆ® ¹Ú½ºÀÇ ¹è°æÀ» ¸ðµÎ Èò»öÀ¸·Î Ã¤¿ò
+    // ì—ë””íŠ¸ ë°•ìŠ¤ì˜ ë°°ê²½ì„ ëª¨ë‘ í°ìƒ‰ìœ¼ë¡œ ì±„ì›€
     kDrawRect( qwWindowID, pstArea->iX1 + 1, pstArea->iY1 + 1, pstArea->iX2 - 1, 
                pstArea-> iY2 - 1, WINDOW_COLOR_BACKGROUND, TRUE );
     
-    // ÆÄÀÏ ÀÌ¸§À» Ãâ·Â
+    // íŒŒì¼ ì´ë¦„ì„ ì¶œë ¥
     kDrawText( qwWindowID, pstArea->iX1 + 2, pstArea->iY1 + 2, RGB( 0, 0, 0 ), 
             WINDOW_COLOR_BACKGROUND, pcFileName, iNameLength );
     
-    // ÆÄÀÏ ÀÌ¸§ÀÇ ±æÀÌ°¡ ÆÄÀÏ ½Ã½ºÅÛÀÌ Á¤ÀÇÇÑ ÃÖ´ë ±æÀÌ°¡ ¾Æ´Ï¸é Ä¿¼­¸¦ Ãâ·Â
+    // íŒŒì¼ ì´ë¦„ì˜ ê¸¸ì´ê°€ íŒŒì¼ ì‹œìŠ¤í…œì´ ì •ì˜í•œ ìµœëŒ€ ê¸¸ì´ê°€ ì•„ë‹ˆë©´ ì»¤ì„œë¥¼ ì¶œë ¥
     if( iNameLength < FILESYSTEM_MAXFILENAMELENGTH )
     {
         kDrawText( qwWindowID, pstArea->iX1 + 2 + FONT_ENGLISHWIDTH * iNameLength,
             pstArea->iY1 + 2, RGB( 0, 0, 0 ), WINDOW_COLOR_BACKGROUND, "_", 1 );
     }
     
-    // ¿¡µðÆ® ¹Ú½º ¿µ¿ª¸¸ È­¸é ¾÷µ¥ÀÌÆ®
+    // ì—ë””íŠ¸ ë°•ìŠ¤ ì˜ì—­ë§Œ í™”ë©´ ì—…ë°ì´íŠ¸
     kUpdateScreenByWindowArea( qwWindowID, pstArea );
 }
 
 /**
- *  JPEG ÆÄÀÏÀ» ÀÐ¾î¼­ »õ·Î »ý¼ºÇÑ À©µµ¿ì¿¡ Ç¥½ÃÇÏ°í ÀÌº¥Æ®¸¦ Ã³¸®
+ *  JPEG íŒŒì¼ì„ ì½ì–´ì„œ ìƒˆë¡œ ìƒì„±í•œ ìœˆë„ìš°ì— í‘œì‹œí•˜ê³  ì´ë²¤íŠ¸ë¥¼ ì²˜ë¦¬
  */
 static BOOL kCreateImageViewerWindowAndExecute( QWORD qwMainWindowID, 
         const char* pcFileName )
@@ -1153,30 +1153,30 @@ static BOOL kCreateImageViewerWindowAndExecute( QWORD qwMainWindowID,
     KEYEVENT* pstKeyEvent;
     BOOL bExit;
     
-    // ÃÊ±âÈ­
+    // ì´ˆê¸°í™”
     fp = NULL;
     pbFileBuffer = NULL;
     pstOutputBuffer = NULL;
     qwWindowID = WINDOW_INVALIDID;
     
     //--------------------------------------------------------------------------
-    // ·çÆ® µð·ºÅÍ¸®¸¦ ¿­¾î¼­ ÆÄÀÏÀ» °Ë»ö
+    // ë£¨íŠ¸ ë””ë ‰í„°ë¦¬ë¥¼ ì—´ì–´ì„œ íŒŒì¼ì„ ê²€ìƒ‰
     //--------------------------------------------------------------------------
     pstDirectory = opendir( "/" );
     dwFileSize = 0;
     
-    // µð·ºÅÍ¸®¿¡¼­ ÆÄÀÏÀ» °Ë»ö
+    // ë””ë ‰í„°ë¦¬ì—ì„œ íŒŒì¼ì„ ê²€ìƒ‰
     while( 1 )
     {
-        // µð·ºÅÍ¸®¿¡¼­ ¿£Æ®¸® ÇÏ³ª¸¦ ÀÐÀ½
+        // ë””ë ‰í„°ë¦¬ì—ì„œ ì—”íŠ¸ë¦¬ í•˜ë‚˜ë¥¼ ì½ìŒ
         pstEntry = readdir( pstDirectory );
-        // ´õÀÌ»ó ÆÄÀÏÀÌ ¾øÀ¸¸é ³ª°¨
+        // ë”ì´ìƒ íŒŒì¼ì´ ì—†ìœ¼ë©´ ë‚˜ê°
         if( pstEntry == NULL )
         {
             break;
         }
         
-        // ÆÄÀÏ ÀÌ¸§ÀÇ ±æÀÌ¿Í ³»¿ëÀÌ °°Àº °ÍÀ» °Ë»ö
+        // íŒŒì¼ ì´ë¦„ì˜ ê¸¸ì´ì™€ ë‚´ìš©ì´ ê°™ì€ ê²ƒì„ ê²€ìƒ‰
         if( ( kStrLen( pstEntry->d_name ) == kStrLen( pcFileName ) ) &&
             ( kMemCmp( pstEntry->d_name, pcFileName, kStrLen( pcFileName ) ) 
                     == 0 ) )
@@ -1185,8 +1185,8 @@ static BOOL kCreateImageViewerWindowAndExecute( QWORD qwMainWindowID,
             break;
         }
     }
-    // µð·ºÅÍ¸® ÇÚµéÀ» ¹ÝÈ¯, ÇÚµéÀ» ¹ÝÈ¯ÇÏÁö ¾ÊÀ¸¸é ¸Þ¸ð¸®°¡ ÇØÁ¦µÇÁö ¾Ê°í ³²À¸¹Ç·Î
-    // ²À ÇØÁ¦ÇØ¾ß ÇÔ
+    // ë””ë ‰í„°ë¦¬ í•¸ë“¤ì„ ë°˜í™˜, í•¸ë“¤ì„ ë°˜í™˜í•˜ì§€ ì•Šìœ¼ë©´ ë©”ëª¨ë¦¬ê°€ í•´ì œë˜ì§€ ì•Šê³  ë‚¨ìœ¼ë¯€ë¡œ
+    // ê¼­ í•´ì œí•´ì•¼ í•¨
     closedir( pstDirectory );
 
     if( dwFileSize == 0 )
@@ -1196,9 +1196,9 @@ static BOOL kCreateImageViewerWindowAndExecute( QWORD qwMainWindowID,
     }
 
     //--------------------------------------------------------------------------
-    //  ÆÄÀÏÀ» ÀÐÀº ÈÄ ÀÌ¹ÌÁö µðÄÚµù
+    //  íŒŒì¼ì„ ì½ì€ í›„ ì´ë¯¸ì§€ ë””ì½”ë”©
     //--------------------------------------------------------------------------
-    // ÆÄÀÏ ÀÐ±â
+    // íŒŒì¼ ì½ê¸°
     fp = fopen( pcFileName, "rb" );
     if( fp == NULL )
     {
@@ -1206,7 +1206,7 @@ static BOOL kCreateImageViewerWindowAndExecute( QWORD qwMainWindowID,
         return FALSE;
     }
     
-    // ¸Þ¸ð¸®¸¦ ÆÄÀÏ Å©±â¸¸Å­ ÇÒ´çÇÏ°í JPEG ÀÚ·á±¸Á¶¸¦ ÇÒ´ç
+    // ë©”ëª¨ë¦¬ë¥¼ íŒŒì¼ í¬ê¸°ë§Œí¼ í• ë‹¹í•˜ê³  JPEG ìžë£Œêµ¬ì¡°ë¥¼ í• ë‹¹
     pbFileBuffer = ( BYTE* ) kAllocateMemory( dwFileSize );
     pstJpeg = ( JPEG* ) kAllocateMemory( sizeof( JPEG ) );
     if( ( pbFileBuffer == NULL ) || ( pstJpeg == NULL ) )
@@ -1218,7 +1218,7 @@ static BOOL kCreateImageViewerWindowAndExecute( QWORD qwMainWindowID,
         return FALSE;
     }
     
-    // ÆÄÀÏÀ» ÀÐÀº ÈÄ JPEG ÆÄÀÏ Æ÷¸ËÀÎÁö È®ÀÎ
+    // íŒŒì¼ì„ ì½ì€ í›„ JPEG íŒŒì¼ í¬ë§·ì¸ì§€ í™•ì¸
     if( ( fread( pbFileBuffer, 1, dwFileSize, fp ) != dwFileSize ) ||
         ( kJPEGInit( pstJpeg, pbFileBuffer, dwFileSize ) == FALSE ) )
     {
@@ -1229,16 +1229,16 @@ static BOOL kCreateImageViewerWindowAndExecute( QWORD qwMainWindowID,
         return FALSE;
     }
 
-    // µðÄÚµå °á°ú Ãâ·Â¿ë ¹öÆÛ¸¦ »ý¼º
+    // ë””ì½”ë“œ ê²°ê³¼ ì¶œë ¥ìš© ë²„í¼ë¥¼ ìƒì„±
     pstOutputBuffer = kAllocateMemory( pstJpeg->width * pstJpeg->height * 
                                        sizeof( COLOR ) );
-    // µðÄÚµå¸¦ ¼öÇàÇÑ µÚ Á¤»óÀûÀ¸·Î Ã³¸®µÇ¾ú´Ù¸é À©µµ¿ì¸¦ »ý¼º
+    // ë””ì½”ë“œë¥¼ ìˆ˜í–‰í•œ ë’¤ ì •ìƒì ìœ¼ë¡œ ì²˜ë¦¬ë˜ì—ˆë‹¤ë©´ ìœˆë„ìš°ë¥¼ ìƒì„±
     if( ( pstOutputBuffer != NULL ) &&
         ( kJPEGDecode( pstJpeg, pstOutputBuffer ) == TRUE ) )
     {
-        // ÀüÃ¼ È­¸é ¿µ¿ªÀÇ Å©±â¸¦ ¹ÝÈ¯
+        // ì „ì²´ í™”ë©´ ì˜ì—­ì˜ í¬ê¸°ë¥¼ ë°˜í™˜
         kGetScreenArea( &stScreenArea );
-        // À©µµ¿ì¸¦ »ý¼º, ÀÌ¹ÌÁöÀÇ Å©±â¿Í Á¦¸ñ Ç¥½ÃÁÙÀÇ Å©±â¸¦ °í·Á
+        // ìœˆë„ìš°ë¥¼ ìƒì„±, ì´ë¯¸ì§€ì˜ í¬ê¸°ì™€ ì œëª© í‘œì‹œì¤„ì˜ í¬ê¸°ë¥¼ ê³ ë ¤
         qwWindowID = kCreateWindow( ( stScreenArea.iX2 - pstJpeg->width ) / 2, 
                     ( stScreenArea.iY2 - pstJpeg->height ) / 2, pstJpeg->width, 
                     pstJpeg->height + WINDOW_TITLEBAR_HEIGHT, 
@@ -1246,7 +1246,7 @@ static BOOL kCreateImageViewerWindowAndExecute( QWORD qwMainWindowID,
                     pcFileName );
     }
     
-    // À©µµ¿ì »ý¼º¿¡ ½ÇÆÐÇÏ°Å³ª Ãâ·Â ¹öÆÛ ÇÒ´ç ¶Ç´Â µðÄÚµù¿¡ ½ÇÆÐÇÏ¸é Á¾·á
+    // ìœˆë„ìš° ìƒì„±ì— ì‹¤íŒ¨í•˜ê±°ë‚˜ ì¶œë ¥ ë²„í¼ í• ë‹¹ ë˜ëŠ” ë””ì½”ë”©ì— ì‹¤íŒ¨í•˜ë©´ ì¢…ë£Œ
     if( ( qwWindowID == WINDOW_INVALIDID ) || ( pstOutputBuffer == NULL ) )
     {
         kPrintf( "[ImageViewer] Window create fail or output buffer allocation fail\n" );
@@ -1257,8 +1257,8 @@ static BOOL kCreateImageViewerWindowAndExecute( QWORD qwMainWindowID,
         return FALSE;
     }
 
-    // À©µµ¿ìÀÇ ³Êºñ¸¦ ±¸ÇÏ¿© Á¦¸ñ Ç¥½ÃÁÙ ¿µ¿ªÀ» Á¦¿ÜÇÑ ³ª¸ÓÁö È­¸é ¹öÆÛ ¿µ¿ª¿¡ µðÄÚµùµÈ
-    // ÀÌ¹ÌÁö¸¦ º¹»ç
+    // ìœˆë„ìš°ì˜ ë„ˆë¹„ë¥¼ êµ¬í•˜ì—¬ ì œëª© í‘œì‹œì¤„ ì˜ì—­ì„ ì œì™¸í•œ ë‚˜ë¨¸ì§€ í™”ë©´ ë²„í¼ ì˜ì—­ì— ë””ì½”ë”©ëœ
+    // ì´ë¯¸ì§€ë¥¼ ë³µì‚¬
     pstWindow = kGetWindowWithWindowLock( qwWindowID );
     if( pstWindow != NULL )
     {
@@ -1267,38 +1267,38 @@ static BOOL kCreateImageViewerWindowAndExecute( QWORD qwMainWindowID,
                 iWindowWidth ), pstOutputBuffer, pstJpeg->width * 
                 pstJpeg->height * sizeof( COLOR ) );
 
-        // µ¿±âÈ­ Ã³¸®
+        // ë™ê¸°í™” ì²˜ë¦¬
         kUnlock( &( pstWindow->stLock ) );
     }
     
-    // ÆÄÀÏ ¹öÆÛ¸¦ ÇØÁ¦ÇÏ°í À©µµ¿ì¸¦ È­¸é¿¡ Ç¥½Ã
+    // íŒŒì¼ ë²„í¼ë¥¼ í•´ì œí•˜ê³  ìœˆë„ìš°ë¥¼ í™”ë©´ì— í‘œì‹œ
     kFreeMemory( pbFileBuffer );
     kShowWindow( qwWindowID, TRUE );
     
     //--------------------------------------------------------------------------
-    //  ESC Å°¿Í À©µµ¿ì ´Ý±â ¹öÆ°À» Ã³¸®ÇÏ´Â °£´ÜÇÑ ÀÌº¥Æ® ·çÇÁ
+    //  ESC í‚¤ì™€ ìœˆë„ìš° ë‹«ê¸° ë²„íŠ¼ì„ ì²˜ë¦¬í•˜ëŠ” ê°„ë‹¨í•œ ì´ë²¤íŠ¸ ë£¨í”„
     //--------------------------------------------------------------------------
-    // Á¤»óÀûÀ¸·Î À©µµ¿ì¸¦ »ý¼ºÇÏ¿© Ç¥½ÃÇßÀ¸¸é ÆÄÀÏ ÀÌ¸§ ÀÔ·Â À©µµ¿ì´Â ¼û±è
+    // ì •ìƒì ìœ¼ë¡œ ìœˆë„ìš°ë¥¼ ìƒì„±í•˜ì—¬ í‘œì‹œí–ˆìœ¼ë©´ íŒŒì¼ ì´ë¦„ ìž…ë ¥ ìœˆë„ìš°ëŠ” ìˆ¨ê¹€
     kShowWindow( qwMainWindowID, FALSE );
     
     bExit = FALSE;
     while( bExit == FALSE )
     {
-        // ÀÌº¥Æ® Å¥¿¡¼­ ÀÌº¥Æ®¸¦ ¼ö½Å
+        // ì´ë²¤íŠ¸ íì—ì„œ ì´ë²¤íŠ¸ë¥¼ ìˆ˜ì‹ 
         if( kReceiveEventFromWindowQueue( qwWindowID, &stReceivedEvent ) == FALSE )
         {
             kSleep( 0 );
             continue;
         }
         
-        // ¼ö½ÅµÈ ÀÌº¥Æ®¸¦ Å¸ÀÔ¿¡ µû¶ó ³ª´©¾î Ã³¸®
+        // ìˆ˜ì‹ ëœ ì´ë²¤íŠ¸ë¥¼ íƒ€ìž…ì— ë”°ë¼ ë‚˜ëˆ„ì–´ ì²˜ë¦¬
         switch( stReceivedEvent.qwType )
         {
-            // Å° ÀÌº¥Æ® Ã³¸®
+            // í‚¤ ì´ë²¤íŠ¸ ì²˜ë¦¬
         case EVENT_KEY_DOWN:
             pstKeyEvent = &( stReceivedEvent.stKeyEvent );
-            // ESC Å°°¡ ´­¸®¸é ±×¸²À» Ç¥½ÃÇÏ´Â À©µµ¿ì¸¦ »èÁ¦ÇÏ°í ÆÄÀÏ ÀÌ¸§ ÀÔ·Â À©µµ¿ì¸¦
-            // Ç¥½ÃÇÑ µÚ Á¾·á
+            // ESC í‚¤ê°€ ëˆŒë¦¬ë©´ ê·¸ë¦¼ì„ í‘œì‹œí•˜ëŠ” ìœˆë„ìš°ë¥¼ ì‚­ì œí•˜ê³  íŒŒì¼ ì´ë¦„ ìž…ë ¥ ìœˆë„ìš°ë¥¼
+            // í‘œì‹œí•œ ë’¤ ì¢…ë£Œ
             if( pstKeyEvent->bASCIICode == KEY_ESC )
             {
                 kDeleteWindow( qwWindowID );
@@ -1307,20 +1307,20 @@ static BOOL kCreateImageViewerWindowAndExecute( QWORD qwMainWindowID,
             }                
             break;
 
-            // À©µµ¿ì ÀÌº¥Æ® Ã³¸®
-            // À©µµ¿ì Å©±â º¯°æ ÀÌº¥Æ®¸¦ Ã³¸®
+            // ìœˆë„ìš° ì´ë²¤íŠ¸ ì²˜ë¦¬
+            // ìœˆë„ìš° í¬ê¸° ë³€ê²½ ì´ë²¤íŠ¸ë¥¼ ì²˜ë¦¬
         case EVENT_WINDOW_RESIZE:
-            // º¯°æµÈ À©µµ¿ì¿¡ µðÄÚµùµÈ ÀÌ¹ÌÁö¸¦ Àü¼Û
+            // ë³€ê²½ëœ ìœˆë„ìš°ì— ë””ì½”ë”©ëœ ì´ë¯¸ì§€ë¥¼ ì „ì†¡
             kBitBlt( qwWindowID, 0, WINDOW_TITLEBAR_HEIGHT, pstOutputBuffer, 
                      pstJpeg->width, pstJpeg->height );
-            // À©µµ¿ì¸¦ ÇÑ¹ø ´õ Ç¥½ÃÇÏ¿© À©µµ¿ì ³»ºÎ¿¡ Àü¼ÛµÈ ÀÌ¹ÌÁö¸¦ È­¸é¿¡ ¾÷µ¥ÀÌÆ®
+            // ìœˆë„ìš°ë¥¼ í•œë²ˆ ë” í‘œì‹œí•˜ì—¬ ìœˆë„ìš° ë‚´ë¶€ì— ì „ì†¡ëœ ì´ë¯¸ì§€ë¥¼ í™”ë©´ì— ì—…ë°ì´íŠ¸
             kShowWindow( qwWindowID, TRUE );
             break;
             
-            // À©µµ¿ì ´Ý±â ÀÌº¥Æ®¸¦ Ã³¸®
+            // ìœˆë„ìš° ë‹«ê¸° ì´ë²¤íŠ¸ë¥¼ ì²˜ë¦¬
         case EVENT_WINDOW_CLOSE:
-            // ´Ý±â ¹öÆ°ÀÌ ´­¸®¸é ÀÌ¹ÌÁö Ãâ·Â À©µµ¿ì¸¦ »èÁ¦ÇÏ°í ÆÄÀÏ ÀÌ¸§ ÀÔ·Â À©µµ¿ì¸¦
-            // Ç¥½ÃÇÑ µÚ Á¾·á
+            // ë‹«ê¸° ë²„íŠ¼ì´ ëˆŒë¦¬ë©´ ì´ë¯¸ì§€ ì¶œë ¥ ìœˆë„ìš°ë¥¼ ì‚­ì œí•˜ê³  íŒŒì¼ ì´ë¦„ ìž…ë ¥ ìœˆë„ìš°ë¥¼
+            // í‘œì‹œí•œ ë’¤ ì¢…ë£Œ
             if( stReceivedEvent.qwType == EVENT_WINDOW_CLOSE )
             {
                 kDeleteWindow( qwWindowID );
@@ -1329,14 +1329,14 @@ static BOOL kCreateImageViewerWindowAndExecute( QWORD qwMainWindowID,
             }
             break;
             
-            // ±× ¿Ü Á¤º¸
+            // ê·¸ ì™¸ ì •ë³´
         default:
-            // ¿©±â¿¡ ¾Ë ¼ö ¾ø´Â ÀÌº¥Æ® Ã³¸® ÄÚµå ³Ö±â
+            // ì—¬ê¸°ì— ì•Œ ìˆ˜ ì—†ëŠ” ì´ë²¤íŠ¸ ì²˜ë¦¬ ì½”ë“œ ë„£ê¸°
             break;
         }
     }
 
-    // JPEG ÀÌ¹ÌÁö ÆÄÀÏ µðÄÚµù¿¡ »ç¿ëÇß´ø ¹öÆÛ¸¦ ¹ÝÈ¯
+    // JPEG ì´ë¯¸ì§€ íŒŒì¼ ë””ì½”ë”©ì— ì‚¬ìš©í–ˆë˜ ë²„í¼ë¥¼ ë°˜í™˜
     kFreeMemory( pstJpeg );
     kFreeMemory( pstOutputBuffer );
     

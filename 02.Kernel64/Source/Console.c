@@ -3,56 +3,56 @@
  *  date    2009/01/31
  *  author  kkamagui 
  *          Copyright(c)2008 All rights reserved by kkamagui
- *  brief   ÄÜ¼Ö¿¡ °ü·ÃµÈ ¼Ò½º ÆÄÀÏ
+ *  brief   ì½˜ì†”ì— ê´€ë ¨ëœ ì†ŒìŠ¤ íŒŒì¼
  */
 
 #include <stdarg.h>
 #include "Console.h"
 #include "Keyboard.h"
 
-// ÄÜ¼ÖÀÇ Á¤º¸¸¦ °ü¸®ÇÏ´Â ÀÚ·á±¸Á¶
+// ì½˜ì†”ì˜ ì •ë³´ë¥¼ ê´€ë¦¬í•˜ëŠ” ìžë£Œêµ¬ì¡°
 CONSOLEMANAGER gs_stConsoleManager = { 0, };
 
-// ±×·¡ÇÈ ¸ðµå·Î ½ÃÀÛÇßÀ» ¶§ »ç¿ëÇÏ´Â È­¸é ¹öÆÛ ¿µ¿ª
+// ê·¸ëž˜í”½ ëª¨ë“œë¡œ ì‹œìž‘í–ˆì„ ë•Œ ì‚¬ìš©í•˜ëŠ” í™”ë©´ ë²„í¼ ì˜ì—­
 static CHARACTER gs_vstScreenBuffer[ CONSOLE_WIDTH * CONSOLE_HEIGHT ];
 
-// ±×·¡ÇÈ ¸ðµå·Î ½ÃÀÛÇßÀ» ¶§ GUI ÄÜ¼Ö ¼Ð À©µµ¿ì·Î Àü´ÞµÈ Å° ÀÌº¥Æ®¸¦ ÄÜ¼Ö ¼Ð ÅÂ½ºÅ©·Î 
-// Àü´ÞÇÏ´Â Å¥ ¹öÆÛ
+// ê·¸ëž˜í”½ ëª¨ë“œë¡œ ì‹œìž‘í–ˆì„ ë•Œ GUI ì½˜ì†” ì…¸ ìœˆë„ìš°ë¡œ ì „ë‹¬ëœ í‚¤ ì´ë²¤íŠ¸ë¥¼ ì½˜ì†” ì…¸ íƒœìŠ¤í¬ë¡œ 
+// ì „ë‹¬í•˜ëŠ” í ë²„í¼
 static KEYDATA gs_vstKeyQueueBuffer[ CONSOLE_GUIKEYQUEUE_MAXCOUNT ];
 
 /**
- *  ÄÜ¼Ö ÃÊ±âÈ­
+ *  ì½˜ì†” ì´ˆê¸°í™”
  */
 void kInitializeConsole( int iX, int iY )
 {
-    // ÄÜ¼Ö ÀÚ·á±¸Á¶ ÃÊ±âÈ­
+    // ì½˜ì†” ìžë£Œêµ¬ì¡° ì´ˆê¸°í™”
     kMemSet( &gs_stConsoleManager, 0, sizeof( gs_stConsoleManager ) );
-    // È­¸é ¹öÆÛ ÃÊ±âÈ­
+    // í™”ë©´ ë²„í¼ ì´ˆê¸°í™”
     kMemSet( &gs_vstScreenBuffer, 0, sizeof( gs_vstScreenBuffer ) );
     
     if( kIsGraphicMode() == FALSE )
     {
-        // ±×·¡ÇÈ ¸ðµå·Î ½ÃÀÛÇÑ °ÍÀÌ ¾Æ´Ï¸é ºñµð¿À ¸Þ¸ð¸®¸¦ È­¸é ¹öÆÛ·Î ¼³Á¤
+        // ê·¸ëž˜í”½ ëª¨ë“œë¡œ ì‹œìž‘í•œ ê²ƒì´ ì•„ë‹ˆë©´ ë¹„ë””ì˜¤ ë©”ëª¨ë¦¬ë¥¼ í™”ë©´ ë²„í¼ë¡œ ì„¤ì •
         gs_stConsoleManager.pstScreenBuffer = ( CHARACTER* ) CONSOLE_VIDEOMEMORYADDRESS;
     }
     else
     {
-        // ±×·¡ÇÈ ¸ðµå·Î ½ÃÀÛÇßÀ¸¸é ±×·¡ÇÈ ¸ðµå¿ë È­¸é ¹öÆÛ¸¦ ¼³Á¤
+        // ê·¸ëž˜í”½ ëª¨ë“œë¡œ ì‹œìž‘í–ˆìœ¼ë©´ ê·¸ëž˜í”½ ëª¨ë“œìš© í™”ë©´ ë²„í¼ë¥¼ ì„¤ì •
         gs_stConsoleManager.pstScreenBuffer = gs_vstScreenBuffer;
         
-        // ±×·¡ÇÈ ¸ðµå¿¡¼­ »ç¿ëÇÒ Å° Å¥¿Í ¹ÂÅØ½º¸¦ ÃÊ±âÈ­
+        // ê·¸ëž˜í”½ ëª¨ë“œì—ì„œ ì‚¬ìš©í•  í‚¤ íì™€ ë®¤í…ìŠ¤ë¥¼ ì´ˆê¸°í™”
         kInitializeQueue( &( gs_stConsoleManager.stKeyQueueForGUI ), gs_vstKeyQueueBuffer, 
                 CONSOLE_GUIKEYQUEUE_MAXCOUNT, sizeof( KEYDATA ) );
         kInitializeMutex( &( gs_stConsoleManager.stLock ) );
     }
     
-    // Ä¿¼­ À§Ä¡ ¼³Á¤
+    // ì»¤ì„œ ìœ„ì¹˜ ì„¤ì •
     kSetCursor( iX, iY );
 }
 
 /**
- *  Ä¿¼­ÀÇ À§Ä¡¸¦ ¼³Á¤
- *      ¹®ÀÚ¸¦ Ãâ·ÂÇÒ À§Ä¡µµ °°ÀÌ ¼³Á¤
+ *  ì»¤ì„œì˜ ìœ„ì¹˜ë¥¼ ì„¤ì •
+ *      ë¬¸ìžë¥¼ ì¶œë ¥í•  ìœ„ì¹˜ë„ ê°™ì´ ì„¤ì •
  */
 void kSetCursor( int iX, int iY ) 
 {
@@ -61,31 +61,31 @@ void kSetCursor( int iX, int iY )
     int iOldY;
     int i;
     
-    // Ä¿¼­ÀÇ À§Ä¡¸¦ °è»ê
+    // ì»¤ì„œì˜ ìœ„ì¹˜ë¥¼ ê³„ì‚°
     iLinearValue = iY * CONSOLE_WIDTH + iX;
 
-    // ÅØ½ºÆ® ¸ðµå·Î ½ÃÀÛÇßÀ¸¸é CRT ÄÁÆ®·Ñ·¯·Î Ä¿¼­ À§Ä¡¸¦ Àü¼Û
+    // í…ìŠ¤íŠ¸ ëª¨ë“œë¡œ ì‹œìž‘í–ˆìœ¼ë©´ CRT ì»¨íŠ¸ë¡¤ëŸ¬ë¡œ ì»¤ì„œ ìœ„ì¹˜ë¥¼ ì „ì†¡
     if( kIsGraphicMode() == FALSE )
     {
-        // CRTC ÄÁÆ®·Ñ ¾îµå·¹½º ·¹Áö½ºÅÍ(Æ÷Æ® 0x3D4)¿¡ 0x0E¸¦ Àü¼ÛÇÏ¿©
-        // »óÀ§ Ä¿¼­ À§Ä¡ ·¹Áö½ºÅÍ¸¦ ¼±ÅÃ
+        // CRTC ì»¨íŠ¸ë¡¤ ì–´ë“œë ˆìŠ¤ ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x3D4)ì— 0x0Eë¥¼ ì „ì†¡í•˜ì—¬
+        // ìƒìœ„ ì»¤ì„œ ìœ„ì¹˜ ë ˆì§€ìŠ¤í„°ë¥¼ ì„ íƒ
         kOutPortByte( VGA_PORT_INDEX, VGA_INDEX_UPPERCURSOR );
-        // CRTC ÄÁÆ®·Ñ µ¥ÀÌÅÍ ·¹Áö½ºÅÍ(Æ÷Æ® 0x3D5)¿¡ Ä¿¼­ÀÇ »óÀ§ ¹ÙÀÌÆ®¸¦ Ãâ·Â
+        // CRTC ì»¨íŠ¸ë¡¤ ë°ì´í„° ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x3D5)ì— ì»¤ì„œì˜ ìƒìœ„ ë°”ì´íŠ¸ë¥¼ ì¶œë ¥
         kOutPortByte( VGA_PORT_DATA, iLinearValue >> 8 );
     
-        // CRTC ÄÁÆ®·Ñ ¾îµå·¹½º ·¹Áö½ºÅÍ(Æ÷Æ® 0x3D4)¿¡ 0x0F¸¦ Àü¼ÛÇÏ¿©
-        // ÇÏÀ§ Ä¿¼­ À§Ä¡ ·¹Áö½ºÅÍ¸¦ ¼±ÅÃ
+        // CRTC ì»¨íŠ¸ë¡¤ ì–´ë“œë ˆìŠ¤ ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x3D4)ì— 0x0Fë¥¼ ì „ì†¡í•˜ì—¬
+        // í•˜ìœ„ ì»¤ì„œ ìœ„ì¹˜ ë ˆì§€ìŠ¤í„°ë¥¼ ì„ íƒ
         kOutPortByte( VGA_PORT_INDEX, VGA_INDEX_LOWERCURSOR );
-        // CRTC ÄÁÆ®·Ñ µ¥ÀÌÅÍ ·¹Áö½ºÅÍ(Æ÷Æ® 0x3D5)¿¡ Ä¿¼­ÀÇ ÇÏÀ§ ¹ÙÀÌÆ®¸¦ Ãâ·Â
+        // CRTC ì»¨íŠ¸ë¡¤ ë°ì´í„° ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x3D5)ì— ì»¤ì„œì˜ í•˜ìœ„ ë°”ì´íŠ¸ë¥¼ ì¶œë ¥
         kOutPortByte( VGA_PORT_DATA, iLinearValue & 0xFF );
     }
-    // ±×·¡ÇÈ ¸ðµå·Î ½ÃÀÛÇßÀ¸¸é È­¸é ¹öÆÛ¿¡ Ãâ·ÂÇÑ Ä¿¼­ÀÇ À§Ä¡¸¦ ¿Å°ÜÁÜ
+    // ê·¸ëž˜í”½ ëª¨ë“œë¡œ ì‹œìž‘í–ˆìœ¼ë©´ í™”ë©´ ë²„í¼ì— ì¶œë ¥í•œ ì»¤ì„œì˜ ìœ„ì¹˜ë¥¼ ì˜®ê²¨ì¤Œ
     else
     {
-        // ÀÌÀü¿¡ Ä¿¼­°¡ ÀÖ´ø À§Ä¡°¡ ±×´ë·Î Ä¿¼­·Î ³²¾ÆÀÖÀ¸¸é Ä¿¼­¸¦ Áö¿ò
+        // ì´ì „ì— ì»¤ì„œê°€ ìžˆë˜ ìœ„ì¹˜ê°€ ê·¸ëŒ€ë¡œ ì»¤ì„œë¡œ ë‚¨ì•„ìžˆìœ¼ë©´ ì»¤ì„œë¥¼ ì§€ì›€
         for( i = 0 ; i < CONSOLE_WIDTH * CONSOLE_HEIGHT ; i++ )
         {
-            // Ä¿¼­°¡ ÀÖÀ¸¸é »èÁ¦
+            // ì»¤ì„œê°€ ìžˆìœ¼ë©´ ì‚­ì œ
             if( ( gs_stConsoleManager.pstScreenBuffer[ i ].bCharactor == '_' ) &&
                 ( gs_stConsoleManager.pstScreenBuffer[ i ].bAttribute == 0x00 ) )
             {
@@ -96,16 +96,16 @@ void kSetCursor( int iX, int iY )
             }
         }
         
-        // »õ·Î¿î À§Ä¡¿¡ Ä¿¼­¸¦ Ãâ·Â
+        // ìƒˆë¡œìš´ ìœ„ì¹˜ì— ì»¤ì„œë¥¼ ì¶œë ¥
         gs_stConsoleManager.pstScreenBuffer[ iLinearValue ].bCharactor = '_';
         gs_stConsoleManager.pstScreenBuffer[ iLinearValue ].bAttribute = 0x00;
     }
-    // ¹®ÀÚ¸¦ Ãâ·ÂÇÒ À§Ä¡ ¾÷µ¥ÀÌÆ®
+    // ë¬¸ìžë¥¼ ì¶œë ¥í•  ìœ„ì¹˜ ì—…ë°ì´íŠ¸
     gs_stConsoleManager.iCurrentPrintOffset = iLinearValue;
 }
 
 /**
- *  ÇöÀç Ä¿¼­ÀÇ À§Ä¡¸¦ ¹ÝÈ¯
+ *  í˜„ìž¬ ì»¤ì„œì˜ ìœ„ì¹˜ë¥¼ ë°˜í™˜
  */
 void kGetCursor( int *piX, int *piY )
 {
@@ -114,7 +114,7 @@ void kGetCursor( int *piX, int *piY )
 }
 
 /**
- *  printf ÇÔ¼öÀÇ ³»ºÎ ±¸Çö
+ *  printf í•¨ìˆ˜ì˜ ë‚´ë¶€ êµ¬í˜„
  */
 void kPrintf( const char* pcFormatString, ... )
 {
@@ -122,21 +122,21 @@ void kPrintf( const char* pcFormatString, ... )
     char vcBuffer[ 1024 ];
     int iNextPrintOffset;
 
-    // °¡º¯ ÀÎÀÚ ¸®½ºÆ®¸¦ »ç¿ëÇØ¼­ vsprintf()·Î Ã³¸®
+    // ê°€ë³€ ì¸ìž ë¦¬ìŠ¤íŠ¸ë¥¼ ì‚¬ìš©í•´ì„œ vsprintf()ë¡œ ì²˜ë¦¬
     va_start( ap, pcFormatString );
     kVSPrintf( vcBuffer, pcFormatString, ap );
     va_end( ap );
     
-    // Æ÷¸Ë ¹®ÀÚ¿­À» È­¸é¿¡ Ãâ·Â
+    // í¬ë§· ë¬¸ìžì—´ì„ í™”ë©´ì— ì¶œë ¥
     iNextPrintOffset = kConsolePrintString( vcBuffer );
     
-    // Ä¿¼­ÀÇ À§Ä¡¸¦ ¾÷µ¥ÀÌÆ®
+    // ì»¤ì„œì˜ ìœ„ì¹˜ë¥¼ ì—…ë°ì´íŠ¸
     kSetCursor( iNextPrintOffset % CONSOLE_WIDTH, iNextPrintOffset / CONSOLE_WIDTH );
 }
 
 /**
- *  \n, \t¿Í °°Àº ¹®ÀÚ°¡ Æ÷ÇÔµÈ ¹®ÀÚ¿­À» Ãâ·ÂÇÑ ÈÄ, È­¸é»óÀÇ ´ÙÀ½ Ãâ·ÂÇÒ À§Ä¡¸¦ 
- *  ¹ÝÈ¯
+ *  \n, \tì™€ ê°™ì€ ë¬¸ìžê°€ í¬í•¨ëœ ë¬¸ìžì—´ì„ ì¶œë ¥í•œ í›„, í™”ë©´ìƒì˜ ë‹¤ìŒ ì¶œë ¥í•  ìœ„ì¹˜ë¥¼ 
+ *  ë°˜í™˜
  */
 int kConsolePrintString( const char* pcBuffer )
 {
@@ -145,56 +145,56 @@ int kConsolePrintString( const char* pcBuffer )
     int iLength;
     int iPrintOffset;
 
-    // È­¸é ¹öÆÛ¸¦ ¼³Á¤
+    // í™”ë©´ ë²„í¼ë¥¼ ì„¤ì •
     pstScreen = gs_stConsoleManager.pstScreenBuffer;
     
-    // ¹®ÀÚ¿­À» Ãâ·ÂÇÒ À§Ä¡¸¦ ÀúÀå
+    // ë¬¸ìžì—´ì„ ì¶œë ¥í•  ìœ„ì¹˜ë¥¼ ì €ìž¥
     iPrintOffset = gs_stConsoleManager.iCurrentPrintOffset;
 
-    // ¹®ÀÚ¿­ÀÇ ±æÀÌ¸¸Å­ È­¸é¿¡ Ãâ·Â
+    // ë¬¸ìžì—´ì˜ ê¸¸ì´ë§Œí¼ í™”ë©´ì— ì¶œë ¥
     iLength = kStrLen( pcBuffer );    
     for( i = 0 ; i < iLength ; i++ )
     {
-        // °³Çà Ã³¸®
+        // ê°œí–‰ ì²˜ë¦¬
         if( pcBuffer[ i ] == '\n' )
         {
-            // Ãâ·ÂÇÒ À§Ä¡¸¦ 80ÀÇ ¹è¼ö ÄÃ·³À¸·Î ¿Å±è
-            // ÇöÀç ¶óÀÎÀÇ ³²Àº ¹®ÀÚ¿­ÀÇ ¼ö¸¸Å­ ´õÇØ¼­ ´ÙÀ½ ¶óÀÎÀ¸·Î À§Ä¡½ÃÅ´
+            // ì¶œë ¥í•  ìœ„ì¹˜ë¥¼ 80ì˜ ë°°ìˆ˜ ì»¬ëŸ¼ìœ¼ë¡œ ì˜®ê¹€
+            // í˜„ìž¬ ë¼ì¸ì˜ ë‚¨ì€ ë¬¸ìžì—´ì˜ ìˆ˜ë§Œí¼ ë”í•´ì„œ ë‹¤ìŒ ë¼ì¸ìœ¼ë¡œ ìœ„ì¹˜ì‹œí‚´
             iPrintOffset += ( CONSOLE_WIDTH - ( iPrintOffset % CONSOLE_WIDTH ) );
         }
-        // ÅÇ Ã³¸®
+        // íƒ­ ì²˜ë¦¬
         else if( pcBuffer[ i ] == '\t' )
         {
-            // Ãâ·ÂÇÒ À§Ä¡¸¦ 8ÀÇ ¹è¼ö ÄÃ·³À¸·Î ¿Å±è
+            // ì¶œë ¥í•  ìœ„ì¹˜ë¥¼ 8ì˜ ë°°ìˆ˜ ì»¬ëŸ¼ìœ¼ë¡œ ì˜®ê¹€
             iPrintOffset += ( 8 - ( iPrintOffset % 8 ) );
         }
-        // ÀÏ¹Ý ¹®ÀÚ¿­ Ãâ·Â
+        // ì¼ë°˜ ë¬¸ìžì—´ ì¶œë ¥
         else
         {
-            // ºñµð¿À ¸Þ¸ð¸®¿¡ ¹®ÀÚ¿Í ¼Ó¼ºÀ» ¼³Á¤ÇÏ¿© ¹®ÀÚ¸¦ Ãâ·ÂÇÏ°í
-            // Ãâ·ÂÇÒ À§Ä¡¸¦ ´ÙÀ½À¸·Î ÀÌµ¿
+            // ë¹„ë””ì˜¤ ë©”ëª¨ë¦¬ì— ë¬¸ìžì™€ ì†ì„±ì„ ì„¤ì •í•˜ì—¬ ë¬¸ìžë¥¼ ì¶œë ¥í•˜ê³ 
+            // ì¶œë ¥í•  ìœ„ì¹˜ë¥¼ ë‹¤ìŒìœ¼ë¡œ ì´ë™
             pstScreen[ iPrintOffset ].bCharactor = pcBuffer[ i ];
             pstScreen[ iPrintOffset ].bAttribute = CONSOLE_DEFAULTTEXTCOLOR;
             iPrintOffset++;
         }
         
-        // Ãâ·ÂÇÒ À§Ä¡°¡ È­¸éÀÇ ÃÖ´ñ°ª(80 * 25)À» ¹þ¾î³µÀ¸¸é ½ºÅ©·Ñ Ã³¸®
+        // ì¶œë ¥í•  ìœ„ì¹˜ê°€ í™”ë©´ì˜ ìµœëŒ“ê°’(80 * 25)ì„ ë²—ì–´ë‚¬ìœ¼ë©´ ìŠ¤í¬ë¡¤ ì²˜ë¦¬
         if( iPrintOffset >= ( CONSOLE_HEIGHT * CONSOLE_WIDTH ) )
         {
-            // °¡Àå À­ÁÙÀ» Á¦¿ÜÇÑ ³ª¸ÓÁö¸¦ ÇÑ ÁÙ À§·Î º¹»ç
+            // ê°€ìž¥ ìœ—ì¤„ì„ ì œì™¸í•œ ë‚˜ë¨¸ì§€ë¥¼ í•œ ì¤„ ìœ„ë¡œ ë³µì‚¬
             kMemCpy( pstScreen, pstScreen + CONSOLE_WIDTH,
                      ( CONSOLE_HEIGHT - 1 ) * CONSOLE_WIDTH * sizeof( CHARACTER ) );
 
-            // °¡Àå ¸¶Áö¸· ¶óÀÎÀº °ø¹éÀ¸·Î Ã¤¿ò
+            // ê°€ìž¥ ë§ˆì§€ë§‰ ë¼ì¸ì€ ê³µë°±ìœ¼ë¡œ ì±„ì›€
             for( j = ( CONSOLE_HEIGHT - 1 ) * ( CONSOLE_WIDTH ) ; 
                  j < ( CONSOLE_HEIGHT * CONSOLE_WIDTH ) ; j++ )
             {
-                // °ø¹é Ãâ·Â
+                // ê³µë°± ì¶œë ¥
                 pstScreen[ j ].bCharactor = ' ';
                 pstScreen[ j ].bAttribute = CONSOLE_DEFAULTTEXTCOLOR;
             }
             
-            // Ãâ·ÂÇÒ À§Ä¡¸¦ °¡Àå ¾Æ·¡ÂÊ ¶óÀÎÀÇ Ã³À½À¸·Î ¼³Á¤
+            // ì¶œë ¥í•  ìœ„ì¹˜ë¥¼ ê°€ìž¥ ì•„ëž˜ìª½ ë¼ì¸ì˜ ì²˜ìŒìœ¼ë¡œ ì„¤ì •
             iPrintOffset = ( CONSOLE_HEIGHT - 1 ) * CONSOLE_WIDTH;
         }
     }
@@ -202,52 +202,52 @@ int kConsolePrintString( const char* pcBuffer )
 }
 
 /**
- *  ÀüÃ¼ È­¸éÀ» »èÁ¦
+ *  ì „ì²´ í™”ë©´ì„ ì‚­ì œ
  */
 void kClearScreen( void )
 {
     CHARACTER* pstScreen;
     int i;
     
-    // È­¸é ¹öÆÛ¸¦ ¼³Á¤
+    // í™”ë©´ ë²„í¼ë¥¼ ì„¤ì •
     pstScreen = gs_stConsoleManager.pstScreenBuffer;
     
-    // È­¸é ÀüÃ¼¸¦ °ø¹éÀ¸·Î Ã¤¿ì°í, Ä¿¼­ÀÇ À§Ä¡¸¦ 0, 0À¸·Î ¿Å±è
+    // í™”ë©´ ì „ì²´ë¥¼ ê³µë°±ìœ¼ë¡œ ì±„ìš°ê³ , ì»¤ì„œì˜ ìœ„ì¹˜ë¥¼ 0, 0ìœ¼ë¡œ ì˜®ê¹€
     for( i = 0 ; i < CONSOLE_WIDTH * CONSOLE_HEIGHT ; i++ )
     {
         pstScreen[ i ].bCharactor = ' ';
         pstScreen[ i ].bAttribute = CONSOLE_DEFAULTTEXTCOLOR;
     }
     
-    // Ä¿¼­¸¦ È­¸é »ó´ÜÀ¸·Î ÀÌµ¿
+    // ì»¤ì„œë¥¼ í™”ë©´ ìƒë‹¨ìœ¼ë¡œ ì´ë™
     kSetCursor( 0, 0 );
 }
 
 /**
- *  getch() ÇÔ¼öÀÇ ±¸Çö
+ *  getch() í•¨ìˆ˜ì˜ êµ¬í˜„
  */
 BYTE kGetCh( void )
 {
     KEYDATA stData;
     
-    // Å°°¡ ´­·¯Áú ¶§±îÁö ´ë±âÇÔ
+    // í‚¤ê°€ ëˆŒëŸ¬ì§ˆ ë•Œê¹Œì§€ ëŒ€ê¸°í•¨
     while( 1 )
     {
-        // ±×·¡ÇÈ ¸ðµå°¡ ¾Æ´Ñ °æ¿ì´Â Ä¿³ÎÀÇ Å° Å¥¿¡¼­ °ªÀ» °¡Á®¿È
+        // ê·¸ëž˜í”½ ëª¨ë“œê°€ ì•„ë‹Œ ê²½ìš°ëŠ” ì»¤ë„ì˜ í‚¤ íì—ì„œ ê°’ì„ ê°€ì ¸ì˜´
         if( kIsGraphicMode() == FALSE )
         {
-            // Å° Å¥¿¡ µ¥ÀÌÅÍ°¡ ¼ö½ÅµÉ ¶§±îÁö ´ë±â
+            // í‚¤ íì— ë°ì´í„°ê°€ ìˆ˜ì‹ ë  ë•Œê¹Œì§€ ëŒ€ê¸°
             while( kGetKeyFromKeyQueue( &stData ) == FALSE )
             {
                 kSchedule();
             }
         }
-        // ±×·¡ÇÈ ¸ðµåÀÎ °æ¿ì´Â ±×·¡ÇÈ ¸ðµå¿ë Å° Å¥¿¡¼­ °ªÀ» °¡Á®¿È
+        // ê·¸ëž˜í”½ ëª¨ë“œì¸ ê²½ìš°ëŠ” ê·¸ëž˜í”½ ëª¨ë“œìš© í‚¤ íì—ì„œ ê°’ì„ ê°€ì ¸ì˜´
         else
         {
             while( kGetKeyFromGUIKeyQueue( &stData ) == FALSE )
             {
-                // ±×·¡ÇÈ ¸ðµå¿¡¼­ µ¿ÀÛÇÏ´Â Áß¿¡ ¼Ð ÅÂ½ºÅ©¸¦ Á¾·áÇØ¾ßµÉ °æ¿ì ·çÇÁ¸¦ Á¾·á
+                // ê·¸ëž˜í”½ ëª¨ë“œì—ì„œ ë™ìž‘í•˜ëŠ” ì¤‘ì— ì…¸ íƒœìŠ¤í¬ë¥¼ ì¢…ë£Œí•´ì•¼ë  ê²½ìš° ë£¨í”„ë¥¼ ì¢…ë£Œ
                 if( gs_stConsoleManager.bExit == TRUE )
                 {
                     return 0xFF;
@@ -256,7 +256,7 @@ BYTE kGetCh( void )
             }
         }
         
-        // Å°°¡ ´­·È´Ù´Â µ¥ÀÌÅÍ°¡ ¼ö½ÅµÇ¸é ASCII ÄÚµå¸¦ ¹ÝÈ¯
+        // í‚¤ê°€ ëˆŒë ¸ë‹¤ëŠ” ë°ì´í„°ê°€ ìˆ˜ì‹ ë˜ë©´ ASCII ì½”ë“œë¥¼ ë°˜í™˜
         if( stData.bFlags & KEY_FLAGS_DOWN )
         {
             return stData.bASCIICode;
@@ -265,19 +265,19 @@ BYTE kGetCh( void )
 }
 
 /**
- *  ¹®ÀÚ¿­À» X, Y À§Ä¡¿¡ Ãâ·Â
+ *  ë¬¸ìžì—´ì„ X, Y ìœ„ì¹˜ì— ì¶œë ¥
  */
 void kPrintStringXY( int iX, int iY, const char* pcString )
 {
     CHARACTER* pstScreen;
     int i;
     
-    // È­¸é ¹öÆÛ¸¦ ¼³Á¤
+    // í™”ë©´ ë²„í¼ë¥¼ ì„¤ì •
     pstScreen = gs_stConsoleManager.pstScreenBuffer;
   
-    // ÇöÀç Ãâ·ÂÇÒ À§Ä¡¸¦ °è»ê
+    // í˜„ìž¬ ì¶œë ¥í•  ìœ„ì¹˜ë¥¼ ê³„ì‚°
     pstScreen += ( iY * CONSOLE_WIDTH ) + iX;
-    // ¹®ÀÚ¿­ÀÇ ±æÀÌ¸¸Å­ ·çÇÁ¸¦ µ¹¸é¼­ ¹®ÀÚ¿Í ¼Ó¼ºÀ» ÀúÀå
+    // ë¬¸ìžì—´ì˜ ê¸¸ì´ë§Œí¼ ë£¨í”„ë¥¼ ëŒë©´ì„œ ë¬¸ìžì™€ ì†ì„±ì„ ì €ìž¥
     for( i = 0 ; pcString[ i ] != 0 ; i++ )
     {
         pstScreen[ i ].bCharactor = pcString[ i ];
@@ -286,7 +286,7 @@ void kPrintStringXY( int iX, int iY, const char* pcString )
 }
 
 /**
- *  ÄÜ¼ÖÀ» °ü¸®ÇÏ´Â ÀÚ·á±¸Á¶¸¦ ¹ÝÈ¯
+ *  ì½˜ì†”ì„ ê´€ë¦¬í•˜ëŠ” ìžë£Œêµ¬ì¡°ë¥¼ ë°˜í™˜
  */
 CONSOLEMANAGER* kGetConsoleManager( void )
 {
@@ -294,57 +294,57 @@ CONSOLEMANAGER* kGetConsoleManager( void )
 }
 
 /**
- *  ±×·¡ÇÈ ¸ðµå¿ë Å° Å¥¿¡¼­ Å° µ¥ÀÌÅÍ¸¦ Á¦°Å
+ *  ê·¸ëž˜í”½ ëª¨ë“œìš© í‚¤ íì—ì„œ í‚¤ ë°ì´í„°ë¥¼ ì œê±°
  */
 BOOL kGetKeyFromGUIKeyQueue( KEYDATA* pstData )
 {
     BOOL bResult;
     
-    // Å¥¿¡ µ¥ÀÌÅÍ°¡ ¾øÀ¸¸é ½ÇÆÐ
+    // íì— ë°ì´í„°ê°€ ì—†ìœ¼ë©´ ì‹¤íŒ¨
     if( kIsQueueEmpty( &( gs_stConsoleManager.stKeyQueueForGUI ) ) == TRUE )
     {
         return FALSE;
     }
     
-    // µ¿±âÈ­ Ã³¸®
+    // ë™ê¸°í™” ì²˜ë¦¬
     kLock( &( gs_stConsoleManager.stLock ) );
 
-    // Å¥¿¡¼­ µ¥ÀÌÅÍ¸¦ Á¦°Å
+    // íì—ì„œ ë°ì´í„°ë¥¼ ì œê±°
     bResult = kGetQueue( &( gs_stConsoleManager.stKeyQueueForGUI ), pstData );
     
-    // µ¿±âÈ­ Ã³¸®
+    // ë™ê¸°í™” ì²˜ë¦¬
     kUnlock( &( gs_stConsoleManager.stLock ) );
     
     return bResult;
 }
 
 /**
- *  ±×·¡ÇÈ ¸ðµå¿ë Å° Å¥¿¡ µ¥ÀÌÅÍ¸¦ »ðÀÔ
+ *  ê·¸ëž˜í”½ ëª¨ë“œìš© í‚¤ íì— ë°ì´í„°ë¥¼ ì‚½ìž…
  */
 BOOL kPutKeyToGUIKeyQueue( KEYDATA* pstData )
 {
     BOOL bResult;
     
-    // Å¥¿¡ µ¥ÀÌÅÍ°¡ °¡µæ Ã¡À¸¸é ½ÇÆÐ
+    // íì— ë°ì´í„°ê°€ ê°€ë“ ì°¼ìœ¼ë©´ ì‹¤íŒ¨
     if( kIsQueueFull( &( gs_stConsoleManager.stKeyQueueForGUI ) ) == TRUE )
     {
         return FALSE;
     }
     
-    // µ¿±âÈ­ Ã³¸®
+    // ë™ê¸°í™” ì²˜ë¦¬
     kLock( &( gs_stConsoleManager.stLock ) );
 
-    // Å¥¿¡ µ¥ÀÌÅÍ¸¦ »ðÀÔ
+    // íì— ë°ì´í„°ë¥¼ ì‚½ìž…
     bResult = kPutQueue( &( gs_stConsoleManager.stKeyQueueForGUI ), pstData );
     
-    // µ¿±âÈ­ Ã³¸®
+    // ë™ê¸°í™” ì²˜ë¦¬
     kUnlock( &( gs_stConsoleManager.stLock ) );
     
     return bResult;
 }
 
 /**
- *  ÄÜ¼Ö ¼Ð ÅÂ½ºÅ© Á¾·á ÇÃ·¡±×¸¦ ¼³Á¤
+ *  ì½˜ì†” ì…¸ íƒœìŠ¤í¬ ì¢…ë£Œ í”Œëž˜ê·¸ë¥¼ ì„¤ì •
  */
 void kSetConsoleShellExitFlag( BOOL bFlag )
 {

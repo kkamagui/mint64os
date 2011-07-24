@@ -3,7 +3,7 @@
  *  date    2009/12/08
  *  author  kkamagui 
  *          Copyright(c)2008 All rights reserved by kkamagui
- *  brief   ½Ã½ºÅÛ ÄÝ¿¡ °ü·ÃµÈ ÇÔ¼ö¸¦ Á¤ÀÇÇÑ ¼Ò½º ÆÄÀÏ
+ *  brief   ì‹œìŠ¤í…œ ì½œì— ê´€ë ¨ëœ í•¨ìˆ˜ë¥¼ ì •ì˜í•œ ì†ŒìŠ¤ íŒŒì¼
  */
 
 #include "Types.h"
@@ -21,30 +21,30 @@
 #include "Loader.h"
 
 /**
- *  ½Ã½ºÅÛ ÄÝ(syscall/sysret)¸¦ È£ÃâÇÒ ¼ö ÀÖµµ·Ï ÃÊ±âÈ­
+ *  ì‹œìŠ¤í…œ ì½œ(syscall/sysret)ë¥¼ í˜¸ì¶œí•  ìˆ˜ ìžˆë„ë¡ ì´ˆê¸°í™”
  */
 void kInitializeSystemCall( void )
 {
     QWORD qwRDX;
     QWORD qwRAX;
     
-    // IA32_STAR MSR(0xC0000081) ¼³Á¤
-    // »óÀ§ 32ºñÆ®´Â SYSRET CS/SS[63:48]¿Í SYSCALL CS/SS[47:32]·Î ±¸¼º
+    // IA32_STAR MSR(0xC0000081) ì„¤ì •
+    // ìƒìœ„ 32ë¹„íŠ¸ëŠ” SYSRET CS/SS[63:48]ì™€ SYSCALL CS/SS[47:32]ë¡œ êµ¬ì„±
     qwRDX = ( ( GDT_KERNELDATASEGMENT | SELECTOR_RPL_3 ) << 16 ) | GDT_KERNELCODESEGMENT;
-    // ÇÏÀ§ 32ºñÆ®´Â ¿¹¾àµÊ(Reserved)
+    // í•˜ìœ„ 32ë¹„íŠ¸ëŠ” ì˜ˆì•½ë¨(Reserved)
     qwRAX = 0;
     kWriteMSR( 0xC0000081, qwRDX, qwRAX );
     
-    // IA32_LSTAR MSR ¼³Á¤(0xC0000082), SystemCallEntryPoint() ÇÔ¼öÀÇ ¾îµå·¹½º·Î ÁöÁ¤
+    // IA32_LSTAR MSR ì„¤ì •(0xC0000082), SystemCallEntryPoint() í•¨ìˆ˜ì˜ ì–´ë“œë ˆìŠ¤ë¡œ ì§€ì •
     kWriteMSR( 0xC0000082, 0, ( QWORD ) kSystemCallEntryPoint );
     
-    // IA32_FMASK MSR ¼³Á¤(0xC0000084), 
-    // RFLAGS ·¹Áö½ºÅÍÀÇ °ªÀ» º¯°æÇÒ °ÍÀº ¾øÀ¸¹Ç·Î 0x00À¸·Î ¼³Á¤ÇÏ¿© °ªÀ» À¯Áö
+    // IA32_FMASK MSR ì„¤ì •(0xC0000084), 
+    // RFLAGS ë ˆì§€ìŠ¤í„°ì˜ ê°’ì„ ë³€ê²½í•  ê²ƒì€ ì—†ìœ¼ë¯€ë¡œ 0x00ìœ¼ë¡œ ì„¤ì •í•˜ì—¬ ê°’ì„ ìœ ì§€
     kWriteMSR( 0xC0000084, 0, 0x00 );
 }
 
 /**
- *  ½Ã½ºÅÛ ÄÝ ¹øÈ£¿Í ÆÄ¶ó¹ÌÅÍ ÀÚ·á±¸Á¶¸¦ ÀÌ¿ëÇØ¼­ ½Ã½ºÅÛ ÄÝÀ» Ã³¸®
+ *  ì‹œìŠ¤í…œ ì½œ ë²ˆí˜¸ì™€ íŒŒë¼ë¯¸í„° ìžë£Œêµ¬ì¡°ë¥¼ ì´ìš©í•´ì„œ ì‹œìŠ¤í…œ ì½œì„ ì²˜ë¦¬
  */ 
 QWORD kProcessSystemCall( QWORD qwServiceNumber, PARAMETERTABLE* pstParameter )
 {
@@ -53,7 +53,7 @@ QWORD kProcessSystemCall( QWORD qwServiceNumber, PARAMETERTABLE* pstParameter )
     switch( qwServiceNumber )
     {
         //----------------------------------------------------------------------
-        // ÄÜ¼Ö I/O °ü·Ã
+        // ì½˜ì†” I/O ê´€ë ¨
         //----------------------------------------------------------------------
     case SYSCALL_CONSOLEPRINTSTRING:
         return kConsolePrintString( PARAM( 0 ) );        
@@ -69,14 +69,14 @@ QWORD kProcessSystemCall( QWORD qwServiceNumber, PARAMETERTABLE* pstParameter )
     case SYSCALL_GETCH:
         return kGetCh();
 
-        // µ¿Àû ¸Þ¸ð¸® ÇÒ´ç/ÇØÁ¦ °ü·Ã
+        // ë™ì  ë©”ëª¨ë¦¬ í• ë‹¹/í•´ì œ ê´€ë ¨
     case SYSCALL_MALLOC:
         return ( QWORD ) kAllocateMemory( PARAM( 0 ) );
     case SYSCALL_FREE:
         return kFreeMemory( ( void* ) PARAM( 0 ) );
 
         //----------------------------------------------------------------------
-        // ÆÄÀÏ°ú µð·ºÅÍ¸® I/O °ü·Ã
+        // íŒŒì¼ê³¼ ë””ë ‰í„°ë¦¬ I/O ê´€ë ¨
         //----------------------------------------------------------------------
     case SYSCALL_FOPEN:
         return ( QWORD ) fopen( ( char* ) PARAM( 0 ), ( char* ) PARAM( 1 ) );
@@ -105,7 +105,7 @@ QWORD kProcessSystemCall( QWORD qwServiceNumber, PARAMETERTABLE* pstParameter )
         return kIsFileOpened( ( DIRECTORYENTRY* ) PARAM( 0 ) );
 
         //----------------------------------------------------------------------
-        // ÇÏµå µð½ºÅ© I/O °ü·Ã
+        // í•˜ë“œ ë””ìŠ¤í¬ I/O ê´€ë ¨
         //----------------------------------------------------------------------
     case SYSCALL_READHDDSECTOR:
         return kReadHDDSector( PARAM( 0 ), PARAM( 1 ), PARAM( 2 ), PARAM( 3 ), 
@@ -115,7 +115,7 @@ QWORD kProcessSystemCall( QWORD qwServiceNumber, PARAMETERTABLE* pstParameter )
                                ( char* ) PARAM( 4 ) );
 
         //----------------------------------------------------------------------
-        // ÅÂ½ºÅ©¿Í ½ºÄÉÁÙ·¯ °ü·Ã
+        // íƒœìŠ¤í¬ì™€ ìŠ¤ì¼€ì¤„ëŸ¬ ê´€ë ¨
         //----------------------------------------------------------------------
     case SYSCALL_CREATETASK:
         pstTCB = kCreateTask( PARAM( 0 ), ( void* ) PARAM( 1 ), PARAM( 2 ), 
@@ -150,7 +150,7 @@ QWORD kProcessSystemCall( QWORD qwServiceNumber, PARAMETERTABLE* pstParameter )
                               PARAM( 3 ) );
     
         //----------------------------------------------------------------------
-        // GUI ½Ã½ºÅÛ °ü·Ã
+        // GUI ì‹œìŠ¤í…œ ê´€ë ¨
         //----------------------------------------------------------------------
     case SYSCALL_GETBACKGROUNDWINDOWID:
         return kGetBackgroundWindowID();
@@ -229,7 +229,7 @@ QWORD kProcessSystemCall( QWORD qwServiceNumber, PARAMETERTABLE* pstParameter )
                         PARAM( 4 ), PARAM( 5 ) );
 
         //----------------------------------------------------------------------
-        // JPEG °ü·Ã
+        // JPEG ê´€ë ¨
         //----------------------------------------------------------------------
     case SYSCALL_JPEGINIT:
         return kJPEGInit( ( JPEG* ) PARAM( 0 ), ( char* ) PARAM( 1 ), PARAM( 2 ) );
@@ -237,7 +237,7 @@ QWORD kProcessSystemCall( QWORD qwServiceNumber, PARAMETERTABLE* pstParameter )
         return kJPEGDecode( ( JPEG* ) PARAM( 0 ), ( COLOR* ) PARAM( 1 ) );
 
         //----------------------------------------------------------------------
-        // RTC °ü·Ã
+        // RTC ê´€ë ¨
         //----------------------------------------------------------------------
     case SYSCALL_READRTCTIME:
         kReadRTCTime( ( BYTE* ) PARAM( 0 ), ( BYTE* ) PARAM( 1 ), 
@@ -249,7 +249,7 @@ QWORD kProcessSystemCall( QWORD qwServiceNumber, PARAMETERTABLE* pstParameter )
         return TRUE;
 
         //----------------------------------------------------------------------
-        // ½Ã¸®¾ó I/O °ü·Ã
+        // ì‹œë¦¬ì–¼ I/O ê´€ë ¨
         //----------------------------------------------------------------------
     case SYSCALL_SENDSERIALDATA:
         return kSendSerialData( ( BYTE* ) PARAM( 0 ), PARAM( 1 ) );
@@ -260,7 +260,7 @@ QWORD kProcessSystemCall( QWORD qwServiceNumber, PARAMETERTABLE* pstParameter )
         return TRUE;
 
         //----------------------------------------------------------------------
-        // ±âÅ¸
+        // ê¸°íƒ€
         //----------------------------------------------------------------------
     case SYSCALL_GETTOTALRAMSIZE:
         return kGetTotalRAMSize();
@@ -276,7 +276,7 @@ QWORD kProcessSystemCall( QWORD qwServiceNumber, PARAMETERTABLE* pstParameter )
         return TRUE;
         
         //----------------------------------------------------------------------
-        // Á¤ÀÇµÇÁö ¾ÊÀº ½Ã½ºÅÛ ÄÝ Ã³¸®
+        // ì •ì˜ë˜ì§€ ì•Šì€ ì‹œìŠ¤í…œ ì½œ ì²˜ë¦¬
         //----------------------------------------------------------------------
     default:
         kPrintf( "Undefined System Call~!!!, Service Number: %d\n", 

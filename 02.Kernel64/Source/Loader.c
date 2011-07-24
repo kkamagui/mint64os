@@ -3,7 +3,7 @@
  *  date    2009/12/26
  *  author  kkamagui
  *          Copyright(c)2008 All rights reserved by kkamagui
- *  brief   ÀÀ¿ëÇÁ·Î±×·¥À» ·ÎµåÇÏ¿© ½ÇÇàÇÏ´Â ·Î´õ(Loader)¿¡ °ü·ÃµÈ ÇÔ¼ö¸¦ Á¤ÀÇÇÑ ¼Ò½º ÆÄÀÏ
+ *  brief   ì‘ìš©í”„ë¡œê·¸ëž¨ì„ ë¡œë“œí•˜ì—¬ ì‹¤í–‰í•˜ëŠ” ë¡œë”(Loader)ì— ê´€ë ¨ëœ í•¨ìˆ˜ë¥¼ ì •ì˜í•œ ì†ŒìŠ¤ íŒŒì¼
  */
 
 #include "Loader.h"
@@ -11,7 +11,7 @@
 #include "DynamicMemory.h"
 
 /**
- *  ÀÀ¿ëÇÁ·Î±×·¥À» ½ÇÇà
+ *  ì‘ìš©í”„ë¡œê·¸ëž¨ì„ ì‹¤í–‰
  */
 QWORD kExecuteProgram( const char* pcFileName, const char* pcArgumentString, 
         BYTE bAffinity )
@@ -28,23 +28,23 @@ QWORD kExecuteProgram( const char* pcFileName, const char* pcArgumentString,
     TCB* pstTask;
     
     //--------------------------------------------------------------------------
-    // ·çÆ® µð·ºÅÍ¸®¸¦ ¿­¾î¼­ ÆÄÀÏÀ» °Ë»ö
+    // ë£¨íŠ¸ ë””ë ‰í„°ë¦¬ë¥¼ ì—´ì–´ì„œ íŒŒì¼ì„ ê²€ìƒ‰
     //--------------------------------------------------------------------------
     pstDirectory = opendir( "/" );
     dwFileSize = 0;
     
-    // µð·ºÅÍ¸®¿¡¼­ ÆÄÀÏÀ» °Ë»ö
+    // ë””ë ‰í„°ë¦¬ì—ì„œ íŒŒì¼ì„ ê²€ìƒ‰
     while( 1 )
     {
-        // µð·ºÅÍ¸®¿¡¼­ ¿£Æ®¸® ÇÏ³ª¸¦ ÀÐÀ½
+        // ë””ë ‰í„°ë¦¬ì—ì„œ ì—”íŠ¸ë¦¬ í•˜ë‚˜ë¥¼ ì½ìŒ
         pstEntry = readdir( pstDirectory );
-        // ´õÀÌ»ó ÆÄÀÏÀÌ ¾øÀ¸¸é ³ª°¨
+        // ë”ì´ìƒ íŒŒì¼ì´ ì—†ìœ¼ë©´ ë‚˜ê°
         if( pstEntry == NULL )
         {
             break;
         }
         
-        // ÆÄÀÏ ÀÌ¸§ÀÇ ±æÀÌ¿Í ³»¿ëÀÌ °°Àº °ÍÀ» °Ë»ö
+        // íŒŒì¼ ì´ë¦„ì˜ ê¸¸ì´ì™€ ë‚´ìš©ì´ ê°™ì€ ê²ƒì„ ê²€ìƒ‰
         if( ( kStrLen( pstEntry->d_name ) == kStrLen( pcFileName ) ) &&
             ( kMemCmp( pstEntry->d_name, pcFileName, kStrLen( pcFileName ) ) 
                     == 0 ) )
@@ -53,8 +53,8 @@ QWORD kExecuteProgram( const char* pcFileName, const char* pcArgumentString,
             break;
         }
     }
-    // µð·ºÅÍ¸® ÇÚµéÀ» ¹ÝÈ¯, ÇÚµéÀ» ¹ÝÈ¯ÇÏÁö ¾ÊÀ¸¸é ¸Þ¸ð¸®°¡ ÇØÁ¦µÇÁö ¾Ê°í ³²À¸¹Ç·Î
-    // ²À ÇØÁ¦ÇØ¾ß ÇÔ
+    // ë””ë ‰í„°ë¦¬ í•¸ë“¤ì„ ë°˜í™˜, í•¸ë“¤ì„ ë°˜í™˜í•˜ì§€ ì•Šìœ¼ë©´ ë©”ëª¨ë¦¬ê°€ í•´ì œë˜ì§€ ì•Šê³  ë‚¨ìœ¼ë¯€ë¡œ
+    // ê¼­ í•´ì œí•´ì•¼ í•¨
     closedir( pstDirectory );
 
     if( dwFileSize == 0 )
@@ -65,9 +65,9 @@ QWORD kExecuteProgram( const char* pcFileName, const char* pcArgumentString,
     }
     
     //--------------------------------------------------------------------------
-    // ÆÄÀÏ ÀüÃ¼¸¦ ÀúÀåÇÒ ¼ö ÀÖ´Â ÀÓ½Ã ¹öÆÛ¸¦ ÇÒ´ç ¹Þ¾Æ¼­ ÆÄÀÏÀÇ ³»¿ëÀ» ¸ðµÎ ÀúÀå
+    // íŒŒì¼ ì „ì²´ë¥¼ ì €ìž¥í•  ìˆ˜ ìžˆëŠ” ìž„ì‹œ ë²„í¼ë¥¼ í• ë‹¹ ë°›ì•„ì„œ íŒŒì¼ì˜ ë‚´ìš©ì„ ëª¨ë‘ ì €ìž¥
     //--------------------------------------------------------------------------
-    // ¸Þ¸ð¸® ÇÒ´ç
+    // ë©”ëª¨ë¦¬ í• ë‹¹
     pbTempFileBuffer = ( BYTE* ) kAllocateMemory( dwFileSize );
     if( pbTempFileBuffer == NULL )
     {
@@ -76,7 +76,7 @@ QWORD kExecuteProgram( const char* pcFileName, const char* pcArgumentString,
         return TASK_INVALIDID;
     }
     
-    // ÆÄÀÏÀ» ¿­¾î¼­ ¸ðµÎ ÀÐ¾î ¸Þ¸ð¸®¿¡ ÀúÀå
+    // íŒŒì¼ì„ ì—´ì–´ì„œ ëª¨ë‘ ì½ì–´ ë©”ëª¨ë¦¬ì— ì €ìž¥
     pstFile = fopen( pcFileName, "r" );
     if( ( pstFile != NULL ) && 
         ( fread( pbTempFileBuffer, 1, dwFileSize, pstFile ) == dwFileSize ) )
@@ -93,7 +93,7 @@ QWORD kExecuteProgram( const char* pcFileName, const char* pcArgumentString,
     }
 
     //--------------------------------------------------------------------------
-    // ÆÄÀÏÀÇ ³»¿ëÀ» ºÐ¼®ÇÏ¿© ¼½¼ÇÀ» ·ÎµùÇÏ°í Àç¹èÄ¡¸¦ ¼öÇà
+    // íŒŒì¼ì˜ ë‚´ìš©ì„ ë¶„ì„í•˜ì—¬ ì„¹ì…˜ì„ ë¡œë”©í•˜ê³  ìž¬ë°°ì¹˜ë¥¼ ìˆ˜í–‰
     //--------------------------------------------------------------------------
     if( kLoadProgramAndRelocation( pbTempFileBuffer, &qwApplicationMemory, 
             &qwMemorySize, &qwEntryPointAddress ) == FALSE )
@@ -104,13 +104,13 @@ QWORD kExecuteProgram( const char* pcFileName, const char* pcArgumentString,
         return TASK_INVALIDID;
     }
     
-    // ¸Þ¸ð¸® ÇØÁ¦
+    // ë©”ëª¨ë¦¬ í•´ì œ
     kFreeMemory( pbTempFileBuffer );
     
     //--------------------------------------------------------------------------
-    // ÅÂ½ºÅ©¸¦ »ý¼ºÇÏ°í ½ºÅÃ¿¡ ÀÎÀÚ ¹®ÀÚ¿­À» ÀúÀå
+    // íƒœìŠ¤í¬ë¥¼ ìƒì„±í•˜ê³  ìŠ¤íƒì— ì¸ìž ë¬¸ìžì—´ì„ ì €ìž¥
     //--------------------------------------------------------------------------
-    // À¯Àú ·¹º§ ÀÀ¿ëÇÁ·Î±×·¥ ÅÂ½ºÅ© »ý¼º
+    // ìœ ì € ë ˆë²¨ ì‘ìš©í”„ë¡œê·¸ëž¨ íƒœìŠ¤í¬ ìƒì„±
     pstTask = kCreateTask( TASK_FLAGS_USERLEVEL | TASK_FLAGS_PROCESS, 
         ( void* ) qwApplicationMemory, qwMemorySize, qwEntryPointAddress, 
         bAffinity );
@@ -120,14 +120,14 @@ QWORD kExecuteProgram( const char* pcFileName, const char* pcArgumentString,
         return TASK_INVALIDID;
     }
     
-    // ÀÎÀÚ ¹®ÀÚ¿­ ÀúÀå
+    // ì¸ìž ë¬¸ìžì—´ ì €ìž¥
     kAddArgumentStringToTask( pstTask, pcArgumentString );
     
     return pstTask->stLink.qwID;
 }
 
 /**
- *  ÀÀ¿ëÇÁ·Î±×·¥ÀÇ ¼½¼ÇÀ» ·ÎµùÇÏ°í Àç¹èÄ¡¸¦ ¼öÇà
+ *  ì‘ìš©í”„ë¡œê·¸ëž¨ì˜ ì„¹ì…˜ì„ ë¡œë”©í•˜ê³  ìž¬ë°°ì¹˜ë¥¼ ìˆ˜í–‰
  */
 static BOOL kLoadProgramAndRelocation( BYTE* pbFileBuffer, 
         QWORD* pqwApplicationMemoryAddress, QWORD* pqwApplicationMemorySize, 
@@ -144,7 +144,7 @@ static BOOL kLoadProgramAndRelocation( BYTE* pbFileBuffer,
     BYTE* pbLoadedAddress;
 
     //--------------------------------------------------------------------------
-    // ELF Çì´õ Á¤º¸¸¦ Ãâ·ÂÇÏ°í ºÐ¼®¿¡ ÇÊ¿äÇÑ Á¤º¸¸¦ ÀúÀå
+    // ELF í—¤ë” ì •ë³´ë¥¼ ì¶œë ¥í•˜ê³  ë¶„ì„ì— í•„ìš”í•œ ì •ë³´ë¥¼ ì €ìž¥
     //--------------------------------------------------------------------------
     pstELFHeader = ( Elf64_Ehdr* ) pbFileBuffer;
     pstSectionHeader = ( Elf64_Shdr* ) ( pbFileBuffer + pstELFHeader->e_shoff );
@@ -161,7 +161,7 @@ static BOOL kLoadProgramAndRelocation( BYTE* pbFileBuffer,
             pstELFHeader->e_phentsize );
     kPrintf( "Section Name String Table Section Index [%d]\n", pstELFHeader->e_shstrndx );
     
-    // ELFÀÇ ID¿Í Å¬·¡½º, ÀÎÄÚµù, ±×¸®°í Å¸ÀÔÀ» È®ÀÎÇÏ¿© ¿Ã¹Ù¸¥ ÀÀ¿ëÇÁ·Î±×·¥ÀÎÁö È®ÀÎ
+    // ELFì˜ IDì™€ í´ëž˜ìŠ¤, ì¸ì½”ë”©, ê·¸ë¦¬ê³  íƒ€ìž…ì„ í™•ì¸í•˜ì—¬ ì˜¬ë°”ë¥¸ ì‘ìš©í”„ë¡œê·¸ëž¨ì¸ì§€ í™•ì¸
     if( ( pstELFHeader->e_ident[ EI_MAG0 ] != ELFMAG0 ) ||
         ( pstELFHeader->e_ident[ EI_MAG1 ] != ELFMAG1 ) ||
         ( pstELFHeader->e_ident[ EI_MAG2 ] != ELFMAG2 ) ||
@@ -174,15 +174,15 @@ static BOOL kLoadProgramAndRelocation( BYTE* pbFileBuffer,
     }
 
     //--------------------------------------------------------------------------
-    // ¸ðµç ¼½¼Ç Çì´õÀÇ ·ÎµùÇÒ ¸Þ¸ð¸® ¾îµå·¹½º¸¦ È®ÀÎÇÏ¿© °¡Àå ¸¶Áö¸·¿¡ ÀÖ´Â ¼½¼ÇÀ» Ã£À½
-    // ¼½¼ÇÀÇ Á¤º¸µµ °°ÀÌ Ç¥½Ã
+    // ëª¨ë“  ì„¹ì…˜ í—¤ë”ì˜ ë¡œë”©í•  ë©”ëª¨ë¦¬ ì–´ë“œë ˆìŠ¤ë¥¼ í™•ì¸í•˜ì—¬ ê°€ìž¥ ë§ˆì§€ë§‰ì— ìžˆëŠ” ì„¹ì…˜ì„ ì°¾ìŒ
+    // ì„¹ì…˜ì˜ ì •ë³´ë„ ê°™ì´ í‘œì‹œ
     //--------------------------------------------------------------------------
     qwLastSectionAddress = 0;
     qwLastSectionSize = 0;
     for( i = 0 ; i < pstELFHeader->e_shnum ; i++ )
     {
-        // °¡Àå ¸¶Áö¸· ¼½¼ÇÀÎÁö È®ÀÎ, ÀÌ °ªÀ¸·Î ÇÁ·Î±×·¥ÀÌ »ç¿ëÇÒ ÀüÃ¼ ¸Þ¸ð¸® Å©±â¸¦
-        // ¾Ë ¼ö ÀÖÀ½
+        // ê°€ìž¥ ë§ˆì§€ë§‰ ì„¹ì…˜ì¸ì§€ í™•ì¸, ì´ ê°’ìœ¼ë¡œ í”„ë¡œê·¸ëž¨ì´ ì‚¬ìš©í•  ì „ì²´ ë©”ëª¨ë¦¬ í¬ê¸°ë¥¼
+        // ì•Œ ìˆ˜ ìžˆìŒ
         if( ( pstSectionHeader[ i ].sh_flags & SHF_ALLOC ) &&                
             ( pstSectionHeader[ i ].sh_addr >= qwLastSectionAddress ) )
         {
@@ -192,16 +192,16 @@ static BOOL kLoadProgramAndRelocation( BYTE* pbFileBuffer,
     }
     
     kPrintf( "\n========================= Load & Relocaion ========================\n" );
-    // ¸¶Áö¸· SectionÀÇ À§Ä¡ ¹× Å©±â¸¦ Ç¥½Ã
+    // ë§ˆì§€ë§‰ Sectionì˜ ìœ„ì¹˜ ë° í¬ê¸°ë¥¼ í‘œì‹œ
     kPrintf( "Last Section Address [0x%q] Size [0x%q]\n", qwLastSectionAddress,
             qwLastSectionSize );
 
-    // ¸¶Áö¸· ¼½¼ÇÀÇ À§Ä¡·Î ÃÖ´ë ¸Þ¸ð¸® ·®À» °è»ê, 4Kbyte ´ÜÀ§·Î Á¤·Ä
+    // ë§ˆì§€ë§‰ ì„¹ì…˜ì˜ ìœ„ì¹˜ë¡œ ìµœëŒ€ ë©”ëª¨ë¦¬ ëŸ‰ì„ ê³„ì‚°, 4Kbyte ë‹¨ìœ„ë¡œ ì •ë ¬
     qwMemorySize = ( qwLastSectionAddress + qwLastSectionSize + 0x1000 - 1 ) & 
         0xfffffffffffff000;
     kPrintf( "Aligned Memory Size [0x%q]\n", qwMemorySize );
     
-    // ÀÀ¿ëÇÁ·Î±×·¥¿¡¼­ »ç¿ëÇÒ ¸Þ¸ð¸®¸¦ ÇÒ´ç
+    // ì‘ìš©í”„ë¡œê·¸ëž¨ì—ì„œ ì‚¬ìš©í•  ë©”ëª¨ë¦¬ë¥¼ í• ë‹¹
     pbLoadedAddress = ( char* ) kAllocateMemory( qwMemorySize );
     if( pbLoadedAddress == NULL )
     {
@@ -214,29 +214,29 @@ static BOOL kLoadProgramAndRelocation( BYTE* pbFileBuffer,
     }
     
     //--------------------------------------------------------------------------
-    // ÆÄÀÏ¿¡ ÀÖ´Â ³»¿ëÀ» ¸Þ¸ð¸®¿¡ º¹»ç(·Îµù)
+    // íŒŒì¼ì— ìžˆëŠ” ë‚´ìš©ì„ ë©”ëª¨ë¦¬ì— ë³µì‚¬(ë¡œë”©)
     //--------------------------------------------------------------------------
     for( i = 1 ; i < pstELFHeader->e_shnum ; i++ )
     {
-        // ¸Þ¸ð¸®¿¡ ¿Ã¸± ÇÊ¿ä°¡ ¾ø´Â ¼½¼ÇÀÌ°Å³ª Size°¡ 0ÀÎ SectionÀÌ¸é º¹»çÇÒ ÇÊ¿ä ¾øÀ½
+        // ë©”ëª¨ë¦¬ì— ì˜¬ë¦´ í•„ìš”ê°€ ì—†ëŠ” ì„¹ì…˜ì´ê±°ë‚˜ Sizeê°€ 0ì¸ Sectionì´ë©´ ë³µì‚¬í•  í•„ìš” ì—†ìŒ
         if( !( pstSectionHeader[ i ].sh_flags & SHF_ALLOC ) ||
             ( pstSectionHeader[ i ].sh_size == 0 ) )
         {
             continue;
         }
         
-        // ¼½¼Ç Çì´õ¿¡ ·ÎµùÇÒ ¾îµå·¹½º¸¦ Àû¿ë
+        // ì„¹ì…˜ í—¤ë”ì— ë¡œë”©í•  ì–´ë“œë ˆìŠ¤ë¥¼ ì ìš©
         pstSectionHeader[ i ].sh_addr += ( Elf64_Addr ) pbLoadedAddress;        
         
-        // .bss¿Í °°ÀÌ SHT_NOBITS°¡ ¼³Á¤µÈ ¼½¼ÇÀº ÆÄÀÏ¿¡ µ¥ÀÌÅÍ°¡ ¾øÀ¸¹Ç·Î 0À¸·Î ÃÊ±âÈ­
+        // .bssì™€ ê°™ì´ SHT_NOBITSê°€ ì„¤ì •ëœ ì„¹ì…˜ì€ íŒŒì¼ì— ë°ì´í„°ê°€ ì—†ìœ¼ë¯€ë¡œ 0ìœ¼ë¡œ ì´ˆê¸°í™”
         if( pstSectionHeader[ i ].sh_type == SHT_NOBITS)
         {
-            // ÀÀ¿ëÇÁ·Î±×·¥¿¡°Ô ÇÒ´çµÈ ¸Þ¸ð¸®¸¦ 0À¸·Î ¼³Á¤
+            // ì‘ìš©í”„ë¡œê·¸ëž¨ì—ê²Œ í• ë‹¹ëœ ë©”ëª¨ë¦¬ë¥¼ 0ìœ¼ë¡œ ì„¤ì •
             kMemSet( pstSectionHeader[ i ].sh_addr, 0, pstSectionHeader[ i ].sh_size );
         }
         else
         {
-            // ÆÄÀÏ ¹öÆÛÀÇ ³»¿ëÀ» ÀÀ¿ëÇÁ·Î±×·¥¿¡°Ô ÇÒ´çµÈ ¸Þ¸ð¸®·Î º¹»ç
+            // íŒŒì¼ ë²„í¼ì˜ ë‚´ìš©ì„ ì‘ìš©í”„ë¡œê·¸ëž¨ì—ê²Œ í• ë‹¹ëœ ë©”ëª¨ë¦¬ë¡œ ë³µì‚¬
             kMemCpy( pstSectionHeader[ i ].sh_addr, 
                     pbFileBuffer + pstSectionHeader[ i ].sh_offset,
                     pstSectionHeader[ i ].sh_size );
@@ -250,7 +250,7 @@ static BOOL kLoadProgramAndRelocation( BYTE* pbFileBuffer,
     kPrintf( "Program load success\n" );
     
     //--------------------------------------------------------------------------
-    // Àç¹èÄ¡¸¦ ¼öÇà
+    // ìž¬ë°°ì¹˜ë¥¼ ìˆ˜í–‰
     //--------------------------------------------------------------------------
     if( kRelocation( pbFileBuffer ) == FALSE )
     {
@@ -262,7 +262,7 @@ static BOOL kLoadProgramAndRelocation( BYTE* pbFileBuffer,
         kPrintf( "Relocation success\n" );
     }
     
-    // ÀÀ¿ëÇÁ·Î±×·¥ÀÇ ¾îµå·¹½º¿Í ¿£Æ®¸® Æ÷ÀÎÆ®ÀÇ ¾îµå·¹½º¸¦ ¹ÝÈ¯
+    // ì‘ìš©í”„ë¡œê·¸ëž¨ì˜ ì–´ë“œë ˆìŠ¤ì™€ ì—”íŠ¸ë¦¬ í¬ì¸íŠ¸ì˜ ì–´ë“œë ˆìŠ¤ë¥¼ ë°˜í™˜
     *pqwApplicationMemoryAddress = ( QWORD ) pbLoadedAddress;
     *pqwApplicationMemorySize = qwMemorySize;
     *pqwEntryPointAddress = pstELFHeader->e_entry + ( QWORD ) pbLoadedAddress;
@@ -272,8 +272,8 @@ static BOOL kLoadProgramAndRelocation( BYTE* pbFileBuffer,
     
 
 /**
- *  Àç¹èÄ¡¸¦ ¼öÇà
- *      ¼½¼Ç Çì´õ¿¡´Â ¸Þ¸ð¸® ¾îµå·¹½º°¡ ÇÒ´çµÇ¾î ÀÖ¾î¾ß ÇÔ
+ *  ìž¬ë°°ì¹˜ë¥¼ ìˆ˜í–‰
+ *      ì„¹ì…˜ í—¤ë”ì—ëŠ” ë©”ëª¨ë¦¬ ì–´ë“œë ˆìŠ¤ê°€ í• ë‹¹ë˜ì–´ ìžˆì–´ì•¼ í•¨
 */
 static BOOL kRelocation( BYTE* pbFileBuffer )
 {
@@ -293,13 +293,13 @@ static BOOL kRelocation( BYTE* pbFileBuffer )
     Elf64_Rela* pstRela;
     Elf64_Sym* pstSymbolTable;
     
-    // ELF Çì´õ¿Í ¼½¼Ç Çì´õ Å×ÀÌºíÀÇ Ã¹ ¹øÂ° Çì´õ¸¦ Ã£À½
+    // ELF í—¤ë”ì™€ ì„¹ì…˜ í—¤ë” í…Œì´ë¸”ì˜ ì²« ë²ˆì§¸ í—¤ë”ë¥¼ ì°¾ìŒ
     pstELFHeader = ( Elf64_Ehdr* ) pbFileBuffer;
     pstSectionHeader = ( Elf64_Shdr* ) ( pbFileBuffer + pstELFHeader->e_shoff );
 
     //--------------------------------------------------------------------------
-    // ¸ðµç ¼½¼Ç Çì´õ¸¦ °Ë»öÇÏ¿© SHT_REL ¶Ç´Â SHT_RELA Å¸ÀÔÀ» °¡Áö´Â ¼½¼ÇÀ» Ã£¾Æ 
-    // Àç¹èÄ¡¸¦ ¼öÇà
+    // ëª¨ë“  ì„¹ì…˜ í—¤ë”ë¥¼ ê²€ìƒ‰í•˜ì—¬ SHT_REL ë˜ëŠ” SHT_RELA íƒ€ìž…ì„ ê°€ì§€ëŠ” ì„¹ì…˜ì„ ì°¾ì•„ 
+    // ìž¬ë°°ì¹˜ë¥¼ ìˆ˜í–‰
     //--------------------------------------------------------------------------
     for( i = 1 ; i < pstELFHeader->e_shnum ; i++ )
     {
@@ -309,35 +309,35 @@ static BOOL kRelocation( BYTE* pbFileBuffer )
             continue;
         }
 
-        // sh_info ÇÊµå¿¡ Àç¹èÄ¡¸¦ ¼öÇàÇØ¾ß ÇÒ ¼½¼Ç Çì´õÀÇ ÀÎµ¦½º°¡ ÀúÀåµÇ¾î ÀÖÀ½
+        // sh_info í•„ë“œì— ìž¬ë°°ì¹˜ë¥¼ ìˆ˜í–‰í•´ì•¼ í•  ì„¹ì…˜ í—¤ë”ì˜ ì¸ë±ìŠ¤ê°€ ì €ìž¥ë˜ì–´ ìžˆìŒ
         iSectionIndexToRelocation = pstSectionHeader[ i ].sh_info;
         
-        // sh_link¿¡´Â Âü°íÇÏ´Â ½Éº¼ Å×ÀÌºí ¼½¼Ç Çì´õÀÇ ÀÎµ¦½º°¡ ÀúÀåµÇ¾î ÀÖÀ½
+        // sh_linkì—ëŠ” ì°¸ê³ í•˜ëŠ” ì‹¬ë³¼ í…Œì´ë¸” ì„¹ì…˜ í—¤ë”ì˜ ì¸ë±ìŠ¤ê°€ ì €ìž¥ë˜ì–´ ìžˆìŒ
         iSymbolTableIndex = pstSectionHeader[ i ].sh_link;
         
-        // ½Éº¼ Å×ÀÌºí ¼½¼ÇÀÇ Ã¹ ¹øÂ° ¿£Æ®¸®¸¦ ÀúÀå
+        // ì‹¬ë³¼ í…Œì´ë¸” ì„¹ì…˜ì˜ ì²« ë²ˆì§¸ ì—”íŠ¸ë¦¬ë¥¼ ì €ìž¥
         pstSymbolTable = ( Elf64_Sym* ) 
             ( pbFileBuffer + pstSectionHeader[ iSymbolTableIndex ].sh_offset );
 
         //----------------------------------------------------------------------
-        // Àç¹èÄ¡ ¼½¼ÇÀÇ ¿£Æ®¸®¸¦ ¸ðµÎ Ã£¾Æ Àç¹èÄ¡¸¦ ¼öÇà 
+        // ìž¬ë°°ì¹˜ ì„¹ì…˜ì˜ ì—”íŠ¸ë¦¬ë¥¼ ëª¨ë‘ ì°¾ì•„ ìž¬ë°°ì¹˜ë¥¼ ìˆ˜í–‰ 
         //----------------------------------------------------------------------
         for( j = 0 ; j < pstSectionHeader[ i ].sh_size ; )
         {
-            // SHT_REL Å¸ÀÔ
+            // SHT_REL íƒ€ìž…
             if( pstSectionHeader[ i ].sh_type == SHT_REL )
             {
-                // SHT_REL Å¸ÀÔÀº ´õÇØ¾ßÇÏ´Â °ª(Addend)°¡ ¾øÀ¸¹Ç·Î 0À¸·Î ¼³Á¤
+                // SHT_REL íƒ€ìž…ì€ ë”í•´ì•¼í•˜ëŠ” ê°’(Addend)ê°€ ì—†ìœ¼ë¯€ë¡œ 0ìœ¼ë¡œ ì„¤ì •
                 pstRel = ( Elf64_Rel* ) 
                     ( pbFileBuffer + pstSectionHeader[ i ].sh_offset + j );
                 ulOffset = pstRel->r_offset;
                 ulInfo = pstRel->r_info;
                 lAddend = 0;
 
-                // SHT_REL ÀÚ·á±¸Á¶ÀÇ Å©±â¸¸Å­ ÀÌµ¿
+                // SHT_REL ìžë£Œêµ¬ì¡°ì˜ í¬ê¸°ë§Œí¼ ì´ë™
                 j += sizeof( Elf64_Rel );
             }
-            // SHT_RELA Å¸ÀÔ
+            // SHT_RELA íƒ€ìž…
             else
             {
                 pstRela = ( Elf64_Rela* ) 
@@ -346,16 +346,16 @@ static BOOL kRelocation( BYTE* pbFileBuffer )
                 ulInfo = pstRela->r_info;
                 lAddend = pstRela->r_addend;
 
-                // SHT_RELA ÀÚ·á±¸Á¶ÀÇ Å©±â¸¸Å­ ÀÌµ¿
+                // SHT_RELA ìžë£Œêµ¬ì¡°ì˜ í¬ê¸°ë§Œí¼ ì´ë™
                 j += sizeof( Elf64_Rela );
             }
 
-            // Àý´ë ¾îµå·¹½º Å¸ÀÔ(Absolute Type)ÀÇ °æ¿ì´Â Àç¹èÄ¡°¡ ÇÊ¿ä ¾øÀ½
+            // ì ˆëŒ€ ì–´ë“œë ˆìŠ¤ íƒ€ìž…(Absolute Type)ì˜ ê²½ìš°ëŠ” ìž¬ë°°ì¹˜ê°€ í•„ìš” ì—†ìŒ
             if( pstSymbolTable[ RELOCATION_UPPER32( ulInfo ) ].st_shndx == SHN_ABS )
             {
                 continue;
             }
-            // °øÅë Å¸ÀÔ ½Éº¼(Common Type)ÀÇ °æ¿ì´Â Áö¿øÇÏÁö ¾ÊÀ¸¹Ç·Î ¿À·ù¸¦ Ç¥½ÃÇÏ°í Á¾·á
+            // ê³µí†µ íƒ€ìž… ì‹¬ë³¼(Common Type)ì˜ ê²½ìš°ëŠ” ì§€ì›í•˜ì§€ ì•Šìœ¼ë¯€ë¡œ ì˜¤ë¥˜ë¥¼ í‘œì‹œí•˜ê³  ì¢…ë£Œ
             else if( pstSymbolTable[ RELOCATION_UPPER32( ulInfo ) ].st_shndx == 
                 SHN_COMMON )
             {
@@ -364,17 +364,17 @@ static BOOL kRelocation( BYTE* pbFileBuffer )
             }
 
             //------------------------------------------------------------------
-            // Àç¹èÄ¡ Å¸ÀÔÀ» ±¸ÇÏ¿© Àç¹èÄ¡¸¦ ¼öÇàÇÒ °ªÀ» °è»ê
+            // ìž¬ë°°ì¹˜ íƒ€ìž…ì„ êµ¬í•˜ì—¬ ìž¬ë°°ì¹˜ë¥¼ ìˆ˜í–‰í•  ê°’ì„ ê³„ì‚°
             //------------------------------------------------------------------
             switch( RELOCATION_LOWER32( ulInfo ) )
             {
-                // S(st_value) + A(r_addend)·Î °è»êÇÏ´Â Å¸ÀÔ
+                // S(st_value) + A(r_addend)ë¡œ ê³„ì‚°í•˜ëŠ” íƒ€ìž…
             case R_X86_64_64:
             case R_X86_64_32:
             case R_X86_64_32S:
             case R_X86_64_16:
             case R_X86_64_8:
-                // ½Éº¼ÀÌ Á¸ÀçÇÏ´Â ¼½¼Ç Çì´õÀÇ ÀÎµ¦½º
+                // ì‹¬ë³¼ì´ ì¡´ìž¬í•˜ëŠ” ì„¹ì…˜ í—¤ë”ì˜ ì¸ë±ìŠ¤
                 iSectionIndexInSymbol = 
                     pstSymbolTable[ RELOCATION_UPPER32( ulInfo ) ].st_shndx;
                 
@@ -382,12 +382,12 @@ static BOOL kRelocation( BYTE* pbFileBuffer )
                     pstSectionHeader[ iSectionIndexInSymbol ].sh_addr ) + lAddend;
                 break;
 
-                // S(st_value) + A(r_addend) - P(r_offset)·Î °è»êÇÏ´Â Å¸ÀÔ
+                // S(st_value) + A(r_addend) - P(r_offset)ë¡œ ê³„ì‚°í•˜ëŠ” íƒ€ìž…
             case R_X86_64_PC32:
             case R_X86_64_PC16:
             case R_X86_64_PC8:
             case R_X86_64_PC64:
-                // ½Éº¼ÀÌ Á¸ÀçÇÏ´Â ¼½¼Ç Çì´õÀÇ ÀÎµ¦½º
+                // ì‹¬ë³¼ì´ ì¡´ìž¬í•˜ëŠ” ì„¹ì…˜ í—¤ë”ì˜ ì¸ë±ìŠ¤
                 iSectionIndexInSymbol = 
                     pstSymbolTable[ RELOCATION_UPPER32( ulInfo ) ].st_shndx;
                 
@@ -396,19 +396,19 @@ static BOOL kRelocation( BYTE* pbFileBuffer )
                     ( ulOffset + pstSectionHeader[ iSectionIndexToRelocation ].sh_addr );
                 break;
 
-                // B(sh_addr) + A(r_ddend)·Î °è»êÇÏ´Â Å¸ÀÔ
+                // B(sh_addr) + A(r_ddend)ë¡œ ê³„ì‚°í•˜ëŠ” íƒ€ìž…
             case R_X86_64_RELATIVE:
                 lResult = pstSectionHeader[ i ].sh_addr + lAddend;
                 break;
                 
-                // Z(st_size) + A(r_addend)·Î °è»êÇÏ´Â Å¸ÀÔ
+                // Z(st_size) + A(r_addend)ë¡œ ê³„ì‚°í•˜ëŠ” íƒ€ìž…
             case R_X86_64_SIZE32:
             case R_X86_64_SIZE64:
                 lResult = pstSymbolTable[ RELOCATION_UPPER32( ulInfo ) ].st_size +
                     lAddend;
                 break;
 
-                // ±× ¿ÜÀÇ °æ¿ì´Â Áö¿øÇÏÁö ¾ÊÀ¸¹Ç·Î ¿À·ù¸¦ Ç¥½ÃÇÏ°í Á¾·á
+                // ê·¸ ì™¸ì˜ ê²½ìš°ëŠ” ì§€ì›í•˜ì§€ ì•Šìœ¼ë¯€ë¡œ ì˜¤ë¥˜ë¥¼ í‘œì‹œí•˜ê³  ì¢…ë£Œ
             default:
                 kPrintf( "Unsupported relocation type [%X]\n", 
                          RELOCATION_LOWER32( ulInfo ) );
@@ -417,18 +417,18 @@ static BOOL kRelocation( BYTE* pbFileBuffer )
             }
 
             //------------------------------------------------------------------
-            // Àç¹èÄ¡ Å¸ÀÔÀ¸·Î Àû¿ëÇÒ ¹üÀ§¸¦ °è»ê
+            // ìž¬ë°°ì¹˜ íƒ€ìž…ìœ¼ë¡œ ì ìš©í•  ë²”ìœ„ë¥¼ ê³„ì‚°
             //------------------------------------------------------------------
             switch( RELOCATION_LOWER32( ulInfo ) )
             {
-                // 64ºñÆ® Å©±â
+                // 64ë¹„íŠ¸ í¬ê¸°
             case R_X86_64_64:
             case R_X86_64_PC64:
             case R_X86_64_SIZE64:
                 iNumberOfBytes = 8;
                 break;
 
-                // 32ºñÆ® Å©±â
+                // 32ë¹„íŠ¸ í¬ê¸°
             case R_X86_64_PC32:
             case R_X86_64_32:
             case R_X86_64_32S:
@@ -436,19 +436,19 @@ static BOOL kRelocation( BYTE* pbFileBuffer )
                 iNumberOfBytes = 4;
                 break;
 
-                // 16ºñÆ® Å©±â
+                // 16ë¹„íŠ¸ í¬ê¸°
             case R_X86_64_16:
             case R_X86_64_PC16:
                 iNumberOfBytes = 2;
                 break;
 
-                // 8ºñÆ® Å©±â
+                // 8ë¹„íŠ¸ í¬ê¸°
             case R_X86_64_8:
             case R_X86_64_PC8:
                 iNumberOfBytes = 1;
                 break;
 
-                // ±âÅ¸ Å¸ÀÔÀº ¿À·ù¸¦ Ç¥½ÃÇÏ°í Á¾·á 
+                // ê¸°íƒ€ íƒ€ìž…ì€ ì˜¤ë¥˜ë¥¼ í‘œì‹œí•˜ê³  ì¢…ë£Œ 
             default:
                 kPrintf( "Unsupported relocation type [%X]\n", 
                          RELOCATION_LOWER32( ulInfo ) );
@@ -457,7 +457,7 @@ static BOOL kRelocation( BYTE* pbFileBuffer )
             }
 
             //------------------------------------------------------------------
-            // °è»ê °á°ú¿Í Àû¿ëÇÒ ¹üÀ§°¡ ³ª¿ÔÀ¸¹Ç·Î ÇØ´ç ¼½¼Ç¿¡ Àû¿ë
+            // ê³„ì‚° ê²°ê³¼ì™€ ì ìš©í•  ë²”ìœ„ê°€ ë‚˜ì™”ìœ¼ë¯€ë¡œ í•´ë‹¹ ì„¹ì…˜ì— ì ìš©
             //------------------------------------------------------------------
             switch( iNumberOfBytes )
             {
@@ -485,7 +485,7 @@ static BOOL kRelocation( BYTE* pbFileBuffer )
                      ulOffset ) ) += ( char ) lResult;
                 break;
 
-                // ±× ¿ÜÀÇ Å©±â´Â Áö¿øÇÏÁö ¾ÊÀ¸¹Ç·Î ¿À·ù¸¦ Ç¥½ÃÇÏ°í Á¾·á
+                // ê·¸ ì™¸ì˜ í¬ê¸°ëŠ” ì§€ì›í•˜ì§€ ì•Šìœ¼ë¯€ë¡œ ì˜¤ë¥˜ë¥¼ í‘œì‹œí•˜ê³  ì¢…ë£Œ
             default:
                 kPrintf( "Relocation error. Relocation byte size is [%d]byte\n", 
                          iNumberOfBytes );
@@ -498,7 +498,7 @@ static BOOL kRelocation( BYTE* pbFileBuffer )
 }
 
 /**
- *  ÅÂ½ºÅ©¿¡ ÀÎÀÚ ¹®ÀÚ¿­ ÀúÀå
+ *  íƒœìŠ¤í¬ì— ì¸ìž ë¬¸ìžì—´ ì €ìž¥
  */
 static void kAddArgumentStringToTask( TCB* pstTask, const char* pcArgumentString )
 {
@@ -506,14 +506,14 @@ static void kAddArgumentStringToTask( TCB* pstTask, const char* pcArgumentString
     int iAlignedLength;
     QWORD qwNewRSPAddress;
     
-    // ÀÎÀÚ ¹®ÀÚ¿­ÀÇ ±æÀÌ °è»ê
+    // ì¸ìž ë¬¸ìžì—´ì˜ ê¸¸ì´ ê³„ì‚°
     if( pcArgumentString == NULL )
     {
         iLength = 0;
     }
     else
     {
-        // ÀÎÀÚ ¹®ÀÚ¿­Àº ÃÖ´ë 1Kbyte±îÁö Àü´Þ
+        // ì¸ìž ë¬¸ìžì—´ì€ ìµœëŒ€ 1Kbyteê¹Œì§€ ì „ë‹¬
         iLength = kStrLen( pcArgumentString );
 
         if( iLength > 1023 )
@@ -522,32 +522,32 @@ static void kAddArgumentStringToTask( TCB* pstTask, const char* pcArgumentString
         }
     }
     
-    // ÀÎÀÚ ¹®ÀÚ¿­ÀÇ ±æÀÌ¸¦ 8¹ÙÀÌÆ®·Î Á¤·Ä
+    // ì¸ìž ë¬¸ìžì—´ì˜ ê¸¸ì´ë¥¼ 8ë°”ì´íŠ¸ë¡œ ì •ë ¬
     iAlignedLength = ( iLength + 7 ) & 0xFFFFFFF8;
     
-    // »õ·Î¿î RSP ·¹Áö½ºÅÍÀÇ °ªÀ» °è»êÇÏ°í ½ºÅÃ¿¡ ÀÎÀÚ ¸®½ºÆ®¸¦ º¹»ç
+    // ìƒˆë¡œìš´ RSP ë ˆì§€ìŠ¤í„°ì˜ ê°’ì„ ê³„ì‚°í•˜ê³  ìŠ¤íƒì— ì¸ìž ë¦¬ìŠ¤íŠ¸ë¥¼ ë³µì‚¬
     qwNewRSPAddress = pstTask->stContext.vqRegister[ TASK_RSPOFFSET ] - 
         ( QWORD ) iAlignedLength;
     kMemCpy( ( void* ) qwNewRSPAddress, pcArgumentString, iLength );
     *( ( BYTE* ) qwNewRSPAddress + iLength ) = '\0';
     
-    // RSP ·¹Áö½ºÅÍ¿Í RBP ·¹Áö½ºÅÍÀÇ °ªÀ» »õ·Î¿î ½ºÅÃ ¾îµå·¹½º·Î °»½Å
+    // RSP ë ˆì§€ìŠ¤í„°ì™€ RBP ë ˆì§€ìŠ¤í„°ì˜ ê°’ì„ ìƒˆë¡œìš´ ìŠ¤íƒ ì–´ë“œë ˆìŠ¤ë¡œ ê°±ì‹ 
     pstTask->stContext.vqRegister[ TASK_RSPOFFSET ] = qwNewRSPAddress;
     pstTask->stContext.vqRegister[ TASK_RBPOFFSET ] = qwNewRSPAddress;
     
-    // Ã¹ ¹øÂ° ÆÄ¶ó¹ÌÅÍ·Î »ç¿ëµÇ´Â RDI ·¹Áö½ºÅÍ¸¦ ÆÄ¶ó¹ÌÅÍ°¡ ÀúÀåµÈ ½ºÅÃÀÇ ¾îµå·¹½º·Î ÁöÁ¤
+    // ì²« ë²ˆì§¸ íŒŒë¼ë¯¸í„°ë¡œ ì‚¬ìš©ë˜ëŠ” RDI ë ˆì§€ìŠ¤í„°ë¥¼ íŒŒë¼ë¯¸í„°ê°€ ì €ìž¥ëœ ìŠ¤íƒì˜ ì–´ë“œë ˆìŠ¤ë¡œ ì§€ì •
     pstTask->stContext.vqRegister[ TASK_RDIOFFSET ] = qwNewRSPAddress;
 }
 
 /**
- *  ÀÀ¿ëÇÁ·Î±×·¥¿¡¼­ µ¿ÀÛÇÏ´Â ½º·¹µå¸¦ »ý¼º
+ *  ì‘ìš©í”„ë¡œê·¸ëž¨ì—ì„œ ë™ìž‘í•˜ëŠ” ìŠ¤ë ˆë“œë¥¼ ìƒì„±
  */
 QWORD kCreateThread( QWORD qwEntryPoint, QWORD qwArgument, BYTE bAffinity, 
         QWORD qwExitFunction )
 {
     TCB* pstTask;
     
-    // À¯Àú ·¹º§ ÀÀ¿ëÇÁ·Î±×·¥ ÅÂ½ºÅ© »ý¼º
+    // ìœ ì € ë ˆë²¨ ì‘ìš©í”„ë¡œê·¸ëž¨ íƒœìŠ¤í¬ ìƒì„±
     pstTask = kCreateTask( TASK_FLAGS_USERLEVEL | TASK_FLAGS_THREAD, NULL, 0, 
                            qwEntryPoint, bAffinity );
     if( pstTask == NULL )
@@ -555,12 +555,12 @@ QWORD kCreateThread( QWORD qwEntryPoint, QWORD qwArgument, BYTE bAffinity,
         return TASK_INVALIDID;
     }
 
-    // Á¾·áµÉ ¶§ È£ÃâµÇ´Â kEndTask() ÇÔ¼ö¸¦ Àü´Þ¹ÞÀº ÇÔ¼ö·Î ´ëÃ¼
-    // Á¾·áµÉ ¶§ È£ÃâµÇ´Â ÇÔ¼ö´Â ÇöÀç RSP ·¹Áö½ºÅÍ°¡ °¡¸®Å°°í ÀÖÀ½
+    // ì¢…ë£Œë  ë•Œ í˜¸ì¶œë˜ëŠ” kEndTask() í•¨ìˆ˜ë¥¼ ì „ë‹¬ë°›ì€ í•¨ìˆ˜ë¡œ ëŒ€ì²´
+    // ì¢…ë£Œë  ë•Œ í˜¸ì¶œë˜ëŠ” í•¨ìˆ˜ëŠ” í˜„ìž¬ RSP ë ˆì§€ìŠ¤í„°ê°€ ê°€ë¦¬í‚¤ê³  ìžˆìŒ
     *( ( QWORD* ) pstTask->stContext.vqRegister[ TASK_RSPOFFSET ] ) = 
         qwExitFunction;
     
-    // Ã¹ ¹øÂ° ÆÄ¶ó¹ÌÅÍ·Î »ç¿ëµÇ´Â RDI ·¹Áö½ºÅÍ¿¡ ÀÎÀÚ¸¦ »ðÀÔ
+    // ì²« ë²ˆì§¸ íŒŒë¼ë¯¸í„°ë¡œ ì‚¬ìš©ë˜ëŠ” RDI ë ˆì§€ìŠ¤í„°ì— ì¸ìžë¥¼ ì‚½ìž…
     pstTask->stContext.vqRegister[ TASK_RDIOFFSET ] = qwArgument;
     
     return pstTask->stLink.qwID;

@@ -3,8 +3,8 @@
  *  date    2010/03/31
  *  author  kkamagui 
  *          Copyright(c)2008 All rights reserved by kkamagui
- *  brief   ÀÀ¿ëÇÁ·Î±×·¥°ú °¢Á¾ µ¥ÀÌÅÍ ÆÄÀÏÀ» ¹­¾î ÆÐÅ°Áö ÇüÅÂ·Î ¸¸µé¾îÁÖ´Â
- *          PackageMakerÀÇ ¼Ò½º ÆÄÀÏ
+ *  brief   ì‘ìš©í”„ë¡œê·¸ëž¨ê³¼ ê°ì¢… ë°ì´í„° íŒŒì¼ì„ ë¬¶ì–´ íŒ¨í‚¤ì§€ í˜•íƒœë¡œ ë§Œë“¤ì–´ì£¼ëŠ”
+ *          PackageMakerì˜ ì†ŒìŠ¤ íŒŒì¼
  */
 
 #include <stdio.h>
@@ -16,56 +16,56 @@
 #include <sys/stat.h>
 #include <errno.h>
 
-// ¸ÅÅ©·Î Á¤ÀÇ
-// ÇÑ ¼½ÅÍÀÇ ¹ÙÀÌÆ® ¼ö
+// ë§¤í¬ë¡œ ì •ì˜
+// í•œ ì„¹í„°ì˜ ë°”ì´íŠ¸ ìˆ˜
 #define BYTESOFSECTOR       512
 
-// ÆÐÅ°ÁöÀÇ ½Ã±×³ÊÃ³
+// íŒ¨í‚¤ì§€ì˜ ì‹œê·¸ë„ˆì²˜
 #define PACKAGESIGNATURE    "MINT64OSPACKAGE "
 
-// ÆÄÀÏ ÀÌ¸§ÀÇ ÃÖ´ë ±æÀÌ, Ä¿³ÎÀÇ FILESYSTEM_MAXFILENAMELENGTH¿Í °°À½
+// íŒŒì¼ ì´ë¦„ì˜ ìµœëŒ€ ê¸¸ì´, ì»¤ë„ì˜ FILESYSTEM_MAXFILENAMELENGTHì™€ ê°™ìŒ
 #define MAXFILENAMELENGTH   24
 
-// DWORD Å¸ÀÔÀ» Á¤ÀÇ
+// DWORD íƒ€ìž…ì„ ì •ì˜
 #define DWORD               unsigned int
 
 
-// ÀÚ·á ±¸Á¶ Á¤ÀÇ
-// 1¹ÙÀÌÆ®·Î Á¤·Ä
+// ìžë£Œ êµ¬ì¡° ì •ì˜
+// 1ë°”ì´íŠ¸ë¡œ ì •ë ¬
 #pragma pack( push, 1 )
 
-// ÆÐÅ°Áö Çì´õ ³»ºÎÀÇ °¢ ÆÄÀÏ Á¤º¸¸¦ ±¸¼ºÇÏ´Â ÀÚ·á±¸Á¶
+// íŒ¨í‚¤ì§€ í—¤ë” ë‚´ë¶€ì˜ ê° íŒŒì¼ ì •ë³´ë¥¼ êµ¬ì„±í•˜ëŠ” ìžë£Œêµ¬ì¡°
 typedef struct PackageItemStruct
 {
-    // ÆÄÀÏ ÀÌ¸§
+    // íŒŒì¼ ì´ë¦„
     char vcFileName[ MAXFILENAMELENGTH ];
 
-    // ÆÄÀÏÀÇ Å©±â
+    // íŒŒì¼ì˜ í¬ê¸°
     DWORD dwFileLength;
 } PACKAGEITEM;
 
-// ÆÐÅ°Áö Çì´õ ÀÚ·á±¸Á¶
+// íŒ¨í‚¤ì§€ í—¤ë” ìžë£Œêµ¬ì¡°
 typedef struct PackageHeaderStruct
 {
-    // MINT64 OSÀÇ ÆÐÅ°Áö ÆÄÀÏÀ» ³ªÅ¸³»´Â ½Ã±×³ÊÃ³
+    // MINT64 OSì˜ íŒ¨í‚¤ì§€ íŒŒì¼ì„ ë‚˜íƒ€ë‚´ëŠ” ì‹œê·¸ë„ˆì²˜
     char vcSignature[ 16 ];
 
-    // ÆÐÅ°Áö Çì´õÀÇ ÀüÃ¼ Å©±â
+    // íŒ¨í‚¤ì§€ í—¤ë”ì˜ ì „ì²´ í¬ê¸°
     DWORD dwHeaderSize;
 
-    // ÆÐÅ°Áö ¾ÆÀÌÅÛÀÇ ½ÃÀÛ À§Ä¡
+    // íŒ¨í‚¤ì§€ ì•„ì´í…œì˜ ì‹œìž‘ ìœ„ì¹˜
     PACKAGEITEM vstItem[ 0 ];
 } PACKAGEHEADER;
 
 #pragma pack( pop )
 
 
-// ÇÔ¼ö ¼±¾ð
+// í•¨ìˆ˜ ì„ ì–¸
 int AdjustInSectorSize( int iFd, int iSourceSize );
 int CopyFile( int iSourceFd, int iTargetFd );
 
 /**
- *  Main ÇÔ¼ö
+ *  Main í•¨ìˆ˜
 */
 int main(int argc, char* argv[])
 {
@@ -77,14 +77,14 @@ int main(int argc, char* argv[])
     PACKAGEHEADER stHeader;
     PACKAGEITEM stItem;
         
-    // Ä¿¸Çµå ¶óÀÎ ¿É¼Ç °Ë»ç
+    // ì»¤ë§¨ë“œ ë¼ì¸ ì˜µì…˜ ê²€ì‚¬
     if( argc < 2 )
     {
         fprintf( stderr, "[ERROR] PackageMaker.exe app1.elf app2.elf data.txt ...\n" );
         exit( -1 );
     }
     
-    // Package.img ÆÄÀÏÀ» »ý¼º
+    // Package.img íŒŒì¼ì„ ìƒì„±
     if( ( iTargetFd = open( "Package.img", O_RDWR | O_CREAT |  O_TRUNC |
             O_BINARY, S_IREAD | S_IWRITE ) ) == -1 )
     {
@@ -93,38 +93,38 @@ int main(int argc, char* argv[])
     }
 
     //--------------------------------------------------------------------------
-    //  ÀÎÀÚ·Î Àü´ÞµÈ ÆÄÀÏ ÀÌ¸§À¸·Î ÆÐÅ°Áö Çì´õ¸¦ ¸ÕÀú »ý¼º
+    //  ì¸ìžë¡œ ì „ë‹¬ëœ íŒŒì¼ ì´ë¦„ìœ¼ë¡œ íŒ¨í‚¤ì§€ í—¤ë”ë¥¼ ë¨¼ì € ìƒì„±
     //--------------------------------------------------------------------------
     printf( "[INFO] Create package header...\n" );
 
-    // ½Ã±×³ÊÃ³¸¦ º¹»çÇÏ°í Çì´õÀÇ Å©±â¸¦ °è»ê
+    // ì‹œê·¸ë„ˆì²˜ë¥¼ ë³µì‚¬í•˜ê³  í—¤ë”ì˜ í¬ê¸°ë¥¼ ê³„ì‚°
     memcpy( stHeader.vcSignature, PACKAGESIGNATURE, sizeof( stHeader.vcSignature ) );
     stHeader.dwHeaderSize = sizeof( PACKAGEHEADER ) +
         ( argc - 1 ) * sizeof( PACKAGEITEM );
-    // ÆÄÀÏ¿¡ ÀúÀå
+    // íŒŒì¼ì— ì €ìž¥
     if( write( iTargetFd, &stHeader, sizeof( stHeader ) ) != sizeof( stHeader ) )
     {
         fprintf( stderr, "[ERROR] Data write fail\n" );
         exit( -1 );
     }
 
-    // ÀÎÀÚ¸¦ µ¹¸é¼­ ÆÐÅ°Áö Çì´õÀÇ Á¤º¸¸¦ Ã¤¿ö ³ÖÀ½
+    // ì¸ìžë¥¼ ëŒë©´ì„œ íŒ¨í‚¤ì§€ í—¤ë”ì˜ ì •ë³´ë¥¼ ì±„ì›Œ ë„£ìŒ
     for( i = 1 ; i < argc ; i++ )
     {
-        // ÆÄÀÏ Á¤º¸¸¦ È®ÀÎ
+        // íŒŒì¼ ì •ë³´ë¥¼ í™•ì¸
         if( stat( argv[ i ], &stFileData ) != 0 )
         {
             fprintf( stderr, "[ERROR] %s file open fail\n" );
             exit( -1 );
         }
 
-        // ÆÄÀÏ ÀÌ¸§°ú ±æÀÌ¸¦ ÀúÀå
+        // íŒŒì¼ ì´ë¦„ê³¼ ê¸¸ì´ë¥¼ ì €ìž¥
         memset( stItem.vcFileName, 0, sizeof( stItem.vcFileName ) );
         strncpy( stItem.vcFileName, argv[ i ], sizeof( stItem.vcFileName ) );
         stItem.vcFileName[ sizeof( stItem.vcFileName ) - 1 ] = '\0';
         stItem.dwFileLength = stFileData.st_size;
 
-        // ÆÄÀÏ¿¡ ¾¸
+        // íŒŒì¼ì— ì”€
         if( write( iTargetFd, &stItem, sizeof( stItem ) ) != sizeof( stItem ) )
         {
             fprintf( stderr, "[ERROR] Data write fail\n" );
@@ -136,29 +136,29 @@ int main(int argc, char* argv[])
     printf( "[INFO] Create complete\n" );
 
     //--------------------------------------------------------------------------
-    //  »ý¼ºµÈ ÆÐÅ°Áö Çì´õ µÚ¿¡ ÆÄÀÏÀÇ ³»¿ëÀ» º¹»ç
+    //  ìƒì„±ëœ íŒ¨í‚¤ì§€ í—¤ë” ë’¤ì— íŒŒì¼ì˜ ë‚´ìš©ì„ ë³µì‚¬
     //--------------------------------------------------------------------------
     printf( "[INFO] Copy data file to package...\n" );
-    // ÀÎÀÚ¸¦ µ¹¸é¼­ ÆÄÀÏÀ» Ã¤¿ö ³ÖÀ½
+    // ì¸ìžë¥¼ ëŒë©´ì„œ íŒŒì¼ì„ ì±„ì›Œ ë„£ìŒ
     iSourceSize = 0;
     for( i = 1 ; i < argc ; i++ )
     {
-        // µ¥ÀÌÅÍ ÆÄÀÏÀ» ¿®
+        // ë°ì´í„° íŒŒì¼ì„ ì—¶
         if( ( iSourceFd = open( argv[ i ], O_RDONLY | O_BINARY ) ) == -1 )
         {
             fprintf( stderr, "[ERROR] %s open fail\n", argv[ 1 ] );
             exit( -1 );
         }
 
-        // ÆÄÀÏÀÇ ³»¿ëÀ» ÆÐÅ°Áö ÆÄÀÏ¿¡ ¾´ µÚ¿¡ ÆÄÀÏÀ» ´ÝÀ½
+        // íŒŒì¼ì˜ ë‚´ìš©ì„ íŒ¨í‚¤ì§€ íŒŒì¼ì— ì“´ ë’¤ì— íŒŒì¼ì„ ë‹«ìŒ
         iSourceSize += CopyFile( iSourceFd, iTargetFd );
         close( iSourceFd );
     }
     
-    // ÆÄÀÏ Å©±â¸¦ ¼½ÅÍ Å©±âÀÎ 512¹ÙÀÌÆ®·Î ¸ÂÃß±â À§ÇØ ³ª¸ÓÁö ºÎºÐÀ» 0x00À¸·Î Ã¤¿ò
+    // íŒŒì¼ í¬ê¸°ë¥¼ ì„¹í„° í¬ê¸°ì¸ 512ë°”ì´íŠ¸ë¡œ ë§žì¶”ê¸° ìœ„í•´ ë‚˜ë¨¸ì§€ ë¶€ë¶„ì„ 0x00ìœ¼ë¡œ ì±„ì›€
     AdjustInSectorSize( iTargetFd , iSourceSize + stHeader.dwHeaderSize );
 
-    // ¼º°ø ¸Þ½ÃÁö Ãâ·Â
+    // ì„±ê³µ ë©”ì‹œì§€ ì¶œë ¥
     printf( "[INFO] Total %d Byte copy complete\n", iSourceSize);
     printf( "[INFO] Package file create complete\n" );
 
@@ -167,7 +167,7 @@ int main(int argc, char* argv[])
 }
 
 /**
- *  ÇöÀç À§Ä¡ºÎÅÍ 512¹ÙÀÌÆ® ¹è¼ö À§Ä¡±îÁö ¸ÂÃß¾î 0x00À¸·Î Ã¤¿ò
+ *  í˜„ìž¬ ìœ„ì¹˜ë¶€í„° 512ë°”ì´íŠ¸ ë°°ìˆ˜ ìœ„ì¹˜ê¹Œì§€ ë§žì¶”ì–´ 0x00ìœ¼ë¡œ ì±„ì›€
 */
 int AdjustInSectorSize( int iFd, int iSourceSize )
 {
@@ -192,13 +192,13 @@ int AdjustInSectorSize( int iFd, int iSourceSize )
         printf( "[INFO] File size is aligned 512 byte\n" );
     }
     
-    // ¼½ÅÍ ¼ö¸¦ µÇµ¹·ÁÁÜ
+    // ì„¹í„° ìˆ˜ë¥¼ ë˜ëŒë ¤ì¤Œ
     iSectorCount = ( iSourceSize + iAdjustSizeToSector ) / BYTESOFSECTOR;
     return iSectorCount;
 }
 
 /**
- *  ¼Ò½º ÆÄÀÏ(Source FD)ÀÇ ³»¿ëÀ» ¸ñÇ¥ ÆÄÀÏ(Target FD)¿¡ º¹»çÇÏ°í ±× Å©±â¸¦ µÇµ¹·ÁÁÜ
+ *  ì†ŒìŠ¤ íŒŒì¼(Source FD)ì˜ ë‚´ìš©ì„ ëª©í‘œ íŒŒì¼(Target FD)ì— ë³µì‚¬í•˜ê³  ê·¸ í¬ê¸°ë¥¼ ë˜ëŒë ¤ì¤Œ
 */
 int CopyFile( int iSourceFd, int iTargetFd )
 {

@@ -3,13 +3,13 @@
  *  date    2009/02/23
  *  author  kkamagui 
  *          Copyright(c)2008 All rights reserved by kkamagui 
- *  brief   ¸®½ºÆ®¿¡ °ü·ÃµÈ ÇÔ¼ö¸¦ Á¤ÀÇÇÑ ¼Ò½º ÆÄÀÏ
+ *  brief   ë¦¬ìŠ¤íŠ¸ì— ê´€ë ¨ëœ í•¨ìˆ˜ë¥¼ ì •ì˜í•œ ì†ŒìŠ¤ íŒŒì¼
  */
 
 #include "List.h"
 
 /**
- *  ¸®½ºÆ®¸¦ ÃÊ±âÈ­
+ *  ë¦¬ìŠ¤íŠ¸ë¥¼ ì´ˆê¸°í™”
  */
 void kInitializeList( LIST* pstList )
 {
@@ -19,7 +19,7 @@ void kInitializeList( LIST* pstList )
 }
 
 /**
- *  ¸®½ºÆ®¿¡ Æ÷ÇÔµÈ ¾ÆÀÌÅÛÀÇ ¼ö¸¦ ¹İÈ¯
+ *  ë¦¬ìŠ¤íŠ¸ì— í¬í•¨ëœ ì•„ì´í…œì˜ ìˆ˜ë¥¼ ë°˜í™˜
  */
 int kGetListCount( const LIST* pstList )
 {
@@ -27,17 +27,17 @@ int kGetListCount( const LIST* pstList )
 }
 
 /**
- *  ¸®½ºÆ®¿¡ µ¥ÀÌÅÍ¸¦ ´õÇÔ
+ *  ë¦¬ìŠ¤íŠ¸ì— ë°ì´í„°ë¥¼ ë”í•¨
  */
 void kAddListToTail( LIST* pstList, void* pvItem )
 {
     LISTLINK* pstLink;
     
-    // ´ÙÀ½ µ¥ÀÌÅÍÀÇ ¾îµå·¹½º¸¦ ¾øÀ½(NULL)À¸·Î ¼³Á¤
+    // ë‹¤ìŒ ë°ì´í„°ì˜ ì–´ë“œë ˆìŠ¤ë¥¼ ì—†ìŒ(NULL)ìœ¼ë¡œ ì„¤ì •
     pstLink = ( LISTLINK* ) pvItem;
     pstLink->pvNext = NULL;
     
-    // ¸®½ºÆ®°¡ ºó »óÅÂÀÌ¸é Header¿Í TailÀ» Ãß°¡ÇÑ µ¥ÀÌÅÍ·Î ¼³Á¤
+    // ë¦¬ìŠ¤íŠ¸ê°€ ë¹ˆ ìƒíƒœì´ë©´ Headerì™€ Tailì„ ì¶”ê°€í•œ ë°ì´í„°ë¡œ ì„¤ì •
     if( pstList->pvHeader == NULL )
     {
         pstList->pvHeader = pvItem;
@@ -47,27 +47,27 @@ void kAddListToTail( LIST* pstList, void* pvItem )
         return ;
     }
     
-    // ¸¶Áö¸· µ¥ÀÌÅÍÀÇ LISTLINKÀÇ À§Ä¡¸¦ ±¸ÇÏ¿© ´ÙÀ½ µ¥ÀÌÅÍ¸¦ Ãß°¡ÇÑ µ¥ÀÌÅÍ·Î ¼³Á¤
+    // ë§ˆì§€ë§‰ ë°ì´í„°ì˜ LISTLINKì˜ ìœ„ì¹˜ë¥¼ êµ¬í•˜ì—¬ ë‹¤ìŒ ë°ì´í„°ë¥¼ ì¶”ê°€í•œ ë°ì´í„°ë¡œ ì„¤ì •
     pstLink = ( LISTLINK* ) pstList->pvTail;
     pstLink->pvNext = pvItem;
 
-    // ¸®½ºÆ®ÀÇ ¸¶Áö¸· µ¥ÀÌÅÍ¸¦ Ãß°¡ÇÑ µ¥ÀÌÅÍ·Î º¯°æ
+    // ë¦¬ìŠ¤íŠ¸ì˜ ë§ˆì§€ë§‰ ë°ì´í„°ë¥¼ ì¶”ê°€í•œ ë°ì´í„°ë¡œ ë³€ê²½
     pstList->pvTail = pvItem;
     pstList->iItemCount++;
 }
 
 /**
- *  ¸®½ºÆ®ÀÇ Ã¹ ºÎºĞ¿¡ µ¥ÀÌÅÍ¸¦ ´õÇÔ
+ *  ë¦¬ìŠ¤íŠ¸ì˜ ì²« ë¶€ë¶„ì— ë°ì´í„°ë¥¼ ë”í•¨
  */
 void kAddListToHeader( LIST* pstList, void* pvItem )
 {
     LISTLINK* pstLink;
     
-    // ´ÙÀ½ µ¥ÀÌÅÍÀÇ ¾îµå·¹½º¸¦ Header·Î ¼³Á¤
+    // ë‹¤ìŒ ë°ì´í„°ì˜ ì–´ë“œë ˆìŠ¤ë¥¼ Headerë¡œ ì„¤ì •
     pstLink = ( LISTLINK* ) pvItem;
     pstLink->pvNext = pstList->pvHeader;    
     
-    // ¸®½ºÆ®°¡ ºó »óÅÂÀÌ¸é Header¿Í TailÀ» Ãß°¡ÇÑ µ¥ÀÌÅÍ·Î ¼³Á¤
+    // ë¦¬ìŠ¤íŠ¸ê°€ ë¹ˆ ìƒíƒœì´ë©´ Headerì™€ Tailì„ ì¶”ê°€í•œ ë°ì´í„°ë¡œ ì„¤ì •
     if( pstList->pvHeader == NULL )
     {
         pstList->pvHeader = pvItem;
@@ -77,13 +77,13 @@ void kAddListToHeader( LIST* pstList, void* pvItem )
         return ;
     }
     
-    // ¸®½ºÆ®ÀÇ Ã¹ ¹øÂ° µ¥ÀÌÅÍ¸¦ Ãß°¡ÇÑ µ¥ÀÌÅÍ·Î º¯°æ
+    // ë¦¬ìŠ¤íŠ¸ì˜ ì²« ë²ˆì§¸ ë°ì´í„°ë¥¼ ì¶”ê°€í•œ ë°ì´í„°ë¡œ ë³€ê²½
     pstList->pvHeader = pvItem;
     pstList->iItemCount++;
 }
 
 /**
- *  ¸®½ºÆ®¿¡¼­ µ¥ÀÌÅÍ¸¦ Á¦°ÅÇÑ ÈÄ, µ¥ÀÌÅÍÀÇ Æ÷ÀÎÅÍ¸¦ ¹İÈ¯
+ *  ë¦¬ìŠ¤íŠ¸ì—ì„œ ë°ì´í„°ë¥¼ ì œê±°í•œ í›„, ë°ì´í„°ì˜ í¬ì¸í„°ë¥¼ ë°˜í™˜
  */
 void* kRemoveList( LIST* pstList, QWORD qwID )
 {
@@ -93,22 +93,22 @@ void* kRemoveList( LIST* pstList, QWORD qwID )
     pstPreviousLink = ( LISTLINK* ) pstList->pvHeader;
     for( pstLink = pstPreviousLink ; pstLink != NULL ; pstLink = pstLink->pvNext )
     {
-        // ÀÏÄ¡ÇÏ´Â ID°¡ ÀÖ´Ù¸é Á¦°Å
+        // ì¼ì¹˜í•˜ëŠ” IDê°€ ìˆë‹¤ë©´ ì œê±°
         if( pstLink->qwID == qwID )
         {
-            // ¸¸¾à µ¥ÀÌÅÍ°¡ ÇÏ³ª ¹Û¿¡ ¾ø´Ù¸é ¸®½ºÆ® ÃÊ±âÈ­
+            // ë§Œì•½ ë°ì´í„°ê°€ í•˜ë‚˜ ë°–ì— ì—†ë‹¤ë©´ ë¦¬ìŠ¤íŠ¸ ì´ˆê¸°í™”
             if( ( pstLink == pstList->pvHeader ) && 
                 ( pstLink == pstList->pvTail ) )
             {
                 pstList->pvHeader = NULL;
                 pstList->pvTail = NULL;
             }
-            // ¸¸¾à ¸®½ºÆ®ÀÇ Ã¹ ¹øÂ° µ¥ÀÌÅÍÀÌ¸é Header¸¦ µÎ ¹øÂ° µ¥ÀÌÅÍ·Î º¯°æ
+            // ë§Œì•½ ë¦¬ìŠ¤íŠ¸ì˜ ì²« ë²ˆì§¸ ë°ì´í„°ì´ë©´ Headerë¥¼ ë‘ ë²ˆì§¸ ë°ì´í„°ë¡œ ë³€ê²½
             else if( pstLink == pstList->pvHeader )
             {
                 pstList->pvHeader = pstLink->pvNext;
             }
-            // ¸¸¾à ¸®½ºÆ®ÀÇ ¸¶Áö¸· µ¥ÀÌÅÍ¸é TailÀ» ¸¶Áö¸· ÀÌÀüÀÇ µ¥ÀÌÅÍ·Î º¯°æ
+            // ë§Œì•½ ë¦¬ìŠ¤íŠ¸ì˜ ë§ˆì§€ë§‰ ë°ì´í„°ë©´ Tailì„ ë§ˆì§€ë§‰ ì´ì „ì˜ ë°ì´í„°ë¡œ ë³€ê²½
             else if( pstLink == pstList->pvTail )
             {
                 pstList->pvTail = pstPreviousLink;
@@ -127,7 +127,7 @@ void* kRemoveList( LIST* pstList, QWORD qwID )
 }
 
 /**
- *  ¸®½ºÆ®ÀÇ Ã¹ ¹øÂ° µ¥ÀÌÅÍ¸¦ Á¦°ÅÇÏ¿© ¹İÈ¯
+ *  ë¦¬ìŠ¤íŠ¸ì˜ ì²« ë²ˆì§¸ ë°ì´í„°ë¥¼ ì œê±°í•˜ì—¬ ë°˜í™˜
  */
 void* kRemoveListFromHeader( LIST* pstList )
 {
@@ -138,13 +138,13 @@ void* kRemoveListFromHeader( LIST* pstList )
         return NULL;
     }
 
-    // Çì´õ¸¦ Á¦°ÅÇÏ°í, ¹İÈ¯
+    // í—¤ë”ë¥¼ ì œê±°í•˜ê³ , ë°˜í™˜
     pstLink = ( LISTLINK* ) pstList->pvHeader;
     return kRemoveList( pstList, pstLink->qwID );
 }
 
 /**
- *  ¸®½ºÆ®ÀÇ ¸¶Áö¸· µ¥ÀÌÅÍ¸¦ Á¦°ÅÇÏ¿© ¹İÈ¯
+ *  ë¦¬ìŠ¤íŠ¸ì˜ ë§ˆì§€ë§‰ ë°ì´í„°ë¥¼ ì œê±°í•˜ì—¬ ë°˜í™˜
  */
 void* kRemoveListFromTail( LIST* pstList )
 {
@@ -155,14 +155,14 @@ void* kRemoveListFromTail( LIST* pstList )
         return NULL;
     }
 
-    // Å×ÀÏÀ» Á¦°ÅÇÏ°í, ¹İÈ¯
+    // í…Œì¼ì„ ì œê±°í•˜ê³ , ë°˜í™˜
     pstLink = ( LISTLINK* ) pstList->pvTail;
     return kRemoveList( pstList, pstLink->qwID );
 }
 
 
 /**
- *  ¸®½ºÆ®¿¡¼­ ¾ÆÀÌÅÛÀ» Ã£À½
+ *  ë¦¬ìŠ¤íŠ¸ì—ì„œ ì•„ì´í…œì„ ì°¾ìŒ
  */
 void* kFindList( const LIST* pstList, QWORD qwID )
 {
@@ -171,7 +171,7 @@ void* kFindList( const LIST* pstList, QWORD qwID )
     for( pstLink = ( LISTLINK* ) pstList->pvHeader ; pstLink != NULL ; 
          pstLink = pstLink->pvNext )
     {
-        // ÀÏÄ¡ÇÏ´Â °Ô ÀÖ´Ù¸é ¹İÈ¯
+        // ì¼ì¹˜í•˜ëŠ” ê²Œ ìˆë‹¤ë©´ ë°˜í™˜
         if( pstLink->qwID == qwID )
         {
             return pstLink;
@@ -181,7 +181,7 @@ void* kFindList( const LIST* pstList, QWORD qwID )
 }
 
 /**
- *  ¸®½ºÆ®ÀÇ Çì´õ¸¦ ¹İÈ¯
+ *  ë¦¬ìŠ¤íŠ¸ì˜ í—¤ë”ë¥¼ ë°˜í™˜
  */
 void* kGetHeaderFromList( const LIST* pstList )
 {
@@ -189,7 +189,7 @@ void* kGetHeaderFromList( const LIST* pstList )
 }
 
 /**
- *  ¸®½ºÆ®ÀÇ Å×ÀÏÀ» ¹İÈ¯
+ *  ë¦¬ìŠ¤íŠ¸ì˜ í…Œì¼ì„ ë°˜í™˜
  */
 void* kGetTailFromList( const LIST* pstList )
 {
@@ -197,7 +197,7 @@ void* kGetTailFromList( const LIST* pstList )
 }
 
 /**
- *  ÇöÀç ¾ÆÀÌÅÛÀÇ ´ÙÀ½ ¾ÆÀÌÅÛÀ» ¹İÈ¯ 
+ *  í˜„ì¬ ì•„ì´í…œì˜ ë‹¤ìŒ ì•„ì´í…œì„ ë°˜í™˜ 
  */
 void* kGetNextFromList( const LIST* pstList, void* pstCurrent )
 {

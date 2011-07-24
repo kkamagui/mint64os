@@ -3,32 +3,32 @@
  *  date    2009/04/20
  *  author  kkamagui 
  *          Copyright(c)2008 All rights reserved by kkamagui
- *  brief   ÇÏµå µð½ºÅ© ÄÁÆ®·Ñ·¯¿¡ °ü·ÃµÈ ¼Ò½º ÆÄÀÏ
+ *  brief   í•˜ë“œ ë””ìŠ¤í¬ ì»¨íŠ¸ë¡¤ëŸ¬ì— ê´€ë ¨ëœ ì†ŒìŠ¤ íŒŒì¼
  */
 
 #include "HardDisk.h"
 
-// ÇÏµå µð½ºÅ©¸¦ °ü¸®ÇÏ´Â ÀÚ·á±¸Á¶
+// í•˜ë“œ ë””ìŠ¤í¬ë¥¼ ê´€ë¦¬í•˜ëŠ” ìžë£Œêµ¬ì¡°
 static HDDMANAGER gs_stHDDManager;
 
 /**
- *  ÇÏµå µð½ºÅ© µð¹ÙÀÌ½º µå¶óÀÌ¹ö¸¦ ÃÊ±âÈ­
+ *  í•˜ë“œ ë””ìŠ¤í¬ ë””ë°”ì´ìŠ¤ ë“œë¼ì´ë²„ë¥¼ ì´ˆê¸°í™”
  */
 BOOL kInitializeHDD(void)
 {
-    // ¹ÂÅØ½º ÃÊ±âÈ­
+    // ë®¤í…ìŠ¤ ì´ˆê¸°í™”
     kInitializeMutex( &( gs_stHDDManager.stMutex ) );
 
-    // ÀÎÅÍ·´Æ® ÇÃ·¡±× ÃÊ±âÈ­
+    // ì¸í„°ëŸ½íŠ¸ í”Œëž˜ê·¸ ì´ˆê¸°í™”
     gs_stHDDManager.bPrimaryInterruptOccur = FALSE;
     gs_stHDDManager.bSecondaryInterruptOccur = FALSE;
 
-    // Ã¹ ¹øÂ°¿Í µÎ ¹øÂ° PATA Æ÷Æ®ÀÇ µðÁöÅÐ Ãâ·Â ·¹Áö½ºÅÍ(Æ÷Æ® 0x3F6¿Í 0x376)¿¡ 0À»
-    // Ãâ·ÂÇÏ¿© ÇÏµå µð½ºÅ© ÄÁÆ®·Ñ·¯ÀÇ ÀÎÅÍ·´Æ®¸¦ È°¼ºÈ­
+    // ì²« ë²ˆì§¸ì™€ ë‘ ë²ˆì§¸ PATA í¬íŠ¸ì˜ ë””ì§€í„¸ ì¶œë ¥ ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x3F6ì™€ 0x376)ì— 0ì„
+    // ì¶œë ¥í•˜ì—¬ í•˜ë“œ ë””ìŠ¤í¬ ì»¨íŠ¸ë¡¤ëŸ¬ì˜ ì¸í„°ëŸ½íŠ¸ë¥¼ í™œì„±í™”
     kOutPortByte( HDD_PORT_PRIMARYBASE + HDD_PORT_INDEX_DIGITALOUTPUT, 0 );
     kOutPortByte( HDD_PORT_SECONDARYBASE + HDD_PORT_INDEX_DIGITALOUTPUT, 0 );
     
-    // ÇÏµå µð½ºÅ© Á¤º¸ ¿äÃ»
+    // í•˜ë“œ ë””ìŠ¤í¬ ì •ë³´ ìš”ì²­
     if( kReadHDDInformation( TRUE, TRUE, &( gs_stHDDManager.stHDDInformation ) ) 
             == FALSE )
     {
@@ -37,7 +37,7 @@ BOOL kInitializeHDD(void)
         return FALSE;
     }
 
-    // ÇÏµå µð½ºÅ©°¡ °Ë»öµÇ¾úÀ¸¸é QEMU¿¡¼­¸¸ ¾µ ¼ö ÀÖµµ·Ï ¼³Á¤
+    // í•˜ë“œ ë””ìŠ¤í¬ê°€ ê²€ìƒ‰ë˜ì—ˆìœ¼ë©´ QEMUì—ì„œë§Œ ì“¸ ìˆ˜ ìžˆë„ë¡ ì„¤ì •
     gs_stHDDManager.bHDDDetected = TRUE;
     if( kMemCmp( gs_stHDDManager.stHDDInformation.vwModelNumber, "QEMU", 4 ) == 0 )
     {
@@ -51,37 +51,37 @@ BOOL kInitializeHDD(void)
 }
 
 /**
- *  ÇÏµå µð½ºÅ©ÀÇ »óÅÂ¸¦ ¹ÝÈ¯
+ *  í•˜ë“œ ë””ìŠ¤í¬ì˜ ìƒíƒœë¥¼ ë°˜í™˜
  */
 static BYTE kReadHDDStatus( BOOL bPrimary )
 {
     if( bPrimary == TRUE )
     {
-        // Ã¹ ¹øÂ° PATA Æ÷Æ®ÀÇ »óÅÂ ·¹Áö½ºÅÍ(Æ÷Æ® 0x1F7)¿¡¼­ °ªÀ» ¹ÝÈ¯
+        // ì²« ë²ˆì§¸ PATA í¬íŠ¸ì˜ ìƒíƒœ ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x1F7)ì—ì„œ ê°’ì„ ë°˜í™˜
         return kInPortByte( HDD_PORT_PRIMARYBASE + HDD_PORT_INDEX_STATUS );
     }
-    // µÎ ¹øÂ° PATA Æ÷Æ®ÀÇ »óÅÂ ·¹Áö½ºÅÍ(Æ÷Æ® 0x177)¿¡¼­ °ªÀ» ¹ÝÈ¯
+    // ë‘ ë²ˆì§¸ PATA í¬íŠ¸ì˜ ìƒíƒœ ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x177)ì—ì„œ ê°’ì„ ë°˜í™˜
     return kInPortByte( HDD_PORT_SECONDARYBASE + HDD_PORT_INDEX_STATUS );
 }
 
 /**
- *  ÇÏµå µð½ºÅ©ÀÇ Busy°¡ ÇØÁ¦µÉ ¶§±îÁö ÀÏÁ¤ ½Ã°£ µ¿¾È ´ë±â
+ *  í•˜ë“œ ë””ìŠ¤í¬ì˜ Busyê°€ í•´ì œë  ë•Œê¹Œì§€ ì¼ì • ì‹œê°„ ë™ì•ˆ ëŒ€ê¸°
  */
 static BOOL kWaitForHDDNoBusy( BOOL bPrimary )
 {
     QWORD qwStartTickCount;
     BYTE bStatus;
 
-    // ´ë±â¸¦ ½ÃÀÛÇÑ ½Ã°£À» ÀúÀå
+    // ëŒ€ê¸°ë¥¼ ì‹œìž‘í•œ ì‹œê°„ì„ ì €ìž¥
     qwStartTickCount = kGetTickCount();
 
-    // ÀÏÁ¤ ½Ã°£ µ¿¾È ÇÏµå µð½ºÅ©ÀÇ Busy°¡ ÇØÁ¦µÉ ¶§±îÁö ´ë±â
+    // ì¼ì • ì‹œê°„ ë™ì•ˆ í•˜ë“œ ë””ìŠ¤í¬ì˜ Busyê°€ í•´ì œë  ë•Œê¹Œì§€ ëŒ€ê¸°
     while( ( kGetTickCount() - qwStartTickCount ) <= HDD_WAITTIME )
     {
-        // HDDÀÇ »óÅÂ¸¦ ¹ÝÈ¯
+        // HDDì˜ ìƒíƒœë¥¼ ë°˜í™˜
         bStatus = kReadHDDStatus( bPrimary );
 
-        // Busy ºñÆ®(ºñÆ® 7)ÀÌ ¼³Á¤µÇ¾î ÀÖÁö ¾ÊÀ¸¸é Busy°¡ ÇØÁ¦µÈ °ÍÀÌ¹Ç·Î Á¾·á
+        // Busy ë¹„íŠ¸(ë¹„íŠ¸ 7)ì´ ì„¤ì •ë˜ì–´ ìžˆì§€ ì•Šìœ¼ë©´ Busyê°€ í•´ì œëœ ê²ƒì´ë¯€ë¡œ ì¢…ë£Œ
         if( ( bStatus & HDD_STATUS_BUSY ) != HDD_STATUS_BUSY )
         {
             return TRUE;
@@ -92,24 +92,24 @@ static BOOL kWaitForHDDNoBusy( BOOL bPrimary )
 }
 
 /**
- *  ÇÏµå µð½ºÅ©°¡ ReadyµÉ ¶§±îÁö ÀÏÁ¤ ½Ã°£ µ¿¾È ´ë±â
+ *  í•˜ë“œ ë””ìŠ¤í¬ê°€ Readyë  ë•Œê¹Œì§€ ì¼ì • ì‹œê°„ ë™ì•ˆ ëŒ€ê¸°
  */
 static BOOL kWaitForHDDReady(BOOL bPrimary)
 {
     QWORD qwStartTickCount;
     BYTE bStatus;
 
-    // ´ë±â¸¦ ½ÃÀÛÇÑ ½Ã°£À» ÀúÀå
+    // ëŒ€ê¸°ë¥¼ ì‹œìž‘í•œ ì‹œê°„ì„ ì €ìž¥
     qwStartTickCount = kGetTickCount();
 
-    // ÀÏÁ¤ ½Ã°£ µ¿¾È ÇÏµå µð½ºÅ©°¡ Ready°¡ µÉ ¶§±îÁö ´ë±â
+    // ì¼ì • ì‹œê°„ ë™ì•ˆ í•˜ë“œ ë””ìŠ¤í¬ê°€ Readyê°€ ë  ë•Œê¹Œì§€ ëŒ€ê¸°
     while( ( kGetTickCount() - qwStartTickCount ) <= HDD_WAITTIME )
     {
-        // HDDÀÇ »óÅÂ¸¦ ¹ÝÈ¯
+        // HDDì˜ ìƒíƒœë¥¼ ë°˜í™˜
         bStatus = kReadHDDStatus( bPrimary );
 
-        // Ready ºñÆ®(ºñÆ® 6)ÀÌ ¼³Á¤µÇ¾î ÀÖÀ¸¸é µ¥ÀÌÅÍ¸¦ ¹ÞÀ» ÁØºñ°¡ µÈ °ÍÀÌ¹Ç·Î
-        // Á¾·á
+        // Ready ë¹„íŠ¸(ë¹„íŠ¸ 6)ì´ ì„¤ì •ë˜ì–´ ìžˆìœ¼ë©´ ë°ì´í„°ë¥¼ ë°›ì„ ì¤€ë¹„ê°€ ëœ ê²ƒì´ë¯€ë¡œ
+        // ì¢…ë£Œ
         if( ( bStatus & HDD_STATUS_READY ) == HDD_STATUS_READY )
         {
             return TRUE;
@@ -121,7 +121,7 @@ static BOOL kWaitForHDDReady(BOOL bPrimary)
 
 
 /**
- *  ÀÎÅÍ·´Æ® ¹ß»ý ¿©ºÎ¸¦ ¼³Á¤
+ *  ì¸í„°ëŸ½íŠ¸ ë°œìƒ ì—¬ë¶€ë¥¼ ì„¤ì •
  */
 void kSetHDDInterruptFlag( BOOL bPrimary, BOOL bFlag )
 {
@@ -136,19 +136,19 @@ void kSetHDDInterruptFlag( BOOL bPrimary, BOOL bFlag )
 }
 
 /**
- *  ÀÎÅÍ·´Æ®°¡ ¹ß»ýÇÒ ¶§±îÁö ´ë±â
+ *  ì¸í„°ëŸ½íŠ¸ê°€ ë°œìƒí•  ë•Œê¹Œì§€ ëŒ€ê¸°
  */
 static BOOL kWaitForHDDInterrupt( BOOL bPrimary )
 {
     QWORD qwTickCount;
     
-    // ´ë±â¸¦ ½ÃÀÛÇÑ ½Ã°£À» ÀúÀå
+    // ëŒ€ê¸°ë¥¼ ì‹œìž‘í•œ ì‹œê°„ì„ ì €ìž¥
     qwTickCount = kGetTickCount();
     
-    // ÀÏÁ¤ ½Ã°£ µ¿¾È ÇÏµå µð½ºÅ©ÀÇ ÀÎÅÍ·´Æ®°¡ ¹ß»ýÇÒ ¶§±îÁö ´ë±â
+    // ì¼ì • ì‹œê°„ ë™ì•ˆ í•˜ë“œ ë””ìŠ¤í¬ì˜ ì¸í„°ëŸ½íŠ¸ê°€ ë°œìƒí•  ë•Œê¹Œì§€ ëŒ€ê¸°
     while( kGetTickCount() - qwTickCount <= HDD_WAITTIME )
     {
-        // ÇÏµå µð½ºÅ© ÀÚ·á±¸Á¶¿¡ ÀÎÅÍ·´Æ® ¹ß»ý ÇÃ·¡±×¸¦ È®ÀÎ
+        // í•˜ë“œ ë””ìŠ¤í¬ ìžë£Œêµ¬ì¡°ì— ì¸í„°ëŸ½íŠ¸ ë°œìƒ í”Œëž˜ê·¸ë¥¼ í™•ì¸
         if( ( bPrimary == TRUE ) && 
             ( gs_stHDDManager.bPrimaryInterruptOccur == TRUE ) )
         {
@@ -164,7 +164,7 @@ static BOOL kWaitForHDDInterrupt( BOOL bPrimary )
 }
 
 /**
- *  ÇÏµå µð½ºÅ©ÀÇ Á¤º¸¸¦ ÀÐÀ½
+ *  í•˜ë“œ ë””ìŠ¤í¬ì˜ ì •ë³´ë¥¼ ì½ìŒ
  */
 BOOL kReadHDDInformation( BOOL bPrimary, BOOL bMaster, HDDINFORMATION* pstHDDInformation )
 {
@@ -176,99 +176,99 @@ BOOL kReadHDDInformation( BOOL bPrimary, BOOL bMaster, HDDINFORMATION* pstHDDInf
     WORD wTemp;
     BOOL bWaitResult;
 
-    // PATA Æ÷Æ®¿¡ µû¶ó¼­ I/O Æ÷Æ®ÀÇ ±âº» ¾îµå·¹½º¸¦ ¼³Á¤
+    // PATA í¬íŠ¸ì— ë”°ë¼ì„œ I/O í¬íŠ¸ì˜ ê¸°ë³¸ ì–´ë“œë ˆìŠ¤ë¥¼ ì„¤ì •
     if( bPrimary == TRUE )
     {
-        // Ã¹ ¹øÂ° PATA Æ÷Æ®ÀÌ¸é Æ÷Æ® 0x1F0À» ÀúÀå
+        // ì²« ë²ˆì§¸ PATA í¬íŠ¸ì´ë©´ í¬íŠ¸ 0x1F0ì„ ì €ìž¥
         wPortBase = HDD_PORT_PRIMARYBASE;
     }
     else
     {
-        // µÎ ¹øÂ° PATA Æ÷Æ®ÀÌ¸é Æ÷Æ® 0x170À» ÀúÀå
+        // ë‘ ë²ˆì§¸ PATA í¬íŠ¸ì´ë©´ í¬íŠ¸ 0x170ì„ ì €ìž¥
         wPortBase = HDD_PORT_SECONDARYBASE;
     }
 
-    // µ¿±âÈ­ Ã³¸®
+    // ë™ê¸°í™” ì²˜ë¦¬
     kLock( &(gs_stHDDManager.stMutex ) );
     
-    // ¾ÆÁ÷ ¼öÇà ÁßÀÎ Ä¿¸Çµå°¡ ÀÖ´Ù¸é ÀÏÁ¤ ½Ã°£ µ¿¾È ³¡³¯ ¶§±îÁö ´ë±â
+    // ì•„ì§ ìˆ˜í–‰ ì¤‘ì¸ ì»¤ë§¨ë“œê°€ ìžˆë‹¤ë©´ ì¼ì • ì‹œê°„ ë™ì•ˆ ëë‚  ë•Œê¹Œì§€ ëŒ€ê¸°
     if( kWaitForHDDNoBusy( bPrimary ) == FALSE )
     {
-        // µ¿±âÈ­ Ã³¸®
+        // ë™ê¸°í™” ì²˜ë¦¬
         kUnlock( &(gs_stHDDManager.stMutex ) );
         return FALSE;
     }
     
     //==========================================================================
-    //  LBA ¾îµå·¹½º¿Í µå¶óÀÌºê ¹× Çìµå¿¡ °ü·ÃµÈ ·¹Áö½ºÅÍ ¼³Á¤
-    //      µå¶óÀÌºê¿Í Çìµå Á¤º¸¸¸ ÀÖÀ¸¸é µÊ
+    //  LBA ì–´ë“œë ˆìŠ¤ì™€ ë“œë¼ì´ë¸Œ ë° í—¤ë“œì— ê´€ë ¨ëœ ë ˆì§€ìŠ¤í„° ì„¤ì •
+    //      ë“œë¼ì´ë¸Œì™€ í—¤ë“œ ì •ë³´ë§Œ ìžˆìœ¼ë©´ ë¨
     //==========================================================================
-    // µå¶óÀÌºê¿Í Çìµå µ¥ÀÌÅÍ ¼³Á¤
+    // ë“œë¼ì´ë¸Œì™€ í—¤ë“œ ë°ì´í„° ì„¤ì •
     if( bMaster == TRUE )
     {
-        // ¸¶½ºÅÍÀÌ¸é LBA ÇÃ·¡±×¸¸ ¼³Á¤
+        // ë§ˆìŠ¤í„°ì´ë©´ LBA í”Œëž˜ê·¸ë§Œ ì„¤ì •
         bDriveFlag = HDD_DRIVEANDHEAD_LBA;
     }
     else
     {
-        // ½½·¹ÀÌºêÀÌ¸é LBA ÇÃ·¡±×¿¡ ½½·¹ÀÌºê ÇÃ·¡±×µµ °°ÀÌ ¼³Á¤
+        // ìŠ¬ë ˆì´ë¸Œì´ë©´ LBA í”Œëž˜ê·¸ì— ìŠ¬ë ˆì´ë¸Œ í”Œëž˜ê·¸ë„ ê°™ì´ ì„¤ì •
         bDriveFlag = HDD_DRIVEANDHEAD_LBA | HDD_DRIVEANDHEAD_SLAVE;
     }
-    // µå¶óÀÌºê/Çìµå ·¹Áö½ºÅÍ(Æ÷Æ® 0x1F6 ¶Ç´Â 0x176)¿¡ ¼³Á¤µÈ °ªÀ» Àü¼Û
+    // ë“œë¼ì´ë¸Œ/í—¤ë“œ ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x1F6 ë˜ëŠ” 0x176)ì— ì„¤ì •ëœ ê°’ì„ ì „ì†¡
     kOutPortByte( wPortBase + HDD_PORT_INDEX_DRIVEANDHEAD, bDriveFlag );
 
     //==========================================================================
-    //  Ä¿¸Çµå Àü¼Û ÈÄ, ÀÎÅÍ·´Æ® ´ë±â
+    //  ì»¤ë§¨ë“œ ì „ì†¡ í›„, ì¸í„°ëŸ½íŠ¸ ëŒ€ê¸°
     //==========================================================================
-    // Ä¿¸Çµå¸¦ ¹Þ¾ÆµéÀÏ ÁØºñ°¡ µÉ ¶§±îÁö ÀÏÁ¤ ½Ã°£ µ¿¾È ´ë±â
+    // ì»¤ë§¨ë“œë¥¼ ë°›ì•„ë“¤ì¼ ì¤€ë¹„ê°€ ë  ë•Œê¹Œì§€ ì¼ì • ì‹œê°„ ë™ì•ˆ ëŒ€ê¸°
     if( kWaitForHDDReady( bPrimary ) == FALSE )
     {
-        // µ¿±âÈ­ Ã³¸®
+        // ë™ê¸°í™” ì²˜ë¦¬
         kUnlock( &(gs_stHDDManager.stMutex ) );
         return FALSE;
     }
 
-    // ÀÎÅÍ·´Æ® ÇÃ·¡±×¸¦ ÃÊ±âÈ­
+    // ì¸í„°ëŸ½íŠ¸ í”Œëž˜ê·¸ë¥¼ ì´ˆê¸°í™”
     kSetHDDInterruptFlag( bPrimary, FALSE );
     
-    // Ä¿¸Çµå ·¹Áö½ºÅÍ(Æ÷Æ® 0x1F7 ¶Ç´Â 0x177)¿¡ µå¶óÀÌºê ÀÎ½Ä Ä¿¸Çµå(0xEC)¸¦ Àü¼Û
+    // ì»¤ë§¨ë“œ ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x1F7 ë˜ëŠ” 0x177)ì— ë“œë¼ì´ë¸Œ ì¸ì‹ ì»¤ë§¨ë“œ(0xEC)ë¥¼ ì „ì†¡
     kOutPortByte( wPortBase + HDD_PORT_INDEX_COMMAND, HDD_COMMAND_IDENTIFY );
 
-    // Ã³¸®°¡ ¿Ï·áµÉ ¶§±îÁö ÀÎÅÍ·´Æ® ¹ß»ýÀ» ±â´Ù¸²
+    // ì²˜ë¦¬ê°€ ì™„ë£Œë  ë•Œê¹Œì§€ ì¸í„°ëŸ½íŠ¸ ë°œìƒì„ ê¸°ë‹¤ë¦¼
     bWaitResult = kWaitForHDDInterrupt( bPrimary );
-    // ¿¡·¯°¡ ¹ß»ýÇÏ°Å³ª ÀÎÅÍ·´Æ®°¡ ¹ß»ýÇÏÁö ¾ÊÀ¸¸é ¹®Á¦°¡ ¹ß»ýÇÑ °ÍÀÌ¹Ç·Î Á¾·á
+    // ì—ëŸ¬ê°€ ë°œìƒí•˜ê±°ë‚˜ ì¸í„°ëŸ½íŠ¸ê°€ ë°œìƒí•˜ì§€ ì•Šìœ¼ë©´ ë¬¸ì œê°€ ë°œìƒí•œ ê²ƒì´ë¯€ë¡œ ì¢…ë£Œ
     bStatus = kReadHDDStatus( bPrimary );
     if( ( bWaitResult == FALSE ) || 
         ( ( bStatus & HDD_STATUS_ERROR ) == HDD_STATUS_ERROR ) )
     {
-        // µ¿±âÈ­ Ã³¸®
+        // ë™ê¸°í™” ì²˜ë¦¬
         kUnlock( &( gs_stHDDManager.stMutex ) );
         return FALSE;
     }
 
     //==========================================================================
-    //  µ¥ÀÌÅÍ ¼ö½Å
+    //  ë°ì´í„° ìˆ˜ì‹ 
     //==========================================================================
-    // ÇÑ ¼½ÅÍ¸¦ ÀÐÀ½
+    // í•œ ì„¹í„°ë¥¼ ì½ìŒ
     for( i = 0; i < 512 / 2; i++ )
     {
         ( ( WORD* ) pstHDDInformation )[ i ] =
         kInPortWord( wPortBase + HDD_PORT_INDEX_DATA );
     }
 
-    // ¹®ÀÚ¿­Àº ¹ÙÀÌÆ® ¼ø¼­·Î ´Ù½Ã º¯È¯
+    // ë¬¸ìžì—´ì€ ë°”ì´íŠ¸ ìˆœì„œë¡œ ë‹¤ì‹œ ë³€í™˜
     kSwapByteInWord( pstHDDInformation->vwModelNumber,
             sizeof( pstHDDInformation->vwModelNumber ) / 2 );
     kSwapByteInWord( pstHDDInformation->vwSerialNumber,
             sizeof( pstHDDInformation->vwSerialNumber ) / 2 );
 
-    // µ¿±âÈ­ Ã³¸®
+    // ë™ê¸°í™” ì²˜ë¦¬
     kUnlock( &(gs_stHDDManager.stMutex ) );
     return TRUE;
 }
 
 /**
- *  WORD ³»ÀÇ ¹ÙÀÌÆ® ¼ø¼­¸¦ ¹Ù²Þ
+ *  WORD ë‚´ì˜ ë°”ì´íŠ¸ ìˆœì„œë¥¼ ë°”ê¿ˆ
  */
 static void kSwapByteInWord(WORD* pwData, int iWordCount)
 {
@@ -283,9 +283,9 @@ static void kSwapByteInWord(WORD* pwData, int iWordCount)
 }
 
 /**
- *  ÇÏµå µð½ºÅ©ÀÇ ¼½ÅÍ¸¦ ÀÐÀ½
- *      ÃÖ´ë 256°³ÀÇ ¼½ÅÍ¸¦ ÀÐÀ» ¼ö ÀÖÀ½
- *      ½ÇÁ¦·Î ÀÐÀº ¼½ÅÍ ¼ö¸¦ ¹ÝÈ¯
+ *  í•˜ë“œ ë””ìŠ¤í¬ì˜ ì„¹í„°ë¥¼ ì½ìŒ
+ *      ìµœëŒ€ 256ê°œì˜ ì„¹í„°ë¥¼ ì½ì„ ìˆ˜ ìžˆìŒ
+ *      ì‹¤ì œë¡œ ì½ì€ ì„¹í„° ìˆ˜ë¥¼ ë°˜í™˜
  */
 int kReadHDDSector( BOOL bPrimary, BOOL bMaster, DWORD dwLBA, int iSectorCount,
         char* pcBuffer )
@@ -297,7 +297,7 @@ int kReadHDDSector( BOOL bPrimary, BOOL bMaster, DWORD dwLBA, int iSectorCount,
     long lReadCount = 0;
     BOOL bWaitResult;
 
-    // ¹üÀ§ °Ë»ç. ÃÖ´ë 256 ¼½ÅÍ¸¦ Ã³¸®ÇÒ ¼ö ÀÖÀ½
+    // ë²”ìœ„ ê²€ì‚¬. ìµœëŒ€ 256 ì„¹í„°ë¥¼ ì²˜ë¦¬í•  ìˆ˜ ìžˆìŒ
     if( ( gs_stHDDManager.bHDDDetected == FALSE ) ||
         ( iSectorCount <= 0 ) || ( 256 < iSectorCount ) ||
         ( ( dwLBA + iSectorCount ) >= gs_stHDDManager.stHDDInformation.dwTotalSectors ) )
@@ -305,43 +305,43 @@ int kReadHDDSector( BOOL bPrimary, BOOL bMaster, DWORD dwLBA, int iSectorCount,
         return 0;
     }
 
-    // PATA Æ÷Æ®¿¡ µû¶ó¼­ I/O Æ÷Æ®ÀÇ ±âº» ¾îµå·¹½º¸¦ ¼³Á¤
+    // PATA í¬íŠ¸ì— ë”°ë¼ì„œ I/O í¬íŠ¸ì˜ ê¸°ë³¸ ì–´ë“œë ˆìŠ¤ë¥¼ ì„¤ì •
     if( bPrimary == TRUE )
     {
-        // Ã¹ ¹øÂ° PATA Æ÷Æ®ÀÌ¸é Æ÷Æ® 0x1F0À» ÀúÀå
+        // ì²« ë²ˆì§¸ PATA í¬íŠ¸ì´ë©´ í¬íŠ¸ 0x1F0ì„ ì €ìž¥
         wPortBase = HDD_PORT_PRIMARYBASE;
     }
     else
     {
-        // µÎ ¹øÂ° PATA Æ÷Æ®ÀÌ¸é Æ÷Æ® 0x170À» ÀúÀå
+        // ë‘ ë²ˆì§¸ PATA í¬íŠ¸ì´ë©´ í¬íŠ¸ 0x170ì„ ì €ìž¥
         wPortBase = HDD_PORT_SECONDARYBASE;
     }
 
-    // µ¿±âÈ­ Ã³¸®
+    // ë™ê¸°í™” ì²˜ë¦¬
     kLock( &( gs_stHDDManager.stMutex ) );
     
-    // ¾ÆÁ÷ ¼öÇà ÁßÀÎ Ä¿¸Çµå°¡ ÀÖ´Ù¸é ÀÏÁ¤ ½Ã°£ µ¿¾È ³¡³¯ ¶§±îÁö ´ë±â
+    // ì•„ì§ ìˆ˜í–‰ ì¤‘ì¸ ì»¤ë§¨ë“œê°€ ìžˆë‹¤ë©´ ì¼ì • ì‹œê°„ ë™ì•ˆ ëë‚  ë•Œê¹Œì§€ ëŒ€ê¸°
     if( kWaitForHDDNoBusy( bPrimary ) == FALSE )
     {
-        // µ¿±âÈ­ Ã³¸®
+        // ë™ê¸°í™” ì²˜ë¦¬
         kUnlock( &( gs_stHDDManager.stMutex ) );
         return FALSE;
     }
 
     //==========================================================================
-    //  µ¥ÀÌÅÍ ·¹Áö½ºÅÍ ¼³Á¤
-    //      LBA ¸ðµåÀÇ °æ¿ì, ¼½ÅÍ ¹øÈ£ -> ½Ç¸°´õ ¹øÈ£ -> Çìµå ¹øÈ£ÀÇ ¼øÀ¸·Î 
-    //      LBA ¾îµå·¹½º¸¦ ´ëÀÔ
+    //  ë°ì´í„° ë ˆì§€ìŠ¤í„° ì„¤ì •
+    //      LBA ëª¨ë“œì˜ ê²½ìš°, ì„¹í„° ë²ˆí˜¸ -> ì‹¤ë¦°ë” ë²ˆí˜¸ -> í—¤ë“œ ë²ˆí˜¸ì˜ ìˆœìœ¼ë¡œ 
+    //      LBA ì–´ë“œë ˆìŠ¤ë¥¼ ëŒ€ìž…
     //==========================================================================
-    // ¼½ÅÍ ¼ö ·¹Áö½ºÅÍ(Æ÷Æ® 0x1F2 ¶Ç´Â 0x172)¿¡ ÀÐÀ» ¼½ÅÍ ¼ö¸¦ Àü¼Û
+    // ì„¹í„° ìˆ˜ ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x1F2 ë˜ëŠ” 0x172)ì— ì½ì„ ì„¹í„° ìˆ˜ë¥¼ ì „ì†¡
     kOutPortByte( wPortBase + HDD_PORT_INDEX_SECTORCOUNT, iSectorCount );
-    // ¼½ÅÍ ¹øÈ£ ·¹Áö½ºÅÍ(Æ÷Æ® 0x1F3 ¶Ç´Â 0x173)¿¡ ÀÐÀ» ¼½ÅÍ À§Ä¡(LBA 0~7ºñÆ®)¸¦ Àü¼Û
+    // ì„¹í„° ë²ˆí˜¸ ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x1F3 ë˜ëŠ” 0x173)ì— ì½ì„ ì„¹í„° ìœ„ì¹˜(LBA 0~7ë¹„íŠ¸)ë¥¼ ì „ì†¡
     kOutPortByte( wPortBase + HDD_PORT_INDEX_SECTORNUMBER, dwLBA );
-    // ½Ç¸°´õ LSB ·¹Áö½ºÅÍ(Æ÷Æ® 0x1F4 ¶Ç´Â 0x174)¿¡ ÀÐÀ» ¼½ÅÍ À§Ä¡(LBA 8~15ºñÆ®)¸¦ Àü¼Û
+    // ì‹¤ë¦°ë” LSB ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x1F4 ë˜ëŠ” 0x174)ì— ì½ì„ ì„¹í„° ìœ„ì¹˜(LBA 8~15ë¹„íŠ¸)ë¥¼ ì „ì†¡
     kOutPortByte( wPortBase + HDD_PORT_INDEX_CYLINDERLSB, dwLBA >> 8 );
-    // ½Ç¸°´õ MSB ·¹Áö½ºÅÍ(Æ÷Æ® 0x1F5 ¶Ç´Â 0x175)¿¡ ÀÐÀ» ¼½ÅÍ À§Ä¡(LBA 16~23ºñÆ®)¸¦ Àü¼Û
+    // ì‹¤ë¦°ë” MSB ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x1F5 ë˜ëŠ” 0x175)ì— ì½ì„ ì„¹í„° ìœ„ì¹˜(LBA 16~23ë¹„íŠ¸)ë¥¼ ì „ì†¡
     kOutPortByte( wPortBase + HDD_PORT_INDEX_CYLINDERMSB, dwLBA >> 16 );
-    // µå¶óÀÌºê¿Í Çìµå µ¥ÀÌÅÍ ¼³Á¤
+    // ë“œë¼ì´ë¸Œì™€ í—¤ë“œ ë°ì´í„° ì„¤ì •
     if( bMaster == TRUE )
     {
         bDriveFlag = HDD_DRIVEANDHEAD_LBA;
@@ -350,61 +350,61 @@ int kReadHDDSector( BOOL bPrimary, BOOL bMaster, DWORD dwLBA, int iSectorCount,
     {
         bDriveFlag = HDD_DRIVEANDHEAD_LBA | HDD_DRIVEANDHEAD_SLAVE;
     }
-    // µå¶óÀÌºê/Çìµå ·¹Áö½ºÅÍ(Æ÷Æ® 0x1F6 ¶Ç´Â 0x176)¿¡ ÀÐÀ» ¼½ÅÍÀÇ À§Ä¡(LBA 24~27ºñÆ®)¿Í
-    // ¼³Á¤µÈ °ªÀ» °°ÀÌ Àü¼Û
+    // ë“œë¼ì´ë¸Œ/í—¤ë“œ ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x1F6 ë˜ëŠ” 0x176)ì— ì½ì„ ì„¹í„°ì˜ ìœ„ì¹˜(LBA 24~27ë¹„íŠ¸)ì™€
+    // ì„¤ì •ëœ ê°’ì„ ê°™ì´ ì „ì†¡
     kOutPortByte( wPortBase + HDD_PORT_INDEX_DRIVEANDHEAD, bDriveFlag | ( (dwLBA
             >> 24 ) & 0x0F ) );
 
     //==========================================================================
-    //  Ä¿¸Çµå Àü¼Û
+    //  ì»¤ë§¨ë“œ ì „ì†¡
     //==========================================================================
-    // Ä¿¸Çµå¸¦ ¹Þ¾ÆµéÀÏ ÁØºñ°¡ µÉ ¶§±îÁö ÀÏÁ¤ ½Ã°£ µ¿¾È ´ë±â
+    // ì»¤ë§¨ë“œë¥¼ ë°›ì•„ë“¤ì¼ ì¤€ë¹„ê°€ ë  ë•Œê¹Œì§€ ì¼ì • ì‹œê°„ ë™ì•ˆ ëŒ€ê¸°
     if( kWaitForHDDReady( bPrimary ) == FALSE )
     {
-        // µ¿±âÈ­ Ã³¸®
+        // ë™ê¸°í™” ì²˜ë¦¬
         kUnlock( &( gs_stHDDManager.stMutex ) );
         return FALSE;
     }
 
-    // ÀÎÅÍ·´Æ® ÇÃ·¡±×¸¦ ÃÊ±âÈ­
+    // ì¸í„°ëŸ½íŠ¸ í”Œëž˜ê·¸ë¥¼ ì´ˆê¸°í™”
     kSetHDDInterruptFlag( bPrimary, FALSE );
     
-    // Ä¿¸Çµå ·¹Áö½ºÅÍ(Æ÷Æ® 0x1F7 ¶Ç´Â 0x177)¿¡ ÀÐ±â(0x20)À» Àü¼Û
+    // ì»¤ë§¨ë“œ ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x1F7 ë˜ëŠ” 0x177)ì— ì½ê¸°(0x20)ì„ ì „ì†¡
     kOutPortByte( wPortBase + HDD_PORT_INDEX_COMMAND, HDD_COMMAND_READ );
 
     //==========================================================================
-    //  ÀÎÅÍ·´Æ® ´ë±â ÈÄ, µ¥ÀÌÅÍ ¼ö½Å
+    //  ì¸í„°ëŸ½íŠ¸ ëŒ€ê¸° í›„, ë°ì´í„° ìˆ˜ì‹ 
     //==========================================================================
-    // ¼½ÅÍ ¼ö¸¸Å­ ·çÇÁ¸¦ µ¹¸é¼­ µ¥ÀÌÅÍ ¼ö½Å
+    // ì„¹í„° ìˆ˜ë§Œí¼ ë£¨í”„ë¥¼ ëŒë©´ì„œ ë°ì´í„° ìˆ˜ì‹ 
     for( i = 0 ; i < iSectorCount ; i++ )
     {
-        // ¿¡·¯°¡ ¹ß»ýÇÏ¸é Á¾·á
+        // ì—ëŸ¬ê°€ ë°œìƒí•˜ë©´ ì¢…ë£Œ
         bStatus = kReadHDDStatus( bPrimary );
         if( ( bStatus & HDD_STATUS_ERROR ) == HDD_STATUS_ERROR )
         {
             kPrintf( "Error Occur\n" );
-            // µ¿±âÈ­ Ã³¸®
+            // ë™ê¸°í™” ì²˜ë¦¬
             kUnlock( &( gs_stHDDManager.stMutex ) );
             return i;
         }
 
-        // DATAREQUEST ºñÆ®°¡ ¼³Á¤µÇÁö ¾Ê¾ÒÀ¸¸é µ¥ÀÌÅÍ°¡ ¼ö½ÅµÇ±æ ±â´Ù¸²
+        // DATAREQUEST ë¹„íŠ¸ê°€ ì„¤ì •ë˜ì§€ ì•Šì•˜ìœ¼ë©´ ë°ì´í„°ê°€ ìˆ˜ì‹ ë˜ê¸¸ ê¸°ë‹¤ë¦¼
         if( ( bStatus & HDD_STATUS_DATAREQUEST ) != HDD_STATUS_DATAREQUEST )
         {
-            // Ã³¸®°¡ ¿Ï·áµÉ ¶§±îÁö ÀÏÁ¤ ½Ã°£ µ¿¾È ÀÎÅÍ·´Æ®¸¦ ±â´Ù¸²
+            // ì²˜ë¦¬ê°€ ì™„ë£Œë  ë•Œê¹Œì§€ ì¼ì • ì‹œê°„ ë™ì•ˆ ì¸í„°ëŸ½íŠ¸ë¥¼ ê¸°ë‹¤ë¦¼
             bWaitResult = kWaitForHDDInterrupt( bPrimary );
             kSetHDDInterruptFlag( bPrimary, FALSE );
-            // ÀÎÅÍ·´Æ®°¡ ¹ß»ýÇÏÁö ¾ÊÀ¸¸é ¹®Á¦°¡ ¹ß»ýÇÑ °ÍÀÌ¹Ç·Î Á¾·á
+            // ì¸í„°ëŸ½íŠ¸ê°€ ë°œìƒí•˜ì§€ ì•Šìœ¼ë©´ ë¬¸ì œê°€ ë°œìƒí•œ ê²ƒì´ë¯€ë¡œ ì¢…ë£Œ
             if( bWaitResult == FALSE )
             {
                 kPrintf( "Interrupt Not Occur\n" );
-                // µ¿±âÈ­ Ã³¸®
+                // ë™ê¸°í™” ì²˜ë¦¬
                 kUnlock( &( gs_stHDDManager.stMutex ) );
                 return FALSE;
             }
         }
         
-        // ÇÑ ¼½ÅÍ¸¦ ÀÐÀ½
+        // í•œ ì„¹í„°ë¥¼ ì½ìŒ
         for( j = 0 ; j < 512 / 2 ; j++ )
         {
             ( ( WORD* ) pcBuffer )[ lReadCount++ ]
@@ -412,15 +412,15 @@ int kReadHDDSector( BOOL bPrimary, BOOL bMaster, DWORD dwLBA, int iSectorCount,
         }
     }
 
-    // µ¿±âÈ­ Ã³¸®
+    // ë™ê¸°í™” ì²˜ë¦¬
     kUnlock( &( gs_stHDDManager.stMutex ) );
     return i;
 }
 
 /**
- *  ÇÏµå µð½ºÅ©¿¡ ¼½ÅÍ¸¦ ¾¸
- *      ÃÖ´ë 256°³ÀÇ ¼½ÅÍ¸¦ ¾µ ¼ö ÀÖÀ½
- *      ½ÇÁ¦·Î ¾´ ¼½ÅÍ ¼ö¸¦ ¹ÝÈ¯
+ *  í•˜ë“œ ë””ìŠ¤í¬ì— ì„¹í„°ë¥¼ ì”€
+ *      ìµœëŒ€ 256ê°œì˜ ì„¹í„°ë¥¼ ì“¸ ìˆ˜ ìžˆìŒ
+ *      ì‹¤ì œë¡œ ì“´ ì„¹í„° ìˆ˜ë¥¼ ë°˜í™˜
  */
 int kWriteHDDSector(BOOL bPrimary, BOOL bMaster, DWORD dwLBA, int iSectorCount,
         char* pcBuffer)
@@ -433,7 +433,7 @@ int kWriteHDDSector(BOOL bPrimary, BOOL bMaster, DWORD dwLBA, int iSectorCount,
     long lReadCount = 0;
     BOOL bWaitResult;
 
-    // ¹üÀ§ °Ë»ç. ÃÖ´ë 256 ¼½ÅÍ¸¦ Ã³¸®ÇÒ ¼ö ÀÖÀ½
+    // ë²”ìœ„ ê²€ì‚¬. ìµœëŒ€ 256 ì„¹í„°ë¥¼ ì²˜ë¦¬í•  ìˆ˜ ìžˆìŒ
     if( ( gs_stHDDManager.bCanWrite == FALSE ) || 
         ( iSectorCount <= 0 ) || ( 256 < iSectorCount ) ||
         ( ( dwLBA + iSectorCount ) >= gs_stHDDManager.stHDDInformation.dwTotalSectors ) )
@@ -442,41 +442,41 @@ int kWriteHDDSector(BOOL bPrimary, BOOL bMaster, DWORD dwLBA, int iSectorCount,
         return 0;
     }
 
-    // PATA Æ÷Æ®¿¡ µû¶ó¼­ I/O Æ÷Æ®ÀÇ ±âº» ¾îµå·¹½º¸¦ ¼³Á¤
+    // PATA í¬íŠ¸ì— ë”°ë¼ì„œ I/O í¬íŠ¸ì˜ ê¸°ë³¸ ì–´ë“œë ˆìŠ¤ë¥¼ ì„¤ì •
     if( bPrimary == TRUE )
     {
-        // Ã¹ ¹øÂ° PATA Æ÷Æ®ÀÌ¸é Æ÷Æ® 0x1F0À» ÀúÀå
+        // ì²« ë²ˆì§¸ PATA í¬íŠ¸ì´ë©´ í¬íŠ¸ 0x1F0ì„ ì €ìž¥
         wPortBase = HDD_PORT_PRIMARYBASE;
     }
     else
     {
-        // µÎ ¹øÂ° PATA Æ÷Æ®ÀÌ¸é Æ÷Æ® 0x170À» ÀúÀå
+        // ë‘ ë²ˆì§¸ PATA í¬íŠ¸ì´ë©´ í¬íŠ¸ 0x170ì„ ì €ìž¥
         wPortBase = HDD_PORT_SECONDARYBASE;
     }
 
-    // ¾ÆÁ÷ ¼öÇà ÁßÀÎ Ä¿¸Çµå°¡ ÀÖ´Ù¸é ÀÏÁ¤ ½Ã°£ µ¿¾È ³¡³¯ ¶§±îÁö ´ë±â
+    // ì•„ì§ ìˆ˜í–‰ ì¤‘ì¸ ì»¤ë§¨ë“œê°€ ìžˆë‹¤ë©´ ì¼ì • ì‹œê°„ ë™ì•ˆ ëë‚  ë•Œê¹Œì§€ ëŒ€ê¸°
     if( kWaitForHDDNoBusy( bPrimary ) == FALSE )
     {
         return FALSE;
     }
 
-    // µ¿±âÈ­ Ã³¸®
+    // ë™ê¸°í™” ì²˜ë¦¬
     kLock( &(gs_stHDDManager.stMutex ) );
 
     //==========================================================================
-    //  µ¥ÀÌÅÍ ·¹Áö½ºÅÍ ¼³Á¤
-    //      LBA ¸ðµåÀÇ °æ¿ì, ¼½ÅÍ ¹øÈ£ -> ½Ç¸°´õ ¹øÈ£ -> Çìµå ¹øÈ£ÀÇ ¼øÀ¸·Î 
-    //      LBA ¾îµå·¹½º¸¦ ´ëÀÔ
+    //  ë°ì´í„° ë ˆì§€ìŠ¤í„° ì„¤ì •
+    //      LBA ëª¨ë“œì˜ ê²½ìš°, ì„¹í„° ë²ˆí˜¸ -> ì‹¤ë¦°ë” ë²ˆí˜¸ -> í—¤ë“œ ë²ˆí˜¸ì˜ ìˆœìœ¼ë¡œ 
+    //      LBA ì–´ë“œë ˆìŠ¤ë¥¼ ëŒ€ìž…
     //==========================================================================
-    // ¼½ÅÍ ¼ö ·¹Áö½ºÅÍ(Æ÷Æ® 0x1F2 ¶Ç´Â 0x172)¿¡ ¾µ ¼½ÅÍ ¼ö¸¦ Àü¼Û
+    // ì„¹í„° ìˆ˜ ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x1F2 ë˜ëŠ” 0x172)ì— ì“¸ ì„¹í„° ìˆ˜ë¥¼ ì „ì†¡
     kOutPortByte( wPortBase + HDD_PORT_INDEX_SECTORCOUNT, iSectorCount );
-    // ¼½ÅÍ ¹øÈ£ ·¹Áö½ºÅÍ(Æ÷Æ® 0x1F3 ¶Ç´Â 0x173)¿¡ ¾µ ¼½ÅÍ À§Ä¡(LBA 0~7ºñÆ®)¸¦ Àü¼Û
+    // ì„¹í„° ë²ˆí˜¸ ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x1F3 ë˜ëŠ” 0x173)ì— ì“¸ ì„¹í„° ìœ„ì¹˜(LBA 0~7ë¹„íŠ¸)ë¥¼ ì „ì†¡
     kOutPortByte( wPortBase + HDD_PORT_INDEX_SECTORNUMBER, dwLBA );
-    // ½Ç¸°´õ LSB ·¹Áö½ºÅÍ(Æ÷Æ® 0x1F4 ¶Ç´Â 0x174)¿¡ ¾µ ¼½ÅÍ À§Ä¡(LBA 8~15ºñÆ®)¸¦ Àü¼Û
+    // ì‹¤ë¦°ë” LSB ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x1F4 ë˜ëŠ” 0x174)ì— ì“¸ ì„¹í„° ìœ„ì¹˜(LBA 8~15ë¹„íŠ¸)ë¥¼ ì „ì†¡
     kOutPortByte( wPortBase + HDD_PORT_INDEX_CYLINDERLSB, dwLBA >> 8 );
-    // ½Ç¸°´õ MSB ·¹Áö½ºÅÍ(Æ÷Æ® 0x1F5 ¶Ç´Â 0x175)¿¡ ¾µ ¼½ÅÍ À§Ä¡(LBA 16~23ºñÆ®)¸¦ Àü¼Û
+    // ì‹¤ë¦°ë” MSB ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x1F5 ë˜ëŠ” 0x175)ì— ì“¸ ì„¹í„° ìœ„ì¹˜(LBA 16~23ë¹„íŠ¸)ë¥¼ ì „ì†¡
     kOutPortByte( wPortBase + HDD_PORT_INDEX_CYLINDERMSB, dwLBA >> 16 );
-    // µå¶óÀÌºê¿Í Çìµå µ¥ÀÌÅÍ ¼³Á¤
+    // ë“œë¼ì´ë¸Œì™€ í—¤ë“œ ë°ì´í„° ì„¤ì •
     if( bMaster == TRUE )
     {
         bDriveFlag = HDD_DRIVEANDHEAD_LBA;
@@ -485,38 +485,38 @@ int kWriteHDDSector(BOOL bPrimary, BOOL bMaster, DWORD dwLBA, int iSectorCount,
     {
         bDriveFlag = HDD_DRIVEANDHEAD_LBA | HDD_DRIVEANDHEAD_SLAVE;
     }
-    // µå¶óÀÌºê/Çìµå ·¹Áö½ºÅÍ(Æ÷Æ® 0x1F6 ¶Ç´Â 0x176)¿¡ ¾µ ¼½ÅÍÀÇ À§Ä¡(LBA 24~27ºñÆ®)¿Í
-    // ¼³Á¤µÈ °ªÀ» °°ÀÌ Àü¼Û
+    // ë“œë¼ì´ë¸Œ/í—¤ë“œ ë ˆì§€ìŠ¤í„°(í¬íŠ¸ 0x1F6 ë˜ëŠ” 0x176)ì— ì“¸ ì„¹í„°ì˜ ìœ„ì¹˜(LBA 24~27ë¹„íŠ¸)ì™€
+    // ì„¤ì •ëœ ê°’ì„ ê°™ì´ ì „ì†¡
     kOutPortByte(wPortBase + HDD_PORT_INDEX_DRIVEANDHEAD, bDriveFlag | ( (dwLBA
             >> 24 ) & 0x0F ) );
 
     //==========================================================================
-    //  Ä¿¸Çµå Àü¼Û ÈÄ, µ¥ÀÌÅÍ ¼Û½ÅÀÌ °¡´ÉÇÒ ¶§±îÁö ´ë±â
+    //  ì»¤ë§¨ë“œ ì „ì†¡ í›„, ë°ì´í„° ì†¡ì‹ ì´ ê°€ëŠ¥í•  ë•Œê¹Œì§€ ëŒ€ê¸°
     //==========================================================================
-    // Ä¿¸Çµå¸¦ ¹Þ¾ÆµéÀÏ ÁØºñ°¡ µÉ ¶§±îÁö ÀÏÁ¤ ½Ã°£ µ¿¾È ´ë±â
+    // ì»¤ë§¨ë“œë¥¼ ë°›ì•„ë“¤ì¼ ì¤€ë¹„ê°€ ë  ë•Œê¹Œì§€ ì¼ì • ì‹œê°„ ë™ì•ˆ ëŒ€ê¸°
     if( kWaitForHDDReady( bPrimary ) == FALSE )
     {
-        // µ¿±âÈ­ Ã³¸®
+        // ë™ê¸°í™” ì²˜ë¦¬
         kUnlock( &( gs_stHDDManager.stMutex ) );
         return FALSE;
     }
 
-    // Ä¿¸Çµå Àü¼Û
+    // ì»¤ë§¨ë“œ ì „ì†¡
     kOutPortByte( wPortBase + HDD_PORT_INDEX_COMMAND, HDD_COMMAND_WRITE );
     
-    // µ¥ÀÌÅÍ ¼Û½ÅÀÌ °¡´ÉÇÒ ¶§±îÁö ´ë±â
+    // ë°ì´í„° ì†¡ì‹ ì´ ê°€ëŠ¥í•  ë•Œê¹Œì§€ ëŒ€ê¸°
     while( 1 )
     {
         bStatus = kReadHDDStatus( bPrimary );
-        // ¿¡·¯°¡ ¹ß»ýÇÏ¸é Á¾·á
+        // ì—ëŸ¬ê°€ ë°œìƒí•˜ë©´ ì¢…ë£Œ
         if( ( bStatus & HDD_STATUS_ERROR ) == HDD_STATUS_ERROR )
         {
-            // µ¿±âÈ­ Ã³¸®
+            // ë™ê¸°í™” ì²˜ë¦¬
             kUnlock( &(gs_stHDDManager.stMutex ) );
             return 0;
         }
         
-        // Data RequestºñÆ®°¡ ¼³Á¤µÇ¾ú´Ù¸é µ¥ÀÌÅÍ ¼Û½Å °¡´É
+        // Data Requestë¹„íŠ¸ê°€ ì„¤ì •ë˜ì—ˆë‹¤ë©´ ë°ì´í„° ì†¡ì‹  ê°€ëŠ¥
         if( ( bStatus & HDD_STATUS_DATAREQUEST ) == HDD_STATUS_DATAREQUEST )
         {
             break;
@@ -526,12 +526,12 @@ int kWriteHDDSector(BOOL bPrimary, BOOL bMaster, DWORD dwLBA, int iSectorCount,
     }
 
     //==========================================================================
-    //  µ¥ÀÌÅÍ ¼Û½Å ÈÄ, ÀÎÅÍ·´Æ® ´ë±â
+    //  ë°ì´í„° ì†¡ì‹  í›„, ì¸í„°ëŸ½íŠ¸ ëŒ€ê¸°
     //==========================================================================
-    // ¼½ÅÍ ¼ö¸¸Å­ ·çÇÁ¸¦ µ¹¸é¼­ µ¥ÀÌÅÍ ¼Û½Å
+    // ì„¹í„° ìˆ˜ë§Œí¼ ë£¨í”„ë¥¼ ëŒë©´ì„œ ë°ì´í„° ì†¡ì‹ 
     for( i = 0 ; i < iSectorCount ; i++)
     {
-        // ÀÎÅÍ·´Æ® ÇÃ·¡±×¸¦ ÃÊ±âÈ­ÇÏ°í ÇÑ ¼½ÅÍ¸¦ ¾¸
+        // ì¸í„°ëŸ½íŠ¸ í”Œëž˜ê·¸ë¥¼ ì´ˆê¸°í™”í•˜ê³  í•œ ì„¹í„°ë¥¼ ì”€
         kSetHDDInterruptFlag( bPrimary, FALSE );
         for( j = 0 ; j < 512 / 2 ; j++ )
         {
@@ -539,32 +539,32 @@ int kWriteHDDSector(BOOL bPrimary, BOOL bMaster, DWORD dwLBA, int iSectorCount,
                          ( ( WORD* ) pcBuffer )[ lReadCount++ ]);
         }
         
-        // ¿¡·¯°¡ ¹ß»ýÇÏ¸é Á¾·á
+        // ì—ëŸ¬ê°€ ë°œìƒí•˜ë©´ ì¢…ë£Œ
         bStatus = kReadHDDStatus( bPrimary );
         if( ( bStatus & HDD_STATUS_ERROR ) == HDD_STATUS_ERROR )
         {
-            // µ¿±âÈ­ Ã³¸®
+            // ë™ê¸°í™” ì²˜ë¦¬
             kUnlock( &(gs_stHDDManager.stMutex ) );
             return i;
         }
         
-        // DATAREQUEST ºñÆ®°¡ ¼³Á¤µÇÁö ¾Ê¾ÒÀ¸¸é µ¥ÀÌÅÍ°¡ Ã³¸®°¡ ¿Ï·áµÇ±æ ±â´Ù¸²
+        // DATAREQUEST ë¹„íŠ¸ê°€ ì„¤ì •ë˜ì§€ ì•Šì•˜ìœ¼ë©´ ë°ì´í„°ê°€ ì²˜ë¦¬ê°€ ì™„ë£Œë˜ê¸¸ ê¸°ë‹¤ë¦¼
         if( ( bStatus & HDD_STATUS_DATAREQUEST ) != HDD_STATUS_DATAREQUEST )
         {
-            // Ã³¸®°¡ ¿Ï·áµÉ ¶§±îÁö ÀÏÁ¤ ½Ã°£ µ¿¾È ÀÎÅÍ·´Æ®¸¦ ±â´Ù¸²
+            // ì²˜ë¦¬ê°€ ì™„ë£Œë  ë•Œê¹Œì§€ ì¼ì • ì‹œê°„ ë™ì•ˆ ì¸í„°ëŸ½íŠ¸ë¥¼ ê¸°ë‹¤ë¦¼
             bWaitResult = kWaitForHDDInterrupt( bPrimary );
             kSetHDDInterruptFlag( bPrimary, FALSE );
-            // ÀÎÅÍ·´Æ®°¡ ¹ß»ýÇÏÁö ¾ÊÀ¸¸é ¹®Á¦°¡ ¹ß»ýÇÑ °ÍÀÌ¹Ç·Î Á¾·á
+            // ì¸í„°ëŸ½íŠ¸ê°€ ë°œìƒí•˜ì§€ ì•Šìœ¼ë©´ ë¬¸ì œê°€ ë°œìƒí•œ ê²ƒì´ë¯€ë¡œ ì¢…ë£Œ
             if( bWaitResult == FALSE )
             {
-                // µ¿±âÈ­ Ã³¸®
+                // ë™ê¸°í™” ì²˜ë¦¬
                 kUnlock( &( gs_stHDDManager.stMutex ) );
                 return FALSE;
             }
         }        
     }
     
-    // µ¿±âÈ­ Ã³¸®
+    // ë™ê¸°í™” ì²˜ë¦¬
     kUnlock( &(gs_stHDDManager.stMutex ) );
     return i;
 }

@@ -3,47 +3,47 @@
  *  date    2009/05/22
  *  author  kkamagui 
  *          Copyright(c)2008 All rights reserved by kkamagui
- *  brief   ·¥ µð½ºÅ©¿¡ °ü·ÃµÈ ÇÔ¼ö¸¦ Á¤ÀÇÇÑ ¼Ò½º ÆÄÀÏ
+ *  brief   ëž¨ ë””ìŠ¤í¬ì— ê´€ë ¨ëœ í•¨ìˆ˜ë¥¼ ì •ì˜í•œ ì†ŒìŠ¤ íŒŒì¼
  */
 
 #include "RAMDisk.h"
 #include "Utility.h"
 #include "DynamicMemory.h"
 
-// ·¥ µð½ºÅ©¸¦ °ü¸®ÇÏ´Â ÀÚ·á±¸Á¶
+// ëž¨ ë””ìŠ¤í¬ë¥¼ ê´€ë¦¬í•˜ëŠ” ìžë£Œêµ¬ì¡°
 static RDDMANAGER gs_stRDDManager;
 
 /**
- *  ·¥ µð½ºÅ© µð¹ÙÀÌ½º µå¶óÀÌ¹ö ÃÊ±âÈ­ ÇÔ¼ö
+ *  ëž¨ ë””ìŠ¤í¬ ë””ë°”ì´ìŠ¤ ë“œë¼ì´ë²„ ì´ˆê¸°í™” í•¨ìˆ˜
  */
 BOOL kInitializeRDD( DWORD dwTotalSectorCount )
 {
-    // ÀÚ·á±¸Á¶ ÃÊ±âÈ­
+    // ìžë£Œêµ¬ì¡° ì´ˆê¸°í™”
     kMemSet( &gs_stRDDManager, 0, sizeof( gs_stRDDManager ) );
     
-    // ·¥ µð½ºÅ©·Î »ç¿ëÇÒ ¸Þ¸ð¸®¸¦ ÇÒ´ç
+    // ëž¨ ë””ìŠ¤í¬ë¡œ ì‚¬ìš©í•  ë©”ëª¨ë¦¬ë¥¼ í• ë‹¹
     gs_stRDDManager.pbBuffer = ( BYTE* ) kAllocateMemory( dwTotalSectorCount * 512 );
     if( gs_stRDDManager.pbBuffer == NULL )
     {
         return FALSE;
     }
     
-    // ÃÑ ¼½ÅÍ ¼ö¿Í µ¿±âÈ­ °´Ã¼¸¦ ¼³Á¤
+    // ì´ ì„¹í„° ìˆ˜ì™€ ë™ê¸°í™” ê°ì²´ë¥¼ ì„¤ì •
     gs_stRDDManager.dwTotalSectorCount = dwTotalSectorCount;
     kInitializeMutex( &( gs_stRDDManager.stMutex ) );
     return TRUE;
 }
 
 /**
- *  ·¥ µð½ºÅ©ÀÇ Á¤º¸¸¦ ¹ÝÈ¯
+ *  ëž¨ ë””ìŠ¤í¬ì˜ ì •ë³´ë¥¼ ë°˜í™˜
  */
 BOOL kReadRDDInformation( BOOL bPrimary, BOOL bMaster, 
         HDDINFORMATION* pstHDDInformation )
 {
-    // ÀÚ·á±¸Á¶ ÃÊ±âÈ­
+    // ìžë£Œêµ¬ì¡° ì´ˆê¸°í™”
     kMemSet( pstHDDInformation, 0, sizeof( HDDINFORMATION ) );
     
-    // ÃÑ ¼½ÅÍ ¼ö¿Í ½Ã¸®¾ó ¹øÈ£, ±×¸®°í ¸ðµ¨ ¹øÈ£¸¸ ¼³Á¤
+    // ì´ ì„¹í„° ìˆ˜ì™€ ì‹œë¦¬ì–¼ ë²ˆí˜¸, ê·¸ë¦¬ê³  ëª¨ë¸ ë²ˆí˜¸ë§Œ ì„¤ì •
     pstHDDInformation->dwTotalSectors = gs_stRDDManager.dwTotalSectorCount;
     kMemCpy( pstHDDInformation->vwSerialNumber, "0000-0000", 9 );
     kMemCpy( pstHDDInformation->vwModelNumber, "MINT RAM Disk v1.0", 18 ); 
@@ -52,19 +52,19 @@ BOOL kReadRDDInformation( BOOL bPrimary, BOOL bMaster,
 }
 
 /**
- *  ·¥ µð½ºÅ©¿¡¼­ ¿©·¯ ¼½ÅÍ¸¦ ÀÐ¾î¼­ ¹ÝÈ¯
+ *  ëž¨ ë””ìŠ¤í¬ì—ì„œ ì—¬ëŸ¬ ì„¹í„°ë¥¼ ì½ì–´ì„œ ë°˜í™˜
  */
 int kReadRDDSector( BOOL bPrimary, BOOL bMaster, DWORD dwLBA, int iSectorCount, 
         char* pcBuffer )
 {
     int iRealReadCount;
     
-    // LBA ¾îµå·¹½ººÎÅÍ ³¡±îÁö ÀÐÀ» ¼ö ÀÖ´Â ¼½ÅÍ ¼ö¿Í ÀÐ¾î¾ß ÇÒ ¼½ÅÍ ¼ö¸¦ ºñ±³ÇØ¼­
-    // ½ÇÁ¦·Î ÀÐÀ» ¼ö ÀÖ´Â ¼ö¸¦ °è»ê
+    // LBA ì–´ë“œë ˆìŠ¤ë¶€í„° ëê¹Œì§€ ì½ì„ ìˆ˜ ìžˆëŠ” ì„¹í„° ìˆ˜ì™€ ì½ì–´ì•¼ í•  ì„¹í„° ìˆ˜ë¥¼ ë¹„êµí•´ì„œ
+    // ì‹¤ì œë¡œ ì½ì„ ìˆ˜ ìžˆëŠ” ìˆ˜ë¥¼ ê³„ì‚°
     iRealReadCount = MIN( gs_stRDDManager.dwTotalSectorCount - 
                       (dwLBA + iSectorCount), iSectorCount );
 
-    // ·¥ µð½ºÅ© ¸Þ¸ð¸®¿¡¼­ µ¥ÀÌÅÍ¸¦ ½ÇÁ¦·Î ÀÐÀ» ¼½ÅÍ ¼ö¸¸Å­ º¹»çÇØ¼­ ¹ÝÈ¯
+    // ëž¨ ë””ìŠ¤í¬ ë©”ëª¨ë¦¬ì—ì„œ ë°ì´í„°ë¥¼ ì‹¤ì œë¡œ ì½ì„ ì„¹í„° ìˆ˜ë§Œí¼ ë³µì‚¬í•´ì„œ ë°˜í™˜
     kMemCpy( pcBuffer, gs_stRDDManager.pbBuffer + ( dwLBA * 512 ), 
              iRealReadCount * 512 );
     
@@ -72,19 +72,19 @@ int kReadRDDSector( BOOL bPrimary, BOOL bMaster, DWORD dwLBA, int iSectorCount,
 }
 
 /**
- *  ·¥ µð½ºÅ©¿¡ ¿©·¯ ¼½ÅÍ¸¦ ¾¸
+ *  ëž¨ ë””ìŠ¤í¬ì— ì—¬ëŸ¬ ì„¹í„°ë¥¼ ì”€
  */
 int kWriteRDDSector( BOOL bPrimary, BOOL bMaster, DWORD dwLBA, int iSectorCount, 
         char* pcBuffer )
 {
     int iRealWriteCount;
     
-    // LBA ¾îµå·¹½ººÎÅÍ ³¡±îÁö ¾µ ¼ö ÀÖ´Â ¼½ÅÍ ¼ö¿Í ½á¾ß ÇÒ ¼½ÅÍ ¼ö¸¦ ºñ±³ÇØ¼­
-    // ½ÇÁ¦·Î ¾µ ¼ö ÀÖ´Â ¼ö¸¦ °è»ê
+    // LBA ì–´ë“œë ˆìŠ¤ë¶€í„° ëê¹Œì§€ ì“¸ ìˆ˜ ìžˆëŠ” ì„¹í„° ìˆ˜ì™€ ì¨ì•¼ í•  ì„¹í„° ìˆ˜ë¥¼ ë¹„êµí•´ì„œ
+    // ì‹¤ì œë¡œ ì“¸ ìˆ˜ ìžˆëŠ” ìˆ˜ë¥¼ ê³„ì‚°
     iRealWriteCount = MIN( gs_stRDDManager.dwTotalSectorCount - 
                       (dwLBA + iSectorCount), iSectorCount );
 
-    // µ¥ÀÌÅÍ¸¦ ½ÇÁ¦·Î ¾µ ¼½ÅÍ ¼ö¸¸Å­ ·¥ µð½ºÅ© ¸Þ¸ð¸®¿¡ º¹»ç
+    // ë°ì´í„°ë¥¼ ì‹¤ì œë¡œ ì“¸ ì„¹í„° ìˆ˜ë§Œí¼ ëž¨ ë””ìŠ¤í¬ ë©”ëª¨ë¦¬ì— ë³µì‚¬
     kMemCpy( gs_stRDDManager.pbBuffer + ( dwLBA * 512 ), pcBuffer, 
              iRealWriteCount * 512 );
     

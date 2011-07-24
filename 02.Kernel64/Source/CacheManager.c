@@ -3,36 +3,36 @@
  *  date    2009/05/17
  *  author  kkamagui 
  *          Copyright(c)2008 All rights reserved by kkamagui
- *  brief   ÆÄÀÏ ½Ã½ºÅÛ Ä³½Ã¿¡ °ü·ÃµÈ ¼Ò½º ÆÄÀÏ
+ *  brief   íŒŒì¼ ì‹œìŠ¤í…œ ìºì‹œì— ê´€ë ¨ëœ ì†ŒìŠ¤ íŒŒì¼
  */
 
 #include "CacheManager.h"
 #include "FileSystem.h"
 #include "DynamicMemory.h"
 
-// ÆÄÀÏ ½Ã½ºÅÛ Ä³½Ã ÀÚ·á±¸Á¶
+// íŒŒì¼ ì‹œìŠ¤í…œ ìºì‹œ ìžë£Œêµ¬ì¡°
 static CACHEMANAGER gs_stCacheManager;
 
 /**
- *  ÆÄÀÏ ½Ã½ºÅÛ Ä³½Ã¸¦ ÃÊ±âÈ­
+ *  íŒŒì¼ ì‹œìŠ¤í…œ ìºì‹œë¥¼ ì´ˆê¸°í™”
  */
 BOOL kInitializeCacheManager( void )
 {
     int i;
     
-    // ÀÚ·á±¸Á¶ ÃÊ±âÈ­
+    // ìžë£Œêµ¬ì¡° ì´ˆê¸°í™”
     kMemSet( &gs_stCacheManager, 0, sizeof( gs_stCacheManager ) );
     
-    // Á¢±Ù ½Ã°£ ÃÊ±âÈ­
+    // ì ‘ê·¼ ì‹œê°„ ì´ˆê¸°í™”
     gs_stCacheManager.vdwAccessTime[ CACHE_CLUSTERLINKTABLEAREA ] = 0;
     gs_stCacheManager.vdwAccessTime[ CACHE_DATAAREA ] = 0;
 
-    // Ä³½Ã ¹öÆÛÀÇ ÃÖ´ñ°ª ¼³Á¤
+    // ìºì‹œ ë²„í¼ì˜ ìµœëŒ“ê°’ ì„¤ì •
     gs_stCacheManager.vdwMaxCount[ CACHE_CLUSTERLINKTABLEAREA ] = 
         CACHE_MAXCLUSTERLINKTABLEAREACOUNT;
     gs_stCacheManager.vdwMaxCount[ CACHE_DATAAREA ] = CACHE_MAXDATAAREACOUNT;
     
-    // Å¬·¯½ºÅÍ ¸µÅ© Å×ÀÌºí ¿µ¿ª¿ë ¸Þ¸ð¸® ÇÒ´ç, Å¬·¯½ºÅÍ ¸µÅ© Å×ÀÌºíÀº 512¹ÙÀÌÆ®·Î °ü¸®ÇÔ
+    // í´ëŸ¬ìŠ¤í„° ë§í¬ í…Œì´ë¸” ì˜ì—­ìš© ë©”ëª¨ë¦¬ í• ë‹¹, í´ëŸ¬ìŠ¤í„° ë§í¬ í…Œì´ë¸”ì€ 512ë°”ì´íŠ¸ë¡œ ê´€ë¦¬í•¨
     gs_stCacheManager.vpbBuffer[ CACHE_CLUSTERLINKTABLEAREA ] = 
         ( BYTE* ) kAllocateMemory( CACHE_MAXCLUSTERLINKTABLEAREACOUNT * 512 );
     if( gs_stCacheManager.vpbBuffer[ CACHE_CLUSTERLINKTABLEAREA ] == NULL )
@@ -40,39 +40,39 @@ BOOL kInitializeCacheManager( void )
         return FALSE;
     }
     
-    // ÇÒ´ç ¹ÞÀº ¸Þ¸ð¸® ¿µ¿ªÀ» ³ª´©¾î¼­ Ä³½Ã ¹öÆÛ¿¡ µî·Ï
+    // í• ë‹¹ ë°›ì€ ë©”ëª¨ë¦¬ ì˜ì—­ì„ ë‚˜ëˆ„ì–´ì„œ ìºì‹œ ë²„í¼ì— ë“±ë¡
     for( i = 0 ; i < CACHE_MAXCLUSTERLINKTABLEAREACOUNT ; i++ )
     {
-        // Ä³½Ã ¹öÆÛ¿¡ ¸Þ¸ð¸® °ø°£ ÇÒ´ç
+        // ìºì‹œ ë²„í¼ì— ë©”ëª¨ë¦¬ ê³µê°„ í• ë‹¹
         gs_stCacheManager.vvstCacheBuffer[ CACHE_CLUSTERLINKTABLEAREA ][ i ].
             pbBuffer = gs_stCacheManager.vpbBuffer[ CACHE_CLUSTERLINKTABLEAREA ] 
             + ( i * 512 );
         
-        // ÅÂ±×¸¦ À¯È¿ÇÏÁö ¾ÊÀº °ÍÀ¸·Î ¼³Á¤ÇÏ¿© ºó °ÍÀ¸·Î ¸¸µê
+        // íƒœê·¸ë¥¼ ìœ íš¨í•˜ì§€ ì•Šì€ ê²ƒìœ¼ë¡œ ì„¤ì •í•˜ì—¬ ë¹ˆ ê²ƒìœ¼ë¡œ ë§Œë“¦
         gs_stCacheManager.vvstCacheBuffer[ CACHE_CLUSTERLINKTABLEAREA ][ i ].
             dwTag = CACHE_INVALIDTAG;
         
     }
     
-    // µ¥ÀÌÅÍ ¿µ¿ª¿ë ¸Þ¸ð¸® ÇÒ´ç, µ¥ÀÌÅÍ ¿µ¿ªÀº Å¬·¯½ºÅÍ ´ÜÀ§(4 Kbyte)·Î °ü¸®ÇÔ
+    // ë°ì´í„° ì˜ì—­ìš© ë©”ëª¨ë¦¬ í• ë‹¹, ë°ì´í„° ì˜ì—­ì€ í´ëŸ¬ìŠ¤í„° ë‹¨ìœ„(4 Kbyte)ë¡œ ê´€ë¦¬í•¨
     gs_stCacheManager.vpbBuffer[ CACHE_DATAAREA ] = 
         ( BYTE* ) kAllocateMemory( CACHE_MAXDATAAREACOUNT * FILESYSTEM_CLUSTERSIZE );
     if( gs_stCacheManager.vpbBuffer[ CACHE_DATAAREA ] == NULL )
     {
-        // ½ÇÆÐÇÏ¸é ÀÌÀü¿¡ ÇÒ´ç ¹ÞÀº ¸Þ¸ð¸®¸¦ ÇØÁ¦ÇØ¾ß ÇÔ
+        // ì‹¤íŒ¨í•˜ë©´ ì´ì „ì— í• ë‹¹ ë°›ì€ ë©”ëª¨ë¦¬ë¥¼ í•´ì œí•´ì•¼ í•¨
         kFreeMemory( gs_stCacheManager.vpbBuffer[ CACHE_CLUSTERLINKTABLEAREA ] );
         return FALSE;
     }
     
-    // ÇÒ´ç ¹ÞÀº ¸Þ¸ð¸® ¿µ¿ªÀ» ³ª´©¾î¼­ Ä³½Ã ¹öÆÛ¿¡ µî·Ï
+    // í• ë‹¹ ë°›ì€ ë©”ëª¨ë¦¬ ì˜ì—­ì„ ë‚˜ëˆ„ì–´ì„œ ìºì‹œ ë²„í¼ì— ë“±ë¡
     for( i = 0 ; i < CACHE_MAXDATAAREACOUNT ; i++ )
     {
-        // Ä³½Ã ¹öÆÛ¿¡ ¸Þ¸ð¸® °ø°£ ÇÒ´ç
+        // ìºì‹œ ë²„í¼ì— ë©”ëª¨ë¦¬ ê³µê°„ í• ë‹¹
         gs_stCacheManager.vvstCacheBuffer[ CACHE_DATAAREA ][ i ].pbBuffer = 
             gs_stCacheManager.vpbBuffer[ CACHE_DATAAREA ] + 
             ( i * FILESYSTEM_CLUSTERSIZE );
         
-        // ÅÂ±×¸¦ À¯È¿ÇÏÁö ¾ÊÀº °ÍÀ¸·Î ¼³Á¤ÇÏ¿© ºó °ÍÀ¸·Î ¸¸µê
+        // íƒœê·¸ë¥¼ ìœ íš¨í•˜ì§€ ì•Šì€ ê²ƒìœ¼ë¡œ ì„¤ì •í•˜ì—¬ ë¹ˆ ê²ƒìœ¼ë¡œ ë§Œë“¦
         gs_stCacheManager.vvstCacheBuffer[ CACHE_DATAAREA ][ i ].dwTag = 
             CACHE_INVALIDTAG;
     }
@@ -81,32 +81,32 @@ BOOL kInitializeCacheManager( void )
 }
 
 /**
- *  Ä³½Ã ¹öÆÛ¿¡¼­ ºó °ÍÀ» Ã£¾Æ¼­ ¹ÝÈ¯
+ *  ìºì‹œ ë²„í¼ì—ì„œ ë¹ˆ ê²ƒì„ ì°¾ì•„ì„œ ë°˜í™˜
  */
 CACHEBUFFER* kAllocateCacheBuffer( int iCacheTableIndex )
 {
     CACHEBUFFER* pstCacheBuffer;
     int i;
     
-    // Ä³½Ã Å×ÀÌºíÀÇ ÃÖ´ë °³¼ö¸¦ ³Ñ¾î¼­¸é ½ÇÆÐ
+    // ìºì‹œ í…Œì´ë¸”ì˜ ìµœëŒ€ ê°œìˆ˜ë¥¼ ë„˜ì–´ì„œë©´ ì‹¤íŒ¨
     if( iCacheTableIndex > CACHE_MAXCACHETABLEINDEX )
     {
         return FALSE;
     }
     
-    // Á¢±Ù ½Ã°£ ÇÊµå°¡ ÃÖ´ë °ª±îÁö °¡¸é ÀüÃ¼ÀûÀ¸·Î Á¢±Ù ½Ã°£À» ³·ÃçÁÜ
+    // ì ‘ê·¼ ì‹œê°„ í•„ë“œê°€ ìµœëŒ€ ê°’ê¹Œì§€ ê°€ë©´ ì „ì²´ì ìœ¼ë¡œ ì ‘ê·¼ ì‹œê°„ì„ ë‚®ì¶°ì¤Œ
     kCutDownAccessTime( iCacheTableIndex );
 
-    // ÃÖ´ë °³¼ö¸¸Å­ °Ë»öÇÏ¿© ºó °ÍÀ» ¹ÝÈ¯
+    // ìµœëŒ€ ê°œìˆ˜ë§Œí¼ ê²€ìƒ‰í•˜ì—¬ ë¹ˆ ê²ƒì„ ë°˜í™˜
     pstCacheBuffer = gs_stCacheManager.vvstCacheBuffer[ iCacheTableIndex ];
     for( i = 0 ; i < gs_stCacheManager.vdwMaxCount[ iCacheTableIndex ] ; i++ )
     {
         if( pstCacheBuffer[ i ].dwTag == CACHE_INVALIDTAG )
         {
-            // ÀÓ½Ã·Î Ä³½Ã ÅÂ±×¸¦ ¼³Á¤ÇÏ¿© ÇÒ´çµÈ °ÍÀ¸·Î ¸¸µê
+            // ìž„ì‹œë¡œ ìºì‹œ íƒœê·¸ë¥¼ ì„¤ì •í•˜ì—¬ í• ë‹¹ëœ ê²ƒìœ¼ë¡œ ë§Œë“¦
             pstCacheBuffer[ i ].dwTag = CACHE_INVALIDTAG - 1;
 
-            // Á¢±Ù ½Ã°£À» °»½Å
+            // ì ‘ê·¼ ì‹œê°„ì„ ê°±ì‹ 
             pstCacheBuffer[ i ].dwAccessTime = 
                 gs_stCacheManager.vdwAccessTime[ iCacheTableIndex ]++;
             
@@ -118,29 +118,29 @@ CACHEBUFFER* kAllocateCacheBuffer( int iCacheTableIndex )
 }
 
 /**
- *  Ä³½Ã ¹öÆÛ¿¡¼­ ÅÂ±×°¡ ÀÏÄ¡ÇÏ´Â °ÍÀ» Ã£¾Æ¼­ ¹ÝÈ¯
+ *  ìºì‹œ ë²„í¼ì—ì„œ íƒœê·¸ê°€ ì¼ì¹˜í•˜ëŠ” ê²ƒì„ ì°¾ì•„ì„œ ë°˜í™˜
  */
 CACHEBUFFER* kFindCacheBuffer( int iCacheTableIndex, DWORD dwTag )
 {
     CACHEBUFFER* pstCacheBuffer;
     int i;
     
-    // Ä³½Ã Å×ÀÌºíÀÇ ÃÖ´ë °³¼ö¸¦ ³Ñ¾î¼­¸é ½ÇÆÐ
+    // ìºì‹œ í…Œì´ë¸”ì˜ ìµœëŒ€ ê°œìˆ˜ë¥¼ ë„˜ì–´ì„œë©´ ì‹¤íŒ¨
     if( iCacheTableIndex > CACHE_MAXCACHETABLEINDEX )
     {
         return FALSE;
     }
     
-    // Á¢±Ù ½Ã°£ ÇÊµå°¡ ÃÖ´ë °ª±îÁö Áõ°¡ÇÏ¸é ÀüÃ¼ÀûÀ¸·Î Á¢±Ù ½Ã°£À» ³·Ãã
+    // ì ‘ê·¼ ì‹œê°„ í•„ë“œê°€ ìµœëŒ€ ê°’ê¹Œì§€ ì¦ê°€í•˜ë©´ ì „ì²´ì ìœ¼ë¡œ ì ‘ê·¼ ì‹œê°„ì„ ë‚®ì¶¤
     kCutDownAccessTime( iCacheTableIndex );
     
-    // ÃÖ´ë °³¼ö¸¸Å­ °Ë»öÇÏ¿© ºó °ÍÀ» ¹ÝÈ¯
+    // ìµœëŒ€ ê°œìˆ˜ë§Œí¼ ê²€ìƒ‰í•˜ì—¬ ë¹ˆ ê²ƒì„ ë°˜í™˜
     pstCacheBuffer = gs_stCacheManager.vvstCacheBuffer[ iCacheTableIndex ];
     for( i = 0 ; i < gs_stCacheManager.vdwMaxCount[ iCacheTableIndex ] ; i++ )
     {
         if( pstCacheBuffer[ i ].dwTag == dwTag )
         {
-            // Á¢±Ù ½Ã°£À» °»½Å
+            // ì ‘ê·¼ ì‹œê°„ì„ ê°±ì‹ 
             pstCacheBuffer[ i ].dwAccessTime = 
                 gs_stCacheManager.vdwAccessTime[ iCacheTableIndex ]++;
             
@@ -152,7 +152,7 @@ CACHEBUFFER* kFindCacheBuffer( int iCacheTableIndex, DWORD dwTag )
 }
 
 /**
- *  Á¢±ÙÇÑ ½Ã°£À» ÀüÃ¼ÀûÀ¸·Î ³·Ãã
+ *  ì ‘ê·¼í•œ ì‹œê°„ì„ ì „ì²´ì ìœ¼ë¡œ ë‚®ì¶¤
  */
 static void kCutDownAccessTime( int iCacheTableIndex )
 {
@@ -161,36 +161,36 @@ static void kCutDownAccessTime( int iCacheTableIndex )
     BOOL bSorted;
     int i, j;
 
-    // Ä³½Ã Å×ÀÌºíÀÇ ÃÖ´ë °³¼ö¸¦ ³Ñ¾î¼­¸é ½ÇÆÐ
+    // ìºì‹œ í…Œì´ë¸”ì˜ ìµœëŒ€ ê°œìˆ˜ë¥¼ ë„˜ì–´ì„œë©´ ì‹¤íŒ¨
     if( iCacheTableIndex > CACHE_MAXCACHETABLEINDEX )
     {
         return ;
     }
 
-    // Á¢±Ù ½Ã°£ÀÌ ¾ÆÁ÷ ÃÖ´ëÄ¡¸¦ ³ÑÁö ¾Ê¾Ò´Ù¸é Á¢±Ù ½Ã°£À» ÁÙÀÏ ÇÊ¿ä ¾øÀ½
+    // ì ‘ê·¼ ì‹œê°„ì´ ì•„ì§ ìµœëŒ€ì¹˜ë¥¼ ë„˜ì§€ ì•Šì•˜ë‹¤ë©´ ì ‘ê·¼ ì‹œê°„ì„ ì¤„ì¼ í•„ìš” ì—†ìŒ
     if( gs_stCacheManager.vdwAccessTime[ iCacheTableIndex ] < 0xfffffffe )
     {
         return ;
     }
 
-    // Ä³½Ã ¹öÆÛ¸¦ Á¢±Ù ½Ã°£À¸·Î ¿À¸§Â÷¼øÀ¸·Î Á¤·ÄÇÔ
-    // ¹öºí Á¤·Ä(Bouble Sort) »ç¿ë
+    // ìºì‹œ ë²„í¼ë¥¼ ì ‘ê·¼ ì‹œê°„ìœ¼ë¡œ ì˜¤ë¦„ì°¨ìˆœìœ¼ë¡œ ì •ë ¬í•¨
+    // ë²„ë¸” ì •ë ¬(Bouble Sort) ì‚¬ìš©
     pstCacheBuffer = gs_stCacheManager.vvstCacheBuffer[ iCacheTableIndex ];
     for( j = 0 ; j < gs_stCacheManager.vdwMaxCount[ iCacheTableIndex ] - 1 ; j++ )
     {
-        // ±âº»Àº Á¤·ÄµÈ °ÍÀ¸·Î ÀúÀå
+        // ê¸°ë³¸ì€ ì •ë ¬ëœ ê²ƒìœ¼ë¡œ ì €ìž¥
         bSorted = TRUE;
         for( i = 0 ; i < gs_stCacheManager.vdwMaxCount[ iCacheTableIndex ] - 1 - j ;
              i++ )
         {
-            // ÀÎÁ¢ÇÑ µÎ µ¥ÀÌÅÍ¸¦ ºñ±³ÇÏ¿© Á¢±Ù ½Ã°£ÀÌ Å« °ÍÀ» ¿ìÃø(i+1)¿¡ À§Ä¡½ÃÅ´
+            // ì¸ì ‘í•œ ë‘ ë°ì´í„°ë¥¼ ë¹„êµí•˜ì—¬ ì ‘ê·¼ ì‹œê°„ì´ í° ê²ƒì„ ìš°ì¸¡(i+1)ì— ìœ„ì¹˜ì‹œí‚´
             if( pstCacheBuffer[ i ].dwAccessTime > 
                 pstCacheBuffer[ i + 1 ].dwAccessTime )
             {
-                // µÎ µ¥ÀÌÅÍ¸¦ ±³È¯ÇÏ¹Ç·Î Á¤·ÄµÇÁö ¾ÊÀº °ÍÀ¸·Î Ç¥½Ã
+                // ë‘ ë°ì´í„°ë¥¼ êµí™˜í•˜ë¯€ë¡œ ì •ë ¬ë˜ì§€ ì•Šì€ ê²ƒìœ¼ë¡œ í‘œì‹œ
                 bSorted = FALSE;
 
-                // i¹øÂ° Ä³½Ã¿Í i+1¹øÂ° Ä³½Ã¸¦ ±³È¯
+                // ië²ˆì§¸ ìºì‹œì™€ i+1ë²ˆì§¸ ìºì‹œë¥¼ êµí™˜
                 kMemCpy( &stTemp, &( pstCacheBuffer[ i ] ), 
                         sizeof( CACHEBUFFER ) );
                 kMemCpy( &( pstCacheBuffer[ i ] ), &( pstCacheBuffer[ i + 1 ] ), 
@@ -200,27 +200,27 @@ static void kCutDownAccessTime( int iCacheTableIndex )
             }
         }
 
-        // ´Ù Á¤·ÄµÇ¾úÀ¸¸é ·çÇÁ¸¦ ºüÁ® ³ª°¨
+        // ë‹¤ ì •ë ¬ë˜ì—ˆìœ¼ë©´ ë£¨í”„ë¥¼ ë¹ ì ¸ ë‚˜ê°
         if( bSorted == TRUE )
         {
             break;
         }
     }
 
-    // ¿À¸§Â÷¼øÀ¸·Î Á¤·ÄÇßÀ¸¹Ç·Î, ÀÎµ¦½º°¡ Áõ°¡ÇÒ¼ö·Ï Á¢±Ù ½Ã°£ Å«(ÃÖ½Å) Ä³½Ã ¹öÆÛÀÓ
-    // Á¢±Ù ½Ã°£À» 0ºÎÅÍ ¼øÂ÷ÀûÀ¸·Î ¼³Á¤ÇÏ¿© µ¥ÀÌÅÍ °»½Å
+    // ì˜¤ë¦„ì°¨ìˆœìœ¼ë¡œ ì •ë ¬í–ˆìœ¼ë¯€ë¡œ, ì¸ë±ìŠ¤ê°€ ì¦ê°€í• ìˆ˜ë¡ ì ‘ê·¼ ì‹œê°„ í°(ìµœì‹ ) ìºì‹œ ë²„í¼ìž„
+    // ì ‘ê·¼ ì‹œê°„ì„ 0ë¶€í„° ìˆœì°¨ì ìœ¼ë¡œ ì„¤ì •í•˜ì—¬ ë°ì´í„° ê°±ì‹ 
     for( i = 0 ; i < gs_stCacheManager.vdwMaxCount[ iCacheTableIndex ] ; i++ )
     {
         pstCacheBuffer[ i ].dwAccessTime = i;
     }
 
-    // Á¢±Ù ½Ã°£À» ÆÄÀÏ ½Ã½ºÅÛ Ä³½Ã ÀÚ·á±¸Á¶¿¡ ÀúÀåÇÏ¿© ´ÙÀ½ºÎÅÍ´Â º¯°æµÈ °ªÀ¸·Î 
-    // Á¢±Ù ½Ã°£À» ¼³Á¤ÇÏµµ·Ï ÇÔ
+    // ì ‘ê·¼ ì‹œê°„ì„ íŒŒì¼ ì‹œìŠ¤í…œ ìºì‹œ ìžë£Œêµ¬ì¡°ì— ì €ìž¥í•˜ì—¬ ë‹¤ìŒë¶€í„°ëŠ” ë³€ê²½ëœ ê°’ìœ¼ë¡œ 
+    // ì ‘ê·¼ ì‹œê°„ì„ ì„¤ì •í•˜ë„ë¡ í•¨
     gs_stCacheManager.vdwAccessTime[ iCacheTableIndex ] = i;
 }
 
 /**
- *  Ä³½Ã ¹öÆÛ¿¡¼­ ³»º¸³¾ °ÍÀ» Ã£À½
+ *  ìºì‹œ ë²„í¼ì—ì„œ ë‚´ë³´ë‚¼ ê²ƒì„ ì°¾ìŒ
  */
 CACHEBUFFER* kGetVictimInCacheBuffer( int iCacheTableIndex )
 {
@@ -229,28 +229,28 @@ CACHEBUFFER* kGetVictimInCacheBuffer( int iCacheTableIndex )
     int iOldIndex;
     int i;
 
-    // Ä³½Ã Å×ÀÌºíÀÇ ÃÖ´ë °³¼ö¸¦ ³Ñ¾î¼­¸é ½ÇÆÐ
+    // ìºì‹œ í…Œì´ë¸”ì˜ ìµœëŒ€ ê°œìˆ˜ë¥¼ ë„˜ì–´ì„œë©´ ì‹¤íŒ¨
     if( iCacheTableIndex > CACHE_MAXCACHETABLEINDEX )
     {
         return FALSE;
     }
     
-    // Á¢±Ù ½Ã°£À» ÃÖ´ë·Î ÇØ¼­ Á¢±Ù ½Ã°£ÀÌ °¡Àå ¿À·¡µÈ(°ªÀÌ ÀÛÀº) Ä³½Ã ¹öÆÛ¸¦ °Ë»ö
+    // ì ‘ê·¼ ì‹œê°„ì„ ìµœëŒ€ë¡œ í•´ì„œ ì ‘ê·¼ ì‹œê°„ì´ ê°€ìž¥ ì˜¤ëž˜ëœ(ê°’ì´ ìž‘ì€) ìºì‹œ ë²„í¼ë¥¼ ê²€ìƒ‰
     iOldIndex = -1;
     dwOldTime = 0xFFFFFFFF;
 
-    // Ä³½Ã ¹öÆÛ¿¡¼­ »ç¿ë ÁßÀÌÁö ¾Ê°Å³ª Á¢±ÙÇÑÁö °¡Àå ¿À·¡µÈ °ÍÀ» Ã£¾Æ¼­ ¹ÝÈ¯
+    // ìºì‹œ ë²„í¼ì—ì„œ ì‚¬ìš© ì¤‘ì´ì§€ ì•Šê±°ë‚˜ ì ‘ê·¼í•œì§€ ê°€ìž¥ ì˜¤ëž˜ëœ ê²ƒì„ ì°¾ì•„ì„œ ë°˜í™˜
     pstCacheBuffer = gs_stCacheManager.vvstCacheBuffer[ iCacheTableIndex ];
     for( i = 0 ; i < gs_stCacheManager.vdwMaxCount[ iCacheTableIndex ] ; i++ )
     {
-        // ºó Ä³½Ã ¹öÆÛ°¡ ÀÖÀ¸¸é ºó °ÍÀ» ¹ÝÈ¯
+        // ë¹ˆ ìºì‹œ ë²„í¼ê°€ ìžˆìœ¼ë©´ ë¹ˆ ê²ƒì„ ë°˜í™˜
         if( pstCacheBuffer[ i ].dwTag == CACHE_INVALIDTAG )
         {
             iOldIndex = i;
             break;
         }
 
-        // Á¢±Ù ½Ã°£ÀÌ ÇöÀç °ªº¸´Ù ¿À·¡µÇ¾úÀ¸¸é ÀúÀåÇØµÒ
+        // ì ‘ê·¼ ì‹œê°„ì´ í˜„ìž¬ ê°’ë³´ë‹¤ ì˜¤ëž˜ë˜ì—ˆìœ¼ë©´ ì €ìž¥í•´ë‘ 
         if( pstCacheBuffer[ i ].dwAccessTime < dwOldTime )
         {
             dwOldTime = pstCacheBuffer[ i ].dwAccessTime;
@@ -258,7 +258,7 @@ CACHEBUFFER* kGetVictimInCacheBuffer( int iCacheTableIndex )
         }
     }
 
-    // Ä³½Ã ¹öÆÛ¸¦ Ã£Áö ¸øÇÏ¸é ¹®Á¦°¡ ¹ß»ýÇÑ °ÍÀÓ
+    // ìºì‹œ ë²„í¼ë¥¼ ì°¾ì§€ ëª»í•˜ë©´ ë¬¸ì œê°€ ë°œìƒí•œ ê²ƒìž„
     if( iOldIndex == -1 )
     {
         kPrintf( "Cache Buffer Find Error\n" );
@@ -266,7 +266,7 @@ CACHEBUFFER* kGetVictimInCacheBuffer( int iCacheTableIndex )
         return NULL;
     }
 
-    // ¼±ÅÃµÈ Ä³½Ã ¹öÆÛÀÇ Á¢±Ù ½Ã°£À» °»½Å
+    // ì„ íƒëœ ìºì‹œ ë²„í¼ì˜ ì ‘ê·¼ ì‹œê°„ì„ ê°±ì‹ 
     pstCacheBuffer[ iOldIndex ].dwAccessTime = 
         gs_stCacheManager.vdwAccessTime[ iCacheTableIndex ]++;
     
@@ -274,37 +274,37 @@ CACHEBUFFER* kGetVictimInCacheBuffer( int iCacheTableIndex )
 }
 
 /**
- *  Ä³½Ã ¹öÆÛÀÇ ³»¿ëÀ» ¸ðµÎ ºñ¿ò
+ *  ìºì‹œ ë²„í¼ì˜ ë‚´ìš©ì„ ëª¨ë‘ ë¹„ì›€
  */
 void kDiscardAllCacheBuffer( int iCacheTableIndex )
 {
     CACHEBUFFER* pstCacheBuffer;
     int i;
     
-    // Ä³½Ã ¹öÆÛ¸¦ ¸ðµÎ ºó °ÍÀ¸·Î ¼³Á¤
+    // ìºì‹œ ë²„í¼ë¥¼ ëª¨ë‘ ë¹ˆ ê²ƒìœ¼ë¡œ ì„¤ì •
     pstCacheBuffer = gs_stCacheManager.vvstCacheBuffer[ iCacheTableIndex ];
     for( i = 0 ; i < gs_stCacheManager.vdwMaxCount[ iCacheTableIndex ] ; i++ )
     {
         pstCacheBuffer[ i ].dwTag = CACHE_INVALIDTAG;
     }
     
-    // Á¢±Ù ½Ã°£À» ÃÊ±âÈ­
+    // ì ‘ê·¼ ì‹œê°„ì„ ì´ˆê¸°í™”
     gs_stCacheManager.vdwAccessTime[ iCacheTableIndex ] = 0;
 }
 
 /**
- *  Ä³½Ã ¹öÆÛÀÇ Æ÷ÀÎÅÍ¿Í ÃÖ´ë °³¼ö¸¦ ¹ÝÈ¯
+ *  ìºì‹œ ë²„í¼ì˜ í¬ì¸í„°ì™€ ìµœëŒ€ ê°œìˆ˜ë¥¼ ë°˜í™˜
  */
 BOOL kGetCacheBufferAndCount( int iCacheTableIndex, 
         CACHEBUFFER** ppstCacheBuffer, int* piMaxCount )
 {
-    // Ä³½Ã Å×ÀÌºíÀÇ ÃÖ´ë °³¼ö¸¦ ³Ñ¾î¼­¸é ½ÇÆÐ
+    // ìºì‹œ í…Œì´ë¸”ì˜ ìµœëŒ€ ê°œìˆ˜ë¥¼ ë„˜ì–´ì„œë©´ ì‹¤íŒ¨
     if( iCacheTableIndex > CACHE_MAXCACHETABLEINDEX )
     {
         return FALSE;
     }
     
-    // Ä³½Ã ¹öÆÛÀÇ Æ÷ÀÎÅÍ¿Í ÃÖ´ñ°ªÀ» ¹ÝÈ¯
+    // ìºì‹œ ë²„í¼ì˜ í¬ì¸í„°ì™€ ìµœëŒ“ê°’ì„ ë°˜í™˜
     *ppstCacheBuffer = gs_stCacheManager.vvstCacheBuffer[ iCacheTableIndex ];
     *piMaxCount = gs_stCacheManager.vdwMaxCount[ iCacheTableIndex ];
     return TRUE;

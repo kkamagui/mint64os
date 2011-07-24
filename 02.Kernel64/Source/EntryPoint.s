@@ -2,64 +2,64 @@
 # date		2009/01/01
 # author	kkamagui 
 #           Copyright(c)2008 All rights reserved by kkamagui
-# brief		IA-32e ¸ðµå Ä¿³Î ¿£Æ®¸® Æ÷ÀÎÆ®¿¡ °ü·ÃµÈ ¼Ò½º ÆÄÀÏ
+# brief		IA-32e ëª¨ë“œ ì»¤ë„ ì—”íŠ¸ë¦¬ í¬ì¸íŠ¸ì— ê´€ë ¨ëœ ì†ŒìŠ¤ íŒŒì¼
 
-[BITS 64]           ; ÀÌÇÏÀÇ ÄÚµå´Â 64ºñÆ® ÄÚµå·Î ¼³Á¤
+[BITS 64]           ; ì´í•˜ì˜ ì½”ë“œëŠ” 64ë¹„íŠ¸ ì½”ë“œë¡œ ì„¤ì •
 
-SECTION .text       ; text ¼½¼Ç(¼¼±×¸ÕÆ®)À» Á¤ÀÇ
+SECTION .text       ; text ì„¹ì…˜(ì„¸ê·¸ë¨¼íŠ¸)ì„ ì •ì˜
 
-; ¿ÜºÎ¿¡¼­ Á¤ÀÇµÈ ÇÔ¼ö¸¦ ¾µ ¼ö ÀÖµµ·Ï ¼±¾ðÇÔ(Import)
+; ì™¸ë¶€ì—ì„œ ì •ì˜ëœ í•¨ìˆ˜ë¥¼ ì“¸ ìˆ˜ ìžˆë„ë¡ ì„ ì–¸í•¨(Import)
 extern Main
-; APIC ID ·¹Áö½ºÅÍÀÇ ¾îµå·¹½º¿Í ±ú¾î³­ ÄÚ¾îÀÇ °³¼ö
+; APIC ID ë ˆì§€ìŠ¤í„°ì˜ ì–´ë“œë ˆìŠ¤ì™€ ê¹¨ì–´ë‚œ ì½”ì–´ì˜ ê°œìˆ˜
 extern g_qwAPICIDAddress, g_iWakeUpApplicationProcessorCount
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-;	ÄÚµå ¿µ¿ª
+;	ì½”ë“œ ì˜ì—­
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 START:
-    mov ax, 0x10        ; IA-32e ¸ðµå Ä¿³Î¿ë µ¥ÀÌÅÍ ¼¼±×¸ÕÆ® µð½ºÅ©¸³ÅÍ¸¦ AX ·¹Áö½ºÅÍ¿¡ ÀúÀå
-    mov ds, ax          ; DS ¼¼±×¸ÕÆ® ¼¿·ºÅÍ¿¡ ¼³Á¤
-    mov es, ax          ; ES ¼¼±×¸ÕÆ® ¼¿·ºÅÍ¿¡ ¼³Á¤
-    mov fs, ax          ; FS ¼¼±×¸ÕÆ® ¼¿·ºÅÍ¿¡ ¼³Á¤
-    mov gs, ax          ; GS ¼¼±×¸ÕÆ® ¼¿·ºÅÍ¿¡ ¼³Á¤
+    mov ax, 0x10        ; IA-32e ëª¨ë“œ ì»¤ë„ìš© ë°ì´í„° ì„¸ê·¸ë¨¼íŠ¸ ë””ìŠ¤í¬ë¦½í„°ë¥¼ AX ë ˆì§€ìŠ¤í„°ì— ì €ìž¥
+    mov ds, ax          ; DS ì„¸ê·¸ë¨¼íŠ¸ ì…€ë ‰í„°ì— ì„¤ì •
+    mov es, ax          ; ES ì„¸ê·¸ë¨¼íŠ¸ ì…€ë ‰í„°ì— ì„¤ì •
+    mov fs, ax          ; FS ì„¸ê·¸ë¨¼íŠ¸ ì…€ë ‰í„°ì— ì„¤ì •
+    mov gs, ax          ; GS ì„¸ê·¸ë¨¼íŠ¸ ì…€ë ‰í„°ì— ì„¤ì •
 
-    ; ½ºÅÃÀ» 0x600000~0x6FFFFF ¿µ¿ª¿¡ 1MB Å©±â·Î »ý¼º
-    mov ss, ax          ; SS ¼¼±×¸ÕÆ® ¼¿·ºÅÍ¿¡ ¼³Á¤
-    mov rsp, 0x6FFFF8   ; RSP ·¹Áö½ºÅÍÀÇ ¾îµå·¹½º¸¦ 0x6FFFF8·Î ¼³Á¤
-    mov rbp, 0x6FFFF8   ; RBP ·¹Áö½ºÅÍÀÇ ¾îµå·¹½º¸¦ 0x6FFFF8·Î ¼³Á¤
+    ; ìŠ¤íƒì„ 0x600000~0x6FFFFF ì˜ì—­ì— 1MB í¬ê¸°ë¡œ ìƒì„±
+    mov ss, ax          ; SS ì„¸ê·¸ë¨¼íŠ¸ ì…€ë ‰í„°ì— ì„¤ì •
+    mov rsp, 0x6FFFF8   ; RSP ë ˆì§€ìŠ¤í„°ì˜ ì–´ë“œë ˆìŠ¤ë¥¼ 0x6FFFF8ë¡œ ì„¤ì •
+    mov rbp, 0x6FFFF8   ; RBP ë ˆì§€ìŠ¤í„°ì˜ ì–´ë“œë ˆìŠ¤ë¥¼ 0x6FFFF8ë¡œ ì„¤ì •
 	
-	; ºÎÆ® ·Î´õ ¿µ¿ªÀÇ Bootstrap Processor ÇÃ·¡±×¸¦ È®ÀÎÇÏ¿©, Bootstrap ProcessorÀÌ¸é
-	; ¹Ù·Î Main ÇÔ¼ö·Î ÀÌµ¿
+	; ë¶€íŠ¸ ë¡œë” ì˜ì—­ì˜ Bootstrap Processor í”Œëž˜ê·¸ë¥¼ í™•ì¸í•˜ì—¬, Bootstrap Processorì´ë©´
+	; ë°”ë¡œ Main í•¨ìˆ˜ë¡œ ì´ë™
 	cmp byte [ 0x7C09 ], 0x01
 	je .BOOTSTRAPPROCESSORSTARTPOINT
 	
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    ; Application Processor¸¸ ½ÇÇàÇÏ´Â ¿µ¿ª
+    ; Application Processorë§Œ ì‹¤í–‰í•˜ëŠ” ì˜ì—­
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    ; ½ºÅÃÀÇ ²À´ë±â(Top)´Â APIC ID¸¦ ÀÌ¿ëÇØ¼­ 0x700000 ÀÌÇÏ·Î ÀÌµ¿
-    ; ÃÖ´ë 16°³ ÄÚ¾î±îÁö Áö¿ø °¡´ÉÇÏ¹Ç·Î ½ºÅÃ ¿µ¿ªÀÎ 1M¸¦ 16À¸·Î ³ª´« °ªÀÎ 
-    ; 64Kbyte(0x10000)¸¸Å­¾¿ ¾Æ·¡·Î ÀÌµ¿ÇÏ¸é¼­ ¼³Á¤ 
-    ; ·ÎÄÃ APICÀÇ APIC ID ·¹Áö½ºÅÍ¿¡¼­ ID¸¦ ÃßÃâ. ID´Â Bit 24~31¿¡ À§Ä¡ÇÔ
-    mov rax, 0                              ; RAX ·¹Áö½ºÅÍ ÃÊ±âÈ­
-    mov rbx, qword [ g_qwAPICIDAddress ]    ; APIC ID ·¹Áö½ºÅÍÀÇ ¾îµå·¹½º¸¦ ÀÐÀ½
-    mov eax, dword [ rbx ] ; APIC ID ·¹Áö½ºÅÍ¿¡¼­ APIC ID¸¦ ÀÐÀ½(ºñÆ® 24~31)
-    shr rax, 24            ; ºñÆ® 24~31¿¡ Á¸ÀçÇÏ´Â APIC ID¸¦ ½ÃÇÁÆ® ½ÃÄÑ¼­ ºñÆ® 0~7·Î ÀÌµ¿
+    ; ìŠ¤íƒì˜ ê¼­ëŒ€ê¸°(Top)ëŠ” APIC IDë¥¼ ì´ìš©í•´ì„œ 0x700000 ì´í•˜ë¡œ ì´ë™
+    ; ìµœëŒ€ 16ê°œ ì½”ì–´ê¹Œì§€ ì§€ì› ê°€ëŠ¥í•˜ë¯€ë¡œ ìŠ¤íƒ ì˜ì—­ì¸ 1Më¥¼ 16ìœ¼ë¡œ ë‚˜ëˆˆ ê°’ì¸ 
+    ; 64Kbyte(0x10000)ë§Œí¼ì”© ì•„ëž˜ë¡œ ì´ë™í•˜ë©´ì„œ ì„¤ì • 
+    ; ë¡œì»¬ APICì˜ APIC ID ë ˆì§€ìŠ¤í„°ì—ì„œ IDë¥¼ ì¶”ì¶œ. IDëŠ” Bit 24~31ì— ìœ„ì¹˜í•¨
+    mov rax, 0                              ; RAX ë ˆì§€ìŠ¤í„° ì´ˆê¸°í™”
+    mov rbx, qword [ g_qwAPICIDAddress ]    ; APIC ID ë ˆì§€ìŠ¤í„°ì˜ ì–´ë“œë ˆìŠ¤ë¥¼ ì½ìŒ
+    mov eax, dword [ rbx ] ; APIC ID ë ˆì§€ìŠ¤í„°ì—ì„œ APIC IDë¥¼ ì½ìŒ(ë¹„íŠ¸ 24~31)
+    shr rax, 24            ; ë¹„íŠ¸ 24~31ì— ì¡´ìž¬í•˜ëŠ” APIC IDë¥¼ ì‹œí”„íŠ¸ ì‹œì¼œì„œ ë¹„íŠ¸ 0~7ë¡œ ì´ë™
 	
-	; ÃßÃâÇÑ APIC ID¿¡ 64Kbyte(0x10000)À» °öÇÏ¿© ½ºÅÃÀÇ ²À´ë±â¸¦ ÀÌµ¿½ÃÅ³ °Å¸®¸¦ °è»ê
-    mov rbx, 0x10000       ; RBX ·¹Áö½ºÅÍ¿¡ ½ºÅÃÀÇ Å©±â(64Kbyte)¸¦ ÀúÀå
-    mul rbx                ; RAX ·¹Áö½ºÅÍ¿¡ ÀúÀåµÈ APIC ID¿Í RBX ·¹Áö½ºÅÍÀÇ ½ºÅÃ °ªÀ» °öÇÔ
+	; ì¶”ì¶œí•œ APIC IDì— 64Kbyte(0x10000)ì„ ê³±í•˜ì—¬ ìŠ¤íƒì˜ ê¼­ëŒ€ê¸°ë¥¼ ì´ë™ì‹œí‚¬ ê±°ë¦¬ë¥¼ ê³„ì‚°
+    mov rbx, 0x10000       ; RBX ë ˆì§€ìŠ¤í„°ì— ìŠ¤íƒì˜ í¬ê¸°(64Kbyte)ë¥¼ ì €ìž¥
+    mul rbx                ; RAX ë ˆì§€ìŠ¤í„°ì— ì €ìž¥ëœ APIC IDì™€ RBX ë ˆì§€ìŠ¤í„°ì˜ ìŠ¤íƒ ê°’ì„ ê³±í•¨
     
-    sub rsp, rax   ; RSP¿Í RBP ·¹Áö½ºÅÍ¿¡¼­ RAX ·¹Áö½ºÅÍ¿¡ ÀúÀåµÈ °ª(½ºÅÃÀÇ ²À´ë±â¸¦
-    sub rbp, rax   ; ÀÌµ¿½ÃÅ³ °Å¸®)À» »©¼­ °¢ ÄÚ¾î º° ½ºÅÃÀ» ÇÒ´çÇØÁÜ
+    sub rsp, rax   ; RSPì™€ RBP ë ˆì§€ìŠ¤í„°ì—ì„œ RAX ë ˆì§€ìŠ¤í„°ì— ì €ìž¥ëœ ê°’(ìŠ¤íƒì˜ ê¼­ëŒ€ê¸°ë¥¼
+    sub rbp, rax   ; ì´ë™ì‹œí‚¬ ê±°ë¦¬)ì„ ë¹¼ì„œ ê° ì½”ì–´ ë³„ ìŠ¤íƒì„ í• ë‹¹í•´ì¤Œ
 
-	; ±ú¾î³­ Application Processor ¼ö¸¦ 1 Áõ°¡½ÃÅ´. lock ¸í·É¾î¸¦ »ç¿ëÇÏ¿© º¯¼ö¿¡
-	; ¹èÅ¸Àû(Exclusive) Á¢±ÙÀÌ °¡´ÉÇÏµµ·Ï ÇÔ
+	; ê¹¨ì–´ë‚œ Application Processor ìˆ˜ë¥¼ 1 ì¦ê°€ì‹œí‚´. lock ëª…ë ¹ì–´ë¥¼ ì‚¬ìš©í•˜ì—¬ ë³€ìˆ˜ì—
+	; ë°°íƒ€ì (Exclusive) ì ‘ê·¼ì´ ê°€ëŠ¥í•˜ë„ë¡ í•¨
 	lock inc dword [ g_iWakeUpApplicationProcessorCount ]
 	
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-	; Bootstrap Processor¿Í Application Processor°¡ °øÅëÀ¸·Î ½ÇÇàÇÏ´Â ¿µ¿ª
+	; Bootstrap Processorì™€ Application Processorê°€ ê³µí†µìœ¼ë¡œ ì‹¤í–‰í•˜ëŠ” ì˜ì—­
 	;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 .BOOTSTRAPPROCESSORSTARTPOINT:
-    call Main           ; C ¾ð¾î ¿£Æ®¸® Æ÷ÀÎÆ® ÇÔ¼ö(Main) È£Ãâ
+    call Main           ; C ì–¸ì–´ ì—”íŠ¸ë¦¬ í¬ì¸íŠ¸ í•¨ìˆ˜(Main) í˜¸ì¶œ
 	
 	jmp $
