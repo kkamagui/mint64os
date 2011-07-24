@@ -1,12 +1,12 @@
 # file		makefile
 # date		2008/12/16
 # author	kkamagui 
-# brief		À¯Æ¿¸®Æ¼¸¦ »ı¼ºÇÏ±â À§ÇÑ make ÆÄÀÏ
+# brief		ìœ í‹¸ë¦¬í‹°ë¥¼ ìƒì„±í•˜ê¸° ìœ„í•œ make íŒŒì¼
 
-# ±âº»ÀûÀ¸·Î ºôµå¸¦ ¼öÇàÇÒ ¸ñ·Ï
+# ê¸°ë³¸ì ìœ¼ë¡œ ë¹Œë“œë¥¼ ìˆ˜í–‰í•  ëª©ë¡
 all: ImageMaker SerialTransfer PackageMaker
 
-# ÀÌ¹ÌÁö ¸ŞÀÌÄ¿ ºôµå¸¦ À§ÇØ ImageMaker µğ·ºÅÍ¸®¿¡¼­ make ½ÇÇà
+# ì´ë¯¸ì§€ ë©”ì´ì»¤ ë¹Œë“œë¥¼ ìœ„í•´ ImageMaker ë””ë ‰í„°ë¦¬ì—ì„œ make ì‹¤í–‰
 ImageMaker:
 	@echo 
 	@echo ============= Build ImageMaker ===============
@@ -18,7 +18,7 @@ ImageMaker:
 	@echo =============== Build Complete ===============
 	@echo 
 
-# Serial Transfer ºôµå¸¦ À§ÇØ SerialTransfer µğ·ºÅÍ¸®¿¡¼­ make ½ÇÇà
+# Serial Transfer ë¹Œë“œë¥¼ ìœ„í•´ SerialTransfer ë””ë ‰í„°ë¦¬ì—ì„œ make ì‹¤í–‰
 SerialTransfer:
 	@echo 
 	@echo ============= Build SerialTransfer ===============
@@ -30,7 +30,7 @@ SerialTransfer:
 	@echo =============== Build Complete ===============
 	@echo 
 	
-# ÆĞÅ°Áö ¸ŞÀÌÄ¿ ºôµå¸¦ À§ÇØ PackageMaker µğ·ºÅÍ¸®¿¡¼­ make ½ÇÇà
+# íŒ¨í‚¤ì§€ ë©”ì´ì»¤ ë¹Œë“œë¥¼ ìœ„í•´ PackageMaker ë””ë ‰í„°ë¦¬ì—ì„œ make ì‹¤í–‰
 PackageMaker:
 	@echo 
 	@echo ============= Build PackageMaker ===============
@@ -42,7 +42,7 @@ PackageMaker:
 	@echo =============== Build Complete ===============
 	@echo 
 		
-# ¼Ò½º ÆÄÀÏÀ» Á¦¿ÜÇÑ ³ª¸ÓÁö ÆÄÀÏ Á¤¸®	
+# ì†ŒìŠ¤ íŒŒì¼ì„ ì œì™¸í•œ ë‚˜ë¨¸ì§€ íŒŒì¼ ì •ë¦¬	
 clean:
 	make -C 00.ImageMaker clean
 	make -C 01.SerialTransfer clean

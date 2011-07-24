@@ -1,12 +1,12 @@
 # file		makefile
 # date		2008/12/16
 # author	kkamagui 
-# brief		MINT64 OSÀÇ ÀÀ¿ëÇÁ·Î±×·¥À» ºôµåÇÏ±â À§ÇÑ make ÆÄÀÏ
+# brief		MINT64 OSì˜ ì‘ìš©í”„ë¡œê·¸ë¨ì„ ë¹Œë“œí•˜ê¸° ìœ„í•œ make íŒŒì¼
 
-# ±âº»ÀûÀ¸·Î ºôµå¸¦ ¼öÇàÇÒ ¸ñ·Ï
+# ê¸°ë³¸ì ìœ¼ë¡œ ë¹Œë“œë¥¼ ìˆ˜í–‰í•  ëª©ë¡
 all: MINT64OSLibrary HelloWorld TextViewer Shooter Hexa HangulViewer OneLineMemo
 
-# ¶óÀÌºê·¯¸® ºôµå¸¦ À§ÇØ UserLibrary µğ·ºÅÍ¸®¿¡¼­ make ½ÇÇà
+# ë¼ì´ë¸ŒëŸ¬ë¦¬ ë¹Œë“œë¥¼ ìœ„í•´ UserLibrary ë””ë ‰í„°ë¦¬ì—ì„œ make ì‹¤í–‰
 MINT64OSLibrary:
 	@echo 
 	@echo ============= Build UserLibrary ===============
@@ -18,7 +18,7 @@ MINT64OSLibrary:
 	@echo =============== Build Complete ===============
 	@echo 
 
-# Hello World ºôµå¸¦ À§ÇØ HelloWorld µğ·ºÅÍ¸®¿¡¼­ make ½ÇÇà
+# Hello World ë¹Œë“œë¥¼ ìœ„í•´ HelloWorld ë””ë ‰í„°ë¦¬ì—ì„œ make ì‹¤í–‰
 HelloWorld:
 	@echo 
 	@echo ============= Build HelloWorld ===============
@@ -30,7 +30,7 @@ HelloWorld:
 	@echo =============== Build Complete ===============
 	@echo 
 	
-# ÅØ½ºÆ® ºä¾î ºôµå¸¦ À§ÇØ TextViewer µğ·ºÅÍ¸®¿¡¼­ make ½ÇÇà
+# í…ìŠ¤íŠ¸ ë·°ì–´ ë¹Œë“œë¥¼ ìœ„í•´ TextViewer ë””ë ‰í„°ë¦¬ì—ì„œ make ì‹¤í–‰
 TextViewer:
 	@echo 
 	@echo ============= Build TextViewer ===============
@@ -42,7 +42,7 @@ TextViewer:
 	@echo =============== Build Complete ===============
 	@echo 
 
-# ¹öºí ½´ÅÍ ºôµå¸¦ À§ÇØ Shooter µğ·ºÅÍ¸®¿¡¼­ make ½ÇÇà
+# ë²„ë¸” ìŠˆí„° ë¹Œë“œë¥¼ ìœ„í•´ Shooter ë””ë ‰í„°ë¦¬ì—ì„œ make ì‹¤í–‰
 Shooter:
 	@echo 
 	@echo ============= Build Shooter ===============
@@ -54,7 +54,7 @@ Shooter:
 	@echo =============== Build Complete ===============
 	@echo 
 
-# Çí»ç ºôµå¸¦ À§ÇØ Hexa µğ·ºÅÍ¸®¿¡¼­ make ½ÇÇà
+# í—¥ì‚¬ ë¹Œë“œë¥¼ ìœ„í•´ Hexa ë””ë ‰í„°ë¦¬ì—ì„œ make ì‹¤í–‰
 Hexa:
 	@echo 
 	@echo ============= Build Hexa ===============
@@ -66,7 +66,7 @@ Hexa:
 	@echo =============== Build Complete ===============
 	@echo 
 
-# ÇÑ±Û ºä¾î ºôµå¸¦ À§ÇØ HangulViewer µğ·ºÅÍ¸®¿¡¼­ make ½ÇÇà
+# í•œê¸€ ë·°ì–´ ë¹Œë“œë¥¼ ìœ„í•´ HangulViewer ë””ë ‰í„°ë¦¬ì—ì„œ make ì‹¤í–‰
 HangulViewer:
 	@echo 
 	@echo ============= Build HangulViewer ===============
@@ -78,7 +78,7 @@ HangulViewer:
 	@echo =============== Build Complete ===============
 	@echo 
 
-# ÇÑ ÁÙ ¸Ş¸ğÀå ºôµå¸¦ À§ÇØ OneLineMemo µğ·ºÅÍ¸®¿¡¼­ make ½ÇÇà
+# í•œ ì¤„ ë©”ëª¨ì¥ ë¹Œë“œë¥¼ ìœ„í•´ OneLineMemo ë””ë ‰í„°ë¦¬ì—ì„œ make ì‹¤í–‰
 OneLineMemo:
 	@echo 
 	@echo ============= Build OneLineMemo ===============
@@ -91,7 +91,7 @@ OneLineMemo:
 	@echo 
 
 
-# ¼Ò½º ÆÄÀÏÀ» Á¦¿ÜÇÑ ³ª¸ÓÁö ÆÄÀÏ Á¤¸®	
+# ì†ŒìŠ¤ íŒŒì¼ì„ ì œì™¸í•œ ë‚˜ë¨¸ì§€ íŒŒì¼ ì •ë¦¬	
 clean:
 	make -C UserLibrary clean
 	make -C 00.HelloWorld clean

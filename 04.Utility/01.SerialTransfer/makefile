@@ -1,15 +1,15 @@
 # file		makefile
 # date		2009/06/06
 # author	kkamagui 
-# brief		½Ã¸®¾ó·Î µ¥ÀÌÅÍ¸¦ Àü¼ÛÇÏ´Â ÇÁ·Î±×·¥À» ºôµåÇÏ´Â make ÆÄÀÏ
+# brief		ì‹œë¦¬ì–¼ë¡œ ë°ì´í„°ë¥¼ ì „ì†¡í•˜ëŠ” í”„ë¡œê·¸ë¨ì„ ë¹Œë“œí•˜ëŠ” make íŒŒì¼
 
-# ±âº»ÀûÀ¸·Î ºôµå¸¦ ¼öÇàÇÒ ¸ñ·Ï
+# ê¸°ë³¸ì ìœ¼ë¡œ ë¹Œë“œë¥¼ ìˆ˜í–‰í•  ëª©ë¡
 all: NetworkTransfer.exe
 
-# NetworkTransfer ºôµå
+# NetworkTransfer ë¹Œë“œ
 NetworkTransfer.exe: NetworkTransfer.c
 	gcc -o $@ $<
 	
-# ¼Ò½º ÆÄÀÏÀ» Á¦¿ÜÇÑ ³ª¸ÓÁö ÆÄÀÏ Á¤¸®	
+# ì†ŒìŠ¤ íŒŒì¼ì„ ì œì™¸í•œ ë‚˜ë¨¸ì§€ íŒŒì¼ ì •ë¦¬	
 clean:
 	rm -f NetworkTransfer.exe

@@ -1,15 +1,15 @@
 # file		makefile
 # date		2008/11/12
 # author	kkamagui 
-# brief		ºÎÆ® ·Î´õ¸¦ ºôµåÇÏ±â À§ÇÑ make ÆÄÀÏ
+# brief		ë¶€íŠ¸ ë¡œë”ë¥¼ ë¹Œë“œí•˜ê¸° ìœ„í•œ make íŒŒì¼
 
-# ±âº»ÀûÀ¸·Î ºôµå¸¦ ¼öÇàÇÒ ¸ñ·Ï
+# ê¸°ë³¸ì ìœ¼ë¡œ ë¹Œë“œë¥¼ ìˆ˜í–‰í•  ëª©ë¡
 all: BootLoader.bin
 
-# ºÎÆ® ·Î´õ ºôµå
+# ë¶€íŠ¸ ë¡œë” ë¹Œë“œ
 BootLoader.bin: BootLoader.asm
 	nasm -o BootLoader.bin BootLoader.asm
 	
-# ¼Ò½º ÆÄÀÏÀ» Á¦¿ÜÇÑ ³ª¸ÓÁö ÆÄÀÏ Á¤¸®	
+# ì†ŒìŠ¤ íŒŒì¼ì„ ì œì™¸í•œ ë‚˜ë¨¸ì§€ íŒŒì¼ ì •ë¦¬	
 clean:
 	rm -f BootLoader.bin

@@ -1,15 +1,15 @@
 # file		makefile
 # date		2010/03/31
 # author	kkamagui 
-# brief		ÆĞÅ°Áö ÆÄÀÏÀ» »ı¼ºÇÏ´Â ÇÁ·Î±×·¥À» ºôµåÇÏ´Â make ÆÄÀÏ
+# brief		íŒ¨í‚¤ì§€ íŒŒì¼ì„ ìƒì„±í•˜ëŠ” í”„ë¡œê·¸ë¨ì„ ë¹Œë“œí•˜ëŠ” make íŒŒì¼
 
-# ±âº»ÀûÀ¸·Î ºôµå¸¦ ¼öÇàÇÒ ¸ñ·Ï
+# ê¸°ë³¸ì ìœ¼ë¡œ ë¹Œë“œë¥¼ ìˆ˜í–‰í•  ëª©ë¡
 all: PackageMaker.exe
 
-# PackageMaker ºôµå
+# PackageMaker ë¹Œë“œ
 PackageMaker.exe: PackageMaker.c
 	gcc -o $@ $<
 	
-# ¼Ò½º ÆÄÀÏÀ» Á¦¿ÜÇÑ ³ª¸ÓÁö ÆÄÀÏ Á¤¸®	
+# ì†ŒìŠ¤ íŒŒì¼ì„ ì œì™¸í•œ ë‚˜ë¨¸ì§€ íŒŒì¼ ì •ë¦¬	
 clean:
 	rm -f PackageMaker.exe

@@ -1,12 +1,12 @@
 # file		makefile
 # date		2008/11/12
 # author	kkamagui 
-# brief		OS ÀÌ¹ÌÁö¸¦ ºôµåÇÏ±â À§ÇÑ make ÆÄÀÏ
+# brief		OS ì´ë¯¸ì§€ë¥¼ ë¹Œë“œí•˜ê¸° ìœ„í•œ make íŒŒì¼
 
-# ±âº»ÀûÀ¸·Î ºôµå¸¦ ¼öÇàÇÒ ¸ñ·Ï
+# ê¸°ë³¸ì ìœ¼ë¡œ ë¹Œë“œë¥¼ ìˆ˜í–‰í•  ëª©ë¡
 all: BootLoader Kernel32 Kernel64 Disk.img Application Utility
 
-# ºÎÆ® ·Î´õ ºôµå¸¦ À§ÇØ ºÎÆ® ·Î´õ µğ·ºÅÍ¸®¿¡¼­ make ½ÇÇà
+# ë¶€íŠ¸ ë¡œë” ë¹Œë“œë¥¼ ìœ„í•´ ë¶€íŠ¸ ë¡œë” ë””ë ‰í„°ë¦¬ì—ì„œ make ì‹¤í–‰
 BootLoader:
 	@echo 
 	@echo ============== Build Boot Loader ===============
@@ -18,7 +18,7 @@ BootLoader:
 	@echo =============== Build Complete ===============
 	@echo 
 	
-# º¸È£ ¸ğµå Ä¿³Î ÀÌ¹ÌÁö¸¦ ºôµåÇÏ±â À§ÇØ º¸È£ ¸ğµå µğ·ºÅÍ¸®¿¡¼­ make ½ÇÇà
+# ë³´í˜¸ ëª¨ë“œ ì»¤ë„ ì´ë¯¸ì§€ë¥¼ ë¹Œë“œí•˜ê¸° ìœ„í•´ ë³´í˜¸ ëª¨ë“œ ë””ë ‰í„°ë¦¬ì—ì„œ make ì‹¤í–‰
 Kernel32:
 	@echo 
 	@echo ============== Build 32bit Kernel ===============
@@ -30,7 +30,7 @@ Kernel32:
 	@echo =============== Build Complete ===============
 	@echo 
 
-# IA-32e ¸ğµå Ä¿³Î ÀÌ¹ÌÁö¸¦ ºôµåÇÏ±â À§ÇØ IA-32e ¸ğµå µğ·ºÅÍ¸®¿¡¼­ make ½ÇÇà
+# IA-32e ëª¨ë“œ ì»¤ë„ ì´ë¯¸ì§€ë¥¼ ë¹Œë“œí•˜ê¸° ìœ„í•´ IA-32e ëª¨ë“œ ë””ë ‰í„°ë¦¬ì—ì„œ make ì‹¤í–‰
 Kernel64:
 	@echo 
 	@echo ============== Build 64bit Kernel ===============
@@ -43,7 +43,7 @@ Kernel64:
 	@echo 
 
 	
-# OS ÀÌ¹ÌÁö »ı¼º
+# OS ì´ë¯¸ì§€ ìƒì„±
 Disk.img: 00.BootLoader/BootLoader.bin 01.Kernel32/Kernel32.bin 02.Kernel64/Kernel64.bin
 	@echo 
 	@echo =========== Disk Image Build Start ===========
@@ -57,7 +57,7 @@ Disk.img: 00.BootLoader/BootLoader.bin 01.Kernel32/Kernel32.bin 02.Kernel64/Kern
 	@echo 
 
 
-# ÀÀ¿ë ÇÁ·Î±×·¥ ºôµå
+# ì‘ìš© í”„ë¡œê·¸ë¨ ë¹Œë“œ
 Application:
 	@echo 
 	@echo =========== Application Build Start ===========
@@ -70,7 +70,7 @@ Application:
 	@echo 
 
 	
-# À¯Æ¿¸®Æ¼ ºôµå
+# ìœ í‹¸ë¦¬í‹° ë¹Œë“œ
 Utility:
 	@echo 
 	@echo =========== Utility Build Start ===========
@@ -83,7 +83,7 @@ Utility:
 	@echo 
 	
 	
-# ¼Ò½º ÆÄÀÏÀ» Á¦¿ÜÇÑ ³ª¸ÓÁö ÆÄÀÏ Á¤¸®	
+# ì†ŒìŠ¤ íŒŒì¼ì„ ì œì™¸í•œ ë‚˜ë¨¸ì§€ íŒŒì¼ ì •ë¦¬	
 clean:
 	make -C 00.BootLoader clean
 	make -C 01.Kernel32 clean
