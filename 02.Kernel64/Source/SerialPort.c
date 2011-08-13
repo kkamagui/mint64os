@@ -33,10 +33,10 @@ void kInitializeSerialPort( void )
     // 제수 래치 레지스터에 접근
     kOutPortByte( wPortBaseAddress + SERIAL_PORT_INDEX_LINECONTROL, 
             SERIAL_LINECONTROL_DLAB );
-    // LSB 제수 래치 레지스터(포트 0x3F8)에 재수의 하위 8비트를 전송
+    // LSB 제수 래치 레지스터(포트 0x3F8)에 제수의 하위 8비트를 전송
     kOutPortByte( wPortBaseAddress + SERIAL_PORT_INDEX_DIVISORLATCHLSB, 
             SERIAL_DIVISORLATCH_115200 );
-    // MSB 제수 래치 레지스터(포트 0x3F9)에 재수의 상위 8비트를 전송
+    // MSB 제수 래치 레지스터(포트 0x3F9)에 제수의 상위 8비트를 전송
     kOutPortByte( wPortBaseAddress + SERIAL_PORT_INDEX_DIVISORLATCHMSB, 
             SERIAL_DIVISORLATCH_115200 >> 8 );
     
