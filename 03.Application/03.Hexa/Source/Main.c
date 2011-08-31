@@ -239,7 +239,7 @@ void Initialize( void )
 
     // 움직이는 블록의 위치를 설정
     g_stGameInfo.iBlockX = -1;
-    g_stGameInfo.iBlockX = -1;
+    g_stGameInfo.iBlockY = -1;
 }
 
 /**
