@@ -62,7 +62,7 @@ int kReadRDDSector( BOOL bPrimary, BOOL bMaster, DWORD dwLBA, int iSectorCount,
     // LBA 어드레스부터 끝까지 읽을 수 있는 섹터 수와 읽어야 할 섹터 수를 비교해서
     // 실제로 읽을 수 있는 수를 계산
     iRealReadCount = MIN( gs_stRDDManager.dwTotalSectorCount - 
-                      (dwLBA + iSectorCount), iSectorCount );
+                      dwLBA, iSectorCount );
 
     // 램 디스크 메모리에서 데이터를 실제로 읽을 섹터 수만큼 복사해서 반환
     kMemCpy( pcBuffer, gs_stRDDManager.pbBuffer + ( dwLBA * 512 ), 
@@ -82,7 +82,7 @@ int kWriteRDDSector( BOOL bPrimary, BOOL bMaster, DWORD dwLBA, int iSectorCount,
     // LBA 어드레스부터 끝까지 쓸 수 있는 섹터 수와 써야 할 섹터 수를 비교해서
     // 실제로 쓸 수 있는 수를 계산
     iRealWriteCount = MIN( gs_stRDDManager.dwTotalSectorCount - 
-                      (dwLBA + iSectorCount), iSectorCount );
+                      dwLBA, iSectorCount );
 
     // 데이터를 실제로 쓸 섹터 수만큼 램 디스크 메모리에 복사
     kMemCpy( gs_stRDDManager.pbBuffer + ( dwLBA * 512 ), pcBuffer, 
