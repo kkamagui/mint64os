@@ -620,6 +620,9 @@ BOOL kSchedule( void )
         kClearTS();
     }
 
+    // 프로세서 사용 시간을 업데이트
+    gs_vstScheduler[ bCurrentAPICID ].iProcessorTime = TASK_PROCESSORTIME;
+    
     // 태스크 종료 플래그가 설정된 경우 콘텍스트를 저장할 필요가 없으므로, 대기 리스트에
     // 삽입하고 콘텍스트 전환
     if( pstRunningTask->qwFlags & TASK_FLAGS_ENDTASK )
@@ -643,9 +646,6 @@ BOOL kSchedule( void )
         kSwitchContext( &( pstRunningTask->stContext ), &( pstNextTask->stContext ) );
     }
 
-    // 프로세서 사용 시간을 업데이트
-    gs_vstScheduler[ bCurrentAPICID ].iProcessorTime = TASK_PROCESSORTIME;
-    
     // 인터럽트 플래그 복원
     kSetInterruptFlag( bPreviousInterrupt );
     return FALSE;
