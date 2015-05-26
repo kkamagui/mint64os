@@ -27,7 +27,7 @@ MINT64 OS의 개발 과정은 "64비트 멀티코어 OS 원리와 구조" 책 ht
 ---
 
 # 참여 방법 #
-MINT64 OS의 Repository는 GIT를 사용하고 있습니다. Repository의 URL은 https://mint64os@code.google.com/p/mint64os/ 입니다. 현재 Push는 막혀있으며, 프로젝트 정책이 정해지는대로 곧 수정할 예정입니다. ^^
+MINT64 OS의 Repository는 GIT를 사용하고 있습니다. Repository의 URL은 https://github.com/kkamagui/mint64os 입니다. 현재 Push는 막혀있으며, 프로젝트 정책이 정해지는대로 곧 수정할 예정입니다. ^^
 
 GIT의 설치 및 간단한 사용법은 http://kkamagui.tistory.com/751 을 참고하기 바랍니다.
 
