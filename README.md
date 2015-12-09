@@ -7,10 +7,8 @@ Project for making your own 64bit multicore operating system (MINT64 OS)
 
 ## Books (two volumes)
 
-<a href='http://www.amazon.com/64-bit-multi-core-principles-structure-Korean/dp/8979148364/ref=sr_1_1?ie=UTF8&qid=1449647674&sr=8-1&keywords=64-bit+multi-core+OS+principles+and+structure' target='_blank'><image src='http://ecx.images-amazon.com/images/I/51-bZ0K3xlL._SX363_BO1,204,203,200_.jpg' width='300' /></a>
-
-[![](http://ecx.images-amazon.com/images/I/512i-i18WYL._SX363_BO1,204,203,200_.jpg)](http://www.amazon.com/64-bit-multi-core-principles-structure-Korean/dp/8979148372/ref=sr_1_2?ie=UTF8&qid=1449647674&sr=8-2&keywords=64-bit+multi-core+OS+principles+and+structure)
-
+<a href='http://www.amazon.com/64-bit-multi-core-principles-structure-Korean/dp/8979148364/ref=sr_1_1?ie=UTF8&qid=1449647674&sr=8-1&keywords=64-bit+multi-core+OS+principles+and+structure' target='_blank'><image src='http://ecx.images-amazon.com/images/I/51-bZ0K3xlL._SX363_BO1,204,203,200_.jpg' width='200' /></a>
+<a href='http://www.amazon.com/64-bit-multi-core-principles-structure-Korean/dp/8979148372/ref=sr_1_2?ie=UTF8&qid=1449647674&sr=8-2&keywords=64-bit+multi-core+OS+principles+and+structure' target='_blank'><image src='http://ecx.images-amazon.com/images/I/512i-i18WYL._SX363_BO1,204,203,200_.jpg' width='200' /></a>
 
 # MINT64 OS란? #
 MINT64 OS는 x86 호환 64비트 멀티코어 프로세서에서 동작하는 OS를 만드는 것이 목표입니다.
