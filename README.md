@@ -5,6 +5,9 @@ Project for making your own 64bit multicore operating system (MINT64 OS)
 
 <a href='http://www.youtube.com/watch?feature=player_embedded&v=TmfPimwaM4Q' target='_blank'><img src='http://img.youtube.com/vi/TmfPimwaM4Q/0.jpg' width='425' height=344 /></a>
 
+## Books (two volumes)
+
+[![](http://ts.daumcdn.net/custom/blog/11/117824/skin/images/book1.jpg)](http://www.amazon.com/64-bit-multi-core-principles-structure-Korean/dp/8979148364/ref=sr_1_1?ie=UTF8&qid=1449647674&sr=8-1&keywords=64-bit+multi-core+OS+principles+and+structure)
 
 # MINT64 OS란? #
 MINT64 OS는 x86 호환 64비트 멀티코어 프로세서에서 동작하는 OS를 만드는 것이 목표입니다.
