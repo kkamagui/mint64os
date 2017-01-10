@@ -73,7 +73,7 @@ void kSetGDTEntry8( GDTENTRY8* pstEntry, DWORD dwBaseAddress, DWORD dwLimit,
     pstEntry->wLowerBaseAddress = dwBaseAddress & 0xFFFF;
     pstEntry->bUpperBaseAddress1 = ( dwBaseAddress >> 16 ) & 0xFF;
     pstEntry->bTypeAndLowerFlag = bLowerFlags | bType;
-    pstEntry->bUpperLimitAndUpperFlag = ( ( dwLimit >> 16 ) & 0xFF ) | 
+    pstEntry->bUpperLimitAndUpperFlag = ( ( dwLimit >> 16 ) & 0x0F ) |
         bUpperFlags;
     pstEntry->bUpperBaseAddress2 = ( dwBaseAddress >> 24 ) & 0xFF;
 }
@@ -89,7 +89,7 @@ void kSetGDTEntry16( GDTENTRY16* pstEntry, QWORD qwBaseAddress, DWORD dwLimit,
     pstEntry->wLowerBaseAddress = qwBaseAddress & 0xFFFF;
     pstEntry->bMiddleBaseAddress1 = ( qwBaseAddress >> 16 ) & 0xFF;
     pstEntry->bTypeAndLowerFlag = bLowerFlags | bType;
-    pstEntry->bUpperLimitAndUpperFlag = ( ( dwLimit >> 16 ) & 0xFF ) | 
+    pstEntry->bUpperLimitAndUpperFlag = ( ( dwLimit >> 16 ) & 0x0F ) |
         bUpperFlags;
     pstEntry->bMiddleBaseAddress2 = ( qwBaseAddress >> 24 ) & 0xFF;
     pstEntry->dwUpperBaseAddress = qwBaseAddress >> 32;
@@ -113,7 +113,7 @@ void kInitializeTSSSegment( TSSSEGMENT* pstTSS )
         pstTSS->qwIST[ 0 ] = IST_STARTADDRESS + IST_SIZE - 
             ( IST_SIZE / MAXPROCESSORCOUNT * i );
         
-        // IO Map의 기준 주소를 TSS 디스크립터의 Limit 필드보다 크게 설정함으로써 
+        // IO Map의 기준 주소를 TSS 디스크립터의 Limit 필드보다 크게 설정함으로써
         // IO Map을 사용하지 않도록 함
         pstTSS->wIOMapBaseAddress = 0xFFFF;
 

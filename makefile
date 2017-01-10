@@ -4,7 +4,7 @@
 # brief		OS 이미지를 빌드하기 위한 make 파일
 
 # 기본적으로 빌드를 수행할 목록
-all: BootLoader Kernel32 Kernel64 Disk.img Application Utility
+all: Utility BootLoader Kernel32 Kernel64 Disk.img Application
 
 # 부트 로더 빌드를 위해 부트 로더 디렉터리에서 make 실행
 BootLoader:
@@ -71,7 +71,7 @@ Application:
 
 	
 # 유틸리티 빌드
-Utility:
+Utility: 
 	@echo 
 	@echo =========== Utility Build Start ===========
 	@echo 
