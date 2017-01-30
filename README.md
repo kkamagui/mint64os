@@ -1,4 +1,4 @@
-# MINT64 OS Prject
+# MINT64 OS Project
 Project for making your own 64bit multicore operating system (MINT64 OS)
 
 ## DEMO (Click for playing video)
@@ -18,7 +18,7 @@ MINT64 OS는 x86 호환 64비트 멀티코어 프로세서에서 동작하는 OS
 
 
 # MINT64 OS의 자세한 정보 #
-MINT64 OS의 개발 과정은 "64비트 멀티코어 OS 원리와 구조" 책 http://www.yes24.com/24/goods/5271779?scode=032&OzSrank=5에 소개되어 있으며, 한빛미디어를 통해 출간되었습니다. Wiki 문서에서 부족한 부분은 "64비트 멀티코어 OS 원리와 구조"를 참고하시기 바랍니다. ^^
+MINT64 OS의 개발 과정은 "64비트 멀티코어 OS 원리와 구조" 책 http://www.yes24.com/24/goods/5271779?scode=032&OzSrank=5 에 소개되어 있으며, 한빛미디어를 통해 출간되었습니다. Wiki 문서에서 부족한 부분은 "64비트 멀티코어 OS 원리와 구조"를 참고하시기 바랍니다. ^^
 
 [![](http://ts.daumcdn.net/custom/blog/11/117824/skin/images/book1.jpg)](http://www.yes24.com/24/goods/5271779?scode=032&OzSrank=5)
 
