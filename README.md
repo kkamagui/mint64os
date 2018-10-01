@@ -7,8 +7,8 @@ Project for making your own 64bit multicore operating system (MINT64 OS)
 
 ## Books (two volumes)
 
-<a href='http://www.amazon.com/64-bit-multi-core-principles-structure-Korean/dp/8979148364/ref=sr_1_1?ie=UTF8&qid=1449647674&sr=8-1&keywords=64-bit+multi-core+OS+principles+and+structure' target='_blank'><image src='http://ecx.images-amazon.com/images/I/51-bZ0K3xlL._SX363_BO1,204,203,200_.jpg' width='300' /></a>
-<a href='http://www.amazon.com/64-bit-multi-core-principles-structure-Korean/dp/8979148372/ref=sr_1_2?ie=UTF8&qid=1449647674&sr=8-2&keywords=64-bit+multi-core+OS+principles+and+structure' target='_blank'><image src='http://ecx.images-amazon.com/images/I/512i-i18WYL._SX363_BO1,204,203,200_.jpg' width='300' /></a>
+<a href='http://www.hanbit.co.kr/store/books/look.php?p_code=B3548683222' target='_blank'><image src='http://www.hanbit.co.kr/data/books/B3548683222_l.jpg' width='300' /></a>
+<a href='http://www.hanbit.co.kr/store/books/look.php?p_code=B1588486644' target='_blank'><image src='http://www.hanbit.co.kr/data/books/B1588486644_l.jpg' width='300' /></a>
 
 # MINT64 OS란? #
 MINT64 OS는 x86 호환 64비트 멀티코어 프로세서에서 동작하는 OS를 만드는 것이 목표입니다.
@@ -18,9 +18,9 @@ MINT64 OS는 x86 호환 64비트 멀티코어 프로세서에서 동작하는 OS
 
 
 # MINT64 OS의 자세한 정보 #
-MINT64 OS의 개발 과정은 "64비트 멀티코어 OS 원리와 구조" 책 http://www.yes24.com/24/goods/5271779?scode=032&OzSrank=5 에 소개되어 있으며, 한빛미디어를 통해 출간되었습니다. Wiki 문서에서 부족한 부분은 "64비트 멀티코어 OS 원리와 구조"를 참고하시기 바랍니다. ^^
+MINT64 OS의 개발 과정은 ["64비트 멀티코어 OS 원리와 구조" 도서](http://www.hanbit.co.kr/search/search_list.html?frm_keyword_str=64%EB%B9%84%ED%8A%B8+%EB%A9%80%ED%8B%B0%EC%BD%94%EC%96%B4+OS+%EC%9B%90%EB%A6%AC%EC%99%80+%EA%B5%AC%EC%A1%B0)에 소개되어 있으며, 한빛미디어를 통해 출간되었습니다. Wiki 문서에서 부족한 부분은 "64비트 멀티코어 OS 원리와 구조"를 참고하시기 바랍니다. ^^
 
-[![](http://ts.daumcdn.net/custom/blog/11/117824/skin/images/book1.jpg)](http://www.yes24.com/24/goods/5271779?scode=032&OzSrank=5)
+[![](http://www.hanbit.co.kr/data/books/B3548683222_l.jpg)](http://www.hanbit.co.kr/search/search_list.html?frm_keyword_str=64%EB%B9%84%ED%8A%B8+%EB%A9%80%ED%8B%B0%EC%BD%94%EC%96%B4+OS+%EC%9B%90%EB%A6%AC%EC%99%80+%EA%B5%AC%EC%A1%B0)
 
 
 # 참여 방법 #
