@@ -84,9 +84,8 @@ RESETDISK:                          ; 디스크를 리셋하는 코드의 시작
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     ; BIOS Reset Function 호출
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
-    ; 서비스 번호 0, 드라이브 번호(0=Floppy)
-    mov ax, 0
-    mov dl, byte [ BOOTDRIVE ]
+    mov ax, 0                           ; BIOS 서비스 번호 0(Reset Disk Drives)
+    mov dl, byte [ BOOTDRIVE ]          ; 부팅 드라이브를 타겟으로 설정
     int 0x13     
     ; 에러가 발생하면 에러 처리로 이동
     jc  HANDLEDISKERROR
@@ -95,7 +94,7 @@ RESETDISK:                          ; 디스크를 리셋하는 코드의 시작
     ; 디스크 파라미터를 읽음
     ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
     mov     ah, 0x08                    ; BIOS 서비스 번호 8(Read Disk Parameters)
-    mov     dl, byte [ BOOTDRIVE ]      ; 읽을 드라이브 번호(USB Flash Drive) 설정
+    mov     dl, byte [ BOOTDRIVE ]      ; 부팅 드라이브를 타겟으로 설정
     int     0x13                        ; 인터럽트 서비스 수행
     jc      HANDLEDISKERROR             ; 에러가 발생했다면 HANDLEDISKERROR로 이동
 
@@ -134,7 +133,7 @@ READDATA:                           ; 디스크를 읽는 코드의 시작
     mov ch, byte [ TRACKNUMBER ]        ; 읽을 트랙 번호 설정
     mov cl, byte [ SECTORNUMBER ]       ; 읽을 섹터 번호 설정
     mov dh, byte [ HEADNUMBER ]         ; 읽을 헤드 번호 설정
-    mov dl, byte [ BOOTDRIVE ]          ; 읽을 드라이브 번호(0=Floppy) 설정
+    mov dl, byte [ BOOTDRIVE ]          ; 부팅 드라이브를 타겟으로 설정
     int 0x13                            ; 인터럽트 서비스 수행
     jc HANDLEDISKERROR                  ; 에러가 발생했다면 HANDLEDISKERROR로 이동
     
