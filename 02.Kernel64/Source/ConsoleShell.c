@@ -230,8 +230,8 @@ int kGetNextParameter( PARAMETERLIST* pstList, char* pcParameter )
     }
     
     // 파라미터를 복사하고 길이를 반환
-    kMemCpy( pcParameter, pstList->pcBuffer + pstList->iCurrentPosition, i );
     iLength = i - pstList->iCurrentPosition;
+    kMemCpy( pcParameter, pstList->pcBuffer + pstList->iCurrentPosition, iLength );
     pcParameter[ iLength ] = '\0';
 
     // 파라미터의 위치 업데이트
