@@ -323,6 +323,7 @@ void kInitializeScheduler( void )
     pstTask->qwMemorySize = 0x500000;
     pstTask->pvStackAddress = ( void* ) 0x600000;
     pstTask->qwStackSize = 0x100000;
+    pstTask->bFPUUsed = FALSE;
     
     // 프로세서 사용률을 계산하는데 사용하는 자료구조 초기화
     gs_vstScheduler[ bCurrentAPICID ].qwSpendProcessorTimeInIdleTask = 0;
